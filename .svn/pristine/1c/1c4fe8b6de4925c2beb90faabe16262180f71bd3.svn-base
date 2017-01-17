@@ -1,0 +1,22 @@
+//
+//  YJSecondCell.h
+//  全球向导
+//
+//  Created by SYJ on 2016/10/20.
+//  Copyright © 2016年 尚勇杰. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface YJSecondCell : UITableViewCell
+
+@property (nonatomic, strong) UIImageView *imageV;
+@property (nonatomic, strong) UILabel *title;
+@property (nonatomic, strong) UILabel *descTitle;
+@property (nonatomic, strong) UIImageView *icon;
+@property (nonatomic, strong) UILabel *name;
+@property (nonatomic, strong) UILabel *position;
+@property (nonatomic, strong) UILabel *num;
+
+
+@end

@@ -1,0 +1,164 @@
+//
+//  YJGuideController.m
+//  全球向导
+//
+//  Created by SYJ on 2016/10/27.
+//  Copyright © 2016年 尚勇杰. All rights reserved.
+//
+
+#import "YJGuideController.h"
+#import "CLSeachBar.h"
+#import "XRWaterfallLayout.h"
+#import "YJGuideCollectionCell.h"
+
+
+@interface YJGuideController ()<UICollectionViewDataSource, XRWaterfallLayoutDelegate>
+
+
+@property (nonatomic, strong) UICollectionView *collectionView;
+
+@end
+
+@implementation YJGuideController
+
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.translucent = NO;
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+}
+
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [self setNavitaionSearch];
+    
+    //创建瀑布流布局
+    XRWaterfallLayout *waterfall = [XRWaterfallLayout waterFallLayoutWithColumnCount:2];
+    
+    //设置各属性的值
+    //    waterfall.rowSpacing = 10;
+    //    waterfall.columnSpacing = 10;
+    //    waterfall.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
+    
+    //或者一次性设置
+    [waterfall setColumnSpacing:10 rowSpacing:10 sectionInset:UIEdgeInsetsMake(10, 10, 10, 10)];
+    
+    
+    //设置代理，实现代理方法
+    waterfall.delegate = self;
+    /*
+     //或者设置block
+     [waterfall setItemHeightBlock:^CGFloat(CGFloat itemWidth, NSIndexPath *indexPath) {
+     //根据图片的原始尺寸，及显示宽度，等比例缩放来计算显示高度
+     XRImage *image = self.images[indexPath.item];
+     return image.imageH / image.imageW * itemWidth;
+     }];
+     */
+    //创建collectionView
+    self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:waterfall];
+    self.collectionView.backgroundColor = [UIColor whiteColor];
+    [self.collectionView registerClass:[YJGuideCollectionCell class] forCellWithReuseIdentifier:@"cell"];
+    self.collectionView.dataSource = self;
+    [self.view addSubview:self.collectionView];
+
+    
+    // Do any additional setup after loading the view.
+}
+
+
+
+- (void)setNavitaionSearch{
+    
+    
+    CLSeachBar *search = [[CLSeachBar alloc] initWithFrame:CGRectMake(0, 7,screen_width * 0.6, 30)];
+    self.navigationItem.titleView = search;
+    
+    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    leftBtn.frame = CGRectMake(0, 7, 50, 30);
+    leftBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
+    [leftBtn setTitleColor:TextColor forState:UIControlStateNormal];
+    //    leftBtn.backgroundColor = [UIColor orangeColor];
+    [leftBtn setTitle:@"宁波" forState:UIControlStateNormal];
+    //    [leftBtn setImage:[UIImage imageNamed:@"arrow_right"] forState:UIControlStateNormal];
+    [leftBtn addTarget:self action:@selector(location:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem * leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
+    self.navigationItem.rightBarButtonItem = leftItem;
+    
+    [self styleOne:search];
+    
+}
+
+- (void)styleOne:(CLSeachBar*)search
+{
+    search.placeholder = @"搜索向导/推荐";
+    
+    search.returnKeyType = UIReturnKeySearch;
+    search.font = [UIFont systemFontOfSize:16];
+    search.textColor = [UIColor whiteColor];
+    [search setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
+    [search setValue:[UIColor redColor] forKeyPath:@"_placeholderLabel.textColor"];
+    search.textColor = [UIColor blackColor];
+    //修改为圆角
+    search.layer.masksToBounds = YES;
+    search.layer.cornerRadius = search.frame.size.height*0.2;
+    search.layer.borderWidth = 1;
+    search.layer.borderColor = TextColor.CGColor;
+    search.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    
+    UIImageView *imageView = [[UIImageView alloc] init];
+    imageView.image = [UIImage imageNamed:@"search"];
+    search.leftView = imageView;
+    // 设置左边的view永远显示
+    search.leftViewMode = UITextFieldViewModeUnlessEditing;
+    // 设置右边永远显示清除按钮
+    search.clearButtonMode = UITextFieldViewModeWhileEditing;
+}
+
+- (void)location:(UIButton *)btn{
+    
+    NSLog(@"点击筛选向导");
+    
+//    YJLocaController *location = [[YJLocaController alloc]init];
+//    [location returnText:^(NSString *cityname) {
+//        [btn setTitle:cityname forState:UIControlStateNormal];
+//    }];
+//    [self presentViewController:location animated:YES completion:nil];
+    
+}
+
+
+//根据item的宽度与indexPath计算每一个item的高度
+- (CGFloat)waterfallLayout:(XRWaterfallLayout *)waterfallLayout itemHeightForWidth:(CGFloat)itemWidth atIndexPath:(NSIndexPath *)indexPath {
+    //根据图片的原始尺寸，及显示宽度，等比例缩放来计算显示高度
+    return 260 * KWidth_Scale;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return 30;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    YJGuideCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+//    cell.imageURL = self.images[indexPath.item].imageURL;
+    return cell;
+}
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

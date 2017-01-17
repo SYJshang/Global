@@ -1,0 +1,104 @@
+//
+//  ViewController.m
+//  全球向导
+//
+//  Created by SYJ on 2016/10/20.
+//  Copyright © 2016年 尚勇杰. All rights reserved.
+//
+
+#import "ViewController.h"
+#import "YJFirstCell.h"
+#import "YJSecondCell.h"
+
+#define Height  CGRectGetHeight([UIScreen mainScreen].bounds)
+#define Width   CGRectGetWidth([UIScreen mainScreen].bounds)
+
+@interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
+
+@property (nonatomic, strong) UITableView *tableView;
+
+@end
+
+@implementation ViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    //穿创建tableView
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Width, Height) style:UITableViewStylePlain];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    //tableView的代理
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    //tableView的背景
+    _tableView.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
+    [self.view addSubview:_tableView];
+    
+    //注册cell
+    [_tableView registerClass:[YJFirstCell class] forCellReuseIdentifier:@"cell"];
+    [_tableView registerClass:[YJSecondCell class] forCellReuseIdentifier:@"secCell"];
+    
+    
+    
+    //    self.view.backgroundColor = [UIColor redColor];
+    // Do any additional setup after loading the view, typically from a nib.
+}
+
+#pragma mark - table view dataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 10;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if (indexPath.row == 0) {
+        return 190;
+    }
+    return 200;
+    
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    if (indexPath.row == 0) {
+        YJFirstCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+        
+        if(cell == nil) {
+            cell = [[YJFirstCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+        }
+        
+        return cell;
+        
+    }
+    
+    YJSecondCell *cells = [tableView dequeueReusableCellWithIdentifier:@"secCell"];
+    cells.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    return cells;
+
+}
+
+#pragma mark - table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+@end
