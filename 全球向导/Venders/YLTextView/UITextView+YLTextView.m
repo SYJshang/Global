@@ -130,6 +130,11 @@ static const void *limitLengthKey = &limitLengthKey;
     if ([self.text length] > [self.limitLength intValue]) {
 
         self.text = [self.text substringToIndex:[self.limitLength intValue]];
+        SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"输入内容超过限制" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            
+        }];
+        alert.sure_btnTitleColor = TextColor;
+        [alert show];
     }
 }
 

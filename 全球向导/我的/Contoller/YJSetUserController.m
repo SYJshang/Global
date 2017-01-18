@@ -270,18 +270,25 @@
         [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.row == 2){
         
-        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"手机号不能更改" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"手机号不能更改" preferredStyle:UIAlertControllerStyleAlert];
+//        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//            
+//        }];
+//        UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//            
+//        }];
+//        [alertVC addAction:action1];
+//        [alertVC addAction:action2];
+//        [self presentViewController:alertVC animated:YES completion:nil];
+
+        
+        SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"手机号暂时不能更改" alertViewBottomViewType:SGAlertViewBottomViewTypeTwo didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
             
         }];
-        UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-        }];
-        [alertVC addAction:action1];
-        [alertVC addAction:action2];
-        [self presentViewController:alertVC animated:YES completion:nil];
-
-
+        alert.sure_btnTitleColor = TextColor;
+        alert.sure_btnTitle = @"确定";
+        [alert show];
+        
     }
     
 }
@@ -292,7 +299,7 @@
 {
     UIAlertController *aler=[UIAlertController alertControllerWithTitle:@"更换头像" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     //从相机选取
-    UIAlertAction *album=[UIAlertAction actionWithTitle:@"从相册选取" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *album = [UIAlertAction actionWithTitle:@"从相册选取" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         UIImagePickerController *picker=[[UIImagePickerController alloc]init];
         picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         picker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:picker.sourceType];
@@ -370,16 +377,12 @@
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
-                UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:datas[@"msg"] preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    
-                }];
-                UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    
-                }];
-                [alertVC addAction:action1];
-                [alertVC addAction:action2];
-                [self presentViewController:alertVC animated:YES completion:nil];
+                    SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:datas[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeTwo didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                        
+                    }];
+                    alert.sure_btnTitleColor = TextColor;
+                    alert.sure_btnTitle = @"确定";
+                    [alert show];
                 });
                 
             }

@@ -156,6 +156,9 @@
 		1A5ED9641DC9F176002FAF0A /* SZYKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5ED9631DC9F176002FAF0A /* SZYKeychain.m */; };
 		1A62B3BA1DD32273006E0D97 /* CHTCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A62B3B91DD32273006E0D97 /* CHTCalendarView.m */; };
 		1A62B3BD1DD322E3006E0D97 /* YJDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A62B3BC1DD322E3006E0D97 /* YJDataController.m */; };
+		1A632FA51E2F013200AB9431 /* YJIssueTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A632FA41E2F013200AB9431 /* YJIssueTitleCell.m */; };
+		1A632FAB1E2F5D5900AB9431 /* UIImageView+LBBlurredImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A632FAA1E2F5D5900AB9431 /* UIImageView+LBBlurredImage.m */; };
+		1A632FAE1E2F69A800AB9431 /* YJPlusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A632FAD1E2F69A800AB9431 /* YJPlusCell.m */; };
 		1A6C746A1DFA4ECF002A9481 /* YJOrderStateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A6C74691DFA4ECF002A9481 /* YJOrderStateController.m */; };
 		1A6C74701DFA4EFC002A9481 /* YJStateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A6C746F1DFA4EFC002A9481 /* YJStateCell.m */; };
 		1A6C74731DFA4F1B002A9481 /* YJStateModle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A6C74721DFA4F1B002A9481 /* YJStateModle.m */; };
@@ -615,6 +618,12 @@
 		1A62B3B91DD32273006E0D97 /* CHTCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHTCalendarView.m; sourceTree = "<group>"; };
 		1A62B3BB1DD322E2006E0D97 /* YJDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJDataController.h; sourceTree = "<group>"; };
 		1A62B3BC1DD322E3006E0D97 /* YJDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJDataController.m; sourceTree = "<group>"; };
+		1A632FA31E2F013200AB9431 /* YJIssueTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJIssueTitleCell.h; sourceTree = "<group>"; };
+		1A632FA41E2F013200AB9431 /* YJIssueTitleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJIssueTitleCell.m; sourceTree = "<group>"; };
+		1A632FA91E2F5D5900AB9431 /* UIImageView+LBBlurredImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+LBBlurredImage.h"; sourceTree = "<group>"; };
+		1A632FAA1E2F5D5900AB9431 /* UIImageView+LBBlurredImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+LBBlurredImage.m"; sourceTree = "<group>"; };
+		1A632FAC1E2F69A800AB9431 /* YJPlusCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJPlusCell.h; sourceTree = "<group>"; };
+		1A632FAD1E2F69A800AB9431 /* YJPlusCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJPlusCell.m; sourceTree = "<group>"; };
 		1A6C74681DFA4ECF002A9481 /* YJOrderStateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJOrderStateController.h; sourceTree = "<group>"; };
 		1A6C74691DFA4ECF002A9481 /* YJOrderStateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJOrderStateController.m; sourceTree = "<group>"; };
 		1A6C746E1DFA4EFC002A9481 /* YJStateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJStateCell.h; sourceTree = "<group>"; };
@@ -1435,6 +1444,17 @@
 			path = "日期选择";
 			sourceTree = "<group>";
 		};
+		1A632FA21E2F00F400AB9431 /* 发布行程 */ = {
+			isa = PBXGroup;
+			children = (
+				1A632FA31E2F013200AB9431 /* YJIssueTitleCell.h */,
+				1A632FA41E2F013200AB9431 /* YJIssueTitleCell.m */,
+				1A632FAC1E2F69A800AB9431 /* YJPlusCell.h */,
+				1A632FAD1E2F69A800AB9431 /* YJPlusCell.m */,
+			);
+			path = "发布行程";
+			sourceTree = "<group>";
+		};
 		1A6C74741DFA8422002A9481 /* 向导主页 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1754,6 +1774,8 @@
 				1A03A7421E092B3B007EB922 /* NSNotification+Extension.m */,
 				1A06BEED1DFFE4CE0032FE99 /* UIImage+ImageEffects.h */,
 				1A06BEEE1DFFE4CE0032FE99 /* UIImage+ImageEffects.m */,
+				1A632FA91E2F5D5900AB9431 /* UIImageView+LBBlurredImage.h */,
+				1A632FAA1E2F5D5900AB9431 /* UIImageView+LBBlurredImage.m */,
 				1A5E4D2D1DF54A9F00136053 /* UIBarButtonItem+Extension.h */,
 				1A5E4D2E1DF54A9F00136053 /* UIBarButtonItem+Extension.m */,
 				1A5E4D2F1DF54A9F00136053 /* UIBarButtonItem+XRZNavitionBar.h */,
@@ -1971,6 +1993,7 @@
 		1AE0FC521DC197A700417351 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1A632FA21E2F00F400AB9431 /* 发布行程 */,
 				1A12C17D1E14B13800213F95 /* 我的发布 */,
 				1A6C74751DFA8465002A9481 /* 向导主页 */,
 				1A26135F1DCC39B8002B95DC /* YJProfileCell.h */,
@@ -2387,6 +2410,7 @@
 				1AFCC8091E260A2F00450852 /* MJRefreshAutoFooter.m in Sources */,
 				1A7887151E1DE084004F3271 /* SGDatePicker.m in Sources */,
 				1A109DC81DB8A8ED00D7A74B /* UITableView+SDAutoTableViewCellHeight.m in Sources */,
+				1A632FA51E2F013200AB9431 /* YJIssueTitleCell.m in Sources */,
 				1A3DFA9A1DD01F1A004F1A63 /* YJOrderFormController.m in Sources */,
 				1A5E4D1A1DF4FEDA00136053 /* SDWebImageDownloader.m in Sources */,
 				1AF928A01DF93B20004B666F /* YJWaitEvaluationControllerViewController.m in Sources */,
@@ -2399,6 +2423,7 @@
 				1A6C74731DFA4F1B002A9481 /* YJStateModle.m in Sources */,
 				1A7FD9291DC1FA7E00FCA46B /* YJGuideController.m in Sources */,
 				1A7886E61E1D02D9004F3271 /* YJAreaMianVC.m in Sources */,
+				1A632FAE1E2F69A800AB9431 /* YJPlusCell.m in Sources */,
 				1AF559F41DDDB811004AA101 /* LYButton.m in Sources */,
 				1A06BEEC1DFFE41A0032FE99 /* YJGCenterController.m in Sources */,
 				1A1BA4CF1E03E84C003BCB75 /* YJEditPhotoCell.m in Sources */,
@@ -2554,6 +2579,7 @@
 				1ADC807F1E03826300BB5D16 /* YJSelcetBtn.m in Sources */,
 				1A5E4D231DF4FEDA00136053 /* UIImageView+WebCache.m in Sources */,
 				1AFCC80E1E260A2F00450852 /* MJRefreshAutoGifFooter.m in Sources */,
+				1A632FAB1E2F5D5900AB9431 /* UIImageView+LBBlurredImage.m in Sources */,
 				1AFCC82E1E2776B700450852 /* YJGuideIntroCell.m in Sources */,
 				1A03A7311E08D139007EB922 /* YJScreentimeCell.m in Sources */,
 				1A5E4D131DF4FEDA00136053 /* MKAnnotationView+WebCache.m in Sources */,

@@ -9,15 +9,19 @@
 
 #import "YJTravelController.h"
 #import "UINavigationBar+Awesome.h"
+#import "YJIssueTitleCell.h"
+#import "UIImageView+LBBlurredImage.h"
 
 static CGFloat imageH = 200;
 static CGFloat navH = 64;
 
-@interface YJTravelController ()<UITableViewDelegate,UITableViewDataSource,SGActionSheetDelegate>
+@interface YJTravelController ()<UITableViewDelegate,UITableViewDataSource,SGActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
 @property (strong, nonatomic) UITableView *tableView;
 @property (nonatomic, strong) UIImageView *headerView;
 @property (nonatomic, strong) UIImage *shadowImage;
+
+@property (nonatomic, strong) NSMutableArray  *contentLsitArr;//内容列表
 
 
 
@@ -25,7 +29,13 @@ static CGFloat navH = 64;
 
 @implementation YJTravelController
 
-
+- (NSMutableArray *)contentLsitArr{
+    if (_contentLsitArr == nil) {
+        _contentLsitArr = [NSMutableArray array];
+    }
+    
+    return _contentLsitArr;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -36,12 +46,19 @@ static CGFloat navH = 64;
     self.tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.backgroundColor = BackGray;
     self.tableView.contentInset = UIEdgeInsetsMake(imageH, 0, 0, 0);
     [self.view addSubview:self.tableView];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.tableView registerClass:[YJIssueTitleCell class] forCellReuseIdentifier:@"title"];
     
     self.headerView = [[UIImageView alloc]init];
     self.headerView.frame = CGRectMake(0, -imageH, screen_width, imageH);
-    self.headerView.image = [UIImage imageNamed:@"bg1"];
+//    self.headerView.image = [UIImage imageNamed:@"bg2"];
+    [self.headerView setImageToBlur:[UIImage imageNamed:@"bg2"]
+                        blurRadius:5
+                   completionBlock:^(){
+                   }];
     self.headerView.contentMode = UIViewContentModeScaleAspectFill;
     [self.tableView addSubview:self.headerView];
     [self.tableView insertSubview:self.headerView atIndex:0];
@@ -51,7 +68,7 @@ static CGFloat navH = 64;
         
         XXLog(@"更换封面");
         
-        SGActionSheet *sheet = [[SGActionSheet alloc]initWithTitle:@"选择图片" delegate:self cancelButtonTitle:@"取消" otherButtonTitleArray:@[@"相册",@"相机"]];
+        SGActionSheet *sheet = [[SGActionSheet alloc]initWithTitle:@"更换封面" delegate:self cancelButtonTitle:@"取消" otherButtonTitleArray:@[@"相册",@"相机"]];
         sheet.messageTextColor = TextColor;
         [sheet show];
         
@@ -106,17 +123,47 @@ static CGFloat navH = 64;
     self.navigationController.navigationBar.shadowImage = self.shadowImage;
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    
+    return 2;
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 50;
+    if (section == 0) {
+        return 2;
+    }else if (section == 1){
+        return self.contentLsitArr.count + 1;
+    }else{
+        return 0;
+    }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50;
+    if (indexPath.row == 0) {
+        return 50;
+    }else{
+        return 100;
+    }
 }
+
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == 0) {
+        YJIssueTitleCell *cell = [tableView dequeueReusableCellWithIdentifier:@"title"];
+        if (indexPath.row == 0) {
+            cell.textView.placeholder = @"输入标题（20字）";
+            cell.textView.limitLength = @20;
+        }else if (indexPath.row == 1){
+            cell.textView.placeholder = @"输入简介（100字）";
+            cell.textView.limitLength = @100;
+        }
+        return cell;
+
+    }
+    
+    
     static NSString *ID = @"XXXX";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
     if (!cell) {
@@ -128,17 +175,16 @@ static CGFloat navH = 64;
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIViewController *vc = [[UIViewController alloc]init];
-    vc.view.backgroundColor = [UIColor whiteColor];
-    [self.navigationController pushViewController:vc animated:YES];
+//    UIViewController *vc = [[UIViewController alloc]init];
+//    vc.view.backgroundColor = [UIColor whiteColor];
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat offsetY = scrollView.contentOffset.y;
-    NSLog(@"%f",offsetY);
     
     if (offsetY < -imageH) {
-        NSLog(@"开始改变");
+        XXLog(@"开始改变");
         CGRect f = self.headerView.frame;
         f.origin.y = offsetY;
         f.size.height =  -offsetY;
@@ -152,13 +198,13 @@ static CGFloat navH = 64;
 {
     UIColor *color = [UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1];
     if (offsetY > -navH * 2 ) {
-        NSLog(@"渐渐不透明");
+        XXLog(@"渐渐不透明");
         CGFloat alpha = MIN(1, 1 - ((-navH * 2 + navH - offsetY) / navH));
         [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:alpha]];
         self.title = @"个人主页";
     }
     else {
-        NSLog(@"渐渐透明");
+        XXLog(@"渐渐透明");
         [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:0]];
         self.title = @"";
     }
@@ -170,12 +216,59 @@ static CGFloat navH = 64;
     
     if (indexPath == 0) {
         XXLog(@"打开相册");
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
+            UIImagePickerController * imagePicker = [[UIImagePickerController alloc]init];
+            imagePicker.delegate = self;
+            imagePicker.allowsEditing = YES;
+            imagePicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+            [self presentViewController:imagePicker animated:YES completion:nil];
+        }
     }else{
         XXLog(@"打开相机");
-
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            
+            UIImagePickerController * imagePicker = [[UIImagePickerController alloc]init];
+            imagePicker.delegate = self;
+            imagePicker.allowsEditing = YES;
+            imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            [self presentViewController:imagePicker animated:YES completion:nil];
+        }
     }
     
 }
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
+{
+    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+    NSData *imgData = UIImageJPEGRepresentation(image, 1);
+    [self.headerView setImageToBlur:image
+                         blurRadius:5
+                    completionBlock:^(){
+                    }];
+    // Set the label text.
+    
+    //选取完图片之后关闭视图
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (UIImage*)blur:(UIImage*)theImage
+{
+    CIContext *context = [CIContext contextWithOptions:nil];
+    CIImage *inputImage = [CIImage imageWithCGImage:theImage.CGImage];
+    
+    CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
+    [filter setValue:inputImage forKey:kCIInputImageKey];
+    [filter setValue:[NSNumber numberWithFloat:15.0f] forKey:@"inputRadius"];
+    CIImage *result = [filter valueForKey:kCIOutputImageKey];
+    
+    CGImageRef cgImage = [context createCGImage:result fromRect:[inputImage extent]];
+    
+    UIImage *returnImage = [UIImage imageWithCGImage:cgImage];
+    CGImageRelease(cgImage);
+    return returnImage;
+}
+
+
 
 
 @end
