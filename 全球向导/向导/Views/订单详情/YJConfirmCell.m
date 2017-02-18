@@ -38,7 +38,7 @@
         [self.contentView addSubview:line];
         line.sd_layout.leftSpaceToView(self.contentView,10).rightSpaceToView(self.contentView,10).bottomSpaceToView(self.contentView,0).heightIs(0.5);
         
-        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
     return self;

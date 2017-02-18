@@ -8,8 +8,8 @@
 
 #import "YJCollectController.h"
 #import "YJGlobalCollectController.h"
-#import "YJRefundController.h"
-#import "YJWaitBuyController.h"
+#import "YJFindCollectVC.h"
+#import "YJShareCollectVC.h"
 #import "SGTopTitleView.h"
 
 @interface YJCollectController ()<SGTopTitleViewDelegate, UIScrollViewDelegate>
@@ -26,9 +26,9 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
-    self.automaticallyAdjustsScrollViewInsets = NO;
     [self.navigationController setNavigationBarHidden:NO animated:NO];
-    
+
+    self.automaticallyAdjustsScrollViewInsets = NO;
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
@@ -53,8 +53,8 @@
     [self setupChildViewController];
     
     
-    self.titles = @[@"收藏订单", @"收藏发现",@"收藏向导"];
-    // , @"NBA", @"新闻", @"娱乐", @"音乐", @"网络电影"
+    self.titles = @[@"向导", @"发现",@"分享"];
+
     self.topTitleView = [SGTopTitleView topTitleViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
     self.topTitleView.backgroundColor = BackGray;
     _topTitleView.staticTitleArr = [NSArray arrayWithArray:_titles];
@@ -97,26 +97,19 @@
 
 // 添加所有子控制器
 - (void)setupChildViewController {
-    // 精选
+    
+    // 向导
     YJGlobalCollectController *oneVC = [[YJGlobalCollectController alloc] init];
     [self addChildViewController:oneVC];
     
-    // 电视剧
-    YJRefundController *twoVC = [[YJRefundController alloc] init];
+    // 发现
+    YJFindCollectVC *twoVC = [[YJFindCollectVC alloc] init];
     [self addChildViewController:twoVC];
     
-    
-    YJWaitBuyController *threeVC = [[YJWaitBuyController alloc] init];
+    // 分享
+    YJShareCollectVC *threeVC = [[YJShareCollectVC alloc] init];
     [self addChildViewController:threeVC];
     
-    //
-    //    // 电影
-    //    TestThreeVC *threeVC = [[TestThreeVC alloc] init];
-    //    [self addChildViewController:threeVC];
-    //
-    //    // 综艺
-    //    TestFourVC *fourVC = [[TestFourVC alloc] init];
-    //    [self addChildViewController:fourVC];
 }
 
 // 显示控制器的view
@@ -151,24 +144,11 @@
 }
 
 
-
-
-
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -66,7 +66,7 @@
     
     self.isCLick = !self.isCLick;
     
-    [self.clinicDele clinicTitle:self.text withClinicChoose:self.isCLick];
+    [self.clinicDele clinicTitle:self.ID withClinicChoose:self.isCLick];
     
 }
 
@@ -85,7 +85,7 @@
     self.textColor = [UIColor whiteColor];
     self.backgroundColor = TextColor;
     
-    self.layer.borderColor=  [BackGray CGColor];
+    self.layer.borderColor =  [BackGray CGColor];
     ;
     
     

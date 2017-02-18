@@ -12,9 +12,9 @@
 
 -(instancetype)initData:(NSDictionary *)dic{
     if (self=[super init]) {
-        self.timeStr=[dic objectForKey:@"timeStr"];
-        self.titleStr=[dic objectForKey:@"titleStr"];
-        self.detailSrtr=[dic objectForKey:@"detailSrtr"];
+        self.timeStr = [dic objectForKey:@"timeStr"];
+        self.titleStr = [dic objectForKey:@"titleStr"];
+        self.detailSrtr = [dic objectForKey:@"detailSrtr"];
     }
     return self;
 }

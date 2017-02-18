@@ -13,7 +13,7 @@
 #import "NSFileManager+DN.h"
 #import "DataManager.h"
 #import "YJLoginController.h"
-#import "WSMovieController.h"
+//#import "WSMovieController.h"
 
 @interface AppDelegate ()
 
@@ -38,7 +38,8 @@
     
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
-    
+    self.window.rootViewController = [[YJTabBarController alloc]init];
+
     [self.window makeKeyAndVisible];
     
    
@@ -52,32 +53,31 @@
     
     
 
-    NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-    NSString *historyVersion =[NSFileManager getAppSettingsForObjectWithKey:@"VersionStr"];
-    if (historyVersion == nil || [historyVersion compare:currentVersion options:NSNumericSearch] == NSOrderedAscending) {
-        self.first = NO;
-        [NSFileManager setAppSettingsForObject:currentVersion forKey:@"VersionStr"];
-        WSMovieController *wsCtrl = [[WSMovieController alloc]init];
-        wsCtrl.movieURL = [NSURL fileURLWithPath:[[NSBundle mainBundle]pathForResource:@"qidong"ofType:@"mp4"]];
-        self.window.rootViewController = wsCtrl;
-        [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"isFirstLogin"];
-        
-        YJLoginController *login = [[YJLoginController alloc]init];
-        self.window.rootViewController = login;
-        
-        
-    }else{
-        
-        self.window.rootViewController = [[YJTabBarController alloc] init];
-
-    }
-    self.first = YES;
+//    NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+//    NSString *historyVersion =[NSFileManager getAppSettingsForObjectWithKey:@"VersionStr"];
+//    if (historyVersion == nil || [historyVersion compare:currentVersion options:NSNumericSearch] == NSOrderedAscending) {
+//        self.first = NO;
+//        [NSFileManager setAppSettingsForObject:currentVersion forKey:@"VersionStr"];
+//        WSMovieController *wsCtrl = [[WSMovieController alloc]init];
+//        wsCtrl.movieURL = [NSURL fileURLWithPath:[[NSBundle mainBundle]pathForResource:@"qidong"ofType:@"mp4"]];
+//        self.window.rootViewController = wsCtrl;
+//        [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"isFirstLogin"];
+//        
+////        YJLoginController *login = [[YJLoginController alloc]init];
+////        self.window.rootViewController = login;
+//        
+//        
+//    }else{
+//        
+//        self.window.rootViewController = [[YJTabBarController alloc] init];
+//
+//    }
+//    self.first = YES;
     
     //必须设置在makeKeyAndVisible下才能生效  加载引导页
-//    [self PageLoadingGuide];
+    [self PageLoadingGuide];
 
 
-//    self.window.rootViewController = [[YJTabBarController alloc]init];
 
     // Override point for customization after application launch.
     return YES;
@@ -87,7 +87,7 @@
 // 加载引导页
 - (void)PageLoadingGuide {
     NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-    NSString *historyVersion =[NSFileManager getAppSettingsForObjectWithKey:@"VersionStr"];
+    NSString *historyVersion = [NSFileManager getAppSettingsForObjectWithKey:@"VersionStr"];
     if (historyVersion == nil || [historyVersion compare:currentVersion options:NSNumericSearch] == NSOrderedAscending) {
         [[DNPageView sharePageView] initPageViewToView:self.window dismiss:^{
             self.first = NO;
@@ -95,7 +95,6 @@
         }];
     }
     self.first = YES;
-    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

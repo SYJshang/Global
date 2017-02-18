@@ -77,6 +77,7 @@
         
         self.price = [[UILabel alloc]init];
         [self.imageV addSubview:self.price];
+        self.price.text = @"￥100";
         self.price.sd_layout.rightSpaceToView(self.imageV,10).bottomSpaceToView(self.num,2).heightIs(20).widthIs(150);
         self.price.textColor = [UIColor whiteColor];
         self.price.font = [UIFont systemFontOfSize:AdaptedWidth(14)];

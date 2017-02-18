@@ -43,6 +43,9 @@
 
 @property (nonatomic, strong) NSMutableArray *lunboImgArr;//轮播图片点击跳转的url
 
+
+@property (nonatomic, strong) UIButton *areaBtn; //地区按钮
+
 @end
 
 @implementation ViewController
@@ -140,11 +143,7 @@
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     
-    //设置导航控制器
-    [self setNavitaion];
-    //设置tableView
-    [self setTable];
-
+   
 
     NSString *str = [YJBNetWorkNotifionTool stringFormStutas];
     XXLog(@"%@",str);
@@ -175,6 +174,11 @@
     [super viewDidLoad];
     self.guideType = [NSDictionary dictionary];
     
+    //设置导航控制器
+    [self setNavitaion];
+    //设置tableView
+    [self setTable];
+
     //请求网络
     [self getNetWork];
     
@@ -312,16 +316,16 @@
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = TextColor;
     
-    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    leftBtn.frame = CGRectMake(0, 7, 50, 30);
-    [leftBtn setImageEdgeInsets:UIEdgeInsetsMake(-5,-15, -5, 0)];
-    [leftBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -15, 0, -15)];
-    [leftBtn setImage:[UIImage imageNamed:@"position"] forState:UIControlStateNormal];
-    leftBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
-    [leftBtn setTitleColor:TextColor forState:UIControlStateNormal];
-    [leftBtn setTitle:@"北京" forState:UIControlStateNormal];
-    [leftBtn addTarget:self action:@selector(location:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem * leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
+    self.areaBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.areaBtn.frame = CGRectMake(0, 7, 50, 30);
+    [self.areaBtn setImageEdgeInsets:UIEdgeInsetsMake(-5,-15, -5, 0)];
+    [self.areaBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -15, 0, -15)];
+    [self.areaBtn setImage:[UIImage imageNamed:@"position"] forState:UIControlStateNormal];
+    self.areaBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
+    [self.areaBtn setTitleColor:TextColor forState:UIControlStateNormal];
+    [self.areaBtn setTitle:@"宁波" forState:UIControlStateNormal];
+    [self.areaBtn addTarget:self action:@selector(location) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:self.areaBtn];
     self.navigationItem.leftBarButtonItem = leftItem;
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -469,22 +473,18 @@
 
 
 
-- (void)location:(UIButton *)btn{
+- (void)location{
     
-    YJAreaMianVC *location = [[YJAreaMianVC alloc]init];
-    
-    location.returnBlocks = ^(NSString *cityname,NSNumber *cityID){
-    
-    XXLog(@"%@",cityID);
-    [btn setTitle:cityname forState:UIControlStateNormal];
+    YJAreaMianVC *locati = [[YJAreaMianVC alloc]init];
+    [locati returnTitle:^(NSString *cityname, NSNumber *cityID) {
+    self.navigationController.navigationBar.tintColor = TextColor;
+    [self.areaBtn setTitle:cityname forState:UIControlStateNormal];
 
-    };
+    XXLog(@"%@",self.areaBtn.titleLabel.text);
+    }];
 
-//    [location returnTitle:^(NSString *cityname) {
-//        [btn setTitle:cityname forState:UIControlStateNormal];
-//    }];
 
-    [self.navigationController pushViewController:location animated:YES];
+    [self.navigationController pushViewController:locati animated:YES];
     
 }
 

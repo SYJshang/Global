@@ -7,7 +7,6 @@
 //
 
 #import "YJAddNumCell.h"
-#import "SDAutoLayout.h"
 
 @implementation YJAddNumCell
 
@@ -53,6 +52,8 @@
         
         self.people = 1;
         
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        
     }
     
     return self;
@@ -61,21 +62,20 @@
 
 - (void)addBtn:(UIButton *)sender{
     
-    self.people++;
-    NSString *peo = [NSString stringWithFormat:@"%d",self.people];
-    self.numLab.text = peo;
+    XXLog(@"sssssss");
+    
+    if (self.peoBlock) {
+        self.peoBlock();
+    }
     
 }
 
 
 - (void)reduceBtn:(UIButton *)sender{
     
-    if (self.people > 0) {
-        self.people --;
+    if (self.peoReduBlock) {
+        self.peoReduBlock();
     }
-    
-    NSString *peo = [NSString stringWithFormat:@"%d",self.people];
-    self.numLab.text = peo;
 }
 
 

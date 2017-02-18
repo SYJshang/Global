@@ -12,6 +12,7 @@
 #import "YJNFindGuideModel.h"
 #import "YJPageModel.h"
 #import "NoNetwork.h"
+#import "YJGuideRecVC.h"
 
 @interface YJGuideRecommendController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -40,7 +41,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = BackGray;
+//    self.view.backgroundColor = BackGray;
     [self setTableView];
     
     
@@ -233,7 +234,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-//    kTipAlert(@"<%ld> selected...", indexPath.row);
+    YJNFindGuideModel *model = self.newFindArr[indexPath.row];
+    YJGuideRecVC *vc = [[YJGuideRecVC alloc]init];
+    vc.ID = model.ID;
+    [self.navigationController pushViewController:vc animated:YES];
+    
 }
 
 

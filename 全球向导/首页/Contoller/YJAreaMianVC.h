@@ -14,7 +14,7 @@ typedef void(^CityName)(NSString *cityname,NSNumber *cityID);
 
 @property (nonatomic, copy) CityName returnBlocks;
 
-//- (void)returnTitle:(CityName)block;
+- (void)returnTitle:(CityName)block;
 
 
 

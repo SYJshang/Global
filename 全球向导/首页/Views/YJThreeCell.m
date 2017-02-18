@@ -27,7 +27,7 @@
         
         self.icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"HeaderIcon"]];
         [self.contentView addSubview:self.icon];
-        self.icon.sd_layout.leftSpaceToView(self.contentView,10).topSpaceToView(self.imageV,10 * KWidth_Scale).heightIs(40 * KWidth_Scale).widthIs(40 * KWidth_Scale);
+        self.icon.sd_layout.leftSpaceToView(self.contentView,10).topSpaceToView(self.imageV,10 * KHeight_Scale).heightIs(40 * KWidth_Scale).widthIs(40 * KWidth_Scale);
         self.icon.layer.masksToBounds = YES;
         self.icon.layer.cornerRadius = self.icon.height / 2;
         self.icon.layer.borderWidth = 2;
@@ -75,8 +75,8 @@
     [self.imageV sd_setImageWithURL:[NSURL URLWithString:guideModel.coverPhotoUrl] placeholderImage:[UIImage imageNamed:@"123"]];
     [self.icon sd_setImageWithURL:[NSURL URLWithString:guideModel.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
     self.name.text = [NSString stringWithFormat:@"by %@",guideModel.realName];
-    NSString *type = [self.guideType objectForKey:guideModel.type];
-    self.position.text = [NSString stringWithFormat:@"|%@|",type];
+//    NSString *type = [self.guideType objectForKey:guideModel.guideDesc];
+    self.position.text = [NSString stringWithFormat:@"|%@|",guideModel.guideDesc];
     self.title.text = [NSString stringWithFormat:@"座右铭: %@",guideModel.motto];
     self.descTitle.text = @"标签: ";
 

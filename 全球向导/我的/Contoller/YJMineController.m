@@ -72,7 +72,8 @@
             
             NSDictionary *data = dict[@"data"];
             self.guideStatus = data[@"guideStatus"];
-            NSDictionary *usrInfo = data[@"userInfo"];
+        
+          NSDictionary *usrInfo = data[@"userInfo"];
           NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"userInfo.plist"];
          [NSKeyedArchiver archiveRootObject:usrInfo toFile:path];
             
@@ -84,7 +85,6 @@
                 [self.icon sd_setImageWithURL:[NSURL URLWithString:self.userModel.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
             }
             
-
             [self setBtnStatus];
             [self.tableView reloadData];
             
@@ -115,7 +115,7 @@
         
         NSInteger guideSta = [[self guideStatus] integerValue];
         
-        //        0普通用户 1申请中 2正常 3申请不通过 4账号被封
+        // 0普通用户 1申请中 2正常 3申请不通过 4账号被封
         switch (guideSta) {
             case 0:
                 [self.goInGuide setTitle:@"申请成为全球向导" forState:UIControlStateNormal];
@@ -191,7 +191,7 @@
     CGFloat off_y = scrollView.contentOffset.y;
     CGFloat kHeight = [UIScreen mainScreen].bounds.size.height;
     // 下拉超过照片的高度的时候
-    if (off_y < -200)
+    if (off_y < - 200)
     {
         CGRect frame = self.topImageView.frame;
         // 这里的思路就是改变 顶部的照片的 frame

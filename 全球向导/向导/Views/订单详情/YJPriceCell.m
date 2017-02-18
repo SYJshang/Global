@@ -18,31 +18,44 @@
         self.allPrice = [[UILabel alloc]init];
         self.allPrice.textAlignment = NSTextAlignmentRight;
         self.allPrice.font = [UIFont systemFontOfSize:15.0];
-        NSString *text = @"100";
-        NSString *priceText = [NSString stringWithFormat:@"总计 ￥%@",text];
-        NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithString:priceText];
-        
-        
-        [AttributedStr addAttribute:NSFontAttributeName
-         
-                              value:[UIFont systemFontOfSize:18.0]
-         
-                              range:NSMakeRange(4, text.length)];
-        
-        [AttributedStr addAttribute:NSForegroundColorAttributeName
-         
-                              value:TextColor
-         
-                              range:NSMakeRange(4, text.length)];
-        
+//        self.text = @"100";
 
-        self.allPrice.attributedText = AttributedStr;
         [self.contentView addSubview:self.allPrice];
         self.allPrice.sd_layout.rightSpaceToView(self.contentView,10).leftSpaceToView(self.contentView,100).topSpaceToView(self.contentView,10).bottomSpaceToView(self.contentView,10);
+        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         
     }
     
     return self;
+}
+
+
+- (void)setModel:(YJOrderFinshModel *)model{
+    
+    _model = model;
+   
+    
+    NSString *priceText = [NSString stringWithFormat:@"总计 ￥%@",model.totalMoney];
+    NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithString:priceText];
+    
+    
+    [AttributedStr addAttribute:NSFontAttributeName
+     
+                          value:[UIFont systemFontOfSize:18.0]
+     
+                          range:NSMakeRange(4, self.text.length)];
+    
+    [AttributedStr addAttribute:NSForegroundColorAttributeName
+     
+                          value:TextColor
+     
+                          range:NSMakeRange(4, self.text.length)];
+    
+    
+    self.allPrice.attributedText = AttributedStr;
+
+    
 }
 
 - (void)awakeFromNib {

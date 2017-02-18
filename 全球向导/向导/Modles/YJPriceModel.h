@@ -16,7 +16,7 @@
 @property (nonatomic , copy) NSString              * version;
 @property (nonatomic , copy) NSString              * statusValue;
 @property (nonatomic , copy) NSString              * type;
-@property (nonatomic , copy) NSString              * value;
+@property (nonatomic , copy) NSString              * valueId;
 @property (nonatomic , assign) NSInteger              deleteFlag;
 @property (nonatomic , assign) NSInteger              order;
 @property (nonatomic , copy) NSString              * ip;

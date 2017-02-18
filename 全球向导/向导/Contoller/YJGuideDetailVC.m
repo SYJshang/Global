@@ -15,6 +15,7 @@
 #import "YJGuideModel.h"
 #import "YJServerModel.h"
 #import "YJEvaModel.h"
+#import "YJLoginFirstController.h"
 
 
 @interface YJGuideDetailVC ()<UITableViewDelegate,UITableViewDataSource,IntroDetailDelegate>
@@ -242,17 +243,124 @@
     //收藏
     self.collectBtn = [YJDIYButton buttonWithFrame:CGRectMake(0, 0, 0, 0) title:@"收藏" imageName:@"coliectionNoraml" Block:^{
         if (self.collectBtn.selected == NO) {
-            [self.collectBtn setImage:[UIImage imageNamed:@"collect-select"] forState:UIControlStateNormal];
-            self.collectBtn.selected = YES;
+            //点击收藏
+            NSMutableDictionary *parmeter = [NSMutableDictionary dictionary];
+            [parmeter setObject:self.guideId forKey:@"guideId"];
+            XXLog(@"%@",self.guideId);
+
+            [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myColGuide/add",BaseUrl] parameters:parmeter success:^(id responseObject) {
+                
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+            XXLog(@"%@",dict[@"code"]);
+            XXLog(@"%@",dict);
+            if ([dict[@"code"] isEqualToString:@"1"]) {
+                
+                [self.collectBtn setImage:[UIImage imageNamed:@"collect-select"] forState:UIControlStateNormal];
+                [self.collectBtn setTitleColor:TextColor forState:UIControlStateNormal];
+                self.collectBtn.selected = YES;
+
+                
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                hud.mode = MBProgressHUDModeText;
+                hud.contentColor = [UIColor whiteColor];
+                hud.color = [UIColor blackColor];
+                hud.label.text = NSLocalizedString(@"收藏成功!", @"HUD message title");
+                [hud hideAnimated:YES afterDelay:2.f];
+
+                
+            }else if ([dict[@"code"] isEqualToString:@"10096"]){
+                SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"不能收藏自己！" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                    
+                }];
+                alert.sure_btnTitleColor = TextColor;
+                [alert show];
+            }else if ([dict[@"code"] isEqualToString:@"10086"]){
+                
+                SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"你已经收藏过该向导！" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                    
+                }];
+                alert.sure_btnTitleColor = TextColor;
+                [alert show];
+
+            }else{
+                SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"收藏失败！请重新登录过后重试！" alertViewBottomViewType:SGAlertViewBottomViewTypeTwo didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                    if (index == 1) {
+                        [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+                    }
+                }];
+                alert.sure_btnTitleColor = TextColor;
+                alert.sure_btnTitle = @"去登录";
+                [alert show];
+            }
+
+                
+            } failure:^(NSError *error) {
+                
+            }];
+            
 
  
         }else{
-            [self.collectBtn setImage:[UIImage imageNamed:@"coliectionNoraml"] forState:UIControlStateNormal];
-            self.collectBtn.selected = NO;
+            
+            //点击取消收藏
+            NSMutableDictionary *parmeter = [NSMutableDictionary dictionary];
+            [parmeter setObject:self.guideId forKey:@"guideId"];
+            XXLog(@"%@",self.guideId);
+            [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myColGuide/cancelByGuideId",BaseUrl] parameters:parmeter success:^(id responseObject) {
+                
+                NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+                XXLog(@"%@",dict[@"code"]);
+                XXLog(@"%@",dict);
+                if ([dict[@"code"] isEqualToString:@"1"]) {
+                    
+                    [self.collectBtn setImage:[UIImage imageNamed:@"coliectionNoraml"] forState:UIControlStateNormal];
+                    [self.collectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                    self.collectBtn.selected = NO;
+                    
+
+                    
+                    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                    hud.mode = MBProgressHUDModeText;
+                    hud.contentColor = [UIColor whiteColor];
+                    hud.color = [UIColor blackColor];
+                    hud.label.text = NSLocalizedString(@"取消收藏成功!", @"HUD message title");
+                    [hud hideAnimated:YES afterDelay:2.f];
+                    
+                    
+                }else if ([dict[@"code"] isEqualToString:@"10088"]){
+                    SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"该收藏不存在！" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                        
+                    }];
+                    alert.sure_btnTitleColor = TextColor;
+                    [alert show];
+                }else if ([dict[@"code"] isEqualToString:@"10089"]){
+                    
+                    SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"该收藏不属于你，无法取消！" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                        
+                    }];
+                    alert.sure_btnTitleColor = TextColor;
+                    [alert show];
+                    
+                }else{
+                    SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"取消收藏失败！请重新登录过后重试！" alertViewBottomViewType:SGAlertViewBottomViewTypeTwo didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                        if (index == 1) {
+                            [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+                        }
+                    }];
+                    alert.sure_btnTitleColor = TextColor;
+                    alert.sure_btnTitle = @"去登录";
+                    [alert show];
+                }
+                
+                
+            } failure:^(NSError *error) {
+                
+            }];
+
+            
 
         }
     }];
-    self.collectBtn.selected = NO;
     [self.bigImg addSubview:self.collectBtn];
     [self.collectBtn setImageEdgeInsets:UIEdgeInsetsMake(-5, 0, -5, 10)];
     [self.collectBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -10, 0, -15)];
@@ -268,7 +376,6 @@
     [WBHttpTool GET:[NSString stringWithFormat:@"%@/mainGuide/toView/%@",BaseUrl,self.guideId] parameters:nil success:^(id responseObject) {
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-        XXLog(@"%@",dict);
         if ([dict[@"code"] isEqualToString:@"1"]) {
             NSDictionary *data = dict[@"data"];
             self.guideModel = [YJGuideModel mj_objectWithKeyValues:data[@"guide"]];
@@ -278,8 +385,13 @@
             self.isCol = [iscol intValue];
             if (self.isCol == 1) {
                 self.collectBtn.selected = YES;
+                [self.collectBtn setImage:[UIImage imageNamed:@"collect-select"] forState:UIControlStateNormal];
+                [self.collectBtn setTitleColor:TextColor forState:UIControlStateNormal];
+                
             }else{
                 self.collectBtn.selected = NO;
+                [self.collectBtn setImage:[UIImage imageNamed:@"coliectionNoraml"] forState:UIControlStateNormal];
+                [self.collectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             }
             
             [self.tableView reloadData];
@@ -413,6 +525,8 @@
             btn.layer.cornerRadius = 10;
             btn.layer.borderColor = TextColor.CGColor;
             btn.layer.borderWidth = 1;
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }else{
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
@@ -431,6 +545,8 @@
             btn.layer.cornerRadius = 10;
             btn.layer.borderColor = TextColor.CGColor;
             btn.layer.borderWidth = 1;
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
 
         }

@@ -40,8 +40,6 @@
         
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-
     }
     
     return self;

@@ -7,9 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YJOrderFinshModel.h"
 
 @interface YJPriceCell : UITableViewCell
 
 @property (nonatomic, strong) UILabel *allPrice;
+
+@property (nonatomic, strong) NSString *text;
+
+@property (nonatomic, strong) YJOrderFinshModel *model;
 
 @end

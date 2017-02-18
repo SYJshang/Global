@@ -8,12 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YJPhoneNumCell : UITableViewCell
+typedef void (^textBlock)(NSString *text);//定义block
+
+
+@interface YJPhoneNumCell : UITableViewCell<UITextFieldDelegate>
+
+
 
 //
 @property (nonatomic, strong) UILabel *phoneNum;
 
 //输入电话
 @property (nonatomic, strong) UITextField *phoneTF;
+
+@property (nonatomic, copy) textBlock text;
+
 
 @end

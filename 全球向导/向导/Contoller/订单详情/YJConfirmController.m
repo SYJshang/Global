@@ -57,24 +57,59 @@
     [self.tableView registerClass:[YJPriceCell class] forCellReuseIdentifier:@"three"];
     [self.tableView registerClass:[YJConfirmCell class] forCellReuseIdentifier:@"four"];
     
-    self.titleArr = @[@"时间",@"人数",@"联系电话",@"徒步陪同",@"其他备注",@"订单编号"];
-    self.descArr = @[@"1天",@"6人",@"1234567890",@"￥100",@"无",@"ass12345678"];
+    XXLog(@"%@",self.model);
+    
+    self.titleArr = @[@"时间",@"人数",@"联系电话",@"订单编号",@"其他备注"];
+//    self.descArr = @[@"1天",@"6人",@"1234567890",@"12345",@"无",@"ass12345678"];
+    
     
     
     // Do any additional setup after loading the view.
 }
 
 
+//phone = 12345;
+//remark = 1234;
+//bigTitle = b;
+//totalMoney = 200;
+//orderNo = 0145;
+//smallTitle = 北京市导游;
+//personNumber = 3;
+//orderDetailList = (
+//                   {
+//                       number = 2;
+//                       orderId = 45;
+//                       id = 100;
+//                       productId = 4;
+//                       productName = 送机1;
+//                       productDesc = 送飞机站1;
+//                       price = 100;
+//                       version = <null>;
+//                       page = <null>;
+//                       ip = <null>;
+//                   }
+//                   ,
+//                   );
+//serviceNumber = 3;
+//showPicUrl = http://tour2.oss-cn-hangzhou.aliyuncs.com/cps/1/1478679664744571;
+//}
+
+
+
+
 #pragma mark - table view dataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     if (section == 0) {
-        return 8;
+        return 6;
+    }else if (section == 1){
+        
+        return self.model.orderDetailList.count + 1;
     }
     return 2;
 }
@@ -95,11 +130,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     
-    if (section == 0) {
-        return 0;
+    if (section == 2) {
+        return 10;
     }
     
-        return 10;
+        return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -109,29 +144,57 @@
         
         if (indexPath.row == 0) {
             YJConfirmCell *cell = [tableView dequeueReusableCellWithIdentifier:@"four"];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [cell.icon sd_setImageWithURL:[NSURL URLWithString:self.model.showPicUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+            cell.name.text = [NSString stringWithFormat:@"%@/%@",self.model.bigTitle,self.model.smallTitle];
             return cell;
         }
-        if (indexPath.row > 0 && indexPath.row < 7) {
+        if (indexPath.row > 0 && indexPath.row < 6) {
             
             YJDescOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"first"];
             cell.name.text = self.titleArr[indexPath.row - 1];
-            cell.desc.text = self.descArr[indexPath.row - 1];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+//            @[@"时间",@"人数",@"联系电话",@"订单编号",@"其他备注"]
+            switch (indexPath.row) {
+                case 1:
+                    cell.desc.text = self.model.serviceNumber;
+                    break;
+                case 2:
+                    cell.desc.text = self.model.personNumber;
+                    break;
+                case 3:
+                    cell.desc.text = self.model.phone;
+                    break;
+                case 4:
+                    cell.desc.text = self.model.orderNo;
+
+                    break;
+                case 5:
+                    cell.desc.text = self.model.remark;
+                    break;
+                default:
+                    break;
+            }
+            
+//            cell.desc.text = self.descArr[indexPath.row - 1];
             return cell;
         }
-    
-        if (indexPath.row == 7) {
+    }else if (indexPath.section == 1){
+        
+        if (indexPath.row < self.model.orderDetailList.count) {
+             YJDescOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"first"];
+            self.serModel = self.model.orderDetailList[indexPath.row];
+            cell.name.text = self.serModel.productName;
+            cell.desc.text = [NSString stringWithFormat:@"%@ %@ * %@",self.serModel.productDesc,self.serModel.price,self.serModel.number];
+            return cell;
+        }else{
+            
             YJPriceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"three"];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.text = self.model.totalMoney;
             return cell;
         }
         
+    }else if (indexPath.section == 2) {
         
-        
- }
-    
-    if (indexPath.section == 1) {
         YJPayFormCell *cell = [tableView dequeueReusableCellWithIdentifier:@"second"];
         if (indexPath.row == 0) {
             cell.icon.image = [UIImage imageNamed:@"微信"];
@@ -156,7 +219,11 @@
     
     if(cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        
     }
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.textLabel.text = @"12345678";
     
     return cell;
 }

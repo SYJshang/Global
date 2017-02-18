@@ -52,10 +52,10 @@
     }
 }
 
-//-(void)returnText:(CityName)block
-//{
-//    self.returnBlocks = block;
-//}
+-(void)returnTitle:(CityName)block
+{
+    self.returnBlocks = block;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

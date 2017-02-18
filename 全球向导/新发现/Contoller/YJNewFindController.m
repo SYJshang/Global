@@ -24,11 +24,17 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
-    self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     self.automaticallyAdjustsScrollViewInsets = NO;
     //隐藏导航栏
     [self.navigationController setNavigationBarHidden:YES animated:NO];
 
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    
+    [super viewWillDisappear:animated];
+    //打开导航栏
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
 }
 
 

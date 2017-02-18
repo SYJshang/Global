@@ -15,23 +15,23 @@
  */
 @property (nonatomic , copy) NSString               * currentPage;
 
-@property (nonatomic , assign) NSInteger              prePage;
+@property (nonatomic , copy) NSString               * prePage;
 /**
  总记录数
  */
-@property (nonatomic , assign) NSInteger              nextPage;
+@property (nonatomic , copy) NSString               * nextPage;
 /**
  总记录数
  */
-@property (nonatomic , assign) NSInteger              totalCount;
+@property (nonatomic , copy) NSString               * totalCount;
 /**
  页大小
  */
-@property (nonatomic , assign) NSInteger              pageSize;
+@property (nonatomic , copy) NSString               * pageSize;
 /**
  总页数
  */
-@property (nonatomic , assign) NSInteger              totalPage;
+@property (nonatomic , copy) NSString               * totalPage;
 
 
 @end

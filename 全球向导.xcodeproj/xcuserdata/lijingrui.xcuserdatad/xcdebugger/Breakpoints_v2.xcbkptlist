@@ -23,22 +23,6 @@
             timestampString = "505638814.97538"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "344"
-            endingLineNumber = "344"
-            landmarkName = "-tableView:didSelectRowAtIndexPath:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/&#x5730;&#x533a;&#x9009;&#x62e9;/&#x57ce;&#x5e02;&#x5217;&#x8868;/YJLocaController.m"
-            timestampString = "505638814.97538"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
             startingLineNumber = "388"
             endingLineNumber = "388"
             landmarkName = "-updateSearchResultsForSearchController:"
@@ -67,22 +51,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/&#x9996;&#x9875;/Contoller/YJAreaMianVC.m"
-            timestampString = "505638563.264911"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
-            landmarkName = "-viewWillDisappear:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/Venders/Source/BlankPageView.m"
             timestampString = "505730681.800893"
             startingColumnNumber = "9223372036854775807"
@@ -99,13 +67,45 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/&#x9996;&#x9875;/Contoller/YJLunboWebVC.m"
-            timestampString = "505796252.117436"
+            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/&#x5411;&#x5bfc;/Contoller/&#x8ba2;&#x5355;&#x8be6;&#x60c5;/YJOrderFormController.m"
+            timestampString = "509102398.336854"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
-            landmarkName = "-webView:didFailLoadWithError:"
+            startingLineNumber = "547"
+            endingLineNumber = "547"
+            landmarkName = "-postData"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/&#x5411;&#x5bfc;/Contoller/&#x8ba2;&#x5355;&#x8be6;&#x60c5;/YJConfirmController.m"
+            timestampString = "509102690.233738"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/&#x5411;&#x5bfc;/Contoller/&#x8ba2;&#x5355;&#x8be6;&#x60c5;/YJConfirmController.m"
+            timestampString = "509102690.233738"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "191"
+            endingLineNumber = "191"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -24,6 +24,7 @@
 @property (nonatomic , copy) NSString              * cpPicId;
 @property (nonatomic , assign) NSInteger              npStatus;
 @property (nonatomic , assign) NSInteger              cityId;
-@property (nonatomic , assign) NSInteger              status;
+@property (nonatomic , copy) NSString            *  status;
+
 
 @end

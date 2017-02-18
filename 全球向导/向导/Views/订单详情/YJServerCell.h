@@ -8,15 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+
+typedef void (^buttonBlock)();//定义block
+
 @interface YJServerCell : UITableViewCell
 
 //名称
 @property (nonatomic, strong) UILabel *serverName;
 //描述
-@property (nonatomic, strong) UILabel *descLab;
+//@property (nonatomic, strong) UILabel *descLab;
 //选择按钮
 @property (nonatomic, strong) UIButton *serverBtn;
 //价格
 @property (nonatomic, strong) UILabel *price;
+
+@property (nonatomic, copy) buttonBlock btnBlock;
+
 
 @end

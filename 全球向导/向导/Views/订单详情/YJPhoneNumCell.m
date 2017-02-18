@@ -25,6 +25,7 @@
         self.phoneTF = [[UITextField alloc]init];
         self.phoneTF.placeholder = @"输入电话（必填）";
         [self.contentView addSubview:self.phoneTF];
+        self.phoneTF.delegate = self;
         self.phoneTF.font = [UIFont systemFontOfSize:AdaptedWidth(14)];
         self.phoneTF.sd_layout.leftSpaceToView(self.phoneNum,5).rightSpaceToView(self.contentView,10).topSpaceToView(self.contentView,10).bottomSpaceToView(self.contentView,10);
         
@@ -38,6 +39,16 @@
     
     return self;
 }
+
+
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    
+    if (self.text) {
+        self.text(textField.text);
+    }
+    
+}
+
 
 - (void)awakeFromNib {
     [super awakeFromNib];

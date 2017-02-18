@@ -11,6 +11,6 @@
 @interface YJSexModel : NSObject
 
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *ID;
+@property (nonatomic, strong) NSString *valueId;
 
 @end

@@ -13,16 +13,28 @@
 #import "YJServerCell.h"
 #import "YJPhoneNumCell.h"
 #import "YJSubmitCell.h"
-#import "SDAutoLayout.h"
 #import "YJConfirmController.h"
 #import "YJDataController.h"
 #import "YJLoginFirstController.h"
 #import "YJGuideModel.h"
 #import "YJProductModel.h"
-//#import "YJSelsectArr.h"
+#import "YJRelateDayCell.h"
+#import "YJOrderFinshModel.h"
 
 
-@interface YJOrderFormController ()<UITableViewDelegate,UITableViewDataSource>
+@interface YJOrderFormController ()<UITableViewDelegate,UITableViewDataSource>{
+    
+    NSInteger _allPrice;//总价
+    NSString *productIds;//服务id
+    NSString *numbers;//服务id的数量
+    NSString *phone;//手机号
+    NSString *wechat;//微信号
+    NSString *remark;//其他内容
+    NSString *serviceDates;//服务日期
+    NSString *serviceNumber;//服务天数
+    NSString *personNumber;//服务人数
+    
+}
 
 @property (nonatomic, strong) UITableView *tableView;
 //总价
@@ -63,6 +75,14 @@
     
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    
+    [super viewWillDisappear:animated];
+    //选择的天数
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults removeObjectForKey:saveSelectArr];
+//    NSMutableArray *select = [userDefaults objectForKey:saveSelectArr];
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -71,6 +91,33 @@
     self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"订单详情" font:19.0];
     UIBarButtonItem * leftItem = [UIBarButtonItem itemWithTarget:self action:@selector(back) image:@"back" highImage:@"back"];
     self.navigationItem.leftBarButtonItem = leftItem;
+    
+    [self.tableView reloadData];
+    
+    productIds = @"";//服务id
+    numbers = @"";//服务id的数量
+    phone = @"";//手机号
+    wechat = @"";//微信号
+    remark = @"";//其他内容
+    serviceDates = @"";//服务日期
+    serviceNumber = @"";//服务天数
+    personNumber = @"1";
+
+    
+}
+    
+- (void)back{
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.title = @"订单详情";
+    
+    
+    
     //加载一个布局
     [self setLayout];
     
@@ -87,20 +134,8 @@
     [self.tableView registerClass:[YJServerCell class] forCellReuseIdentifier:@"four"];
     [self.tableView registerClass:[YJPhoneNumCell class] forCellReuseIdentifier:@"five"];
     [self.tableView registerClass:[YJSubmitCell class] forCellReuseIdentifier:@"six"];
-    
-    
+    [self.tableView registerClass:[YJRelateDayCell class] forCellReuseIdentifier:@"seven"];
 
-}
-    
-- (void)back{
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    self.title = @"订单详情";
     
     [self getNetWork];
     
@@ -118,11 +153,11 @@
             
             NSDictionary *data = dict[@"data"];
             
-            self.guideModel = [YJGuideModel mj_objectWithKeyValues:data[@"guide"]];
-            self.productArr = [YJProductModel mj_objectArrayWithKeyValuesArray:data[@"productList"]];
-            self.DateArr = data[@"disableDateList"];
-            
-            [self.tableView reloadData];
+        self.guideModel = [YJGuideModel mj_objectWithKeyValues:data[@"guide"]];
+        self.productArr = [YJProductModel mj_objectArrayWithKeyValuesArray:data[@"productList"]];
+        self.DateArr = data[@"disableDateList"];
+        
+        [self.tableView reloadData];
             
         }else if ([dict[@"code"] isEqualToString:@"2"]){
             
@@ -137,10 +172,7 @@
             alert.sure_btnTitleColor = TextColor;
             [alert show];
 
-            
         }
-        
-        
         
     } failure:^(NSError *error) {
         
@@ -182,11 +214,16 @@
 }
 
 
+//- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+//    [super touchesBegan:touches withEvent:event];
+//    [self.view endEditing:YES];
+//}
 
 - (void)click:(UIButton *)sender{
     
-    YJConfirmController *vc = [[YJConfirmController alloc]init];
-    [self.navigationController pushViewController:vc animated:YES];
+    [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder)to:nil from:nil forEvent:nil];
+//    [self.tableView reloadData];
+    [self postData];
     
     NSLog(@"提交订单");
 }
@@ -224,11 +261,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     
-    if (section == 0 ) {
+    if (section < 2 ) {
         return 0;
     }
 
-        return 20;
+        return 40;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -242,6 +279,39 @@
     return 40;
 }
 
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    
+        UIView *view = [[UIView alloc]init];
+        view.backgroundColor = [UIColor whiteColor];
+        UIView *line = [[UIView alloc]init];
+        line.backgroundColor = TextColor;
+        [view addSubview:line];
+        line.sd_layout.leftSpaceToView(view,5).centerYEqualToView(view).heightIs(15).widthIs(2);
+        
+        UILabel *lab = [[UILabel alloc]init];
+        lab.textColor = [UIColor blackColor];
+        lab.font = [UIFont boldSystemFontOfSize:AdaptedWidth(14)];
+        [view addSubview:lab];
+        lab.sd_layout.leftSpaceToView(line,5).centerYEqualToView(view).heightIs(15).rightSpaceToView(view,10);
+    switch (section) {
+        case 2:
+            lab.text = @"选择服务类型";
+            break;
+        case 3:
+            lab.text = @"联系方式";
+            break;
+        case 4:
+            lab.text = @"其他备注";
+            break;
+            
+        default:
+            break;
+    }
+    
+        
+    return view;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -258,8 +328,35 @@
         if (indexPath.row == 0) {
             
             YJAddNumCell *cell = [tableView dequeueReusableCellWithIdentifier:@"second"];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            __weak typeof(cell) Scell = cell;
+            
+//            Scell.peoBlock = ^{
+//                Scell.people ++;
+//                Scell.numLab.text =  [NSString stringWithFormat:@"%d",self.people];
+//                return cell;
+//            };
+            Scell.peoBlock = ^{
+                Scell.people ++;
+                Scell.numLab.text = [NSString stringWithFormat:@"%d",Scell.people];
+                personNumber = [NSString stringWithFormat:@"%d",Scell.people];
+
+            };
+            
+            Scell.peoReduBlock = ^{
+            if (Scell.people > 1) {
+                Scell.people --;
+            }
+
+            NSString *peo = [NSString stringWithFormat:@"%d",Scell.people];
+            Scell.numLab.text = peo;
+            personNumber = [NSString stringWithFormat:@"%d",Scell.people];
+
+            };
+            
+            
+
             return cell;
+           
         }
         
         if (indexPath.row == 1) {
@@ -268,13 +365,9 @@
             NSMutableArray *select = [userDefaults objectForKey:saveSelectArr];
             
             if (select.count > 0) {
-                cell.time.text = [NSString stringWithFormat:@"%@开始",select.firstObject];
-//                cell.time.textAlignment = NSTextAlignmentCenter;
-
-                        
+                
+                cell.time.text = [NSString stringWithFormat:@"%lu天",(unsigned long)select.count];
             }
-            
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
     }
         
@@ -282,29 +375,102 @@
     
     if (indexPath.section == 2) {
         
-        YJServerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"four"];
         YJProductModel *moddel = self.productArr[indexPath.row];
-        cell.serverName.text = moddel.name;
-        cell.descLab.text = moddel.desc;
-        cell.price.text = [NSString stringWithFormat:@"￥%@",moddel.price];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
-        
+        productIds = [NSString stringWithFormat:@"%@%@,",productIds,moddel.ID];
+
+        if (moddel.relateDayNumber == 1) {
+            
+            //选择的天数
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            NSMutableArray *select = [userDefaults objectForKey:saveSelectArr];
+            
+            numbers = [NSString stringWithFormat:@"%@%ld,",numbers,select.count];
+            
+            YJServerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"four"];
+            cell.serverName.text = moddel.name;
+           
+            cell.price.text = [NSString stringWithFormat:@"￥%@ *%lu",moddel.price,select.count];
+            __weak typeof(cell) Scell = cell;
+            Scell.serverBtn.userInteractionEnabled = NO;
+//            cell.btnBlock = ^{
+//                if (cell.serverBtn.selected == NO) {
+                    _allPrice += [moddel.price integerValue] * select.count;
+                    
+                    self.priceAll.text = [NSString stringWithFormat:@"合计 ￥%ld",_allPrice];
+//                    Scell.serverBtn.selected = YES;
+            
+//                }else if (cell.serverBtn.selected == YES){
+//                    _allPrice -= [moddel.price integerValue] * select.count;
+//
+//                    self.priceAll.text = [NSString stringWithFormat:@"合计 ￥%ld",_allPrice];
+//                    Scell.serverBtn.selected = NO;
+//
+//                }
+//            };
+            return cell;
+        }else{
+            
+            YJRelateDayCell *cell = [tableView dequeueReusableCellWithIdentifier:@"seven"];
+            cell.num.text = moddel.name;
+            cell.descLab.text = [NSString stringWithFormat:@"%@ *%d",moddel.price,cell.people];
+
+            __weak typeof(cell) Scell = cell;
+            Scell.btnBlock = ^(UIButton *sender){
+                if (sender.tag == 100) {
+                Scell.people ++;
+                NSString *peo = [NSString stringWithFormat:@"%d",Scell.people];
+                Scell.numLab.text = peo;
+                    
+                }else if (sender.tag == 101){
+                    if (Scell.people > 0) {
+                        Scell.people --;
+                    }
+                Scell.descLab.text = [NSString stringWithFormat:@"%@ *%d",moddel.price,Scell.people];
+                NSString *peo = [NSString stringWithFormat:@"%d",Scell.people];
+                Scell.numLab.text = peo;
+            }
+                Scell.descLab.text = [NSString stringWithFormat:@"%@ *%d",moddel.price,Scell.people];
+                _allPrice =+ [moddel.price integerValue] * Scell.people;
+                self.priceAll.text = [NSString stringWithFormat:@"合计 ￥%ld",_allPrice];
+            };
+            
+            numbers = [NSString stringWithFormat:@"%@%d",numbers,Scell.people];
+
+           
+            return cell;
+        }
     }
     
     if (indexPath.section == 3) {
         YJPhoneNumCell *cell = [tableView dequeueReusableCellWithIdentifier:@"five"];
+        __weak typeof(cell) Scell = cell;
+
+        
         switch (indexPath.row) {
-            case 0:
+            case 0:{
                 cell.phoneNum.text = @"联系电话";
                 cell.phoneTF.placeholder = @"请输入手机号（必填）";
-                break;
                 
-            case 1:
+                Scell.text = ^(NSString *sender){
+                    
+                    phone = sender;
+                    XXLog(@"%@",phone);
+                    
+                };
+//                phone = cell.phoneTF.text;
+                break;
+            }
+            case 1:{
                 cell.phoneNum.text = @"微信号";
                 cell.phoneTF.placeholder = @"请输入微信号（选填）";
+                Scell.text = ^(NSString *sender){
+                    
+                    wechat = sender;
+                    XXLog(@"%@",wechat);
+                    
+                };
                 break;
-                
+            }
             default:
                 break;
         }
@@ -317,39 +483,21 @@
     if (indexPath.section == 4) {
         if (indexPath.row == 0) {
             YJPhoneNumCell *cell = [tableView dequeueReusableCellWithIdentifier:@"five"];
+            __weak typeof(cell) Scell = cell;
             cell.phoneNum.text = @"其他备注";
             cell.phoneTF.placeholder = @"(选填)";
+            Scell.text = ^(NSString *sender){
+                
+                remark = sender;
+                XXLog(@"%@",remark);
+                
+            };
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }
-        
-//        if (indexPath.row == 1) {
-//            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-//            if(cell == nil) {
-//            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-//        }
-//            
-//        cell.textLabel.text = @"保险信息";
-//        cell.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"我的_进入箭头"]];
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        return cell;
-//    }
 }
     
-//    if (indexPath.section == 5) {
-//        YJSubmitCell *cell = [tableView dequeueReusableCellWithIdentifier:@"six"];
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        return cell;
-//    }
-    
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    
-//    if(cell == nil) {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-//    }
-    
-//    cell.textLabel.text = [NSString stringWithFormat:@"Cell %ld", (long)indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -367,10 +515,65 @@
 
         }
     }
-    
-//    kTipAlert(@"<%ld> selected...", indexPath.row);
 }
 
+
+- (void)postData{
+    
+    
+    NSMutableDictionary *parmter = [NSMutableDictionary dictionary];
+    [parmter setObject:self.guideID forKey:@"guideId"];
+    [parmter setObject:productIds forKey:@"productIds"];
+    [parmter setObject:numbers forKey:@"numbers"];
+    [parmter setObject:phone forKey:@"phone"];
+    [parmter setObject:wechat forKey:@"wechat"];
+    [parmter setObject:remark forKey:@"remark"];
+    
+    //选择的天数
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *select = [userDefaults objectForKey:saveSelectArr];
+
+    if (select.count > 0) {
+        for (NSString *str in select) {
+            serviceDates = [NSString stringWithFormat:@"%@%@,",serviceDates,str];
+        }
+        serviceNumber = [NSString stringWithFormat:@"%ld",select.count];
+    }
+    [parmter setObject:serviceDates forKey:@"serviceDates"];
+    [parmter setObject:serviceNumber forKey:@"serviceNumber"];
+    [parmter setObject:personNumber forKey:@"personNumber"];
+   
+    
+    XXLog(@"%@",parmter);
+
+
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myOrder/orderGuide",BaseUrl] parameters:parmter success:^(id responseObject) {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        XXLog(@"%@",dict);
+        
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            YJConfirmController *vc = [[YJConfirmController alloc]init];
+            
+            YJOrderFinshModel *model = [YJOrderFinshModel mj_objectWithKeyValues:dict[@"data"]];
+//            NSString *orderNo = dict[@"data"][@"orderNo"];
+            vc.model = model;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else{
+            
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+        XXLog(@"%@",error);
+        
+    }];
+    
+}
 
 
 - (void)didReceiveMemoryWarning {

@@ -19,6 +19,7 @@
 @interface YJSelectLab : UILabel
 
 @property (nonatomic,assign) BOOL isCLick;
+@property (nonatomic, strong) NSString *ID;
 
 @property (nonatomic,assign) id<SeleLableDele> clinicDele;
 

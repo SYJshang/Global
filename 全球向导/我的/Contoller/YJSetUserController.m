@@ -15,7 +15,7 @@
 #import "UIImageView+WebCache.h"
 #import "MBProgressHUD.h"
 
-@interface YJSetUserController ()<UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface YJSetUserController ()<UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,UIImagePickerControllerDelegate,SGActionSheetDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -50,7 +50,7 @@
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     // Set the label text.
     hud.label.text = NSLocalizedString(@"提交信息...", @"HUD loading title");
-    hud.backgroundView.color = [UIColor blackColor];
+//    hud.backgroundView.color = [UIColor blackColor];
 
     if (self.imgId) {
         
@@ -293,36 +293,61 @@
     
 }
 
-
-//选择照片
-- (void)setup
-{
-    UIAlertController *aler=[UIAlertController alertControllerWithTitle:@"更换头像" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    //从相机选取
-    UIAlertAction *album = [UIAlertAction actionWithTitle:@"从相册选取" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+- (void)SGActionSheet:(SGActionSheet *)actionSheet didSelectRowAtIndexPath:(NSInteger)indexPath{
+    
+    if (indexPath == 0) {
         UIImagePickerController *picker=[[UIImagePickerController alloc]init];
         picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         picker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:picker.sourceType];
         picker.allowsEditing = YES;
         picker.delegate = self;
         [self presentViewController:picker animated:YES completion:nil];
-    }];
-    //从相机选取
-    UIAlertAction *camera=[UIAlertAction actionWithTitle:@"相机拍摄" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+    }else if ( indexPath == 1 ){
+        
         UIImagePickerController *picker=[[UIImagePickerController alloc]init];
         picker.sourceType=UIImagePickerControllerSourceTypeCamera;
         picker.mediaTypes=[UIImagePickerController availableMediaTypesForSourceType:picker.sourceType];
         picker.allowsEditing = YES;
         picker.delegate = self;
         [self presentViewController:picker animated:YES completion:nil];
-        
-    }];
+    }
     
-    UIAlertAction *cancl=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-    [aler addAction:cancl];
-    [aler addAction:album];
-    [aler addAction:camera];
-    [self presentViewController:aler animated:YES completion:nil];
+}
+
+//选择照片
+- (void)setup
+{
+    
+    SGActionSheet *sheet = [[SGActionSheet alloc]initWithTitle:@"更换头像" delegate:self cancelButtonTitle:@"取消" otherButtonTitleArray:@[@"相册",@"相机"]];
+    sheet.messageTextColor = TextColor;
+    [sheet show];
+    
+//    UIAlertController *aler=[UIAlertController alertControllerWithTitle:@"更换头像" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+//    //从相机选取
+//    UIAlertAction *album = [UIAlertAction actionWithTitle:@"从相册选取" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+//        UIImagePickerController *picker=[[UIImagePickerController alloc]init];
+//        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+//        picker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:picker.sourceType];
+//        picker.allowsEditing = YES;
+//        picker.delegate = self;
+//        [self presentViewController:picker animated:YES completion:nil];
+//    }];
+//    //从相机选取
+//    UIAlertAction *camera=[UIAlertAction actionWithTitle:@"相机拍摄" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+//        UIImagePickerController *picker=[[UIImagePickerController alloc]init];
+//        picker.sourceType=UIImagePickerControllerSourceTypeCamera;
+//        picker.mediaTypes=[UIImagePickerController availableMediaTypesForSourceType:picker.sourceType];
+//        picker.allowsEditing = YES;
+//        picker.delegate = self;
+//        [self presentViewController:picker animated:YES completion:nil];
+//        
+//    }];
+//    
+//    UIAlertAction *cancl = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+//    [aler addAction:cancl];
+//    [aler addAction:album];
+//    [aler addAction:camera];
+//    [self presentViewController:aler animated:YES completion:nil];
 }
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {

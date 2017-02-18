@@ -12,6 +12,7 @@
 #import "YJPageModel.h"
 #import "NoNetwork.h"
 #import "MJRefresh.h"
+#import "YJShareDetailVC.h"
 
 @interface YJVisitorRCController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -40,7 +41,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = BackGray;
+//    self.view.backgroundColor = BackGray;
     [self setTableView];
     
     NSString *str = [YJBNetWorkNotifionTool stringFormStutas];
@@ -225,7 +226,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    //    kTipAlert(@"<%ld> selected...", indexPath.row);
+    YJNearbyModel *model = self.shareListArr[indexPath.row];
+    YJShareDetailVC *vc = [[YJShareDetailVC alloc]init];
+    vc.ID = model.ID;
+    [self.navigationController pushViewController:vc animated:YES];
+
 }
 
 

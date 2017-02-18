@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^peopleBlock)();//定义block
+
 @interface YJAddNumCell : UITableViewCell
 
 //人数
@@ -20,5 +22,11 @@
 @property (nonatomic, strong) UIButton *addBtn;
 
 @property (nonatomic, assign) int people;
+
+@property (nonatomic, copy) peopleBlock peoBlock;
+
+@property (nonatomic, copy) peopleBlock peoReduBlock;
+
+
 
 @end

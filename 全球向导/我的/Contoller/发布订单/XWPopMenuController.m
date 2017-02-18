@@ -304,7 +304,7 @@
 //                _closeImgView.transform = CGAffineTransformRotate(_closeImgView.transform, -M_PI_2*1.5);
 //        }];
         
-        YJEvaluationController *publishVC = [[YJEvaluationController alloc]init];
+        YJTravelController *publishVC = [[YJTravelController alloc]init];
         [self.navigationController  pushViewController:publishVC animated:YES];
 
     }

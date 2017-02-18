@@ -118,11 +118,7 @@
         
         NSArray *arr = notification.object;
         XXLog(@"......%@",arr);
-        self.type = arr[1];
-        self.sex = arr[0];
-
     }
-    
 }
 
 - (void)viewDidLoad {
@@ -132,7 +128,6 @@
     
     //创建瀑布流布局
     XRWaterfallLayout *waterfall = [XRWaterfallLayout waterFallLayoutWithColumnCount:2];
-    
     //设置各属性的值
     waterfall.rowSpacing = 10;
     waterfall.columnSpacing = 10;
@@ -219,6 +214,12 @@
             self.collectionView.hidden = NO;
             
             NSDictionary *data = dict[@"data"];
+            
+            //存储字典，在下个筛选页面会用到
+            NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"userInfo.plist"];
+            [NSKeyedArchiver archiveRootObject:data toFile:path];
+
+            
             self.pageModel = [YJPageModel mj_objectWithKeyValues:data[@"queryGuide"][@"page"]];
             self.guideList = [YJGuideModel mj_objectArrayWithKeyValuesArray:data[@"guideList"]];
             self.cityModel = [YJCityModel mj_objectWithKeyValues:data[@"city"]];
@@ -319,7 +320,7 @@
 
 
 
-- (void)styleOne:(CLSeachBar*)search
+- (void)styleOne:(CLSeachBar *)search
 {
     search.placeholder = @"搜索向导/推荐";
     
@@ -431,6 +432,14 @@
     return CGSizeMake(screen_width, 150);
     
 }
+
+
+- (void)dealloc{
+    
+    self.collectionView = nil;
+    self.noNetWork = nil;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

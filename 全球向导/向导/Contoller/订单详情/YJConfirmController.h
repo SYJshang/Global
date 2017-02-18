@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YJOrderFinshModel.h"
+#import "YJSerModel.h"
 
 @interface YJConfirmController : UIViewController
+
+@property (nonatomic, strong) YJOrderFinshModel *model;
+@property (nonatomic, strong) YJSerModel *serModel;
+
+//@property (nonatomic, strong) NSString *orderNo; //订单编号
 
 @end

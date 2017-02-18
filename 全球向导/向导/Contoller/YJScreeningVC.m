@@ -66,19 +66,19 @@
         
         YJSexModel *model1 = [[YJSexModel alloc]init];
         model1.name = @"默认";
-        model1.ID = nil;
+        model1.valueId = @"2";
         
         YJSexModel *model2 = [[YJSexModel alloc]init];
         model2.name = @"男";
-        model2.ID = @"0";
+        model2.valueId = @"0";
         
         YJSexModel *model3 = [[YJSexModel alloc]init];
         model3.name = @"女";
-        model3.ID = @"1";
+        model3.valueId = @"1";
 
     _sexTypeArr = [NSMutableArray arrayWithObjects:model1,model2,model3, nil];
-    }
     
+    }
     return _sexTypeArr;
     
 }
@@ -103,8 +103,8 @@
     if(self.basicBlock){
         self.basicBlock();
     }
-    [self.navigationController popViewControllerAnimated:YES];
     
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)setCancleBarItemHandle:(BasicBlock)basicBlock{
@@ -137,36 +137,34 @@
 
 - (void)getnetWork{
     
-    [WBHttpTool GET:[NSString stringWithFormat:@"%@/mainGuide/listInit",BaseUrl] parameters:nil success:^(id responseObject) {
-        
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-        XXLog(@"%@",dict);
-        
-        if ([dict[@"code"] isEqualToString:@"1"]) {
-            
-            NSDictionary *data = dict[@"data"];
-            self.guideTypeArr = [YJGuideTypeModel mj_objectArrayWithKeyValuesArray:data[@"guideTypeList"]];
-            self.priceTypeArr = [YJPriceModel mj_objectArrayWithKeyValuesArray:data[@"priceRangeList"]];
-            
-            YJGuideTypeModel *guideModel = [[YJGuideTypeModel alloc]init];
-            guideModel.name = @"默认";
-            [self.guideTypeArr insertObject:guideModel atIndex:0];
-            
-            YJPriceModel *priceModel = [[YJPriceModel alloc]init];
-            priceModel.name = @"默认";
-            [self.priceTypeArr insertObject:priceModel atIndex:0];
-            
-            [self.tableView reloadData];
-            [self buildData];
-
-
-        }
-        
-    } failure:^(NSError *error) {
-        
-    }];
-
+//    [WBHttpTool GET:[NSString stringWithFormat:@"%@/mainGuide/listInit",BaseUrl] parameters:nil success:^(id responseObject) {
+//        
+//        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+//        XXLog(@"%@",dict);
+//        
+//        if ([dict[@"code"] isEqualToString:@"1"]) {
+//            
+//            NSDictionary *data = dict[@"data"];
     
+            //类型
+        NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"userInfo.plist"];
+        NSDictionary *data = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    
+        self.guideTypeArr = [YJGuideTypeModel mj_objectArrayWithKeyValuesArray:data[@"guideTypeList"]];
+        //价格
+        self.priceTypeArr = [YJPriceModel mj_objectArrayWithKeyValuesArray:data[@"priceRangeList"]];
+        
+        YJGuideTypeModel *guideModel = [[YJGuideTypeModel alloc]init];
+        guideModel.name = @"默认";
+        [self.guideTypeArr insertObject:guideModel atIndex:0];
+        
+        YJPriceModel *priceModel = [[YJPriceModel alloc]init];
+        priceModel.name = @"默认";
+        [self.priceTypeArr insertObject:priceModel atIndex:0];
+        
+        [self.tableView reloadData];
+        [self buildData];
+
 }
 
 - (void)buildData{
@@ -340,9 +338,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
-    if (indexPath.section == 0) {
-        [self.navigationController pushViewController:[YJDataController new] animated:YES];
-    }
 }
 
 

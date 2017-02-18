@@ -20,7 +20,7 @@
 @implementation MCELLSelect
 - (instancetype)init{
     
-    self  = [super init ];
+    self  = [super init];
     if (self) {
         
         self.selectArr = [NSMutableArray array];
@@ -72,9 +72,14 @@
             
             YJSelectLab *lable = [[YJSelectLab alloc]init];
             lable.text = [self.data.arrLabel[i] name];
+            lable.ID = [self.data.arrLabel[i] valueId];
             lable.textAlignment = NSTextAlignmentCenter;
             lable.textColor = [UIColor blackColor];
             lable.tag = 10000 + i;
+            if (lable.tag == 10000) {
+                lable.isCLick = YES;
+            }
+            
             lable.clinicDele = self;
             [self addSubview:lable];
             [self.arr addObject:lable];
@@ -115,7 +120,7 @@
         
         YJSelectLab *lable = [self viewWithTag:(i + 10000)];
         
-        if ([self.titleArray containsObject:[[self.data.arrLabel objectAtIndex:i]name]]) {
+        if ([self.titleArray containsObject:[[self.data.arrLabel objectAtIndex:i]valueId]]) {
             
             lable.isCLick = YES;
             
@@ -147,6 +152,8 @@
     
     
     [self.titleArray addObject:titleName];
+    XXLog(@"%@",self.titleArray);
+
 }
 
 
@@ -162,7 +169,6 @@
         BOOL isValue = [self.titleArray containsObject:titleName];
         
         if (isValue) {
-            
             return;
         }
         
@@ -186,8 +192,9 @@
     r.size.width = 150;
     r.size.height = 30;
     self.titleLabel.frame = r;
+   
     CGRect r0;
-    r0.size.width = (375 * KWidth_Scale - 50) / 4;
+    r0.size.width = (screen_width - 50) / 4;
     r0.size.height = 30;
     int a = 0;
     
@@ -200,7 +207,7 @@
             UILabel *la =  (UILabel *)self.arr[i];
             
             CGRect r = la.frame;
-            if ( CGRectGetMaxX(r0) + 10 + r0.size.width > 375 * KWidth_Scale) {
+            if ( CGRectGetMaxX(r0) + 10 + r0.size.width > screen_width) {
                 r.origin.y = CGRectGetMaxY(r0) + 5;
                 r.origin.x = 10;
                 a++;

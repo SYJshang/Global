@@ -13,6 +13,7 @@
 
 
 #import "SDAutoLayout.h"
+#import "MBProgressHUD.h"
 #import "UIImage+XW.h"
 #import "UINavigationItem+XRZItemTitle.h"
 #import "UIBarButtonItem+Extension.h"

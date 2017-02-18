@@ -39,9 +39,8 @@ static CGFloat navH = 64;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view, typically from a nib.
-    
-    
     
     self.tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.delegate = self;
@@ -53,7 +52,8 @@ static CGFloat navH = 64;
     [self.tableView registerClass:[YJIssueTitleCell class] forCellReuseIdentifier:@"title"];
     
     self.headerView = [[UIImageView alloc]init];
-    self.headerView.frame = CGRectMake(0, -imageH, screen_width, imageH);
+    self.headerView.frame = CGRectMake(0, - imageH, screen_width, imageH);
+    
 //    self.headerView.image = [UIImage imageNamed:@"bg2"];
     [self.headerView setImageToBlur:[UIImage imageNamed:@"bg2"]
                         blurRadius:5
@@ -65,13 +65,10 @@ static CGFloat navH = 64;
     self.headerView.userInteractionEnabled = YES;
     
     YJDIYButton *btn = [YJDIYButton buttonWithtitle:@"更换封面" Block:^{
-        
         XXLog(@"更换封面");
-        
         SGActionSheet *sheet = [[SGActionSheet alloc]initWithTitle:@"更换封面" delegate:self cancelButtonTitle:@"取消" otherButtonTitleArray:@[@"相册",@"相机"]];
         sheet.messageTextColor = TextColor;
         [sheet show];
-        
         
     }];
     [self.headerView addSubview:btn];
@@ -100,13 +97,15 @@ static CGFloat navH = 64;
 {
     [super viewWillAppear:animated];
     
+    self.automaticallyAdjustsScrollViewInsets = NO;
+//    self.navigationController.navigationBar.translucent = NO;
+//    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+
+    
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem itemWithTarget:self action:@selector(back) image:@"back" highImage:nil];
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem itemWithTarget:self action:@selector(finsh) title:@"发布" titleColor:TextColor font:AdaptedWidth(16)];
     self.navigationItem.titleView = [UILabel titleWithColor:[UIColor whiteColor] title:@"发布行程" font:19.0];
-
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-
     
     self.shadowImage = self.navigationController.navigationBar.shadowImage;
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
@@ -121,6 +120,9 @@ static CGFloat navH = 64;
     
     [self.navigationController.navigationBar lt_reset];
     self.navigationController.navigationBar.shadowImage = self.shadowImage;
+//    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+//    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -217,7 +219,7 @@ static CGFloat navH = 64;
     if (indexPath == 0) {
         XXLog(@"打开相册");
         if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
-            UIImagePickerController * imagePicker = [[UIImagePickerController alloc]init];
+            UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
             imagePicker.delegate = self;
             imagePicker.allowsEditing = YES;
             imagePicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
@@ -240,7 +242,7 @@ static CGFloat navH = 64;
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
     UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
-    NSData *imgData = UIImageJPEGRepresentation(image, 1);
+    NSData  *imgData = UIImageJPEGRepresentation(image, 1);
     [self.headerView setImageToBlur:image
                          blurRadius:5
                     completionBlock:^(){
@@ -251,7 +253,7 @@ static CGFloat navH = 64;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (UIImage*)blur:(UIImage*)theImage
+- (UIImage *)blur:(UIImage *)theImage
 {
     CIContext *context = [CIContext contextWithOptions:nil];
     CIImage *inputImage = [CIImage imageWithCGImage:theImage.CGImage];
