@@ -8,6 +8,9 @@
 
 #import "YJSetUserInfoVC.h"
 
+
+#define MAX_STARWORDS_LENGTH 20
+
 @interface YJSetUserInfoVC ()
 
 @property (nonatomic, strong) UITextField *userNickTf;
@@ -32,23 +35,23 @@
 - (void)finsh{
     
     XXLog(@"%@",self.userNickTf.text);
-    if (self.nickName && self.userNickTf.text.length < 20) {
+    if (self.nickName && ![self.userNickTf.text isEqual: @""]) {
         self.nickName(self.userNickTf.text);
         [self.navigationController popViewControllerAnimated:YES];
-
-    }else{
-        
-        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"用户长度不能超过20" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-        }];
-        UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-        }];
-        [alertVC addAction:action1];
-        [alertVC addAction:action2];
-        [self presentViewController:alertVC animated:YES completion:nil];
     }
+//    }else{
+//        
+//        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"用户长度不能超过20" preferredStyle:UIAlertControllerStyleAlert];
+//        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//            
+//        }];
+//        UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//            
+//        }];
+//        [alertVC addAction:action1];
+//        [alertVC addAction:action2];
+//        [self presentViewController:alertVC animated:YES completion:nil];
+//    }
     
 }
 
@@ -72,7 +75,55 @@
     self.userNickTf.layer.borderWidth = 1.0;
     self.userNickTf.placeholder = @"输入昵称";
     
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textFieldEditChanged:) name:@"UITextFieldTextDidChangeNotification" object:self.userNickTf];
+    
+    
     // Do any additional setup after loading the view.
+}
+
+#pragma mark - Notification Method
+-(void)textFieldEditChanged:(NSNotification *)obj
+{
+    UITextField *textField = (UITextField *)obj.object;
+    NSString *toBeString = textField.text;
+    
+    //获取高亮部分
+    UITextRange *selectedRange = [textField markedTextRange];
+    UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
+    
+    // 没有高亮选择的字，则对已输入的文字进行字数统计和限制
+    if (!position)
+    {
+        if (toBeString.length > MAX_STARWORDS_LENGTH)
+        {
+            UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"用户长度不能超过20" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            [alertVC addAction:action1];
+            [alertVC addAction:action2];
+            [self presentViewController:alertVC animated:YES completion:nil];
+            
+            NSRange rangeIndex = [toBeString rangeOfComposedCharacterSequenceAtIndex:MAX_STARWORDS_LENGTH];
+            if (rangeIndex.length == 1)
+            {
+                textField.text = [toBeString substringToIndex:MAX_STARWORDS_LENGTH];
+                XXLog(@"%@",textField.text);
+            }
+            else
+            {
+                NSRange rangeRange = [toBeString rangeOfComposedCharacterSequencesForRange:NSMakeRange(0, MAX_STARWORDS_LENGTH)];
+                textField.text = [toBeString substringWithRange:rangeRange];
+                XXLog(@"%@",textField.text);
+
+            }
+        }
+    }
+
 }
 
 - (void)didReceiveMemoryWarning {

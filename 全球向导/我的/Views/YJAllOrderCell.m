@@ -28,17 +28,17 @@
         self.stateLab.textColor=[UIColor blackColor];
         self.stateLab.textAlignment = NSTextAlignmentRight;
         [self.contentView addSubview:self.stateLab];
-        if (self.orderState == 1) {
-            self.stateLab.text = @"待评价";
-        }else if (self.orderState == 2){
-            self.stateLab.text = @"交易成功";
-        }else if (self.orderState == 3){
-            self.stateLab.text = @"已完成";
-        }else if (self.orderState == 4){
-            self.stateLab.text = @"退款中";
-        }else{
-            self.stateLab.text = @"待购买";
-        }
+//        if (self.orderState == 1) {
+//            self.stateLab.text = @"待评价";
+//        }else if (self.orderState == 2){
+//            self.stateLab.text = @"交易成功";
+//        }else if (self.orderState == 3){
+//            self.stateLab.text = @"已完成";
+//        }else if (self.orderState == 4){
+//            self.stateLab.text = @"退款中";
+//        }else{
+//            self.stateLab.text = @"待购买";
+//        }
         self.stateLab.sd_layout.rightSpaceToView(self.contentView,10).topEqualToView(self.orderLab).widthIs(100.0).bottomEqualToView(self.orderLab);
         
     //中间线
@@ -79,24 +79,7 @@
     self.priceLab.textAlignment = NSTextAlignmentRight;
     self.priceLab.font = [UIFont systemFontOfSize:AdaptedWidth(13)];
     self.priceLab.sd_layout.rightSpaceToView(self.contentView,10).centerYEqualToView(self.descLab).leftSpaceToView(self.descLab,5).heightEqualToWidth(self.descLab);
-    NSString *text = @"10800";
-    NSString *priceText = [NSString stringWithFormat:@"合计  ￥%@",text];
-    NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithString:priceText];
-    
-    [AttributedStr addAttribute:NSFontAttributeName
-     
-                          value:[UIFont systemFontOfSize:14.0]
-     
-                          range:NSMakeRange(5, text.length)];
-    
-    [AttributedStr addAttribute:NSForegroundColorAttributeName
-     
-                          value:TextColor
-     
-                          range:NSMakeRange(5, text.length)];
-    
-    self.priceLab.attributedText = AttributedStr;
-    
+      
     
     //中间线
     UIView *line1 = [[UIView alloc]init];
@@ -157,6 +140,7 @@
     view.backgroundColor = BackGray;
     view.sd_layout.leftSpaceToView(self.contentView,0).rightSpaceToView(self.contentView,0).topSpaceToView(self.buyOrder,5).bottomSpaceToView(self.contentView,0);
         
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
     
     }
     return self;
@@ -174,6 +158,138 @@
     
 }
 
+
+- (void)setModel:(YJOrderListModel *)model{
+    
+    _model = model;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *orderStatus = [defaults objectForKey:@"orderStatus"];
+    
+    self.orderLab.text = [NSString stringWithFormat:@"订单号 %@",model.orderNo];
+    NSString *status = [NSString stringWithFormat:@"%ld",model.status];
+    self.stateLab.text = orderStatus[status];
+    [self.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",model.showPicUrl]] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+    self.nameLab.text = model.bigTitle;
+    self.descLab.text = model.smallTitle;
+    
+    NSString *text = model.totalMoney;
+    NSString *priceText = [NSString stringWithFormat:@"合计 ￥%@",text];
+    NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithString:priceText];
+    
+    [AttributedStr addAttribute:NSFontAttributeName
+     
+                          value:[UIFont systemFontOfSize:AdaptedWidth(14.0)]
+     
+                          range:NSMakeRange(4, text.length)];
+    
+    [AttributedStr addAttribute:NSForegroundColorAttributeName
+     
+                          value:TextColor
+     
+                          range:NSMakeRange(4, text.length)];
+    
+    self.priceLab.attributedText = AttributedStr;
+
+    
+
+    
+    switch (model.status) {
+        case 1:
+            [self.disOrder setTitle:@"取消订单" forState:UIControlStateNormal];
+            [self.relation setTitle:@"联系向导" forState:UIControlStateNormal];
+            [self.buyOrder setTitle:@"立即付款" forState:UIControlStateNormal];
+
+            break;
+        case 2:
+//            [self.disOrder setTitle:@"取消订单" forState:UIControlStateNormal];
+            self.disOrder.hidden = YES;
+            [self.relation setTitle:@"取消订单" forState:UIControlStateNormal];
+            [self.buyOrder setTitle:@"联系向导" forState:UIControlStateNormal];
+            break;
+        case 3:
+            self.disOrder.hidden = YES;
+            [self.relation setTitle:@"去评价" forState:UIControlStateNormal];
+            [self.buyOrder setTitle:@"再次预定" forState:UIControlStateNormal];
+            break;
+        case 4:
+            self.disOrder.hidden = YES;
+            [self.relation setTitle:@"退款中" forState:UIControlStateNormal];
+            [self.buyOrder setTitle:@"联系向导" forState:UIControlStateNormal];
+            break;
+        case 5:
+            self.disOrder.hidden = YES;
+            [self.relation setTitle:@"退款中" forState:UIControlStateNormal];
+            [self.buyOrder setTitle:@"联系向导" forState:UIControlStateNormal];
+            break;
+        case 6:
+            self.disOrder.hidden = YES;
+//            [self.relation setTitle:@"退款中" forState:UIControlStateNormal];
+            self.disOrder.hidden = YES;
+            [self.buyOrder setTitle:@"交易关闭" forState:UIControlStateNormal];
+            break;
+        case 7:
+            self.disOrder.hidden = YES;
+//            [self.relation setTitle:@"退款中" forState:UIControlStateNormal];
+            self.disOrder.hidden = YES;
+            [self.buyOrder setTitle:@"待接单" forState:UIControlStateNormal];
+            break;
+            
+        default:
+            break;
+    }
+    
+    
+}
+
+
+- (void)setEvaModel:(YJEvaWaitModel *)evaModel{
+    
+    _evaModel = evaModel;
+    
+    self.orderLab.text = [NSString stringWithFormat:@"订单号 %@",evaModel.orderNo];
+//    NSString *status = [NSString stringWithFormat:@"%ld",evaModel.status];
+    
+    if (self.orderState == 1) {
+        self.stateLab.text = @"待评价";
+        self.disOrder.hidden = YES;
+        [self.buyOrder setTitle:@"评价" forState:UIControlStateNormal];
+        [self.relation setTitle:@"再次预定" forState:UIControlStateNormal];
+
+    }else{
+        self.stateLab.text = @"已评价";
+        
+        self.disOrder.hidden = YES;
+        self.relation.hidden = YES;
+        [self.buyOrder setTitle:@"再次预定" forState:UIControlStateNormal];
+    }
+    
+    
+    
+    [self.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",evaModel.showPicUrl]] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+    self.nameLab.text = evaModel.bigTitle;
+    self.descLab.text = evaModel.smallTitle;
+    
+    NSString *text = evaModel.price;
+    NSString *priceText = [NSString stringWithFormat:@"合计 ￥%@",text];
+    NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithString:priceText];
+    
+    [AttributedStr addAttribute:NSFontAttributeName
+     
+                          value:[UIFont systemFontOfSize:AdaptedWidth(14.0)]
+     
+                          range:NSMakeRange(4, text.length)];
+    
+    [AttributedStr addAttribute:NSForegroundColorAttributeName
+     
+                          value:TextColor
+     
+                          range:NSMakeRange(4, text.length)];
+    
+    self.priceLab.attributedText = AttributedStr;
+
+    
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];

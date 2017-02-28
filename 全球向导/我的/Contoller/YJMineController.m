@@ -19,7 +19,8 @@
 #import "YJSetUserController.h"
 #import "YJMineEvaluateVC.h"
 #import "YJUsreInfoModel.h"
-#import "YJIssueVC.h"
+//#import "YJIssueVC.h"
+#import "YJMineShareVC.h"
 #import "UIImageView+WebCache.h"
 
 @interface YJMineController ()<UITableViewDataSource,UITableViewDelegate,YJBtnClickPublic>
@@ -55,7 +56,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+//    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)getUserInfo{
@@ -435,7 +436,7 @@
     
     if (indexPath.section == 1 && indexPath.row == 2) {
         
-        [self.navigationController pushViewController:[YJIssueVC new] animated:YES];
+        [self.navigationController pushViewController:[YJMineShareVC new] animated:YES];
         
     }
 

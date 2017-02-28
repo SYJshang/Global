@@ -32,6 +32,11 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    self.navigationController.navigationBar.translucent = NO;
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.tintColor = [UIColor grayColor];
+    
     [self setLaoutView];
     
 }
@@ -50,8 +55,7 @@
 
 - (void)setLaoutView{
     
-    self.navigationController.navigationBar.tintColor = [UIColor grayColor];
-    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    
     
     UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     leftBtn.frame = CGRectMake(8, 14, 16, 16);
@@ -77,13 +81,13 @@
 
 - (void)back{
     
-        [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 
 #pragma mark - table view dataSource
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
 
@@ -97,19 +101,14 @@
         YJPhoneNumCell *cell = [tableView dequeueReusableCellWithIdentifier:@"first"];
         switch (indexPath.row) {
             case 0:
-                
                 cell.phoneNum.text = @"订单名称";
                 cell.phoneTF.placeholder = @"请输入订单名称";
-                
                 break;
             case 1:
-                
                 cell.phoneNum.text = @"目标位置";
                 cell.phoneTF.placeholder = @"请输入目标位置";
-                
                 break;
    
-                
             default:
                 break;
         }

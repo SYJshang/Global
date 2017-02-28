@@ -25,6 +25,10 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+
+    
     self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     self.automaticallyAdjustsScrollViewInsets = NO;
     

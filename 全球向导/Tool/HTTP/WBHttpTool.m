@@ -16,7 +16,7 @@
     AFHTTPSessionManager *manger = [self getHttpSessionManager];
     // 设置超时时间
     [manger.requestSerializer willChangeValueForKey:@"timeoutInterval"];
-    manger.requestSerializer.timeoutInterval = 5.f;
+    manger.requestSerializer.timeoutInterval = 10.f;
     [manger.requestSerializer didChangeValueForKey:@"timeoutInterval"];
     
     [manger GET:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -46,7 +46,7 @@
    AFHTTPSessionManager *mgr = [self getHttpSessionManager];
     // 设置超时时间
     [mgr.requestSerializer willChangeValueForKey:@"timeoutInterval"];
-    mgr.requestSerializer.timeoutInterval = 5.f;
+    mgr.requestSerializer.timeoutInterval = 10.f;
     [mgr.requestSerializer didChangeValueForKey:@"timeoutInterval"];
 
     [mgr POST:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

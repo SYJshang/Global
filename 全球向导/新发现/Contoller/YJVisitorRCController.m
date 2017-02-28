@@ -23,6 +23,8 @@
 
 @property (nonatomic, strong) NoNetwork *noNetWork;
 
+@property (nonatomic, assign) int currenPage;
+
 @end
 
 @implementation YJVisitorRCController
@@ -149,10 +151,16 @@
 - (void)getMoreData{
     
     
-    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
-    [parameter setObject:self.pageModel.currentPage forKey:@"currentPage"];
+    if (self.currenPage < self.pageModel.totalPage) {
+        self.currenPage ++;
+    }
     
-    [WBHttpTool GET:[NSString stringWithFormat:@"%@/mainUserRec/list",BaseUrl] parameters:parameter success:^(id responseObject) {
+    NSString *curee = [NSString stringWithFormat:@"%d",self.currenPage];
+    NSMutableDictionary *parmeter = [NSMutableDictionary dictionary];
+    [parmeter setObject:curee forKey:@"currentPage"];
+
+    
+    [WBHttpTool GET:[NSString stringWithFormat:@"%@/mainUserRec/list",BaseUrl] parameters:parmeter success:^(id responseObject) {
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         XXLog(@"%@",dict);
@@ -168,7 +176,7 @@
             self.pageModel = [YJPageModel mj_objectWithKeyValues:data[@"queryGuideRec"][@"page"]];
             self.shareListArr = [YJNearbyModel mj_objectArrayWithKeyValuesArray:data[@"userRecList"]];
             
-            [self.tableView.mj_header endRefreshing];
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
             [self.tableView reloadData];
             
             

@@ -12,6 +12,8 @@
 #import "YJPageModel.h"
 #import "YJGuideModel.h"
 #import "NoNetwork.h"
+#import "YJEvaluationController.h"
+
 
 @interface YJGlobalCollectController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -19,6 +21,8 @@
 @property (nonatomic, strong) NSMutableArray *guideList; //收藏列表
 @property (nonatomic, strong) YJPageModel *pageModel; //页数
 @property (nonatomic, strong) NoNetwork *noNetWork; //空白页面
+
+
 
 
 @end
@@ -95,7 +99,7 @@
         self.pageModel = [YJPageModel mj_objectWithKeyValues:dict[@"data"][@"queryColGuide"][@"page"]];
         
         
-        XXLog(@"%@",self.pageModel.nextPage);
+        XXLog(@"%ld",self.pageModel.nextPage);
         
         if (self.guideList.count == 0) {
             
@@ -188,7 +192,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    
+    [self.navigationController pushViewController:[YJEvaluationController new] animated:YES];
 }
 
 

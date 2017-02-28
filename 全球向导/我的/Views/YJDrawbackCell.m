@@ -29,17 +29,6 @@
         self.stateLab.textColor=[UIColor blackColor];
         self.stateLab.textAlignment = NSTextAlignmentRight;
         [self.contentView addSubview:self.stateLab];
-        if (self.orderState == 1) {
-            self.stateLab.text = @"待评价";
-        }else if (self.orderState == 2){
-            self.stateLab.text = @"交易成功";
-        }else if (self.orderState == 3){
-            self.stateLab.text = @"已完成";
-        }else if (self.orderState == 4){
-            self.stateLab.text = @"退款中";
-        }else{
-            self.stateLab.text = @"待购买";
-        }
         self.stateLab.sd_layout.rightSpaceToView(self.contentView,10).topEqualToView(self.orderLab).widthIs(100.0).bottomEqualToView(self.orderLab);
         
         //中间线
@@ -80,24 +69,6 @@
         self.priceLab.textAlignment = NSTextAlignmentRight;
         self.priceLab.font = [UIFont systemFontOfSize:AdaptedWidth(13)];
         self.priceLab.sd_layout.rightSpaceToView(self.contentView,10).centerYEqualToView(self.descLab).leftSpaceToView(self.descLab,5).heightEqualToWidth(self.descLab);
-        NSString *text = @"10800";
-        NSString *priceText = [NSString stringWithFormat:@"合计  ￥%@",text];
-        NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithString:priceText];
-        
-        [AttributedStr addAttribute:NSFontAttributeName
-         
-                              value:[UIFont systemFontOfSize:14.0]
-         
-                              range:NSMakeRange(5, text.length)];
-        
-        [AttributedStr addAttribute:NSForegroundColorAttributeName
-         
-                              value:TextColor
-         
-                              range:NSMakeRange(5, text.length)];
-        
-        self.priceLab.attributedText = AttributedStr;
-        
         
         //中间线
         UIView *line1 = [[UIView alloc]init];
@@ -114,23 +85,7 @@
         self.refundPrice.textColor = [UIColor grayColor];
         self.refundPrice.sd_layout.rightSpaceToView(self.contentView,10).topSpaceToView(line1,5).heightIs(30 * KHeight_Scale).widthIs(130 *KWidth_Scale);
         
-        NSString *text1 = @"￥10800";
-        NSString *priceText1 = [NSString stringWithFormat:@"退款金额:%@",text1];
-        NSMutableAttributedString *AttributedStr1 = [[NSMutableAttributedString alloc]initWithString:priceText1];
         
-        [AttributedStr1 addAttribute:NSFontAttributeName
-         
-                              value:[UIFont systemFontOfSize:14.0]
-         
-                              range:NSMakeRange(5, text1.length)];
-        
-        [AttributedStr1 addAttribute:NSForegroundColorAttributeName
-         
-                              value:TextColor
-         
-                              range:NSMakeRange(5, text1.length)];
-        
-        self.refundPrice.attributedText = AttributedStr1;
         
 
         
@@ -152,9 +107,84 @@
         view.sd_layout.leftSpaceToView(self.contentView,0).rightSpaceToView(self.contentView,0).topSpaceToView(self.refundPrice,5).bottomSpaceToView(self.contentView,0);
         
         
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        
     }
     return self;
     
+}
+
+- (void)setModel:(YJBuyListModel *)model{
+    
+    
+    _model = model;
+    
+    self.orderLab.text = [NSString stringWithFormat:@"订单号 %@",model.orderNo];
+//    NSString *status = [NSString stringWithFormat:@"%@",];
+    self.stateLab.text = self.refundStatusMap[model.status];
+    [self.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",model.showPicUrl]] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+    self.nameLab.text = model.bigTitle;
+    self.descLab.text = model.smallTitle;
+    
+    NSString *text = model.tradeMoney;
+    NSString *priceText = [NSString stringWithFormat:@"合计 ￥%@",text];
+    NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithString:priceText];
+    
+    [AttributedStr addAttribute:NSFontAttributeName
+     
+                          value:[UIFont systemFontOfSize:AdaptedWidth(14.0)]
+     
+                          range:NSMakeRange(4, text.length)];
+    
+    [AttributedStr addAttribute:NSForegroundColorAttributeName
+     
+                          value:TextColor
+     
+                          range:NSMakeRange(4, text.length)];
+    
+    self.priceLab.attributedText = AttributedStr;
+    
+    
+    
+    NSString *priceText1 = [NSString stringWithFormat:@"合计  ￥%@",model.tradeMoney];
+    NSMutableAttributedString *AttributedStr1 = [[NSMutableAttributedString alloc]initWithString:priceText1];
+    
+    [AttributedStr1 addAttribute:NSFontAttributeName
+     
+                          value:[UIFont systemFontOfSize:AdaptedWidth(14.0)]
+     
+                          range:NSMakeRange(5, model.tradeMoney.length)];
+    
+    [AttributedStr1 addAttribute:NSForegroundColorAttributeName
+     
+                          value:TextColor
+     
+                          range:NSMakeRange(5, model.tradeMoney.length)];
+    
+    self.priceLab.attributedText = AttributedStr1;
+    
+    
+    
+    NSString *priceText2 = [NSString stringWithFormat:@"退款金额:%@",model.refundMoney];
+    NSMutableAttributedString *AttributedStr2 = [[NSMutableAttributedString alloc]initWithString:priceText2];
+    
+    [AttributedStr2 addAttribute:NSFontAttributeName
+     
+                           value:[UIFont systemFontOfSize:AdaptedWidth(14.0)]
+     
+                           range:NSMakeRange(5, model.refundMoney.length)];
+    
+    [AttributedStr2 addAttribute:NSForegroundColorAttributeName
+     
+                           value:TextColor
+     
+                           range:NSMakeRange(5, model.refundMoney.length)];
+    
+    self.refundPrice.attributedText = AttributedStr2;
+    
+
+
 }
 
 

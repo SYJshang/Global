@@ -249,6 +249,7 @@
     self.icon = [[UIImageView alloc]init];
     [self.view addSubview:self.icon];
     
+    //请求图片验证码
     [WBHttpTool GET:[NSString stringWithFormat:@"%@/verifyCode/create",BaseUrl] parameters:nil success:^(id responseObject) {
         
         

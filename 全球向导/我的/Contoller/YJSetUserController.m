@@ -32,7 +32,11 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
     self.automaticallyAdjustsScrollViewInsets = NO;
+    
     
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
@@ -85,10 +89,10 @@
                     
                     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:dict[@"msg"] preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                        
+                        [hud hideAnimated:YES];
                     }];
                     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                        
+                        [hud hideAnimated:YES];
                     }];
                     [alertVC addAction:action1];
                     [alertVC addAction:action2];
@@ -139,10 +143,10 @@
                     
                     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:dict[@"msg"] preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                        
+                        [hud hideAnimated:YES];
                     }];
                     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                        
+                        [hud hideAnimated:YES];
                     }];
                     [alertVC addAction:action1];
                     [alertVC addAction:action2];

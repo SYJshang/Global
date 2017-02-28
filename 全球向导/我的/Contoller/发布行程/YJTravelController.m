@@ -37,6 +37,48 @@ static CGFloat navH = 64;
     return _contentLsitArr;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    //    self.navigationController.navigationBar.translucent = NO;
+    //    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+//    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    
+    
+    
+   
+    
+    
+    
+//    self.navigationItem.leftBarButtonItem = [UIBarButtonItem itemWithTarget:self action:@selector(back) image:@"back" highImage:nil];
+//    self.navigationItem.rightBarButtonItem = [UIBarButtonItem itemWithTarget:self action:@selector(finsh) title:@"发布" titleColor:TextColor font:AdaptedWidth(16)];
+//    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor whiteColor] title:@"发布行程" font:19.0];
+    
+    self.shadowImage = self.navigationController.navigationBar.shadowImage;
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    
+    CGFloat offsetY = self.tableView.contentOffset.y;
+    [self changeNavAlphaWithConnentOffset:offsetY];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self.navigationController.navigationBar lt_reset];
+    self.navigationController.navigationBar.shadowImage = self.shadowImage;
+    //    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    //    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    
+}
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -80,6 +122,28 @@ static CGFloat navH = 64;
     btn.layer.borderWidth = 1.0;
     btn.layer.borderColor = [UIColor whiteColor].CGColor;
     
+    YJDIYButton *backBtn = [YJDIYButton buttonWithFrame:CGRectMake(10, 25, 10, 15) imageName:@"back" andBlock:^{
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        
+    }];
+    [self.headerView addSubview:backBtn];
+    
+    YJDIYButton *finsh = [YJDIYButton buttonWithtitle:@"发布" Block:^{
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }];
+    [finsh setTitleColor:TextColor forState:UIControlStateNormal];
+    finsh.titleLabel.font = [UIFont systemFontOfSize:AdaptedWidth(15)];
+    [self.headerView addSubview:finsh];
+    finsh.sd_layout.rightSpaceToView(self.headerView,10).topSpaceToView(self.headerView,25).widthIs(40).heightIs(16);
+    
+    UILabel *label = [[UILabel alloc]init];
+    label.text = @"发布行程";
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont systemFontOfSize:AdaptedWidth(17.0)];
+    label.textAlignment = NSTextAlignmentCenter;
+    [self.headerView addSubview:label];
+    label.sd_layout.topSpaceToView(self.headerView,25).centerXEqualToView(self.headerView).widthIs(100).heightIs(20);
+    
 }
 
 - (void)back{
@@ -91,38 +155,6 @@ static CGFloat navH = 64;
     
     XXLog(@"发布");
     [self.navigationController popToRootViewControllerAnimated:YES];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    self.automaticallyAdjustsScrollViewInsets = NO;
-//    self.navigationController.navigationBar.translucent = NO;
-//    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-
-    
-    self.navigationItem.leftBarButtonItem = [UIBarButtonItem itemWithTarget:self action:@selector(back) image:@"back" highImage:nil];
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem itemWithTarget:self action:@selector(finsh) title:@"发布" titleColor:TextColor font:AdaptedWidth(16)];
-    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor whiteColor] title:@"发布行程" font:19.0];
-    
-    self.shadowImage = self.navigationController.navigationBar.shadowImage;
-    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-    
-    CGFloat offsetY = self.tableView.contentOffset.y;
-    [self changeNavAlphaWithConnentOffset:offsetY];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-    [self.navigationController.navigationBar lt_reset];
-    self.navigationController.navigationBar.shadowImage = self.shadowImage;
-//    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-//    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{

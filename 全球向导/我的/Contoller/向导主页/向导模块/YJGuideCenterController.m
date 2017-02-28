@@ -25,6 +25,7 @@
     [super viewWillAppear:animated];
     self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
     
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];

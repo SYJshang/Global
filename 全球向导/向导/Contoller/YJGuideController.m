@@ -27,7 +27,7 @@
 @property (nonatomic, strong) CLSeachBar *seacher;
 @property (nonatomic, strong) UIImageView *cityImg;
 
-@property (nonatomic, strong) NSString *currentPage;//当前页面
+@property (nonatomic, assign) int      currentPage;//当前页面
 @property (nonatomic, strong) NSString *cityId;//当前城市
 @property (nonatomic, strong) NSString *beginPrice;//开始价格
 @property (nonatomic, strong) NSString *endPrice;//结束价格
@@ -124,7 +124,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.currentPage = 1;
+    
     [self setNavitaionSearch];
+    
+    
     
     //创建瀑布流布局
     XRWaterfallLayout *waterfall = [XRWaterfallLayout waterFallLayoutWithColumnCount:2];
@@ -245,7 +249,17 @@
     NSMutableDictionary *parametr = [NSMutableDictionary dictionary];
     
     if (self.currentPage) {
-        [parametr setObject:self.pageModel.currentPage forKey:@"currentPage"];
+        
+        if (self.currentPage < self.pageModel.totalPage) {
+            self.currentPage ++;
+        }
+        
+        NSString *curee = [NSString stringWithFormat:@"%d",self.currentPage];
+        NSMutableDictionary *parametr = [NSMutableDictionary dictionary];
+        [parametr setObject:curee forKey:@"currentPage"];
+
+        
+//        [parametr setObject:self.pageModel.currentPage forKey:@"currentPage"];
     }
     if (self.cityId) {
         [parametr setObject:self.cityId forKey:@"cityId"];

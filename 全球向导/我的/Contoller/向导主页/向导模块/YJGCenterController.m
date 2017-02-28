@@ -13,6 +13,8 @@
 #import "CustomHeader.h"
 #import "YJMyFindVC.h"
 #import "YJDateVC.h"
+#import "YJPhotoVC.h"
+#import "YJServerStateVC.h"
 
 void *CustomHeaderInsetObserver = &CustomHeaderInsetObserver;
 @interface YJGCenterController ()
@@ -44,12 +46,17 @@ void *CustomHeaderInsetObserver = &CustomHeaderInsetObserver;
 
 -(instancetype)init
 {
+    //资料
     YJTableVC *information = [[YJTableVC alloc] init];
+    //发现
     YJMyFindVC *find = [[YJMyFindVC alloc] init];
+    //日期
     YJDateVC *date = [[YJDateVC alloc]init];
+    //相册
+    YJPhotoVC *albumPhoto = [[YJPhotoVC alloc]init];
     
     
-    self = [super initWithControllers:find,information,date,information, nil];
+    self = [super initWithControllers:find,albumPhoto,date,information, nil];
     if (self) {
         // your code
         self.segmentMiniTopInset = 64;

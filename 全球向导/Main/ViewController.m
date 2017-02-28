@@ -140,9 +140,11 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.translucent = NO;
-    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    
+//    self.navigationController.navigationBar.translucent = NO;
+//    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    //设置导航控制器
+    [self setNavitaion];
+
    
 
     NSString *str = [YJBNetWorkNotifionTool stringFormStutas];
@@ -174,9 +176,7 @@
     [super viewDidLoad];
     self.guideType = [NSDictionary dictionary];
     
-    //设置导航控制器
-    [self setNavitaion];
-    //设置tableView
+       //设置tableView
     [self setTable];
 
     //请求网络

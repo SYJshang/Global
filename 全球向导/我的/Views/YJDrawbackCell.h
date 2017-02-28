@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YJBuyListModel.h"
 
 @interface YJDrawbackCell : UITableViewCell
 
@@ -45,6 +46,13 @@
  *  交易金额
  */
 @property (nonatomic, strong) UILabel *Allprice;
+
+//数据模型
+@property (nonatomic, strong) YJBuyListModel *model;
+
+@property (nonatomic, strong) NSDictionary *refundStatusMap;
+@property (nonatomic, strong) NSDictionary *payMethodMap;
+
 
 
 

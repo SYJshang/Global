@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YJOrderListModel.h"
+#import "YJEvaWaitModel.h"
 
 @protocol YJBtnClickEvE <NSObject>
 @optional
@@ -60,6 +62,10 @@
  *  购买
  */
 @property (nonatomic, strong) UIButton *buyOrder;
+
+//数据模型
+@property (nonatomic, strong) YJOrderListModel *model;
+@property (nonatomic, strong) YJEvaWaitModel *evaModel;
 
 
 @end

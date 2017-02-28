@@ -31,17 +31,20 @@
         [self addSubview:_videoImageView];
         
         _deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//        [_deleteBtn setImage:[UIImage imageNamed:@"photo_delete"] forState:UIControlStateNormal];
-        [_deleteBtn setBackgroundImage:[UIImage imageNamed:@"photo_delete"] forState:UIControlStateNormal];
-        _deleteBtn.frame = CGRectMake(self.tz_width - 30, 0, 30, 30);
-        _deleteBtn.alpha = 1.0;
-        _deleteBtn.layer.masksToBounds = YES;
-        _deleteBtn.layer.cornerRadius = 15.0;
-        _deleteBtn.layer.borderWidth = 1.0;
-        _deleteBtn.layer.borderColor = [[UIColor blackColor] CGColor];
+        [_deleteBtn setImage:[UIImage imageNamed:@"photo_delete"] forState:UIControlStateNormal];
+        _deleteBtn.frame = CGRectMake(self.tz_width - 36, 0, 36, 36);
+        _deleteBtn.imageEdgeInsets = UIEdgeInsetsMake(-10, 0, 0, -10);
+        _deleteBtn.alpha = 0.6;
         [self addSubview:_deleteBtn];
-//        _deleteBtn.imageEdgeInsets = UIEdgeInsetsMake(-10, 0, 0, -10);
-
+        
+        _gifLable = [[UILabel alloc] init];
+        _gifLable.text = @"GIF";
+        _gifLable.textColor = [UIColor whiteColor];
+        _gifLable.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.8];
+        _gifLable.textAlignment = NSTextAlignmentCenter;
+        _gifLable.font = [UIFont systemFontOfSize:10];
+        _gifLable.frame = CGRectMake(self.tz_width - 25, self.tz_height - 14, 25, 14);
+        [self addSubview:_gifLable];
     }
     return self;
 }
@@ -58,14 +61,13 @@
     if ([asset isKindOfClass:[PHAsset class]]) {
         PHAsset *phAsset = asset;
         _videoImageView.hidden = phAsset.mediaType != PHAssetMediaTypeVideo;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        _gifLable.hidden = ![[phAsset valueForKey:@"filename"] containsString:@"GIF"];
     } else if ([asset isKindOfClass:[ALAsset class]]) {
         ALAsset *alAsset = asset;
         _videoImageView.hidden = ![[alAsset valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo];
-#pragma clang diagnostic pop
+        _gifLable.hidden = YES;
     }
- }
+}
 
 - (void)setRow:(NSInteger)row {
     _row = row;

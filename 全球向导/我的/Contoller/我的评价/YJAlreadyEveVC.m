@@ -8,20 +8,52 @@
 
 #import "YJAlreadyEveVC.h"
 #import "YJAllOrderCell.h"
+#import "YJEvaWaitModel.h"
+#import "YJPageModel.h"
+#import "NoNetwork.h"
 
 
-@interface YJAlreadyEveVC ()<UITableViewDelegate,UITableViewDataSource>
+@interface YJAlreadyEveVC ()<UITableViewDelegate,UITableViewDataSource,YJBtnClickEvE>
 
 @property (nonatomic, strong) UITableView *tableView;
+
+@property (nonatomic, strong) NSMutableArray *orderList; //订单列表
+@property (nonatomic, strong) YJPageModel *pageModel;  //页数列表
+
+@property (nonatomic, strong) NoNetwork *noNetWork;
+
+@property (nonatomic, assign) int cureenPage;
+
+@property (nonatomic, assign) NSInteger count;
+
+@property (nonatomic, strong) NSMutableArray *totalCout; //总数
+
 
 @end
 
 @implementation YJAlreadyEveVC
 
+- (NSMutableArray *)totalCout{
+    
+    if (_totalCout == nil) {
+        _totalCout = [NSMutableArray array];
+    }
+    return _totalCout;
+}
+
+- (NSMutableArray *)orderList{
+    
+    if (_orderList == nil) {
+        _orderList = [NSMutableArray array];
+    }
+    return _orderList;
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor redColor];
+    self.view.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1.0];
     
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 44, screen_width, screen_height - 108) style:UITableViewStylePlain];
     [self.view addSubview:self.tableView];
@@ -32,10 +64,176 @@
     
     //注册cell
     [self.tableView registerClass:[YJAllOrderCell class] forCellReuseIdentifier:@"cell"];
+    
+    
+    self.cureenPage = 1;
+    self.count = 0;
+    
+    
+    NSString *str = [YJBNetWorkNotifionTool stringFormStutas];
+    XXLog(@"%@",str);
+    if ([str isEqualToString:@"3"]) {
+        
+        //设置网络状态
+        [self NetWorks];
+    }
+    
+    
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        [self getNetWork];
+    }];
+    
+    self.tableView.mj_header.automaticallyChangeAlpha = YES;
+    [self.tableView.mj_header beginRefreshing];
+    
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        
+        
+        if (self.pageModel.totalCount <= self.totalCout.count ) {
+            
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            
+        }else{
+            [self getMoreData];
+        }
+        
+        
+    }];
+    
+
 
     
     // Do any additional setup after loading the view.
 }
+
+
+//设置网络状态
+- (void)NetWorks{
+    
+    self.tableView.hidden = YES;
+    
+    [self.noNetWork removeFromSuperview];
+    
+    self.noNetWork = [[NoNetwork alloc]init];
+    self.noNetWork.titleLabel.text = @"数据请求失败\n请设置网络之后重试";
+    __weak typeof(self) weakSelf = self;
+    self.noNetWork.btnBlock = ^{
+        [weakSelf getNetWork];
+    };
+    [self.view addSubview:self.noNetWork];
+}
+
+- (void)noDatas{
+    
+    self.tableView.hidden = YES;
+    
+    [self.noNetWork removeFromSuperview];
+    
+    self.noNetWork = [[NoNetwork alloc]init];
+    self.noNetWork.btrefresh.hidden = YES;
+    self.noNetWork.titleLabel.text = @"暂无数据\n赶快去整出动静吧。。";
+    __weak typeof(self) weakSelf = self;
+    self.noNetWork.btnBlock = ^{
+        [weakSelf getNetWork];
+    };
+    [self.view addSubview:self.noNetWork];
+}
+
+
+- (void)getNetWork{
+    
+    [WBHttpTool GET:[NSString stringWithFormat:@"%@/userInfo/myEva/listFinish",BaseUrl] parameters:nil success:^(id responseObject) {
+        
+        self.cureenPage = 1;
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        XXLog(@"%@",dict);
+        
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            
+            self.totalCout = [YJEvaWaitModel mj_objectArrayWithKeyValuesArray:dict[@"data"][@"evaFinishList"]];
+            self.pageModel = [YJPageModel mj_objectWithKeyValues:dict[@"data"][@"queryEvaFinish"][@"page"]];
+            
+            if (self.totalCout.count == 0) {
+                [self noDatas];
+            }
+            
+            
+            [self.tableView.mj_header endRefreshing];
+            [self.tableView.mj_footer endRefreshing];
+            [self.tableView reloadData];
+        }else{
+            
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
+            
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+        [self getNetWork];
+        
+    }];
+    
+}
+
+- (void)getMoreData{
+    
+    
+    if (self.cureenPage < self.pageModel.totalPage) {
+        self.cureenPage ++;
+    }
+    
+    NSString *curee = [NSString stringWithFormat:@"%d",self.cureenPage];
+    NSMutableDictionary *parmeter = [NSMutableDictionary dictionary];
+    [parmeter setObject:curee forKey:@"currentPage"];
+    
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myEva/listFinish",BaseUrl] parameters:parmeter success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        XXLog(@"%@",dict);
+        
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            
+            self.totalCout = [YJEvaWaitModel mj_objectArrayWithKeyValuesArray:dict[@"data"][@"evaFinishList"]];
+            self.pageModel = [YJPageModel mj_objectWithKeyValues:dict[@"data"][@"queryEvaFinish"][@"page"]];
+            
+            for (YJEvaWaitModel *model in self.orderList) {
+                [self.totalCout addObject:model];
+            }
+            
+            if (self.orderList.count < 2) {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            }else{
+                [self.tableView.mj_footer endRefreshing];
+            }
+            
+            
+            [self.tableView reloadData];
+        }else{
+            
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
+            
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+        [self getNetWork];
+        
+    }];
+    
+}
+
 
 #pragma mark - table view dataSource
 
@@ -49,8 +247,13 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
-}
+    XXLog(@"当前是共 %ld",self.totalCout.count);
+    
+    if (self.totalCout) {
+        return self.totalCout.count;
+    }
+    
+    return 0;}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -58,12 +261,17 @@
     if(cell == nil) {
         cell = [[YJAllOrderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.stateLab.text = @"待评价";
-    cell.stateLab.textColor = TextColor;
-    cell.disOrder.hidden = YES;
-    cell.relation.hidden = YES;
-    [cell.buyOrder setTitle:@"再次预定" forState:UIControlStateNormal];
+    
+    cell.delegate = self;
+    YJEvaWaitModel *model = self.totalCout[indexPath.row];
+    cell.orderState = 2;
+    cell.evaModel = model;
+//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//    cell.stateLab.text = @"待评价";
+//    cell.stateLab.textColor = TextColor;
+//    cell.disOrder.hidden = YES;
+//    cell.relation.hidden = YES;
+//    [cell.buyOrder setTitle:@"再次预定" forState:UIControlStateNormal];
 //    [cell.relation setTitle:@"再次预定" forState:UIControlStateNormal];
     
     return cell;
@@ -76,6 +284,20 @@
 }
 
 
+
+- (void)btnDidClickPlusButton:(NSInteger)ViewTag{
+    
+    if (ViewTag == 1) {
+//        [self.navigationController pushViewController:[YJEvaluationController new] animated:YES];
+        XXLog(@"1");
+
+    }
+    
+    if (ViewTag == 2) {
+        XXLog(@"再次预定");
+    }
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

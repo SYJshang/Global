@@ -54,7 +54,7 @@
     [self setupChildViewController];
     
     
-    self.titles = @[@"全部订单", @"待付款",@"待评价",@"退款/订单"];
+    self.titles = @[@"全部订单", @"待付款",@"待服务",@"退款/订单"];
     // , @"NBA", @"新闻", @"娱乐", @"音乐", @"网络电影"
     self.topTitleView = [SGTopTitleView topTitleViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
     self.topTitleView.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1.0];
