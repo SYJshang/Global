@@ -656,8 +656,8 @@
 
 - (void)dealloc{
     
-    self.tableView = nil;
-    self.noNetWork = nil;
+    [self.tableView removeFromSuperview];
+    [self.noNetWork removeFromSuperview];
     
 }
 

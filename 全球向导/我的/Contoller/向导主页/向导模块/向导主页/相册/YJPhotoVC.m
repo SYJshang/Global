@@ -12,27 +12,48 @@
 #import "YJEditPhotoVC.h"
 #import "TZTestCell.h"
 #import "YJPhotoAlbumCell.h"
+#import "YJPhotoModel.h"
+#import "YJEditPhotoVC.h"
 
 @interface YJPhotoVC ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 
+@property (nonatomic, strong) NSMutableArray *albumLists; //相册列表
+
+
+
 @end
 
 @implementation YJPhotoVC
+
+- (NSMutableArray *)albumLists{
+    
+    if (_albumLists == nil) {
+        _albumLists = [NSMutableArray array];
+    }
+    return _albumLists;
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    [self getNetWork];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    
+//    self.view.userInteractionEnabled = YES;
+
     //创建一个layout布局类
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
     //设置布局方向为垂直流布局
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     //设置每个item的大小为100*100
-    //    layout.itemSize = CGSizeMake(100, 100);
+    //layout.itemSize = CGSizeMake(100, 100);
     //创建collectionView 通过一个布局策略layout来创建
     UICollectionView * collect = [[UICollectionView alloc]initWithFrame:self.view.frame collectionViewLayout:layout];
     collect.backgroundColor = [UIColor whiteColor];
@@ -42,9 +63,39 @@
     //注册item类型 这里使用系统的类型
     [collect registerClass:[YJPhotoAlbumCell class] forCellWithReuseIdentifier:@"cellid"];
     
-    [self.view addSubview:collect];
+    self.collectionView = collect;
+    
+    [self.view addSubview:self.collectionView];
 
     // Do any additional setup after loading the view.
+}
+
+- (void)getNetWork{
+    
+    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+    [WBHttpTool GET:[NSString stringWithFormat:@"%@/guide/album/list",BaseUrl] parameters:parameter success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        XXLog(@"%@",dict);
+        
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            self.albumLists = [YJPhotoModel mj_objectArrayWithKeyValuesArray:dict[@"data"][@"albumList"]];
+            XXLog(@"%lu",(unsigned long)self.albumLists.count);
+            
+            [self.collectionView reloadData];
+        }else{
+            
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+            }];
+            [alert show];
+            
+        }
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    
 }
 
 
@@ -57,7 +108,7 @@
 //item个数
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 6;
+    return self.albumLists.count + 1;
     
 }
 
@@ -70,12 +121,16 @@
     //    cell.line.layer.anchorPoint = CGPointMake(0.5, 0.5);
     //    cell.line.transform=CGAffineTransformScale(cell.line.transform,-1.5,-1.5);
     
+    
+    
     if (indexPath.row == 0) {
         cell.imgIcon.image = [UIImage imageNamed:@"AlbumAddBtn"];
         cell.text.text = @"添加相册";
     }else{
-        cell.imgIcon.image = [UIImage imageNamed:@"timg"];
-        cell.text.text = [NSString stringWithFormat:@"这是第%ld个相册",indexPath.row];
+        YJPhotoModel *model = self.albumLists[indexPath.row - 1];
+        cell.imgIcon.image = [UIImage imageNamed:@"bg1"];
+        cell.text.font = [UIFont boldSystemFontOfSize:AdaptedWidth(14)];
+        cell.text.text = [NSString stringWithFormat:@"%@  %@张",model.name,model.picNumber];
         
     }
     return cell;
@@ -112,8 +167,16 @@
     
     NSLog(@"点击了%ld个",indexPath.row);
     
+    
     if (indexPath.row == 0) {
         [self.navigationController pushViewController:[YJPhotoTitleVC new] animated:YES];
+    }else{
+        YJPhotoModel *model = self.albumLists[indexPath.row - 1];
+
+        YJEditPhotoVC *vc = [[YJEditPhotoVC alloc]init];
+        vc.albumId = model.ID;
+        vc.album = model.name;
+        [self.navigationController pushViewController:vc animated:YES];
     }
     
     

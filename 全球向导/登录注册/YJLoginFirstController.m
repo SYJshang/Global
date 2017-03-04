@@ -241,7 +241,7 @@
     self.iconCode.sd_layout.leftSpaceToView(Code,10).centerYEqualToView(Code).heightIs(20 * KHeight_Scale).rightSpaceToView(self.view,110);
     self.iconCode.placeholder = @"请输入图片验证码";
     self.iconCode.font = [UIFont systemFontOfSize:AdaptedWidth(15.0)];
-    self.iconCode.keyboardType = UIKeyboardTypeNumberPad;
+//    self.iconCode.keyboardType = UIKeyboardTypeNumberPad;
     
     self.icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"backImg"]];
     [self.view addSubview:self.icon];

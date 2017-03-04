@@ -53,7 +53,8 @@
 }
 
 - (void)back{
-    
+
+    self.navigationController.navigationBar.translucent = YES;
     [self.navigationController popViewControllerAnimated:YES];
 }
 

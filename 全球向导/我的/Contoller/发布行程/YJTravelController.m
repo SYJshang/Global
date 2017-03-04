@@ -8,9 +8,9 @@
 //
 
 #import "YJTravelController.h"
-#import "UINavigationBar+Awesome.h"
 #import "YJIssueTitleCell.h"
 #import "UIImageView+LBBlurredImage.h"
+#import "UINavigationBar+Awesome.h"
 
 static CGFloat imageH = 200;
 static CGFloat navH = 64;
@@ -41,23 +41,12 @@ static CGFloat navH = 64;
 {
     [super viewWillAppear:animated];
     
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+//    [self.navigationController setNavigationBarHidden:YES animated:YES];
 
     
     self.automaticallyAdjustsScrollViewInsets = NO;
-    //    self.navigationController.navigationBar.translucent = NO;
-    //    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-//    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    
-    
-    
-   
-    
-    
-    
-//    self.navigationItem.leftBarButtonItem = [UIBarButtonItem itemWithTarget:self action:@selector(back) image:@"back" highImage:nil];
-//    self.navigationItem.rightBarButtonItem = [UIBarButtonItem itemWithTarget:self action:@selector(finsh) title:@"发布" titleColor:TextColor font:AdaptedWidth(16)];
-//    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor whiteColor] title:@"发布行程" font:19.0];
+    self.navigationController.navigationBar.translucent = YES;
+
     
     self.shadowImage = self.navigationController.navigationBar.shadowImage;
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
@@ -146,10 +135,10 @@ static CGFloat navH = 64;
     
 }
 
-- (void)back{
-    
-    [self.navigationController popToRootViewControllerAnimated:YES];
-}
+//- (void)back{
+//    
+//    [self.navigationController popToRootViewControllerAnimated:YES];
+//}
 
 - (void)finsh{
     

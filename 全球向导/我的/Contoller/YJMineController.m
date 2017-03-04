@@ -46,11 +46,6 @@
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     
-    [self setTableView];
-    
-    //把选中数组存成全局变量
-    [self getUserInfo];
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -158,12 +153,17 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:1.0];
     
+    [self setTableView];
+    
+    //把选中数组存成全局变量
+    [self getUserInfo];
+    
     // Do any additional setup after loading the view.
 }
 
 - (void)setTableView{
     
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height - 64) style:UITableViewStylePlain];
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -178,7 +178,7 @@
 //    }
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:1.0];
-    self.tableView.contentInset = UIEdgeInsetsMake(200 * KHeight_Scale, 0, 0, 0);
+    self.tableView.contentInset = UIEdgeInsetsMake(200, 0, 0, 0);
 
     [self setImage];
     

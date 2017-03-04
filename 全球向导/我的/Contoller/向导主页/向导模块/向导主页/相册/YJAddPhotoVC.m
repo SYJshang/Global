@@ -18,6 +18,7 @@
 #import "TZVideoPlayerController.h"
 #import "TZPhotoPreviewController.h"
 #import "TZGifPhotoPreviewController.h"
+#import "BANetManager.h"
 
 @interface YJAddPhotoVC ()<TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate>{
     
@@ -36,12 +37,40 @@
 
 @implementation YJAddPhotoVC
 
+//- (void)viewWillAppear:(BOOL)animated{
+//    
+//    [super viewWillAppear:animated];
+//    
+//    self.view.backgroundColor = [UIColor whiteColor];
+//    
+//}
+
 - (void)viewWillAppear:(BOOL)animated{
-    
     [super viewWillAppear:animated];
-    
     self.view.backgroundColor = [UIColor whiteColor];
     
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.navigationController.navigationBar.translucent = NO;
+    self.navigationController.navigationBar.barTintColor = BackGray;
+    self.navigationController.navigationBar.tintColor = [UIColor grayColor];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+    
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem itemWithTarget:self action:@selector(finsh) title:@"上传" titleColor:TextColor font:AdaptedWidth(16)];
+    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"上传照片" font:19.0];
+}
+
+- (void)finsh{
+    
+    [self PostImage];
+
+}
+
+- (void)back{
+    
+    self.navigationController.navigationBar.translucent = YES;
+    UIViewController *vc = self.navigationController.viewControllers[2];
+    [self.navigationController popToViewController:vc animated:YES];
 }
 
 - (void)viewDidLoad {
@@ -54,7 +83,64 @@
     _selectedAssets = [NSMutableArray array];
     [self configCollectionView];
     
+    
     // Do any additional setup after loading the view.
+}
+
+
+- (void)PostImage{
+    
+    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+    [parameter setObject:self.albumId forKey:@"albumId"];
+    [parameter setObject:@"json" forKey:@"format"];
+//    [parameter setObject:@"" forKey:@""];
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.contentColor = [UIColor whiteColor];
+    hud.color = [UIColor blackColor];
+    hud.label.text = NSLocalizedString(@"正在上传图片...", @"HUD loading title");
+    
+    [BANetManager ba_uploadImageWithUrlString:[NSString stringWithFormat:@"%@/guide/albumPic/add?dir=image",BaseUrl] parameters:parameter imageArray:_selectedPhotos fileName:[NSString stringWithFormat:@"%ld.png",_selectedPhotos.count] successBlock:^(id response) {
+        
+        NSDictionary *dict = response;
+        XXLog(@"%@",dict);
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+//            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.contentColor = [UIColor whiteColor];
+            hud.color = [UIColor blackColor];
+            hud.label.text = NSLocalizedString(@"上传照片成功!", @"HUD message title");
+            [hud hideAnimated:YES afterDelay:2.f];
+            
+            UIViewController *vc = self.navigationController.viewControllers[2];
+            [self.navigationController popToViewController:vc animated:YES];
+
+        }else{
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+            }];
+            [alert show];
+        }
+        
+    } failurBlock:^(NSError *error) {
+        
+        SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"上传图片失败" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            
+        }];
+        [alert show];
+        
+    } upLoadProgress:^(int64_t bytesProgress, int64_t totalBytesProgress) {
+        
+    }];
+    
+    [BANetManager ba_uploadImageWithUrlString:nil parameters:nil imageArray:nil fileName:nil successBlock:^(id response) {
+        
+    } failurBlock:^(NSError *error) {
+        
+    } upLoadProgress:^(int64_t bytesProgress, int64_t totalBytesProgress) {
+        
+    }];
+    
 }
 
 

@@ -15,6 +15,7 @@
 #import "YJDateVC.h"
 #import "YJPhotoVC.h"
 #import "YJServerStateVC.h"
+//#import "UIImage+ImageEffects.h"
 
 void *CustomHeaderInsetObserver = &CustomHeaderInsetObserver;
 @interface YJGCenterController ()
@@ -30,9 +31,31 @@ void *CustomHeaderInsetObserver = &CustomHeaderInsetObserver;
     [super viewWillAppear:animated];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
+    self.navigationController.navigationBar.translucent = YES;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+    
+    [self.navigationController.navigationBar setBackgroundImage:[self createImageWithColor:[UIColor clearColor]] forBarMetrics:UIBarMetricsDefault];
+    
+    [self.navigationController.navigationBar setShadowImage:[self createImageWithColor:[UIColor clearColor]]];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    [self.navigationController.navigationBar setTranslucent:YES];
+    
+    // Do any additional setup after loading the view.
+    
+    [self addObserver:self forKeyPath:@"segmentTopInset" options:NSKeyValueObservingOptionNew context:CustomHeaderInsetObserver];
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBar.translucent = NO;
+    
+    [self removeObserver:self forKeyPath:@"segmentTopInset"];
+
+
     
 }
 
@@ -46,14 +69,14 @@ void *CustomHeaderInsetObserver = &CustomHeaderInsetObserver;
 
 -(instancetype)init
 {
-    //资料
-    YJTableVC *information = [[YJTableVC alloc] init];
     //发现
     YJMyFindVC *find = [[YJMyFindVC alloc] init];
-    //日期
-    YJDateVC *date = [[YJDateVC alloc]init];
     //相册
     YJPhotoVC *albumPhoto = [[YJPhotoVC alloc]init];
+    //日期
+    YJDateVC *date = [[YJDateVC alloc]init];
+    //资料
+    YJTableVC *information = [[YJTableVC alloc] init];
     
     
     self = [super initWithControllers:find,albumPhoto,date,information, nil];
@@ -82,15 +105,7 @@ void *CustomHeaderInsetObserver = &CustomHeaderInsetObserver;
     [super viewDidLoad];
     
     
-    [self.navigationController.navigationBar setBackgroundImage:[self createImageWithColor:[UIColor clearColor]] forBarMetrics:UIBarMetricsDefault];
-    
-    [self.navigationController.navigationBar setShadowImage:[self createImageWithColor:[UIColor clearColor]]];
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    [self.navigationController.navigationBar setTranslucent:YES];
-
-    // Do any additional setup after loading the view.
-    
-    [self addObserver:self forKeyPath:@"segmentTopInset" options:NSKeyValueObservingOptionNew context:CustomHeaderInsetObserver];
+   
 }
 
 -(UIImage *)createImageWithColor: (UIColor *) color
@@ -120,7 +135,6 @@ void *CustomHeaderInsetObserver = &CustomHeaderInsetObserver;
 
 -(void)dealloc
 {
-    [self removeObserver:self forKeyPath:@"segmentTopInset"];
 }
 
 

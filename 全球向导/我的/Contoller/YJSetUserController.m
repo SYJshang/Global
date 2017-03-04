@@ -75,15 +75,11 @@
                 
                 if ([code isEqualToString:@"1"]) {
                     
-                    sleep(1);
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        UIImage *image = [[UIImage imageNamed:@"smile"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-                        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-                        hud.customView = imageView;
-                        hud.mode = MBProgressHUDModeCustomView;
-                        hud.label.text = NSLocalizedString(@"完成", @"HUD completed title");
-                        [hud hideAnimated:YES];
-                    });
+                    hud.mode = MBProgressHUDModeText;
+                    hud.contentColor = [UIColor whiteColor];
+                    hud.color = [UIColor blackColor];
+                    hud.label.text = NSLocalizedString(@"提交成功!", @"HUD message title");
+                    [hud hideAnimated:YES afterDelay:2.f];
 
                 }else{
                     
@@ -129,15 +125,11 @@
                 NSString *code = dict[@"code"];
                 if ([code isEqualToString:@"1"]) {
                     
-                    sleep(1);
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        UIImage *image = [[UIImage imageNamed:@"smile"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-                        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-                        hud.customView = imageView;
-                        hud.mode = MBProgressHUDModeCustomView;
-                        hud.label.text = NSLocalizedString(@"完成", @"HUD completed title");
-                        [hud hideAnimated:YES];
-                    });
+                    hud.mode = MBProgressHUDModeText;
+                    hud.contentColor = [UIColor whiteColor];
+                    hud.color = [UIColor blackColor];
+                    hud.label.text = NSLocalizedString(@"完成!", @"HUD message title");
+                    [hud hideAnimated:YES afterDelay:2.f];
                     
             }else{
                     
@@ -397,8 +389,10 @@
                     
                    
                     hud.mode = MBProgressHUDModeText;
-                    hud.label.text = NSLocalizedString(@"上传完成", @"HUD completed title");
-                    [hud hideAnimated:YES];
+                    hud.contentColor = [UIColor whiteColor];
+                    hud.color = [UIColor blackColor];
+                    hud.label.text = NSLocalizedString(@"上传照片成功!", @"HUD message title");
+                    [hud hideAnimated:YES afterDelay:2.f];
 
                 });
                 

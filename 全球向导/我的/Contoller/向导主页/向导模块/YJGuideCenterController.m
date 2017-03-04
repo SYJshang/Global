@@ -24,9 +24,9 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
-    self.automaticallyAdjustsScrollViewInsets = NO;
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    
+
+    self.automaticallyAdjustsScrollViewInsets = NO;
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
@@ -34,11 +34,19 @@
     self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"向导中心" font:19.0];
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    
+    [super viewWillDisappear:animated];
+
+    
+}
+
 - (void)back{
     
     [self.navigationController popViewControllerAnimated:YES];
     
 }
+
 
 
 - (void)viewDidLoad {

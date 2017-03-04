@@ -1,32 +1,28 @@
 //
-//  YJPhotoTitleVC.m
+//  YJReplaceNameVC.m
 //  全球向导
 //
-//  Created by SYJ on 2017/2/28.
+//  Created by SYJ on 2017/3/3.
 //  Copyright © 2017年 尚勇杰. All rights reserved.
 //
 
-#import "YJPhotoTitleVC.h"
-#import "YJAddPhotoVC.h"
-
+#import "YJReplaceNameVC.h"
 
 #define MAX_STARWORDS_LENGTH 20
 
-@interface YJPhotoTitleVC ()
+@interface YJReplaceNameVC ()
 
 @property (nonatomic, strong) UITextField *userNickTf;
-
-//@property (nonatomic, strong) NSString *albumID;
 
 
 @end
 
-@implementation YJPhotoTitleVC
+@implementation YJReplaceNameVC
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.view.backgroundColor = [UIColor whiteColor];
-
+    
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.navigationController.navigationBar.translucent = NO;
@@ -45,7 +41,7 @@
 }
 
 - (void)back{
-
+    
     self.navigationController.navigationBar.translucent = YES;
     [self.navigationController popViewControllerAnimated:YES];
     
@@ -76,25 +72,27 @@
     
     NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
     [parameter setObject:self.userNickTf.text forKey:@"name"];
-    [WBHttpTool Post:[NSString stringWithFormat:@"%@/guide/album/add",BaseUrl] parameters:parameter success:^(id responseObject) {
+    [parameter setObject:self.albumId forKey:@"id"];
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/guide/album/update",BaseUrl] parameters:parameter success:^(id responseObject) {
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         XXLog(@"%@",dict);
         if ([dict[@"code"] isEqualToString:@"1"]) {
             
-//            self.albumID = dict[@"data"][@"id"];
+            //            self.albumID = dict[@"data"][@"id"];
             
             
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
             hud.mode = MBProgressHUDModeText;
             hud.contentColor = [UIColor whiteColor];
             hud.color = [UIColor blackColor];
-            hud.label.text = NSLocalizedString(@"创建相册成功!", @"HUD message title");
+            hud.label.text = NSLocalizedString(@"修改名称成功!", @"HUD message title");
             [hud hideAnimated:YES afterDelay:2.f];
-            YJAddPhotoVC *vc = [[YJAddPhotoVC alloc]init];
-            vc.albumId = dict[@"data"][@"id"];
-            XXLog(@"%@",vc.albumId);
-            [self.navigationController pushViewController:vc animated:YES];
+            
+            UIViewController *vc = self.navigationController.viewControllers[2];
+            [self.navigationController popToViewController:vc animated:YES];
+            
+            
         }else{
             SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
                 
@@ -153,11 +151,6 @@
     
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 /*
 #pragma mark - Navigation

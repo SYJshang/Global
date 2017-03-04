@@ -10,4 +10,8 @@
 
 @interface YJEditPhotoVC : UIViewController
 
+@property (nonatomic, strong) NSString *albumId;
+@property (nonatomic, strong) NSString *album; //相册名称
+
+
 @end
