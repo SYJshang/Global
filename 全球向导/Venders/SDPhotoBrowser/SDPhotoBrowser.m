@@ -114,19 +114,25 @@
 }
 
 - (void)deleteImage{
-//    
-//    int index = _scrollView.contentOffset.x / _scrollView.bounds.size.width;
-//    UIImageView *currentImageView = _scrollView.subviews[index];
+    
+    int index = _scrollView.contentOffset.x / _scrollView.bounds.size.width;
+    UIImageView *currentImageView = _scrollView.subviews[index];
 //    [currentImageView removeFromSuperview];
-//    [_scrollView removeFromSuperview];
-//    self.imageCount--;
+//    self.imageCount --;
 //    if (self.currentImageIndex == self.imageCount) {
 //        self.currentImageIndex--;
 //    }else{
 //        self.currentImageIndex = index;
 //    }
+//    _scrollView.hidden = YES;
+//    _willDisappear = YES;
+//    [self removeFromSuperview];
 //    [self setupScrollView];
 //    [self setupToolbars];
+    
+    if ([self.delegate respondsToSelector:@selector(indexPath:)]) {
+            [self.delegate indexPath:index];
+    }
 }
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;

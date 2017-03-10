@@ -12,7 +12,7 @@
 
 @protocol YJBtnClickEvE <NSObject>
 @optional
--(void)btnDidClickPlusButton:(NSInteger )ViewTag;
+-(void)btnDidClickPlusButton:(UIButton *)ViewTag;
 @end
 
 @interface YJAllOrderCell : UITableViewCell

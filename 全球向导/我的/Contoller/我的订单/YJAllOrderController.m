@@ -12,6 +12,7 @@
 #import "YJOrderListModel.h"
 #import "YJPageModel.h"
 #import "NoNetwork.h"
+#import "YJConfirmController.h"
 
 
 
@@ -225,7 +226,7 @@
                 [self.totalCout addObject:model];
             }
 
-            if (self.orderList.count < 2) {
+            if (self.orderList.count < self.pageModel.pageSize) {
                 [self.tableView.mj_footer endRefreshingWithNoMoreData];
             }else{
                 [self.tableView.mj_footer endRefreshing];
@@ -295,12 +296,43 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    
     [self.navigationController pushViewController:[YJDetailController new] animated:YES];
 }
 
-- (void)btnDidClickPlusButton:(NSInteger)ViewTag{
+- (void)btnDidClickPlusButton:(UIButton *)ViewTag{
     
-    XXLog(@"点击了第 %ld 个按钮",ViewTag);
+    XXLog(@"点击了第 %ld 个按钮",ViewTag.tag);
+    
+    YJAllOrderCell *cell = (YJAllOrderCell *)[[ViewTag superview]superview];
+    //获取cell
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    //获取当前选中cell
+//    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    YJOrderListModel *model = self.totalCout[indexPath.row];
+    
+        
+        switch (model.status) {
+         
+        case 1:{
+            
+        if (ViewTag.tag == 1) {
+            
+            YJConfirmController *vc = [[YJConfirmController alloc]init];
+            vc.orderID = model.ID;
+            [self.navigationController pushViewController:vc animated:YES];
+            
+        }
+                
+                break;
+                
+            default:
+                break;
+        }
+        
+        
+    }
+    
     
 }
 

@@ -10,4 +10,6 @@
 
 @interface YJReveingDetailVC : UIViewController
 
+@property (nonatomic, strong) NSString *orderId;
+
 @end

@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YJServerStateModle.h"
 
 @interface YJEditServerVC : UIViewController
+
+@property (nonatomic, strong) YJServerStateModle *model;
 
 @end

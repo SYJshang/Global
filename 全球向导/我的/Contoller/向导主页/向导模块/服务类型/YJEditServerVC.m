@@ -14,6 +14,8 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 
+@property (nonatomic, strong) UITextField *textFiled;
+
 @end
 
 @implementation YJEditServerVC
@@ -26,6 +28,7 @@
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(finsh)];
     self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"编辑服务" font:19.0];
     
 }
@@ -36,6 +39,53 @@
     
 }
 
+- (void)finsh{
+    
+    XXLog(@"完成");
+    [self getUpdate];
+}
+
+
+
+- (void)getUpdate{
+    
+    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+    [parameter setObject:self.model.ID forKey:@"id"];
+    [parameter setObject:@"1" forKey:@"peopleNumberLimit"];
+    [parameter setObject:self.textFiled.text forKey:@"price"];
+//    if (self.model.status == 0) {
+        [parameter setObject:@"1" forKey:@"status"];
+        
+
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/guide/product/update",BaseUrl] parameters:parameter success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.contentColor = [UIColor whiteColor];
+            hud.color = [UIColor blackColor];
+            hud.label.text = NSLocalizedString(@"修改成功!", @"HUD message title");
+            [hud hideAnimated:YES afterDelay:2.f];
+
+            [self.navigationController popViewControllerAnimated:YES];
+            
+        }else{
+            
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
+        }
+        
+
+        
+        
+    } failure:^(NSError *error) {
+        
+    }];
+}
 
 
 - (void)viewDidLoad {
@@ -49,9 +99,22 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:1.0];
     
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+    tap.cancelsTouchesInView =NO;
+    [_tableView addGestureRecognizer:tap];
+
+    
     [self.tableView registerClass:[YJDescOrderCell class] forCellReuseIdentifier:@"cell"];
     [self.tableView registerClass:[YJEditPriceCell class] forCellReuseIdentifier:@"cell1"];
 }
+
+
+- (void)tap:(UITapGestureRecognizer*)tap{
+    [self.textFiled resignFirstResponder];
+}
+
+
+
 
 #pragma mark - table view dataSource
 
@@ -75,8 +138,8 @@
         
         YJEditPriceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
         cell.name.text = @"服务价格";
-        cell.price.text = @"￥1000.00";
         cell.price.textColor = [UIColor blackColor];
+        self.textFiled = cell.price;
         
         return cell;
         
@@ -93,15 +156,13 @@
         case 0:
             
             cell.name.text = @"服务名称";
-            cell.desc.text = @"带车接机";
-            cell.desc.textAlignment = NSTextAlignmentRight;
+            cell.desc.text = self.model.name;
+//            cell.desc.textAlignment = NSTextAlignmentRight;
             
             break;
         case 1:
             cell.name.text = @"服务描述";
-            cell.desc.text = @"A8地带你装逼带你飞";
-            cell.desc.textAlignment = NSTextAlignmentRight;
-
+            cell.desc.text = self.model.desc;
             break;
         default:
             break;
@@ -117,11 +178,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
-    
-    
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

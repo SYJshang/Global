@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A0383481E6EBDFF00A54525 /* YJServerStateModle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A0383471E6EBDFF00A54525 /* YJServerStateModle.m */; };
+		1A03834B1E6FE67200A54525 /* YJGuideReceiveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A03834A1E6FE67200A54525 /* YJGuideReceiveModel.m */; };
+		1A03834E1E715E5B00A54525 /* YJWaitOrderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A03834D1E715E5B00A54525 /* YJWaitOrderVC.m */; };
+		1A0383511E715FD500A54525 /* YJGuideWaitReceiveVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A0383501E715FD500A54525 /* YJGuideWaitReceiveVC.m */; };
+		1A0383541E71605500A54525 /* YJWaitServceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A0383531E71605500A54525 /* YJWaitServceVC.m */; };
+		1A0383571E71613800A54525 /* YJGuideRefundVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A0383561E71613800A54525 /* YJGuideRefundVC.m */; };
+		1A03835A1E72460C00A54525 /* YJGuideRefundModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A0383591E72460C00A54525 /* YJGuideRefundModel.m */; };
+		1A03835D1E729B8100A54525 /* YJOrderDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A03835C1E729B8100A54525 /* YJOrderDetailModel.m */; };
+		1A0383601E72BE4900A54525 /* YJRefundDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A03835F1E72BE4900A54525 /* YJRefundDetailVC.m */; };
 		1A03A6BD1E077509007EB922 /* YJMineEvaluateVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A03A6BC1E077509007EB922 /* YJMineEvaluateVC.m */; };
 		1A03A6C01E077616007EB922 /* YJEveWiatVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A03A6BF1E077616007EB922 /* YJEveWiatVC.m */; };
 		1A03A6C31E077711007EB922 /* YJAlreadyEveVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A03A6C21E077711007EB922 /* YJAlreadyEveVC.m */; };
@@ -366,6 +375,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A0383461E6EBDFF00A54525 /* YJServerStateModle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJServerStateModle.h; sourceTree = "<group>"; };
+		1A0383471E6EBDFF00A54525 /* YJServerStateModle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJServerStateModle.m; sourceTree = "<group>"; };
+		1A0383491E6FE67200A54525 /* YJGuideReceiveModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJGuideReceiveModel.h; sourceTree = "<group>"; };
+		1A03834A1E6FE67200A54525 /* YJGuideReceiveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJGuideReceiveModel.m; sourceTree = "<group>"; };
+		1A03834C1E715E5B00A54525 /* YJWaitOrderVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJWaitOrderVC.h; sourceTree = "<group>"; };
+		1A03834D1E715E5B00A54525 /* YJWaitOrderVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJWaitOrderVC.m; sourceTree = "<group>"; };
+		1A03834F1E715FD500A54525 /* YJGuideWaitReceiveVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJGuideWaitReceiveVC.h; sourceTree = "<group>"; };
+		1A0383501E715FD500A54525 /* YJGuideWaitReceiveVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJGuideWaitReceiveVC.m; sourceTree = "<group>"; };
+		1A0383521E71605500A54525 /* YJWaitServceVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJWaitServceVC.h; sourceTree = "<group>"; };
+		1A0383531E71605500A54525 /* YJWaitServceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJWaitServceVC.m; sourceTree = "<group>"; };
+		1A0383551E71613800A54525 /* YJGuideRefundVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJGuideRefundVC.h; sourceTree = "<group>"; };
+		1A0383561E71613800A54525 /* YJGuideRefundVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJGuideRefundVC.m; sourceTree = "<group>"; };
+		1A0383581E72460C00A54525 /* YJGuideRefundModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJGuideRefundModel.h; sourceTree = "<group>"; };
+		1A0383591E72460C00A54525 /* YJGuideRefundModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJGuideRefundModel.m; sourceTree = "<group>"; };
+		1A03835B1E729B8100A54525 /* YJOrderDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJOrderDetailModel.h; sourceTree = "<group>"; };
+		1A03835C1E729B8100A54525 /* YJOrderDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJOrderDetailModel.m; sourceTree = "<group>"; };
+		1A03835E1E72BE4900A54525 /* YJRefundDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJRefundDetailVC.h; sourceTree = "<group>"; };
+		1A03835F1E72BE4900A54525 /* YJRefundDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJRefundDetailVC.m; sourceTree = "<group>"; };
 		1A03A6BB1E077509007EB922 /* YJMineEvaluateVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJMineEvaluateVC.h; sourceTree = "<group>"; };
 		1A03A6BC1E077509007EB922 /* YJMineEvaluateVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJMineEvaluateVC.m; sourceTree = "<group>"; };
 		1A03A6BE1E077616007EB922 /* YJEveWiatVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJEveWiatVC.h; sourceTree = "<group>"; };
@@ -1779,6 +1806,14 @@
 				1AF3ABA91E66A1D000F5E568 /* YJPhotoModel.m */,
 				1AA3B9A01E681AF400718AD5 /* YJPhotoLsitModel.h */,
 				1AA3B9A11E681AF400718AD5 /* YJPhotoLsitModel.m */,
+				1A0383461E6EBDFF00A54525 /* YJServerStateModle.h */,
+				1A0383471E6EBDFF00A54525 /* YJServerStateModle.m */,
+				1A0383491E6FE67200A54525 /* YJGuideReceiveModel.h */,
+				1A03834A1E6FE67200A54525 /* YJGuideReceiveModel.m */,
+				1A0383581E72460C00A54525 /* YJGuideRefundModel.h */,
+				1A0383591E72460C00A54525 /* YJGuideRefundModel.m */,
+				1A03835B1E729B8100A54525 /* YJOrderDetailModel.h */,
+				1A03835C1E729B8100A54525 /* YJOrderDetailModel.m */,
 			);
 			path = "向导主页";
 			sourceTree = "<group>";
@@ -2313,12 +2348,22 @@
 		1AF3AB7A1E6567DD00F5E568 /* 向导接单 */ = {
 			isa = PBXGroup;
 			children = (
-				1AF3AB7B1E6567DD00F5E568 /* YJAllReceivingController.h */,
-				1AF3AB7C1E6567DD00F5E568 /* YJAllReceivingController.m */,
 				1AF3AB7D1E6567DD00F5E568 /* YJReceiveOrderController.h */,
 				1AF3AB7E1E6567DD00F5E568 /* YJReceiveOrderController.m */,
+				1AF3AB7B1E6567DD00F5E568 /* YJAllReceivingController.h */,
+				1AF3AB7C1E6567DD00F5E568 /* YJAllReceivingController.m */,
+				1A03834C1E715E5B00A54525 /* YJWaitOrderVC.h */,
+				1A03834D1E715E5B00A54525 /* YJWaitOrderVC.m */,
+				1A03834F1E715FD500A54525 /* YJGuideWaitReceiveVC.h */,
+				1A0383501E715FD500A54525 /* YJGuideWaitReceiveVC.m */,
+				1A0383521E71605500A54525 /* YJWaitServceVC.h */,
+				1A0383531E71605500A54525 /* YJWaitServceVC.m */,
+				1A0383551E71613800A54525 /* YJGuideRefundVC.h */,
+				1A0383561E71613800A54525 /* YJGuideRefundVC.m */,
 				1AF3AB7F1E6567DD00F5E568 /* YJReveingDetailVC.h */,
 				1AF3AB801E6567DD00F5E568 /* YJReveingDetailVC.m */,
+				1A03835E1E72BE4900A54525 /* YJRefundDetailVC.h */,
+				1A03835F1E72BE4900A54525 /* YJRefundDetailVC.m */,
 			);
 			path = "向导接单";
 			sourceTree = "<group>";
@@ -2732,6 +2777,7 @@
 				1A443C151DF96B5400CC1AC2 /* YJButton.m in Sources */,
 				1A2C15A21DF14A3E0053B02B /* YJTravelController.m in Sources */,
 				1AFCC81C1E260A2F00450852 /* UIView+MJExtension.m in Sources */,
+				1A03835D1E729B8100A54525 /* YJOrderDetailModel.m in Sources */,
 				1A6C74731DFA4F1B002A9481 /* YJStateModle.m in Sources */,
 				1A83B1D81E56CFE8008C2ECC /* YJOrderFinshModel.m in Sources */,
 				1A7FD9291DC1FA7E00FCA46B /* YJGuideController.m in Sources */,
@@ -2769,8 +2815,10 @@
 				1A7FD9261DC1ED5800FCA46B /* YJFourCell.m in Sources */,
 				1AFC41621DF7A26900DEA96A /* YJMyOrderController.m in Sources */,
 				1A2613611DCC39B8002B95DC /* YJProfileCell.m in Sources */,
+				1A0383601E72BE4900A54525 /* YJRefundDetailVC.m in Sources */,
 				1A047D5F1E0B692500AC1355 /* MJExtensionConst.m in Sources */,
 				1A5E4D151DF4FEDA00136053 /* NSImage+WebCache.m in Sources */,
+				1A0383511E715FD500A54525 /* YJGuideWaitReceiveVC.m in Sources */,
 				1AA4C0631E52A68000B7DD9F /* YJShareCollectCell.m in Sources */,
 				1AF3AB931E6567DD00F5E568 /* YJReceiveOrderController.m in Sources */,
 				1A03A6C61E07C637007EB922 /* YJShareCell.m in Sources */,
@@ -2784,6 +2832,7 @@
 				1A2783361E2CB9AC0044FB41 /* YJProductModel.m in Sources */,
 				1AFCC8151E260A2F00450852 /* MJRefreshNormalHeader.m in Sources */,
 				1AFCC7881E237B4B00450852 /* YJGuideModel.m in Sources */,
+				1A0383481E6EBDFF00A54525 /* YJServerStateModle.m in Sources */,
 				1AEB22971DE44A2300784AF3 /* WSMovieController.m in Sources */,
 				1A2C8B8F1DD571EB0017F068 /* PublishMenuButton.m in Sources */,
 				1A5E4D181DF4FEDA00136053 /* SDWebImageCompat.m in Sources */,
@@ -2798,6 +2847,7 @@
 				1A0DF3251DBFAA2300E2EE9F /* NBSearchResultController.m in Sources */,
 				1A78875D1E1E4EEF004F3271 /* PinyinHelper.m in Sources */,
 				1AFCC8181E260A2F00450852 /* MJRefreshConst.m in Sources */,
+				1A0383571E71613800A54525 /* YJGuideRefundVC.m in Sources */,
 				1AF3AB5F1E655F4B00F5E568 /* TZPhotoPreviewCell.m in Sources */,
 				1A8CE8811E14F627009931CA /* YJDemandDetailVC.m in Sources */,
 				1AFC41651DF7AB5100DEA96A /* YJAllOrderController.m in Sources */,
@@ -2850,6 +2900,7 @@
 				1A5ED9611DC9F07F002FAF0A /* DataManager.m in Sources */,
 				1A9423821E66C50100CEA243 /* UIButton+AFNetworking.m in Sources */,
 				1AF928AC1DF94130004B666F /* YJDrawbackCell.m in Sources */,
+				1A03834B1E6FE67200A54525 /* YJGuideReceiveModel.m in Sources */,
 				1A2C8B901DD571EB0017F068 /* XWPopMenuController.m in Sources */,
 				1A443C0C1DF94AD500CC1AC2 /* YJDetailController.m in Sources */,
 				1AF3AB621E655F4B00F5E568 /* TZVideoPlayerController.m in Sources */,
@@ -2863,6 +2914,7 @@
 				1A7887121E1DE084004F3271 /* SGAlertView.m in Sources */,
 				1A03A6C31E077711007EB922 /* YJAlreadyEveVC.m in Sources */,
 				1A5E4D1F1DF4FEDA00136053 /* UIImage+GIF.m in Sources */,
+				1A0383541E71605500A54525 /* YJWaitServceVC.m in Sources */,
 				1AD2BACC1DD1BF88003A246C /* YJPayFormCell.m in Sources */,
 				1A3DFAAA1DD08140004F1A63 /* YJPhoneNumCell.m in Sources */,
 				1A047D671E0B692500AC1355 /* NSObject+MJProperty.m in Sources */,
@@ -2933,6 +2985,7 @@
 				1A047D601E0B692500AC1355 /* MJFoundation.m in Sources */,
 				1A5E4D351DF56BDC00136053 /* YJCache.m in Sources */,
 				1A5E4D1D1DF4FEDA00136053 /* SDWebImagePrefetcher.m in Sources */,
+				1A03834E1E715E5B00A54525 /* YJWaitOrderVC.m in Sources */,
 				1AFCC77C1E23229A00450852 /* NSObject+YJJsonOrModel.m in Sources */,
 				1AFCC77F1E23251500450852 /* YJUserModel.m in Sources */,
 				1A5E4D161DF4FEDA00136053 /* SDImageCache.m in Sources */,
@@ -2989,6 +3042,7 @@
 				1A5259431E5D850F00067F21 /* YJBuyListModel.m in Sources */,
 				1AA4C06C1E52CE9D00B7DD9F /* YJGuideRecVC.m in Sources */,
 				1A62B3BD1DD322E3006E0D97 /* YJDataController.m in Sources */,
+				1A03835A1E72460C00A54525 /* YJGuideRefundModel.m in Sources */,
 				1A9423811E66C50100CEA243 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				1A6C747E1DFAA405002A9481 /* YJGOrderCell.m in Sources */,
 				1AFCC7D01E24E33400450852 /* YJBNetWorkNotifionTool.m in Sources */,

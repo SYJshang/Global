@@ -13,7 +13,7 @@
 
 @property (nonatomic, strong) UILabel *allPrice;
 
-@property (nonatomic, strong) NSString *text;
+//@property (nonatomic, strong) NSString *text;
 
 @property (nonatomic, strong) YJOrderFinshModel *model;
 

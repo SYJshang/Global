@@ -68,7 +68,7 @@
     //[webView setDelegate:self];
     webView.navigationDelegate = self;
     [webView setOpaque:NO];//opaque是不透明的意思
-    //    [webView setScalesPageToFit:YES];//自动缩放以适应屏幕
+//    [webView setScalesPageToFit:YES];//自动缩放以适应屏幕
     [self.view addSubview:webView];
     
     //加载网页的方式

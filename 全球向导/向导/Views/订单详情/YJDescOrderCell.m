@@ -26,6 +26,7 @@
         self.desc.text = @"10人";
         [self.contentView addSubview:self.desc];
         self.desc.textColor = [UIColor grayColor];
+        self.desc.textAlignment = NSTextAlignmentRight;
         self.desc.font = [UIFont systemFontOfSize:AdaptedWidth(14)];
         self.desc.sd_layout.leftSpaceToView(self.name,5).topSpaceToView(self.contentView,10).bottomSpaceToView(self.contentView,10).rightSpaceToView(self.contentView,10);
         

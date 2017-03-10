@@ -10,18 +10,32 @@
 #import "YJServerStateCell.h"
 #import "YJOtherServerVC.h"
 #import "YJEditServerVC.h"
+#import "YJServerStateModle.h"
+#import "YJPageModel.h"
 
 @interface YJServerStateVC ()<UITableViewDelegate,UITableViewDataSource,editBtnClickPush>
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSArray *titleArr;
-@property (nonatomic, strong) NSArray *descArr;
-@property (nonatomic, strong) NSArray *iconArr;
+//@property (nonatomic, strong) NSArray *titleArr;
+//@property (nonatomic, strong) NSArray *descArr;
+//@property (nonatomic, strong) NSArray *iconArr;
+
+@property (nonatomic, strong) NSMutableArray *serverList;
+@property (nonatomic, strong) YJPageModel *pageModel;
 
 
 @end
 
 @implementation YJServerStateVC
+
+- (NSMutableArray *)serverList{
+    
+    if (_serverList == nil) {
+        
+        _serverList = [NSMutableArray array];
+    }
+    return _serverList;
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -33,6 +47,8 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"服务类型" font:19.0];
     
+    [self getServerList];
+
 }
 
 - (void)back{
@@ -57,14 +73,46 @@
     
     [self.tableView registerClass:[YJServerStateCell class] forCellReuseIdentifier:@"cell"];
     
-    self.titleArr = @[@"徒步接机",@"带车接机",@"徒步陪游",@"带车陪游",@"徒步送机",@"带车送机"];
-    self.iconArr = @[@"icon3",@"icon4",@"icon5",@"icon6",@"icon7",@"icon8"];
-    self.descArr = @[@"搭乘公交地铁等接机",@"向导专车接机",@"搭乘公交陪游",@"向导专车陪游",@"搭乘公众交通送机",@"向导开车送机"];
+//
+//    self.titleArr = @[@"徒步接机",@"带车接机",@"徒步陪游",@"带车陪游",@"徒步送机",@"带车送机"];
+//    self.iconArr = @[@"icon3",@"icon4",@"icon5",@"icon6",@"icon7",@"icon8"];
+//    self.descArr = @[@"搭乘公交地铁等接机",@"向导专车接机",@"搭乘公交陪游",@"向导专车陪游",@"搭乘公众交通送机",@"向导开车送机"];
     
     // Do any additional setup after loading the view.
 }
 
 
+- (void)getServerList{
+    
+    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+    [parameter setObject:@"1" forKey:@"currentPage"];
+    [WBHttpTool GET:[NSString stringWithFormat:@"%@/guide/product/list",BaseUrl] parameters:parameter success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        
+        
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            
+            self.serverList = [YJServerStateModle mj_objectArrayWithKeyValuesArray:dict[@"data"][@"productList"]];
+            
+            self.pageModel = [YJPageModel mj_objectWithKeyValues:dict[@"data"][@"queryProduct"][@"page"]];
+            [self.tableView reloadData];
+            
+        }else{
+            
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
+
+        }
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    
+}
 
 #pragma mark - table view dataSource
 
@@ -79,19 +127,16 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.titleArr.count;
+    return self.serverList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     YJServerStateCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
-    if(cell == nil) {
-        cell = [[YJServerStateCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-    }
-    cell.server.text = self.titleArr[indexPath.row];
-    cell.descLab.text = self.descArr[indexPath.row];
-    cell.icon.image = [UIImage imageNamed:self.iconArr[indexPath.row]];
+    YJServerStateModle *model = self.serverList[indexPath.row];
+    cell.model = model;
+
     cell.delegate = self;
     
     return cell;
@@ -106,10 +151,75 @@
     
 }
 
-- (void)editClickPush{
+- (void)editClickPush:(UIButton *)sender{
+   
+    YJServerStateCell *cell = (YJServerStateCell *)[[sender superview] superview];
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     
-    XXLog(@"点击进入编辑页面");
-    [self.navigationController pushViewController:[YJEditServerVC new] animated:YES];
+    YJServerStateModle *model = self.serverList[indexPath.row];
+    
+    if (sender.tag == 2) {
+        XXLog(@"点击进入编辑页面");
+        YJEditServerVC *vc = [[YJEditServerVC alloc]init];
+        vc.model = model;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else{
+        
+        
+        
+        
+        [self startServe:model];
+        
+    }
+    
+  
+}
+
+- (void)startServe:(YJServerStateModle *)model{
+   
+    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+    [parameter setObject:model.ID forKey:@"id"];
+    if (model.status == 0) {
+        [parameter setObject:@"1" forKey:@"status"];
+ 
+    }else{
+        [parameter setObject:@"0" forKey:@"status"];
+    }
+    
+  
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/guide/product/updateStatus",BaseUrl] parameters:parameter success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+           
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.contentColor = [UIColor whiteColor];
+            hud.color = [UIColor blackColor];
+            hud.label.text = NSLocalizedString(@"修改成功!", @"HUD message title");
+            [hud hideAnimated:YES afterDelay:2.f];
+            
+            if (model.status == 0) {
+                model.status = 1;
+            }else{
+                model.status = 0;
+            }
+
+            [self.tableView reloadData];
+            
+        }else{
+            
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    
 }
 
 

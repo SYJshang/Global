@@ -149,10 +149,10 @@
 
 - (void)action:(UIButton *)btn{
     
-    NSInteger tap = btn.tag;
+//    NSInteger tap = btn.tag;
     //通知代理
     if ([self.delegate respondsToSelector:@selector(btnDidClickPlusButton:)]) {
-        [self.delegate btnDidClickPlusButton:tap];
+        [self.delegate btnDidClickPlusButton:btn];
     }
 
     

@@ -44,7 +44,7 @@
         //时间icon
         self.timeIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"daojishi"]];
         [self.contentView addSubview:self.timeIcon];
-        self.timeIcon.sd_layout.rightSpaceToView(self.timeLab,2).centerYEqualToView(self.timeLab).heightIs(12 * KHeight_Scale).widthIs(12 * KHeight_Scale);
+        self.timeIcon.sd_layout.rightSpaceToView(self.timeLab,2).centerYEqualToView(self.timeLab).heightIs(12 * KHeight_Scale).widthIs(14 * KHeight_Scale);
         
         //分割线
         UIView *line = [[UIView alloc]init];
@@ -65,25 +65,6 @@
         self.reserveLab.font = [UIFont systemFontOfSize:AdaptedWidth(13)];
         self.reserveLab.sd_layout.leftSpaceToView(self.reserveIcon,5).centerYEqualToView(self.reserveIcon).heightIs(20 * KHeight_Scale).rightSpaceToView(self.contentView,10);
         
-        NSString *text1 = @"太阳花";
-        NSString *priceText1 = [NSString stringWithFormat:@"预订人名称  %@",text1];
-        NSMutableAttributedString *AttributedStr1 = [[NSMutableAttributedString alloc]initWithString:priceText1];
-        
-        [AttributedStr1 addAttribute:NSFontAttributeName
-         
-                               value:[UIFont boldSystemFontOfSize:AdaptedWidth(13)]
-         
-                               range:NSMakeRange(7, text1.length)];
-        
-        [AttributedStr1 addAttribute:NSForegroundColorAttributeName
-         
-                               value:[UIColor blackColor]
-         
-                               range:NSMakeRange(7, text1.length)];
-        
-        self.reserveLab.attributedText = AttributedStr1;
-
-        
         
         
         //总共时长
@@ -99,28 +80,7 @@
         self.allTimeLab.font = [UIFont systemFontOfSize:AdaptedWidth(13)];
         self.allTimeLab.sd_layout.leftSpaceToView(self.allTimeIcon,5).centerYEqualToView(self.allTimeIcon).heightIs(20 * KHeight_Scale).rightSpaceToView(self.contentView,10);
         
-        NSString *text2 = @"五天";
-        NSString *priceText2 = [NSString stringWithFormat:@"共计时长     %@",text2];
-        NSMutableAttributedString *AttributedStr2 = [[NSMutableAttributedString alloc]initWithString:priceText2];
-        
-        [AttributedStr2 addAttribute:NSFontAttributeName
-         
-                               value:[UIFont boldSystemFontOfSize:AdaptedWidth(13)]
-         
-                               range:NSMakeRange(9, text2.length)];
-        
-        [AttributedStr2 addAttribute:NSForegroundColorAttributeName
-         
-                               value:[UIColor blackColor]
-         
-                               range:NSMakeRange(9, text2.length)];
-        
-        self.allTimeLab.attributedText = AttributedStr2;
-        
-        
-        
-        
-        
+      /*
         //发现名称
         //icon
         self.findIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"mingcheng"]];
@@ -153,13 +113,13 @@
         self.findLab.attributedText = AttributedStr3;
 
         
-        
+        */
         
 
         UIView *line1 = [[UIView alloc]init];
         [self.contentView addSubview:line1];
         line1.backgroundColor = BackGray;
-        line1.sd_layout.leftEqualToView(self.contentView).rightEqualToView(self.contentView).topSpaceToView(self.findLab,10 * KHeight_Scale).heightIs(1);
+        line1.sd_layout.leftEqualToView(self.contentView).rightEqualToView(self.contentView).topSpaceToView(self.allTimeLab,10 * KHeight_Scale).heightIs(1);
         
         
         //接单按钮
@@ -227,8 +187,110 @@
     
     //通知代理
     if ([self.delegate respondsToSelector:@selector(btnClickEnvent:)]) {
-        [self.delegate btnClickEnvent:btn.tag];
+        [self.delegate btnClickEnvent:btn];
     }
+}
+
+
+- (void)setModel:(YJGuideReceiveModel *)model{
+    
+    _model = model;
+    self.orderNum.text = [NSString stringWithFormat:@"订单号 %@",model.orderNo];
+    
+    NSString *status = [NSString stringWithFormat:@"%ld",model.status];
+    self.stateLab.text = self.orderState[status];
+    
+    NSString *text1 = self.userInfo[model.buyerId];
+    NSString *priceText1 = [NSString stringWithFormat:@"预订人名称  %@",text1];
+    NSMutableAttributedString *AttributedStr1 = [[NSMutableAttributedString alloc]initWithString:priceText1];
+    
+    [AttributedStr1 addAttribute:NSFontAttributeName
+     
+                           value:[UIFont boldSystemFontOfSize:AdaptedWidth(13)]
+     
+                           range:NSMakeRange(7, text1.length)];
+    
+    [AttributedStr1 addAttribute:NSForegroundColorAttributeName
+     
+                           value:[UIColor blackColor]
+     
+                           range:NSMakeRange(7, text1.length)];
+    
+    self.reserveLab.attributedText = AttributedStr1;
+    
+    
+
+    NSString *text2 = [NSString stringWithFormat:@"%ld天",model.serviceNumber];
+    NSString *priceText2 = [NSString stringWithFormat:@"共计时长     %@",text2];
+    NSMutableAttributedString *AttributedStr2 = [[NSMutableAttributedString alloc]initWithString:priceText2];
+    
+    [AttributedStr2 addAttribute:NSFontAttributeName
+     
+                           value:[UIFont boldSystemFontOfSize:AdaptedWidth(13)]
+     
+                           range:NSMakeRange(9, text2.length)];
+    
+    [AttributedStr2 addAttribute:NSForegroundColorAttributeName
+     
+                           value:[UIColor blackColor]
+     
+                           range:NSMakeRange(9, text2.length)];
+    
+    self.allTimeLab.attributedText = AttributedStr2;
+    
+    switch (model.status) {
+        case 1:
+            [self.receiveBtn setTitle:@"接单" forState:UIControlStateNormal];
+            [self.relationBtn setTitle:@"联系用户" forState:UIControlStateNormal];
+            [self.refuseBtn setTitle:@"取消订单" forState:UIControlStateNormal];
+            self.refuseBtn.hidden = NO;
+            self.relationBtn.hidden = NO;
+            self.refuseBtn.hidden = NO;
+            break;
+        case 2:
+            [self.receiveBtn setTitle:@"联系用户" forState:UIControlStateNormal];
+            self.refuseBtn.hidden = NO;
+            self.relationBtn.hidden = YES;
+            self.refuseBtn.hidden = YES;
+            break;
+        case 3:
+            [self.receiveBtn setTitle:@"联系用户" forState:UIControlStateNormal];
+            self.refuseBtn.hidden = NO;
+            self.relationBtn.hidden = YES;
+            self.refuseBtn.hidden = YES;
+            break;
+        case 4:
+            [self.receiveBtn setTitle:@"联系用户" forState:UIControlStateNormal];
+            self.refuseBtn.hidden = NO;
+            self.relationBtn.hidden = YES;
+            self.refuseBtn.hidden = YES;
+            break;
+        case 5:
+            [self.receiveBtn setTitle:@"联系用户" forState:UIControlStateNormal];
+            self.refuseBtn.hidden = NO;
+            self.relationBtn.hidden = YES;
+            self.refuseBtn.hidden = YES;
+            break;
+        case 6:
+            [self.receiveBtn setTitle:@"联系用户" forState:UIControlStateNormal];
+            self.refuseBtn.hidden = NO;
+            self.relationBtn.hidden = YES;
+            self.refuseBtn.hidden = YES;
+            break;
+        case 7:
+            self.refuseBtn.hidden = NO;
+            self.relationBtn.hidden = NO;
+            self.refuseBtn.hidden = NO;
+            [self.receiveBtn setTitle:@"接单" forState:UIControlStateNormal];
+            [self.relationBtn setTitle:@"联系用户" forState:UIControlStateNormal];
+            [self.refuseBtn setTitle:@"拒绝订单" forState:UIControlStateNormal];
+            break;
+       
+        default:
+
+            break;
+    }
+    
 }
 
 - (void)awakeFromNib {

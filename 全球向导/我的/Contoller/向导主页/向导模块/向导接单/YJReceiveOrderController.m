@@ -10,6 +10,10 @@
 #import "SGTopTitleView.h"
 #import "YJAllOrderController.h"
 #import "YJAllReceivingController.h"
+#import "YJWaitOrderVC.h"
+#import "YJGuideWaitReceiveVC.h"
+#import "YJWaitServceVC.h"
+#import "YJGuideRefundVC.h"
 
 @interface YJReceiveOrderController ()<SGTopTitleViewDelegate, UIScrollViewDelegate>
 
@@ -30,7 +34,7 @@
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"我的订单" font:19.0];
+    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"向导接单" font:19.0];
 }
 
 - (void)back{
@@ -52,7 +56,7 @@
     [self setupChildViewController];
     
     
-    self.titles = @[@"全部订单", @"待接单",@"已接单",@"已完成",@"取消订单"];
+    self.titles = @[@"全部订单", @"待付款",@"待接单",@"待服务",@"退款"];
     // , @"NBA", @"新闻", @"娱乐", @"音乐", @"网络电影"
     self.topTitleView = [SGTopTitleView topTitleViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
     self.topTitleView.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1.0];
@@ -102,27 +106,19 @@
     [self addChildViewController:oneVC];
     
     // 电视剧
-    YJAllOrderController *twoVC = [[YJAllOrderController alloc] init];
+    YJWaitOrderVC *twoVC = [[YJWaitOrderVC alloc] init];
     [self addChildViewController:twoVC];
     
     
-    YJAllOrderController *threeVC = [[YJAllOrderController alloc] init];
+    YJGuideWaitReceiveVC *threeVC = [[YJGuideWaitReceiveVC alloc] init];
     [self addChildViewController:threeVC];
     
-    YJAllOrderController *fourVC = [[YJAllOrderController alloc] init];
+    YJWaitServceVC *fourVC = [[YJWaitServceVC alloc] init];
     [self addChildViewController:fourVC];
     
-    YJAllOrderController *fiveVC = [[YJAllOrderController alloc] init];
+    YJGuideRefundVC *fiveVC = [[YJGuideRefundVC alloc] init];
     [self addChildViewController:fiveVC];
     
-    //
-    //    // 电影
-    //    TestThreeVC *threeVC = [[TestThreeVC alloc] init];
-    //    [self addChildViewController:threeVC];
-    //
-    //    // 综艺
-    //    TestFourVC *fourVC = [[TestFourVC alloc] init];
-    //    [self addChildViewController:fourVC];
 }
 
 // 显示控制器的view

@@ -22,7 +22,7 @@
 #import "YJOrderFinshModel.h"
 
 
-@interface YJOrderFormController ()<UITableViewDelegate,UITableViewDataSource>{
+@interface YJOrderFormController ()<UITableViewDelegate,UITableViewDataSource,MyCustomCellDelegate>{
     
     NSInteger _allPrice;//总价
     NSString *productIds;//服务id
@@ -116,6 +116,9 @@
     
     self.title = @"订单详情";
     
+    if (self.DateArr) {
+        [self.DateArr removeAllObjects];
+    }
     
     
     //加载一个布局
@@ -330,15 +333,11 @@
             YJAddNumCell *cell = [tableView dequeueReusableCellWithIdentifier:@"second"];
             __weak typeof(cell) Scell = cell;
             
-//            Scell.peoBlock = ^{
-//                Scell.people ++;
-//                Scell.numLab.text =  [NSString stringWithFormat:@"%d",self.people];
-//                return cell;
-//            };
             Scell.peoBlock = ^{
                 Scell.people ++;
                 Scell.numLab.text = [NSString stringWithFormat:@"%d",Scell.people];
                 personNumber = [NSString stringWithFormat:@"%d",Scell.people];
+                XXLog(@"%@",personNumber);
 
             };
             
@@ -352,9 +351,6 @@
             personNumber = [NSString stringWithFormat:@"%d",Scell.people];
 
             };
-            
-            
-
             return cell;
            
         }
@@ -372,19 +368,25 @@
     }
         
 }
-    
+
     if (indexPath.section == 2) {
         
-        YJProductModel *moddel = self.productArr[indexPath.row];
-        productIds = [NSString stringWithFormat:@"%@%@,",productIds,moddel.ID];
 
+        YJProductModel *moddel = self.productArr[indexPath.row];
+        
+        if (self.productArr.count != 0) {
+            productIds = [NSString stringWithFormat:@"%@%@,",productIds,moddel.ID];
+        }
+        
+        XXLog(@"productIds >>>>>>>>>>>>%@",productIds);
+
+        
         if (moddel.relateDayNumber == 1) {
             
             //选择的天数
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
             NSMutableArray *select = [userDefaults objectForKey:saveSelectArr];
             
-            numbers = [NSString stringWithFormat:@"%@%ld,",numbers,select.count];
             
             YJServerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"four"];
             cell.serverName.text = moddel.name;
@@ -392,50 +394,37 @@
             cell.price.text = [NSString stringWithFormat:@"￥%@ *%lu",moddel.price,select.count];
             __weak typeof(cell) Scell = cell;
             Scell.serverBtn.userInteractionEnabled = NO;
-//            cell.btnBlock = ^{
-//                if (cell.serverBtn.selected == NO) {
-                    _allPrice += [moddel.price integerValue] * select.count;
-                    
-                    self.priceAll.text = [NSString stringWithFormat:@"合计 ￥%ld",_allPrice];
-//                    Scell.serverBtn.selected = YES;
+
+            _allPrice = [moddel.price integerValue] * select.count;
+            self.priceAll.text = [NSString stringWithFormat:@"总计 ￥%ld",_allPrice];
             
-//                }else if (cell.serverBtn.selected == YES){
-//                    _allPrice -= [moddel.price integerValue] * select.count;
-//
-//                    self.priceAll.text = [NSString stringWithFormat:@"合计 ￥%ld",_allPrice];
-//                    Scell.serverBtn.selected = NO;
-//
-//                }
-//            };
+            if (self.productArr.count != 0) {
+                
+                numbers = [NSString stringWithFormat:@"%@%ld,",numbers,select.count];
+//                    [self totalPrice:moddel];
+
+ 
+            }
+            
+            
             return cell;
         }else{
             
             YJRelateDayCell *cell = [tableView dequeueReusableCellWithIdentifier:@"seven"];
             cell.num.text = moddel.name;
             cell.descLab.text = [NSString stringWithFormat:@"%@ *%d",moddel.price,cell.people];
-
-            __weak typeof(cell) Scell = cell;
-            Scell.btnBlock = ^(UIButton *sender){
-                if (sender.tag == 100) {
-                Scell.people ++;
-                NSString *peo = [NSString stringWithFormat:@"%d",Scell.people];
-                Scell.numLab.text = peo;
-                    
-                }else if (sender.tag == 101){
-                    if (Scell.people > 0) {
-                        Scell.people --;
-                    }
-                Scell.descLab.text = [NSString stringWithFormat:@"%@ *%d",moddel.price,Scell.people];
-                NSString *peo = [NSString stringWithFormat:@"%d",Scell.people];
-                Scell.numLab.text = peo;
+            cell.numLab.text = [NSString stringWithFormat:@"%d",cell.people];
+            cell.delegate = self;
+//            [self totalPrice:moddel];
+            if (self.productArr.count != 0) {
+                
+                numbers = [NSString stringWithFormat:@"%@%@,",numbers,cell.numLab.text];
+//                [self totalPrice:moddel];
+                
+                
             }
-                Scell.descLab.text = [NSString stringWithFormat:@"%@ *%d",moddel.price,Scell.people];
-                _allPrice =+ [moddel.price integerValue] * Scell.people;
-                self.priceAll.text = [NSString stringWithFormat:@"合计 ￥%ld",_allPrice];
-            };
             
-            numbers = [NSString stringWithFormat:@"%@%d",numbers,Scell.people];
-
+            XXLog(@"numbers >>>>>>>>>>%@",numbers);
            
             return cell;
         }
@@ -517,6 +506,91 @@
     }
 }
 
+-(void)btnClick:(UITableViewCell *)cell andFlag:(int)flag
+{
+    NSIndexPath *index = [self.tableView indexPathForCell:cell];
+    XXLog(@"%@",index);
+    
+    YJRelateDayCell *cells = (YJRelateDayCell *)cell;
+    
+    switch (flag) {
+        case 100:
+        {
+            //做加法
+            //先获取到当期行数据源内容，改变数据源内容，刷新表格
+            
+            cells.people ++;
+
+        }
+            break;
+        case 101:
+        {
+            if (cells.people > 0) {
+                cells.people --;
+            }
+            
+        }
+            break;
+        default:
+            break;
+    }
+    
+    //刷新表格
+    [self.tableView reloadData];
+//     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:index,nil] withRowAnimation:UITableViewRowAnimationNone];
+    
+    YJProductModel *model = self.productArr[index.row];
+    //计算总价
+//    [self totalPrice];
+    [self totalPrice:model];
+    
+}
+
+-(void)totalPrice:(YJProductModel *)model
+{
+    
+    //每次算完要重置为0，因为每次的都是全部循环算一遍
+     _allPrice = 0;
+    productIds = @"";
+    self.priceAll.text = [NSString stringWithFormat:@"总计 ￥%ld",_allPrice];
+    numbers = @"";
+
+    
+    //遍历整个数据源，然后判断如果是选中的商品，就计算价格（单价 * 商品数量）
+    
+    for ( int i = 0; i < self.productArr.count; i++)
+    {
+        YJRelateDayCell *cell = [self.tableView  cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:2]];
+        
+        YJProductModel *model = [self.productArr objectAtIndex:i];
+        if (model.relateDayNumber == 1)
+        {
+            //选择的天数
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            NSMutableArray *select = [userDefaults objectForKey:saveSelectArr];
+            
+//            _allPrice = _allPrice + [model.price integerValue] * select.count;
+            XXLog(@"%ld",_allPrice);
+//            numbers = [NSString stringWithFormat:@"%@%ld,",numbers,select.count];
+            
+        }else{
+            
+            _allPrice = _allPrice + [model.price integerValue] * cell.people;
+//            numbers = [NSString stringWithFormat:@"%@%@,",numbers,cell.numLab.text];
+
+    }
+    
+        XXLog(@"%ld",_allPrice);
+        XXLog(@"number >>>>%@",numbers);
+        
+    //给总价文本赋值
+    self.priceAll.text = [NSString stringWithFormat:@"总计 ￥%ld",_allPrice];
+    NSLog(@"%@",self.priceAll.text);
+    
+   
+    }
+    
+}
 
 - (void)postData{
     
@@ -555,7 +629,6 @@
             YJConfirmController *vc = [[YJConfirmController alloc]init];
             
             YJOrderFinshModel *model = [YJOrderFinshModel mj_objectWithKeyValues:dict[@"data"]];
-//            NSString *orderNo = dict[@"data"][@"orderNo"];
             vc.model = model;
             [self.navigationController pushViewController:vc animated:YES];
         }else{

@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YJGuideReceiveModel.h"
+
 
 @protocol DisAndReceingClickPush <NSObject>
 @optional
--(void)btnClickEnvent:(NSInteger)tag;
+-(void)btnClickEnvent:(UIButton *)sender;
 @end
 
 @interface YJGOrderCell : UITableViewCell
@@ -34,9 +36,9 @@
 //总共时长icon
 @property (nonatomic, strong) UILabel *allTimeLab;
 //发现名称icon
-@property (nonatomic, strong) UIImageView *findIcon;
-//发现名称
-@property (nonatomic, strong) UILabel *findLab;
+//@property (nonatomic, strong) UIImageView *findIcon;
+////发现名称
+//@property (nonatomic, strong) UILabel *findLab;
 //接单
 @property (nonatomic, strong) UIButton *receiveBtn;
 //联系用户
@@ -45,7 +47,10 @@
 @property (nonatomic, strong) UIButton *refuseBtn;
 
 
+@property (nonatomic, strong) YJGuideReceiveModel *model;
 
+@property (nonatomic, strong) NSDictionary *orderState;
+@property (nonatomic, strong) NSDictionary *userInfo;
 
 
 

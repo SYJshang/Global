@@ -53,11 +53,11 @@
         self.stateBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.contentView addSubview:self.stateBtn];
         [self.stateBtn setTitle:@"启用" forState:UIControlStateNormal];
+        self.stateBtn.tag = 1;
         [self.stateBtn setBackgroundColor:TextColor];
         [self.stateBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        self.stateBtn.selected = YES;
         self.stateBtn.titleLabel.font = [UIFont systemFontOfSize:AdaptedWidth(14)];
-        [self.stateBtn addTarget:self action:@selector(stataClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self.stateBtn addTarget:self action:@selector(editClick:) forControlEvents:UIControlEventTouchUpInside];
         self.stateBtn.sd_layout.rightSpaceToView(self.contentView,10).topSpaceToView(self.descLab,10).heightIs(25 * KHeight_Scale).widthIs(70 * KWidth_Scale);
         self.stateBtn.layer.masksToBounds = YES;
         self.stateBtn.layer.cornerRadius = 12;
@@ -70,6 +70,7 @@
         [self.contentView addSubview:self.editBtn];
         [self.editBtn setTitle:@"编辑" forState:UIControlStateNormal];
         [self.editBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        self.editBtn.tag = 2;
         [self.editBtn addTarget:self action:@selector(editClick:) forControlEvents:UIControlEventTouchUpInside];
         self.editBtn.titleLabel.font = [UIFont systemFontOfSize:AdaptedWidth(14)];
         self.editBtn.sd_layout.rightSpaceToView(self.stateBtn,10).topSpaceToView(self.priceLab,10).heightIs(25 * KHeight_Scale).widthIs(70 * KWidth_Scale);
@@ -86,33 +87,57 @@
     
 }
 
-- (void)stataClick:(UIButton *)btn{
-    
-    if (btn.selected == YES) {
-        
-        [UIView animateWithDuration:0.5 animations:^{
-            btn.selected = NO;
-            [btn setBackgroundColor:[UIColor grayColor]];
-            [btn setTitle:@"停用" forState:UIControlStateNormal];
-            btn.layer.borderColor = TextColor.CGColor;
-        }];
-    }else{
-        
-        [UIView animateWithDuration:0.5 animations:^{
-            btn.selected = YES;
-            [btn setBackgroundColor:TextColor];
-            [btn setTitle:@"接单" forState:UIControlStateNormal];
-            btn.layer.borderColor = BackGray.CGColor;
-   
-        }];
-    }
-}
+//- (void)stataClick:(UIButton *)btn{
+//    
+//    if (btn.selected == YES) {
+//        
+//        [UIView animateWithDuration:0.5 animations:^{
+//            btn.selected = NO;
+//            [btn setBackgroundColor:[UIColor grayColor]];
+//            [btn setTitle:@"停用" forState:UIControlStateNormal];
+//            btn.layer.borderColor = TextColor.CGColor;
+//        }];
+//    }else{
+//        
+//        [UIView animateWithDuration:0.5 animations:^{
+//            btn.selected = YES;
+//            [btn setBackgroundColor:TextColor];
+//            [btn setTitle:@"接单" forState:UIControlStateNormal];
+//            btn.layer.borderColor = BackGray.CGColor;
+//   
+//        }];
+//    }
+//}
 
 - (void)editClick:(UIButton *)btn{
     //通知代理
-    if ([self.delegate respondsToSelector:@selector(editClickPush)]) {
-        [self.delegate editClickPush];
+    if ([self.delegate respondsToSelector:@selector(editClickPush:)]) {
+        [self.delegate editClickPush:btn];
     }
+}
+
+- (void)setModel:(YJServerStateModle *)model{
+    
+    _model = model;
+    [self.icon sd_setImageWithURL:[NSURL URLWithString:model.iconUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+    self.server.text = model.name;
+    self.descLab.text = model.desc;
+    self.priceLab.text = [NSString stringWithFormat:@"￥ %@",model.price];
+    switch (model.status) {
+        case 0:
+            [self.stateBtn setBackgroundColor:TextColor];
+            [self.stateBtn setTitle:@"启用" forState:UIControlStateNormal];
+            self.stateBtn.layer.borderColor = TextColor.CGColor;
+            break;
+        case 1:
+            [self.stateBtn setBackgroundColor:[UIColor grayColor]];
+            [self.stateBtn setTitle:@"停用" forState:UIControlStateNormal];
+            self.stateBtn.layer.borderColor = TextColor.CGColor;
+            break;
+        default:
+            break;
+    }
+    
 }
 
 - (void)awakeFromNib {

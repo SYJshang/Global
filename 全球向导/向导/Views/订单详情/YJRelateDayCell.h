@@ -8,10 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^addBlock)(UIButton *sender);//定义block
+//添加代理，用于按钮加减的实现
+@protocol MyCustomCellDelegate <NSObject>
+
+-(void)btnClick:(UITableViewCell *)cell andFlag:(int)flag;
+
+@end
+
+//typedef void (^addBlock)(UIButton *sender);//定义block
 
 
 @interface YJRelateDayCell : UITableViewCell
+
 
 //人数
 @property (nonatomic, strong) UILabel *num;
@@ -26,7 +34,10 @@ typedef void (^addBlock)(UIButton *sender);//定义block
 
 @property (nonatomic, assign) int people;
 
-@property (nonatomic, copy) addBlock btnBlock;
+//@property (nonatomic, copy) addBlock btnBlock;
+
+@property(assign,nonatomic)id<MyCustomCellDelegate>delegate;
+
 
 
 

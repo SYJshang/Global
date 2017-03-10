@@ -29,6 +29,7 @@
 @property (nonatomic, strong) NSString *page;
 @property (nonatomic, strong) NSString *ip;
 @property (nonatomic, strong) NSString *url;
+@property (nonatomic, strong) NSString *picId;
 
 
 

@@ -7,8 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YJGuideRefundModel.h"
+
+@protocol relationClickPush <NSObject>
+@optional
+-(void)btnClickEve:(UIButton *)sender;
+@end
+
 
 @interface YJOrderBgCell : UITableViewCell
+
+@property (nonatomic, weak) id <relationClickPush>delegate;
+
 
 //订单号
 @property (nonatomic, strong) UILabel *orderNum;
@@ -33,9 +43,17 @@
 //接单
 @property (nonatomic, strong) UIButton *receiveBtn;
 //联系用户
-@property (nonatomic, strong) UIButton *relationBtn;
-//拒绝接单
-@property (nonatomic, strong) UIButton *refuseBtn;
+//@property (nonatomic, strong) UIButton *relationBtn;
+////拒绝接单
+//@property (nonatomic, strong) UIButton *refuseBtn;
+
+
+@property (nonatomic, strong) NSDictionary *payMethodMap;
+@property (nonatomic, strong) NSDictionary *refundStatusMap;
+@property (nonatomic, strong) NSDictionary *userInfoMap;
+
+@property (nonatomic, strong) YJGuideRefundModel *model;
+
 
 
 

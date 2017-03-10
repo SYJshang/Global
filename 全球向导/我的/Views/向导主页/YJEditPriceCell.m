@@ -23,10 +23,12 @@
         
         
         self.price = [[UITextField alloc]init];
-        self.price.text = @"￥98.00";
+//        self.price.text = @"￥98.00";
         self.price.textAlignment = NSTextAlignmentRight;
         [self.contentView addSubview:self.price];
         self.price.textColor = [UIColor grayColor];
+        self.price.placeholder = @"请输入价格";
+        self.price.keyboardType = UIKeyboardTypeNumberPad;
         self.price.font = [UIFont systemFontOfSize:AdaptedWidth(14)];
         self.price.sd_layout.leftSpaceToView(self.name,5).topSpaceToView(self.contentView,10).bottomSpaceToView(self.contentView,10).rightSpaceToView(self.contentView,10);
         

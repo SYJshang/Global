@@ -46,7 +46,7 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = BackGray;
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height - 64) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
@@ -63,38 +63,41 @@
 //    self.descArr = @[@"1天",@"6人",@"1234567890",@"12345",@"无",@"ass12345678"];
     
     
+    if (self.model == nil) {
+        [self getNetWorkData];
+    }
+    
     
     // Do any additional setup after loading the view.
 }
 
 
-//phone = 12345;
-//remark = 1234;
-//bigTitle = b;
-//totalMoney = 200;
-//orderNo = 0145;
-//smallTitle = 北京市导游;
-//personNumber = 3;
-//orderDetailList = (
-//                   {
-//                       number = 2;
-//                       orderId = 45;
-//                       id = 100;
-//                       productId = 4;
-//                       productName = 送机1;
-//                       productDesc = 送飞机站1;
-//                       price = 100;
-//                       version = <null>;
-//                       page = <null>;
-//                       ip = <null>;
-//                   }
-//                   ,
-//                   );
-//serviceNumber = 3;
-//showPicUrl = http://tour2.oss-cn-hangzhou.aliyuncs.com/cps/1/1478679664744571;
-//}
-
-
+- (void)getNetWorkData{
+    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+    [parameter setObject:self.orderID forKey:@"orderId"];
+    [WBHttpTool GET:[NSString stringWithFormat:@"%@/userInfo/myOrder/toPay",BaseUrl] parameters:parameter success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            
+            self.model = [YJOrderFinshModel mj_objectWithKeyValues:dict[@"data"]];
+            
+            [self.tableView reloadData];
+        }else{
+            
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    
+}
 
 
 #pragma mark - table view dataSource
@@ -108,7 +111,6 @@
     if (section == 0) {
         return 6;
     }else if (section == 1){
-        
         return self.model.orderDetailList.count + 1;
     }
     return 2;
@@ -119,9 +121,13 @@
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             return 120;
-        }else{
-            return 40;
         }
+        
+        return 40;
+        
+    }else if (indexPath.section == 1){
+        
+        return 40;
     }
     
     return 60;
@@ -189,7 +195,8 @@
         }else{
             
             YJPriceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"three"];
-            cell.text = self.model.totalMoney;
+//            cell.text = self.model.totalMoney;
+            cell.model = self.model;
             return cell;
         }
         
@@ -232,15 +239,52 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.section == 1) {
+    if (indexPath.section == 2) {
         if (indexPath.row ==0 ) {
             NSLog(@"微信支付");
         }
         
         if (indexPath.row == 1) {
             NSLog(@"支付宝支付");
+            [self payOrder];
         }
     }
+    
+}
+
+//支付
+- (void)payOrder{
+    
+    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+    [parameter setObject:self.orderID forKey:@"orderId"];
+    
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myOrder/pay",BaseUrl] parameters:parameter success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        XXLog(@"%@",dict);
+        
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.contentColor = [UIColor whiteColor];
+            hud.color = [UIColor blackColor];
+            hud.label.text = NSLocalizedString(@"支付成功!", @"HUD message title");
+            [hud hideAnimated:YES afterDelay:2.f];
+
+        }else{
+            
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
+            
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+    }];
     
 }
 

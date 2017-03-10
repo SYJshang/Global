@@ -11,6 +11,8 @@
 #import "YJOrderBgCell.h"
 #import "YJReveingDetailVC.h"
 #import "CountDown.h"
+#import "YJGuideReceiveModel.h"
+#import "YJPageModel.h"
 
 @interface YJAllReceivingController ()<UITableViewDelegate,UITableViewDataSource,DisAndReceingClickPush>
 
@@ -18,9 +20,47 @@
 @property (strong, nonatomic)  CountDown *countDown;
 @property (nonatomic, strong) NSArray *dataSource;
 
+@property (nonatomic, strong) NSDictionary *closeTypeMap;//交易关闭类型
+@property (nonatomic, strong) NSDictionary *orderStatusMap;//订单状态
+@property (nonatomic, strong) NSDictionary *successTypeMap;//订单完成类型
+@property (nonatomic, strong) NSDictionary *userInfoMap;//用户映射
+@property (nonatomic, strong) NSMutableArray *orderList; //订单列表
+
+@property (nonatomic, strong) NSString *nowTime;//当前时间
+
+
+@property (nonatomic, strong) YJPageModel *pageModel;  //页数列表
+
+@property (nonatomic, strong) NoNetwork *noNetWork;
+
+@property (nonatomic, assign) int cureenPage;
+@property (nonatomic, strong) NSMutableArray *totalCout; //总数
+
+
+
 @end
 
 @implementation YJAllReceivingController
+
+- (NSMutableArray *)totalCout{
+    
+    if (_totalCout == nil) {
+        _totalCout = [NSMutableArray array];
+    }
+    return _totalCout;
+}
+
+
+
+- (NSMutableArray *)orderList{
+    
+    if (_orderList == nil) {
+        _orderList = [NSMutableArray array];
+    }
+    return _orderList;
+}
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -34,25 +74,208 @@
     [self.tableView registerClass:[YJGOrderCell class] forCellReuseIdentifier:@"cell"];
     [self.tableView registerClass:[YJOrderBgCell class] forCellReuseIdentifier:@"cell1"];
     
-    self.dataSource = @[@"2016-12-13 4:24:02",@"2016-12-13 14:24:10",@"2016-12-18 6:24:17",@"2016-12-19 12:25:01",@"2016-12-15 20:24:11",@"2016-12-21 14:34:08",@"2016-12-12 14:26:03",@"2016-12-16 22:23:49",@"2016-12-14 14:23:43",@"2016-12-15 14:23:14"];
     self.countDown = [[CountDown alloc] init];
     __weak __typeof(self) weakSelf= self;
     ///每秒回调一次
     [self.countDown countDownWithPER_SECBlock:^{
-//        NSLog(@"6");
         [weakSelf updateTimeInVisibleCells];
     }];
 
 
+    //初始化
+    self.successTypeMap = [NSDictionary dictionary];
+    self.closeTypeMap = [NSDictionary dictionary];
+    self.orderStatusMap = [NSDictionary dictionary];
+    self.userInfoMap = [NSDictionary dictionary];
+    
+    self.cureenPage = 1;
+//    self.count = 0;
+    
+    
+    NSString *str = [YJBNetWorkNotifionTool stringFormStutas];
+    XXLog(@"%@",str);
+    if ([str isEqualToString:@"3"]) {
+        
+        //设置网络状态
+        [self NetWorks];
+    }
+    
+    
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        [self getNetWorkData];
+    }];
+    
+    self.tableView.mj_header.automaticallyChangeAlpha = YES;
+    [self.tableView.mj_header beginRefreshing];
+    
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        
+        
+        if (self.pageModel.totalCount <= self.totalCout.count ) {
+            
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            
+        }else{
+            [self getMoreData];
+        }
+        
+        
+    }];
     
     // Do any additional setup after loading the view.
 }
+
+//设置网络状态
+- (void)NetWorks{
+    
+    self.tableView.hidden = YES;
+    
+    [self.noNetWork removeFromSuperview];
+    
+    self.noNetWork = [[NoNetwork alloc]init];
+    self.noNetWork.titleLabel.text = @"数据请求失败\n请设置网络之后重试";
+    __weak typeof(self) weakSelf = self;
+    self.noNetWork.btnBlock = ^{
+        [weakSelf getNetWorkData];
+    };
+    [self.view addSubview:self.noNetWork];
+}
+
+- (void)noDatas{
+    
+    self.tableView.hidden = YES;
+    
+    [self.noNetWork removeFromSuperview];
+    
+    self.noNetWork = [[NoNetwork alloc]init];
+    self.noNetWork.btrefresh.hidden = YES;
+    self.noNetWork.titleLabel.text = @"暂无数据\n赶快去整出动静吧。。";
+    __weak typeof(self) weakSelf = self;
+    self.noNetWork.btnBlock = ^{
+        [weakSelf getNetWorkData];
+    };
+    [self.view addSubview:self.noNetWork];
+}
+
+
+//获取网络加载数据
+- (void)getNetWorkData{
+    
+    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+    [parameter setObject:@"1" forKey:@"currentPage"];
+    [parameter setObject:@"0" forKey:@"status"];
+    [WBHttpTool GET:[NSString stringWithFormat:@"%@/guide/trade/listInit",BaseUrl] parameters:parameter success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        XXLog(@"%@",dict);
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            
+            self.totalCout = [YJGuideReceiveModel mj_objectArrayWithKeyValuesArray:dict[@"data"][@"orderList"]];
+            self.pageModel = [YJPageModel mj_objectWithKeyValues:dict[@"data"][@"queryOrder"][@"page"]];
+            
+            
+            self.userInfoMap = dict[@"data"][@"userInfoMap"];
+            self.orderStatusMap = dict[@"data"][@"orderStatusMap"];
+            self.closeTypeMap = dict[@"data"][@"closeTypeMap"];
+            self.successTypeMap = dict[@"data"][@"successTypeMap"];
+            
+            self.nowTime = dict[@"data"][@"now"];
+            
+            if (self.totalCout.count == 0) {
+                [self noDatas];
+            }
+            
+            
+            [self.tableView.mj_header endRefreshing];
+            [self.tableView.mj_footer endRefreshing];
+
+            
+            [self.tableView reloadData];
+            
+        }else{
+           
+            
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                [self.tableView.mj_header endRefreshing];
+                [self.tableView.mj_footer endRefreshing];
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
+        }
+        
+    } failure:^(NSError *error) {
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+    }];
+}
+
+
+//获取更多
+- (void)getMoreData{
+    
+    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+    
+    if (self.cureenPage < self.pageModel.totalPage) {
+        self.cureenPage ++;
+    }
+    
+    NSString *curee = [NSString stringWithFormat:@"%d",self.cureenPage];
+    NSMutableDictionary *parmeter = [NSMutableDictionary dictionary];
+    [parmeter setObject:curee forKey:@"currentPage"];
+    [parameter setObject:@"0" forKey:@"status"];
+
+    
+    [WBHttpTool GET:[NSString stringWithFormat:@"%@/guide/trade/list",BaseUrl] parameters:parameter success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        XXLog(@"%@",dict);
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            
+            self.orderList = [YJGuideReceiveModel mj_objectArrayWithKeyValuesArray:dict[@"data"][@"orderList"]];
+            self.pageModel = [YJPageModel mj_objectWithKeyValues:dict[@"data"][@"queryOrder"][@"page"]];
+            self.nowTime = dict[@"data"][@"now"];
+            
+            
+            for (YJGuideReceiveModel *model in self.orderList) {
+                [self.totalCout addObject:model];
+            }
+            
+            if (self.orderList.count < self.pageModel.pageSize) {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            }else{
+                [self.tableView.mj_footer endRefreshing];
+            }
+
+            [self.tableView reloadData];
+            
+        }else{
+            
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+                [self.tableView.mj_header endRefreshing];
+                [self.tableView.mj_footer endRefreshing];
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
+        }
+        
+    } failure:^(NSError *error) {
+        
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+        
+    }];
+}
+
+
+
 
 #pragma mark - table view dataSource
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return 180 * KHeight_Scale;
+    return 155 * KHeight_Scale;
     
 }
 
@@ -61,92 +284,133 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.dataSource.count;
+    return self.totalCout.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-//    if (indexPath.row == 2) {
-//        
-//        YJOrderBgCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
-//        return cell;
-//        
-//    }
-    
-   
-    
-    
     YJGOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
-    if(cell == nil) {
-        cell = [[YJGOrderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-        }
+    YJGuideReceiveModel *model = self.totalCout[indexPath.row];
+    cell.timeLab.text = [self getNowTimeWithString:model.limitTime];
     
-    cell.timeLab.text = [self getNowTimeWithString:self.dataSource[indexPath.row]];
-    if ([cell.timeLab.text isEqualToString:@"00:00:00"]) {
-        cell.stateLab.text = @"已失效";
-        cell.timeLab.textColor = [UIColor grayColor];
-    }else{
-        cell.timeLab.textColor = TextColor;
-    }
+    cell.userInfo = self.userInfoMap;
+    cell.orderState = self.orderStatusMap;
+    cell.model = model;
     cell.delegate = self;
     cell.tag = indexPath.row;
-    
     return cell;
     
 }
 
-- (void)btnClickEnvent:(NSInteger)tag{
+- (void)btnClickEnvent:(UIButton *)sender{
     
-    if (tag == 1) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"是否立即接单" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"NO,等会" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            XXLog(@"取消按钮");
-        }];
-        UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"立即接单" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            XXLog(@"立即接单");
-        }];
-        [alert addAction:action1];
-        [alert addAction:action2];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
+    YJGOrderCell *cell = (YJGOrderCell *)[[sender superview] superview];
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     
-    if (tag == 2) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"联系向导" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"点错了" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            XXLog(@"取消按钮");
-        }];
-        UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"立即联系" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            XXLog(@"立即联系");
-        }];
-        [alert addAction:action1];
-        [alert addAction:action2];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
-    
-    if (tag == 3) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"是否取消订单" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"点错了" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            XXLog(@"取消按钮");
-        }];
-        UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"立即取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            XXLog(@"取消订单");
-        }];
-        [alert addAction:action1];
-        [alert addAction:action2];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
+        YJGuideReceiveModel *model = self.totalCout[indexPath.row];
+        XXLog(@">>>>>>>>>>>%ld",model.status);
+        if (model.status == 1 || model.status == 7) {
+           
+            
+            switch (sender.tag) {
+                case 1:
+                    XXLog(@"1");
+                    
+                    [self receiveOrder:model.ID];
+                    
+                    break;
+                case 2:{
+                    
+                    SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"是否联系用户" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                    }];
+                    alert.sure_btnTitleColor = TextColor;
+                    [alert show];
+                }
 
+                    break;
+                case 3:
+                    XXLog(@"3");
+                    
+                    [self reduseOrder:model.ID];
+
+                    
+                    break;
+                    
+                default:
+                    break;
+            }
+
+        }
+}
+
+#pragma mark - 拒绝接单
+
+- (void)reduseOrder:(NSString *)orderId{
+    
+    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+    [parameter setObject:orderId forKey:@"orderId"];
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/guide/trade/cancel",BaseUrl] parameters:parameter success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.contentColor = [UIColor whiteColor];
+            hud.color = [UIColor blackColor];
+            hud.label.text = NSLocalizedString(@"拒绝接单成功!", @"HUD message title");
+            [hud hideAnimated:YES afterDelay:2.f];
+            
+            [self.tableView reloadData];
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
+#pragma mark - 接单
+
+- (void)receiveOrder:(NSString *)orderId{
+    
+    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+    [parameter setObject:orderId forKey:@"orderId"];
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/guide/trade/receive",BaseUrl] parameters:parameter success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.contentColor = [UIColor whiteColor];
+            hud.color = [UIColor blackColor];
+            hud.label.text = NSLocalizedString(@"接单成功!", @"HUD message title");
+            [hud hideAnimated:YES afterDelay:2.f];
+            
+            [self.tableView reloadData];
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+    }];
 
     
 }
+
+
+
 
 #pragma mark - table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    
-    [self.navigationController pushViewController:[YJReveingDetailVC new] animated:YES];
+    YJGuideReceiveModel *model = self.totalCout[indexPath.row];
+    YJReveingDetailVC *vc = [[YJReveingDetailVC alloc]init];
+    vc.orderId = model.ID;
+    [self.navigationController pushViewController:vc animated:YES];
     
 }
 
@@ -154,9 +418,13 @@
 -(void)updateTimeInVisibleCells{
     NSArray  *cells = self.tableView.visibleCells; //取出屏幕可见ceLl
     for (YJGOrderCell *cell in cells) {
-        cell.timeLab.text = [self getNowTimeWithString:self.dataSource[cell.tag]];
-        if ([cell.timeLab.text isEqualToString:@"00:00:00"]) {
-            cell.stateLab.text = @"已失效";
+        
+//        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        YJGuideReceiveModel *model = self.totalCout[cell.tag];
+        cell.timeLab.text = [self getNowTimeWithString:model.limitTime];
+        if ([cell.timeLab.text isEqualToString:@"00:00:00"] || model.status == 6) {
+            cell.stateLab.text = @"交易关闭";
+            cell.timeLab.text = @"00:00:00";
             cell.timeLab.textColor = [UIColor grayColor];
         }else{
             cell.timeLab.textColor = TextColor;
@@ -173,8 +441,8 @@
     NSString *nowDateStr = [formater stringFromDate:nowDate];
     // 当前时间date格式
     nowDate = [formater dateFromString:nowDateStr];
-    
     NSTimeInterval timeInterval =[expireDate timeIntervalSinceDate:nowDate];
+
     
     int days = (int)(timeInterval/(3600*24));
     int hours = (int)((timeInterval-days*24*3600)/3600);
@@ -202,9 +470,31 @@
     if (days) {
         return [NSString stringWithFormat:@"%@:%@:%@:%@", dayStr,hoursStr, minutesStr,secondsStr];
     }
-    return [NSString stringWithFormat:@"0%@:%@:%@",hoursStr , minutesStr,secondsStr];
+    
+//    XXLog(@"剩余多少     %@",[NSString stringWithFormat:@"%@:%@:%@",hoursStr , minutesStr,secondsStr]);
+    
+    return [NSString stringWithFormat:@"%@:%@:%@",hoursStr , minutesStr,secondsStr];
 }
 
+
+//将时间戳转换为NSDate类型
+-(NSDate *)getDateTimeFromMilliSeconds:(long long) miliSeconds
+{
+    NSTimeInterval tempMilli = miliSeconds;
+    NSTimeInterval seconds = tempMilli/1000.0;//这里的.0一定要加上，不然除下来的数据会被截断导致时间不一致
+    NSLog(@"传入的时间戳=%f",seconds);
+    return [NSDate dateWithTimeIntervalSince1970:seconds];
+}
+
+//将NSDate类型的时间转换为时间戳,从1970/1/1开始
+-(long long)getDateTimeTOMilliSeconds:(NSDate *)datetime
+{
+    NSTimeInterval interval = [datetime timeIntervalSince1970];
+    NSLog(@"转换的时间戳=%f",interval);
+    long long totalMilliseconds = interval*1000 ;
+    NSLog(@"totalMilliseconds=%llu",totalMilliseconds);
+    return totalMilliseconds;
+}
 
 
 - (void)didReceiveMemoryWarning {

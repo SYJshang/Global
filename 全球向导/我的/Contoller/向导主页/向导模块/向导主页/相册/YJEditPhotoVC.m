@@ -29,6 +29,7 @@ static CGFloat navH = 64;
     NSMutableArray *_selectedAssets;
     CGFloat _itemWH;
     CGFloat _margin;
+    SDPhotoBrowser *photoBrowser;
     
 //    NSMutableArray *_photoList;
     
@@ -92,6 +93,8 @@ static CGFloat navH = 64;
     
     CGFloat offsetY = self.collectionView.contentOffset.y;
     [self changeNavAlphaWithConnentOffset:offsetY];
+    
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -191,6 +194,8 @@ static CGFloat navH = 64;
             
             self.pageModle = [YJPageModel mj_objectWithKeyValues:dict[@"data"][@"queryAlbumPic"][@"page"]];
             
+            [self.modelsArray removeAllObjects];
+            
             for (YJPhotoLsitModel *model in self.photoLsitArr) {
                 
                 NSString *str = model.url;
@@ -206,9 +211,7 @@ static CGFloat navH = 64;
             alert.sure_btnTitleColor = TextColor;
             alert.sure_btnTitle = @"好的";
             [alert show];
-            
         }
-        
         
     } failure:^(NSError *error) {
         
@@ -240,7 +243,6 @@ static CGFloat navH = 64;
             [alert show];
         }
         
-
     } dismissBlock:^{
         
     }];
@@ -368,11 +370,10 @@ static CGFloat navH = 64;
         [self.navigationController pushViewController:vc animated:YES];
     }else{
         
-        SDPhotoBrowser *photoBrowser = [SDPhotoBrowser new];
+        photoBrowser = [SDPhotoBrowser new];
         photoBrowser.delegate = self;
         photoBrowser.currentImageIndex = indexPath.row;
         photoBrowser.imageCount = self.modelsArray.count;
-//        photoBrowser.sourceImagesContainerView = self.collectionView;
         
         [photoBrowser show];
         
@@ -399,7 +400,47 @@ static CGFloat navH = 64;
     return [NSURL URLWithString:urlStr];
 }
 
+- (void)indexPath:(NSInteger)index{
+    
+    YJPhotoLsitModel *model = self.photoLsitArr[index];
+    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+    [parameter setObject:model.ID forKey:@"id"];
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/guide/albumPic/delete",BaseUrl] parameters:parameter success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        
+        XXLog(@"%@",dict);
+        
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.contentColor = [UIColor whiteColor];
+            hud.color = [UIColor blackColor];
+            hud.label.text = NSLocalizedString(@"删除相册成功!", @"HUD message title");
+            [hud hideAnimated:YES afterDelay:2.f];
 
+            [photoBrowser removeFromSuperview];
+            [self getPhotoLsit];
+            
+            
+        }else{
+           
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            alert.sure_btnTitle = @"好的";
+            [alert show];
+  
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    
+}
 
 
 - (void)didReceiveMemoryWarning {

@@ -36,16 +36,18 @@
         //时间
         self.timeLab = [[UILabel alloc]init];
         [self.contentView addSubview:self.timeLab];
+        self.timeLab.hidden = YES;
         self.timeLab.text = @"12:00:00";
         self.timeLab.font = [UIFont systemFontOfSize:AdaptedWidth(12.0)];
         self.timeLab.textColor = [UIColor grayColor];
         self.timeLab.textAlignment = NSTextAlignmentLeft;
-        self.timeLab.sd_layout.rightSpaceToView(self.stateLab,5).topSpaceToView(self.contentView,5).heightIs(15 * KHeight_Scale).widthIs(60 * KWidth_Scale);
+        self.timeLab.sd_layout.rightSpaceToView(self.stateLab,5).topSpaceToView(self.contentView,5).heightIs(15 * KHeight_Scale).widthIs(70 * KWidth_Scale);
         
         //时间icon
         self.timeIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"daojishi"]];
         [self.contentView addSubview:self.timeIcon];
-        self.timeIcon.sd_layout.rightSpaceToView(self.timeLab,2).centerYEqualToView(self.timeLab).heightIs(12 * KHeight_Scale).widthIs(12 * KHeight_Scale);
+        self.timeIcon.hidden = YES;
+        self.timeIcon.sd_layout.rightSpaceToView(self.timeLab,2).centerYEqualToView(self.timeLab).heightIs(12 * KHeight_Scale).widthIs(14 * KHeight_Scale);
         
         //分割线
         UIView *line = [[UIView alloc]init];
@@ -62,29 +64,9 @@
         //名称
         self.reserveLab = [[UILabel alloc]init];
         [self.contentView addSubview:self.reserveLab];
-        self.reserveLab.text = @"预订人名称 太阳花";
         self.reserveLab.textColor = [UIColor grayColor];
         self.reserveLab.font = [UIFont systemFontOfSize:AdaptedWidth(13)];
         self.reserveLab.sd_layout.leftSpaceToView(self.reserveIcon,5).centerYEqualToView(self.reserveIcon).heightIs(20 * KHeight_Scale).rightSpaceToView(self.contentView,10);
-        
-//        NSString *text1 = @"太阳花";
-//        NSString *priceText1 = [NSString stringWithFormat:@"预订人名称 :%@",text1];
-//        NSMutableAttributedString *AttributedStr1 = [[NSMutableAttributedString alloc]initWithString:priceText1];
-//        
-//        [AttributedStr1 addAttribute:NSFontAttributeName
-//         
-//                               value:[UIFont boldSystemFontOfSize:AdaptedWidth(13)]
-//         
-//                               range:NSMakeRange(7, text1.length)];
-//        
-//        [AttributedStr1 addAttribute:NSForegroundColorAttributeName
-//         
-//                               value:[UIColor blackColor]
-//         
-//                               range:NSMakeRange(7, text1.length)];
-//        
-//        self.reserveLab.attributedText = AttributedStr1;
-//        
         
         
         
@@ -97,67 +79,27 @@
         //名称
         self.allTimeLab = [[UILabel alloc]init];
         [self.contentView addSubview:self.allTimeLab];
-        self.allTimeLab.text = @"共计时长    5天";
         self.allTimeLab.textColor = [UIColor grayColor];
         self.allTimeLab.font = [UIFont systemFontOfSize:AdaptedWidth(13)];
         self.allTimeLab.sd_layout.leftSpaceToView(self.allTimeIcon,5).centerYEqualToView(self.allTimeIcon).heightIs(20 * KHeight_Scale).rightSpaceToView(self.contentView,10);
         
-//        NSString *text2 = @"五天";
-//        NSString *priceText2 = [NSString stringWithFormat:@"共计时长  :%@",text2];
-//        NSMutableAttributedString *AttributedStr2 = [[NSMutableAttributedString alloc]initWithString:priceText2];
-//        
-//        [AttributedStr2 addAttribute:NSFontAttributeName
-//         
-//                               value:[UIFont boldSystemFontOfSize:AdaptedWidth(13)]
-//         
-//                               range:NSMakeRange(7, text2.length)];
-//        
-//        [AttributedStr2 addAttribute:NSForegroundColorAttributeName
-//         
-//                               value:[UIColor blackColor]
-//         
-//                               range:NSMakeRange(7, text2.length)];
-//        
-//        self.allTimeLab.attributedText = AttributedStr2;
         
+         //发现名称
+         //icon
+         self.findIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"mingcheng"]];
+         [self.contentView addSubview:self.findIcon];
+         self.findIcon.sd_layout.leftSpaceToView(self.contentView,10).topSpaceToView(self.allTimeIcon,10 * KHeight_Scale).widthIs(15 * KHeight_Scale).heightIs(15 * KHeight_Scale);
+         
+         //名称
+         self.findLab = [[UILabel alloc]init];
+         [self.contentView addSubview:self.findLab];
+         self.findLab.textColor = [UIColor grayColor];
+         self.findLab.font = [UIFont systemFontOfSize:AdaptedWidth(13)];
+         self.findLab.sd_layout.leftSpaceToView(self.findIcon,5).centerYEqualToView(self.findIcon).heightIs(20 * KHeight_Scale).rightSpaceToView(self.contentView,10);
+         
         
-        
-        
-        
-        //发现名称
-        //icon
-        self.findIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"mingcheng"]];
-        [self.contentView addSubview:self.findIcon];
-        self.findIcon.sd_layout.leftSpaceToView(self.contentView,10).topSpaceToView(self.allTimeIcon,10 * KHeight_Scale).widthIs(15 * KHeight_Scale).heightIs(15 * KHeight_Scale);
-        
-        //名称
-        self.findLab = [[UILabel alloc]init];
-        [self.contentView addSubview:self.findLab];
-        self.findLab.text = @"发现名称    清新事实上发反反复复发来了的劳动力啊啊萨顶";
-        self.findLab.textColor = [UIColor grayColor];
-        self.findLab.font = [UIFont systemFontOfSize:AdaptedWidth(13)];
-        self.findLab.sd_layout.leftSpaceToView(self.findIcon,5).centerYEqualToView(self.findIcon).heightIs(20 * KHeight_Scale).rightSpaceToView(self.contentView,10);
-        
-//        NSString *text3 = @"清新事实上发反反复复发来了的劳动力啊啊萨顶";
-//        NSString *priceText3 = [NSString stringWithFormat:@"发现名称  :%@",text3];
-//        NSMutableAttributedString *AttributedStr3 = [[NSMutableAttributedString alloc]initWithString:priceText3];
-//        
-//        [AttributedStr3 addAttribute:NSFontAttributeName
-//         
-//                               value:[UIFont boldSystemFontOfSize:AdaptedWidth(13)]
-//         
-//                               range:NSMakeRange(7, text3.length)];
-//        
-//        [AttributedStr3 addAttribute:NSForegroundColorAttributeName
-//         
-//                               value:[UIColor blackColor]
-//         
-//                               range:NSMakeRange(7, text3.length)];
-//        
-//        self.findLab.attributedText = AttributedStr3;
-        
-        
-        
+         
+         
         
         
         UIView *line1 = [[UIView alloc]init];
@@ -169,61 +111,23 @@
         //接单按钮
         self.receiveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.contentView addSubview:self.receiveBtn];
-        [self.receiveBtn setTitle:@"接单" forState:UIControlStateNormal];
+        [self.receiveBtn setTitle:@"联系用户" forState:UIControlStateNormal];
         self.receiveBtn.titleLabel.font = [UIFont systemFontOfSize:AdaptedWidth(14)];
+        [self.receiveBtn addTarget:self action:@selector(btnCk:) forControlEvents:UIControlEventTouchUpInside];
+        self.receiveBtn.tag = 1;
         [self.receiveBtn setTitleColor:TextColor forState:UIControlStateNormal];
         [self.receiveBtn setBackgroundColor:[UIColor whiteColor]];
         self.receiveBtn.sd_layout.rightSpaceToView(self.contentView,10).topSpaceToView(line1,10 * KHeight_Scale).heightIs(30 * KHeight_Scale).widthIs(80 *KWidth_Scale);
         self.receiveBtn.layer.masksToBounds = YES;
         self.receiveBtn.layer.cornerRadius = 13.0;
-        self.receiveBtn.layer.borderColor = BackGray.CGColor;
+        self.receiveBtn.layer.borderColor = TextColor.CGColor;
         self.receiveBtn.layer.borderWidth = 1.0;
         
-        
-        //联系用户
-        self.relationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.contentView addSubview:self.relationBtn];
-        [self.relationBtn setTitle:@"联系向导" forState:UIControlStateNormal];
-        [self.relationBtn setTitleColor:TextColor forState:UIControlStateNormal];
-        [self.relationBtn setBackgroundColor:[UIColor whiteColor]];
-        self.relationBtn.titleLabel.font = [UIFont systemFontOfSize:AdaptedWidth(14)];
-        self.relationBtn.sd_layout.rightSpaceToView(self.receiveBtn,5).topSpaceToView(line1,10 * KHeight_Scale).heightIs(30 * KHeight_Scale).widthIs(80 *KWidth_Scale);
-        self.relationBtn.layer.masksToBounds = YES;
-        self.relationBtn.layer.cornerRadius = 13;
-        self.relationBtn.layer.borderColor = BackGray.CGColor;
-        self.relationBtn.layer.borderWidth = 1.0;
-        
-        
-        //取消订单
-        self.refuseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.contentView addSubview:self.refuseBtn];
-        [self.refuseBtn setTitle:@"取消订单" forState:UIControlStateNormal];
-        self.refuseBtn.titleLabel.font = [UIFont systemFontOfSize:AdaptedWidth(14)];
-        [self.refuseBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [self.refuseBtn setBackgroundColor:[UIColor whiteColor]];
-        self.refuseBtn.sd_layout.rightSpaceToView(self.relationBtn,5).topSpaceToView(line1,10 * KHeight_Scale).heightIs(30 * KHeight_Scale).widthIs(80 *KWidth_Scale);
-        self.refuseBtn.layer.masksToBounds = YES;
-        self.refuseBtn.layer.cornerRadius = 13;
-        self.refuseBtn.layer.borderColor = BackGray.CGColor;
-        self.refuseBtn.layer.borderWidth = 1.0;
-        
+    
         UIView *view = [[UIView alloc]init];
         [self.contentView addSubview:view];
         view.backgroundColor = BackGray;
-        view.sd_layout.leftSpaceToView(self.contentView,0).rightSpaceToView(self.contentView,0).topSpaceToView(self.refuseBtn,10 * KHeight_Scale).bottomSpaceToView(self.contentView,0);
-        
-        
-        
-        
-        UIView *vw = [[UIView alloc]init];
-        [self.contentView addSubview:vw];
-        vw.alpha = 0.7;
-        vw.backgroundColor = BackGray;
-        vw.sd_layout.topEqualToView(self.contentView).leftEqualToView(self.contentView).rightEqualToView(self.contentView).bottomEqualToView(self.contentView);
-        
-        UIImageView *img = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"shixiao"]];
-        [vw addSubview:img];
-        img.sd_layout.rightSpaceToView(vw,30).centerYEqualToView(vw).heightIs(45 * KWidth_Scale).widthIs(60 *KHeight_Scale);
+        view.sd_layout.leftSpaceToView(self.contentView,0).rightSpaceToView(self.contentView,0).topSpaceToView(self.receiveBtn,10 * KHeight_Scale).bottomSpaceToView(self.contentView,0);
         
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -232,6 +136,90 @@
     return self;
     
 }
+
+- (void)btnCk:(UIButton *)btn{
+    
+    //通知代理
+    if ([self.delegate respondsToSelector:@selector(btnClickEve:)]) {
+        [self.delegate btnClickEve:btn];
+    }
+}
+
+
+- (void)setModel:(YJGuideRefundModel *)model{
+    
+    _model = model;
+    self.orderNum.text = [NSString stringWithFormat:@"订单号 %@",model.orderNo];
+    
+    NSString *status = [NSString stringWithFormat:@"%ld",model.status];
+    self.stateLab.text = self.refundStatusMap[status];
+    
+    NSString *text1 = self.userInfoMap[model.buyerId];
+    NSString *priceText1 = [NSString stringWithFormat:@"预订人名称  %@",text1];
+    NSMutableAttributedString *AttributedStr1 = [[NSMutableAttributedString alloc]initWithString:priceText1];
+    
+    [AttributedStr1 addAttribute:NSFontAttributeName
+     
+                           value:[UIFont boldSystemFontOfSize:AdaptedWidth(13)]
+     
+                           range:NSMakeRange(7, text1.length)];
+    
+    [AttributedStr1 addAttribute:NSForegroundColorAttributeName
+     
+                           value:[UIColor blackColor]
+     
+                           range:NSMakeRange(7, text1.length)];
+    
+    self.reserveLab.attributedText = AttributedStr1;
+    
+    
+    
+    NSString *text2 = [NSString stringWithFormat:@"￥%ld",model.tradeMoney];
+    NSString *priceText2 = [NSString stringWithFormat:@"总计价格     %@",text2];
+    NSMutableAttributedString *AttributedStr2 = [[NSMutableAttributedString alloc]initWithString:priceText2];
+    
+    [AttributedStr2 addAttribute:NSFontAttributeName
+     
+                           value:[UIFont boldSystemFontOfSize:AdaptedWidth(13)]
+     
+                           range:NSMakeRange(9, text2.length)];
+    
+    [AttributedStr2 addAttribute:NSForegroundColorAttributeName
+     
+                           value:[UIColor blackColor]
+     
+                           range:NSMakeRange(9, text2.length)];
+    
+    self.allTimeLab.attributedText = AttributedStr2;
+    
+    
+    NSString *text3 = [NSString stringWithFormat:@"￥%ld",model.refundMoney];
+    NSString *priceText3 = [NSString stringWithFormat:@"退款金额     %@",text3];
+    NSMutableAttributedString *AttributedStr3 = [[NSMutableAttributedString alloc]initWithString:priceText3];
+    
+    [AttributedStr3 addAttribute:NSFontAttributeName
+     
+                           value:[UIFont boldSystemFontOfSize:AdaptedWidth(13)]
+     
+                           range:NSMakeRange(9, text3.length)];
+    
+    [AttributedStr3 addAttribute:NSForegroundColorAttributeName
+     
+                           value:TextColor
+     
+                           range:NSMakeRange(9, text3.length)];
+    
+    self.findLab.attributedText = AttributedStr3;
+    
+    
+    
+    
+
+    
+    
+}
+
+
 
 - (void)awakeFromNib {
     [super awakeFromNib];

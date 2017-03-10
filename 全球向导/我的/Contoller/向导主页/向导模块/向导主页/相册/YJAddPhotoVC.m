@@ -62,7 +62,18 @@
 
 - (void)finsh{
     
-    [self PostImage];
+    if (_selectedPhotos.count > 0) {
+        [self PostImage];
+    }else{
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.contentColor = [UIColor whiteColor];
+        hud.color = [UIColor blackColor];
+        hud.label.text = NSLocalizedString(@"请选择照片后上传!", @"HUD message title");
+        [hud hideAnimated:YES afterDelay:2.f];
+
+    }
+    
 
 }
 

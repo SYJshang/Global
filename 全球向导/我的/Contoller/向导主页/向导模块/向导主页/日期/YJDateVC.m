@@ -43,13 +43,14 @@
     calendarView.layer.cornerRadius = 10;
     calendarView.backgroundColor = [UIColor whiteColor];
     [self.tableView addSubview:calendarView];
-    calendarView.sd_layout.centerXEqualToView(self.tableView).centerYEqualToView(self.tableView).heightIs(screen_width - 20).widthIs(screen_width);
+    calendarView.sd_layout.centerXEqualToView(self.tableView).centerYEqualToView(self.tableView).heightIs(screen_width).widthIs(screen_width);
     self.calendar = calendarView;
     //[self setupViews];
-    NSMutableArray *select = [NSMutableArray arrayWithObjects:@"20161217",@"20161219",@"20161213",@"20161225", nil];
+    NSMutableArray *select = [NSMutableArray arrayWithObjects:@"2017-03-17",@"2017-03-19",@"2017-03-13",@"2017-03-25", nil];
     
     if (select.count != 0) {
         calendarView.markedDays = select;
+        calendarView.markedDayFilledColor = [UIColor blueColor];
     }else{
         self.calendar.markedDays = nil;
     }

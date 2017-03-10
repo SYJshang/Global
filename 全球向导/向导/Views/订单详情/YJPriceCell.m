@@ -35,22 +35,25 @@
     
     _model = model;
    
+//    NSString *price = model.totalMoney;
     
     NSString *priceText = [NSString stringWithFormat:@"总计 ￥%@",model.totalMoney];
+    
+    
     NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithString:priceText];
     
     
     [AttributedStr addAttribute:NSFontAttributeName
      
-                          value:[UIFont systemFontOfSize:18.0]
+                          value:[UIFont systemFontOfSize:AdaptedWidth(18.0)]
      
-                          range:NSMakeRange(4, self.text.length)];
+                          range:NSMakeRange(4, model.totalMoney.length)];
     
     [AttributedStr addAttribute:NSForegroundColorAttributeName
      
                           value:TextColor
      
-                          range:NSMakeRange(4, self.text.length)];
+                          range:NSMakeRange(4, model.totalMoney.length)];
     
     
     self.allPrice.attributedText = AttributedStr;

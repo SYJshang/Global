@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YJServerStateModle.h"
 
 @protocol editBtnClickPush <NSObject>
 @optional
--(void)editClickPush;
+-(void)editClickPush:(UIButton *)sender;
 @end
 
 @interface YJServerStateCell : UITableViewCell
@@ -29,6 +30,8 @@
 @property (nonatomic, strong) UIButton *editBtn;
 
 @property (nonatomic, weak) id <editBtnClickPush>delegate;
+
+@property (nonatomic, strong) YJServerStateModle *model;
 
 
 @end

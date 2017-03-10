@@ -73,9 +73,7 @@
 
 - (void)addBtn:(UIButton *)sender{
     
-    if (self.btnBlock) {
-        self.btnBlock(sender);
-    }
+    [self.delegate btnClick:self andFlag:(int)sender.tag];
     
 }
 

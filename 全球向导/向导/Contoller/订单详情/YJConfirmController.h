@@ -15,6 +15,8 @@
 @property (nonatomic, strong) YJOrderFinshModel *model;
 @property (nonatomic, strong) YJSerModel *serModel;
 
+@property (nonatomic, strong) NSString *orderID;
+
 //@property (nonatomic, strong) NSString *orderNo; //订单编号
 
 @end
