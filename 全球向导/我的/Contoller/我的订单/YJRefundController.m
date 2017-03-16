@@ -272,9 +272,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     YJDrawbackCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    if(cell == nil) {
-        cell = [[YJDrawbackCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-    }
+
     
     YJBuyListModel *model = self.totalCout[indexPath.row];
     cell.refundStatusMap = self.refundStatusMap;

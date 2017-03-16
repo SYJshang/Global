@@ -18,28 +18,49 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 
-@property (nonatomic, strong) YJPageModel *pageModel; //页数
-@property (nonatomic, strong) NSMutableArray *findList; //新发现列表
+@property (nonatomic, strong) NSMutableArray *orderList; //订单列表
+@property (nonatomic, strong) YJPageModel *pageModel;  //页数列表
 
-@property (nonatomic, strong) NoNetwork *noNetWork; //空白页面
+@property (nonatomic, strong) NoNetwork *noNetWork;
+
+@property (nonatomic, assign) int cureenPage;
+
+@property (nonatomic, assign) NSInteger count;
+
+@property (nonatomic, strong) NSMutableArray *totalCout; //总数
+
 
 @end
 
 @implementation YJFindCollectVC
 
-- (NSMutableArray *)findList{
+- (NSMutableArray *)totalCout{
     
-    if (_findList == nil) {
-        _findList = [NSMutableArray array];
+    if (_totalCout == nil) {
+        _totalCout = [NSMutableArray array];
     }
-    return _findList;
+    return _totalCout;
 }
+
+- (NSMutableArray *)orderList{
+    
+    if (_orderList == nil) {
+        _orderList = [NSMutableArray array];
+    }
+    return _orderList;
+}
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1.0];
     [self setTableView];
+    
+    self.cureenPage = 1;
+    self.count = 0;
+    
     
     NSString *str = [YJBNetWorkNotifionTool stringFormStutas];
     XXLog(@"%@",str);
@@ -49,7 +70,32 @@
         [self NetWorks];
     }
     
-    // Do any additional setup after loading the view.
+    
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        [self getNetWork];
+    }];
+    
+    self.tableView.mj_header.automaticallyChangeAlpha = YES;
+    [self.tableView.mj_header beginRefreshing];
+    
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        
+        
+        if (self.pageModel.totalCount <= self.totalCout.count ) {
+            
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            
+        }else{
+            [self getMoreData];
+        }
+        
+        
+    }];
+    
+    
+    
+    //    [self getNetWork];
 }
 
 
@@ -69,15 +115,32 @@
     [self.view addSubview:self.noNetWork];
 }
 
+- (void)noDatas{
+    
+    self.tableView.hidden = YES;
+    
+    [self.noNetWork removeFromSuperview];
+    
+    self.noNetWork = [[NoNetwork alloc]init];
+    self.noNetWork.btrefresh.hidden = YES;
+    self.noNetWork.titleLabel.text = @"暂无数据\n赶快去整出动静吧。。";
+    __weak typeof(self) weakSelf = self;
+    self.noNetWork.btnBlock = ^{
+        [weakSelf getNetWork];
+    };
+    [self.view addSubview:self.noNetWork];
+}
+
 
 //加载tableView
 - (void)setTableView{
     
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 44, screen_width, screen_height - 64) style:UITableViewStyleGrouped];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 44, screen_width, screen_height - 108) style:UITableViewStylePlain];
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:1.0];
     
     [self.tableView registerClass:[YJGuideRecommendCell class] forCellReuseIdentifier:@"cell"];
     
@@ -92,40 +155,82 @@
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         
-        self.findList = [YJNFindGuideModel mj_objectArrayWithKeyValuesArray:dict[@"data"][@"colGuideRecList"]];
+        self.totalCout = [YJNFindGuideModel mj_objectArrayWithKeyValuesArray:dict[@"data"][@"colGuideRecList"]];
         
         self.pageModel = [YJPageModel mj_objectWithKeyValues:dict[@"data"][@"queryColGuideRec"][@"page"]];
         
-        if (self.findList.count == 0) {
-            
-            self.tableView.hidden = YES;
-            
-            self.noNetWork = [[NoNetwork alloc]init];
-            self.noNetWork.titleLabel.text = @"暂无数据\n赶紧搞出点事情吧...";
-//            self.noNetWork.btnBlock = ^{
-//                [weakSelf getNetWork];
-//            };
-            self.noNetWork.btrefresh.hidden = YES;
-            
-            [self.view addSubview:self.noNetWork];
-
-        }else{
-            
-            [self.noNetWork removeFromSuperview];
-            self.tableView.hidden = NO;
+        if (self.totalCout.count == 0) {
+            [self noDatas];
         }
         
+        XXLog(@"%ld",(long)self.pageModel.nextPage);
         
-        XXLog(@"%@",self.pageModel.nextPage);
-        
+        [self.tableView.mj_footer endRefreshing];
+        [self.tableView.mj_header endRefreshing];
         [self.tableView reloadData];
         
         
     } failure:^(NSError *error) {
-        
+        [self.tableView.mj_footer endRefreshing];
+        [self.tableView.mj_header endRefreshing];
     }];
     
 }
+
+- (void)getMoreData{
+    
+    
+    if (self.cureenPage < self.pageModel.totalPage) {
+        self.cureenPage ++;
+    }
+    
+    NSString *curee = [NSString stringWithFormat:@"%d",self.cureenPage];
+    NSMutableDictionary *parmeter = [NSMutableDictionary dictionary];
+    [parmeter setObject:curee forKey:@"currentPage"];
+    
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myColGuideRec/list",BaseUrl] parameters:parmeter success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        XXLog(@"%@",dict);
+        
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            
+            self.orderList = [YJNFindGuideModel mj_objectArrayWithKeyValuesArray:dict[@"data"][@"colGuideRecList"]];
+            
+            self.pageModel = [YJPageModel mj_objectWithKeyValues:dict[@"data"][@"queryColGuideRec"][@"page"]];
+
+            
+            for (YJNFindGuideModel *model in self.orderList) {
+                [self.totalCout addObject:model];
+            }
+            
+            if (self.orderList.count < self.pageModel.pageSize) {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            }else{
+                [self.tableView.mj_footer endRefreshing];
+            }
+            
+            
+            [self.tableView reloadData];
+        }else{
+            
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
+            [self.tableView.mj_footer endRefreshing];
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+        [self getNetWork];
+        [self.tableView.mj_footer endRefreshing];
+    }];
+    
+}
+
 
 
 
@@ -137,7 +242,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.findList.count;
+    return self.totalCout.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -154,7 +259,7 @@
     
     YJGuideRecommendCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
-    YJNFindGuideModel *model = self.findList[indexPath.row];
+    YJNFindGuideModel *model = self.totalCout[indexPath.row];
     cell.model = model;
     if (model.status == 0) {
         

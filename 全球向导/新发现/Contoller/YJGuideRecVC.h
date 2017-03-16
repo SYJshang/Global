@@ -13,4 +13,7 @@
 //用户的id
 @property (nonatomic, strong) NSString *ID;
 
+//收藏状态
+@property (nonatomic, assign) NSInteger colState;
+
 @end

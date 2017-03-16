@@ -18,6 +18,7 @@
  *  @param font  字体(默认为系统字体)
  *  @param width 约束宽度
  */
+
 - (CGFloat)heightWithFont:(UIFont *)font constrainedToWidth:(CGFloat)width;
 /**
  *  @brief 计算文字的宽度

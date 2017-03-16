@@ -183,6 +183,9 @@
     
     self.refundPrice.attributedText = AttributedStr2;
     
+    
+    self.Allprice.text = [NSString stringWithFormat:@"交易金额:￥%@",model.tradeMoney];
+    
 
 
 }

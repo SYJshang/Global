@@ -128,7 +128,7 @@
         cell.text.text = @"添加相册";
     }else{
         YJPhotoModel *model = self.albumLists[indexPath.row - 1];
-        cell.imgIcon.image = [UIImage imageNamed:@"bg1"];
+        [cell.imgIcon sd_setImageWithURL:[NSURL URLWithString:model.coverPicUrl] placeholderImage:[UIImage imageNamed:@"bg1"]];
         cell.text.font = [UIFont boldSystemFontOfSize:AdaptedWidth(14)];
         cell.text.text = [NSString stringWithFormat:@"%@  %@张",model.name,model.picNumber];
         
@@ -176,6 +176,7 @@
         YJEditPhotoVC *vc = [[YJEditPhotoVC alloc]init];
         vc.albumId = model.ID;
         vc.album = model.name;
+        vc.corPic = model.coverPicUrl;
         [self.navigationController pushViewController:vc animated:YES];
     }
     

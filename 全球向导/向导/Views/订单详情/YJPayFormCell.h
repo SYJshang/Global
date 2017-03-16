@@ -14,6 +14,8 @@
 @property (nonatomic, strong) UIImageView *icon;
 //name
 @property (nonatomic, strong) UILabel *payName;
+//是否绑定
+@property (nonatomic, strong) UILabel *isReal;
 //进入
 @property (nonatomic, strong) UIImageView *access;
 

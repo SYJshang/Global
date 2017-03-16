@@ -196,44 +196,60 @@
     
     switch (model.status) {
         case 1:
+            self.disOrder.hidden = NO;
+            self.relation.hidden = NO;
+            self.buyOrder.hidden = NO;
             [self.disOrder setTitle:@"取消订单" forState:UIControlStateNormal];
-            [self.relation setTitle:@"联系向导" forState:UIControlStateNormal];
-            [self.buyOrder setTitle:@"立即付款" forState:UIControlStateNormal];
+            [self.relation setTitle:@"立即付款" forState:UIControlStateNormal];
+            [self.buyOrder setTitle:@"联系向导" forState:UIControlStateNormal];
 
             break;
         case 2:
-//            [self.disOrder setTitle:@"取消订单" forState:UIControlStateNormal];
-            self.disOrder.hidden = YES;
+            self.disOrder.hidden = NO;
+            self.relation.hidden = NO;
+            self.buyOrder.hidden = NO;
+            [self.disOrder setTitle:@"确认交易" forState:UIControlStateNormal];
             [self.relation setTitle:@"取消订单" forState:UIControlStateNormal];
             [self.buyOrder setTitle:@"联系向导" forState:UIControlStateNormal];
             break;
         case 3:
             self.disOrder.hidden = YES;
+            self.relation.hidden = NO;
+            self.buyOrder.hidden = NO;
+
             [self.relation setTitle:@"去评价" forState:UIControlStateNormal];
             [self.buyOrder setTitle:@"再次预定" forState:UIControlStateNormal];
             break;
         case 4:
+            self.relation.hidden = NO;
+            self.buyOrder.hidden = NO;
+
             self.disOrder.hidden = YES;
             [self.relation setTitle:@"退款中" forState:UIControlStateNormal];
             [self.buyOrder setTitle:@"联系向导" forState:UIControlStateNormal];
             break;
         case 5:
             self.disOrder.hidden = YES;
+            self.relation.hidden = NO;
+            self.buyOrder.hidden = NO;
+
             [self.relation setTitle:@"退款中" forState:UIControlStateNormal];
             [self.buyOrder setTitle:@"联系向导" forState:UIControlStateNormal];
             break;
         case 6:
             self.disOrder.hidden = YES;
-//            [self.relation setTitle:@"退款中" forState:UIControlStateNormal];
-            self.disOrder.hidden = YES;
-            [self.buyOrder setTitle:@"交易关闭" forState:UIControlStateNormal];
+            self.relation.hidden = YES;
+
+            self.buyOrder.hidden = NO;
+
+            [self.buyOrder setTitle:@"联系向导" forState:UIControlStateNormal];
             break;
         case 7:
             self.disOrder.hidden = YES;
-//            [self.relation setTitle:@"退款中" forState:UIControlStateNormal];
-            self.disOrder.hidden = YES;
-            [self.buyOrder setTitle:@"待接单" forState:UIControlStateNormal];
-            break;
+            self.relation.hidden = NO;
+            self.buyOrder.hidden = NO;
+            [self.relation setTitle:@"取消订单" forState:UIControlStateNormal];
+            [self.buyOrder setTitle:@"联系向导" forState:UIControlStateNormal];            break;
             
         default:
             break;
@@ -253,6 +269,9 @@
     if (self.orderState == 1) {
         self.stateLab.text = @"待评价";
         self.disOrder.hidden = YES;
+        self.relation.hidden = NO;
+        self.buyOrder.hidden = NO;
+        
         [self.buyOrder setTitle:@"评价" forState:UIControlStateNormal];
         [self.relation setTitle:@"再次预定" forState:UIControlStateNormal];
 
@@ -261,6 +280,7 @@
         
         self.disOrder.hidden = YES;
         self.relation.hidden = YES;
+        self.buyOrder.hidden = NO;
         [self.buyOrder setTitle:@"再次预定" forState:UIControlStateNormal];
     }
     

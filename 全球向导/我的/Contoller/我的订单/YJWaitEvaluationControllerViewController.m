@@ -12,6 +12,7 @@
 #import "YJOrderListModel.h"
 #import "YJPageModel.h"
 #import "NoNetwork.h"
+#import "YJConfirmController.h"
 
 @interface YJWaitEvaluationControllerViewController ()<UITableViewDelegate,UITableViewDataSource,YJBtnClickEvE>
 
@@ -280,11 +281,67 @@
 
 
 #pragma mark - Custom Deletae
-- (void)btnDidClickPlusButton:(NSInteger)ViewTag{
+- (void)btnDidClickPlusButton:(UIButton *)ViewTag{
     
-    XXLog(@"点击了第 %ld 个按钮",ViewTag);
+    XXLog(@"点击了第 %ld 个按钮",ViewTag.tag);
+    
+    YJAllOrderCell *cell = (YJAllOrderCell *)[[ViewTag superview]superview];
+    //获取cell
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    //获取当前选中cell
+    //    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    YJOrderListModel *model = self.totalCout[indexPath.row];
+    if (ViewTag.tag == 1) {
+        XXLog(@"联系向导");
+        
+    }else if (ViewTag.tag == 2){
+        YJConfirmController *vc = [[YJConfirmController alloc]init];
+        vc.orderID = model.ID;
+        [self.navigationController pushViewController:vc animated:YES];
+        
+    }else{
+        [self cancleOrder:model.ID];
+        XXLog(@"取消订单");
+        
+    }
 
 }
+
+
+//取消待支付、待接单订单
+- (void)cancleOrder:(NSString *)orderId{
+    
+    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+    [parameter setObject:orderId forKey:@"orderId"];
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myOrder/cancel",BaseUrl] parameters:parameter success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        XXLog(@"%@",dict);
+        
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.contentColor = [UIColor whiteColor];
+            hud.color = [UIColor blackColor];
+            hud.label.text = NSLocalizedString(@"取消成功!", @"HUD message title");
+            [hud hideAnimated:YES afterDelay:2.f];
+            
+            [self.tableView reloadData];
+        }else{
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
+            
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

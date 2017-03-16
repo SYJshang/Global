@@ -17,6 +17,7 @@
 #import "WBHttpTool.h"
 #import "YJTabBarController.h"
 #import "MBProgressHUD.h"
+#import "KeychainIDFA.h"
 
 
 
@@ -342,7 +343,8 @@
         [parameter setObject:self.nameTf.text forKey:@"username"];
         [parameter setObject:self.iconCode.text forKey:@"code"];
         [parameter setObject:self.passwordTf.text forKey:@"password"];
-        
+        NSString *deviceId = [KeychainIDFA IDFA];
+        [parameter setObject:deviceId forKey:@"deviceId"];
         XXLog(@"%@",parameter);
         NSString *url = [NSString stringWithFormat:@"%@/loginProcess",BaseUrl];
         
@@ -356,16 +358,12 @@
             if ([dict[@"code"] isEqualToString:@"1"]) {
                 //登录完成
                 
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                    hud.mode = MBProgressHUDModeText;
-                    hud.contentColor = [UIColor whiteColor];
-                    hud.color = [UIColor blackColor];
-                    hud.label.text = NSLocalizedString(@"登录成功!", @"HUD message title");
-                    [hud hideAnimated:YES];
-                });
-                sleep(1.0);
-                //跳转界面
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                hud.mode = MBProgressHUDModeText;
+                hud.contentColor = [UIColor whiteColor];
+                hud.color = [UIColor blackColor];
+                hud.label.text = NSLocalizedString(@"登录成功!", @"HUD message title");
+                [hud hideAnimated:YES afterDelay:2.f];                //跳转界面
                 [self presentViewController:[YJTabBarController new] animated:YES completion:nil];
             }else{
                 //登录错误提示信息

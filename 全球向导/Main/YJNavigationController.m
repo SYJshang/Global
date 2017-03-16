@@ -10,7 +10,7 @@
 
 
 
-@interface YJNavigationController ()
+@interface YJNavigationController ()<UIGestureRecognizerDelegate>
 
 @end
 
@@ -57,6 +57,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.interactivePopGestureRecognizer.delegate = (id)self;
+
+    
     
 //    self.navigationBar.alpha = 1.0;
 
@@ -67,6 +70,17 @@
     
     
     // Do any additional setup after loading the view.
+}
+
+-(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+    
+    if (self.childViewControllers.count == 1) {
+        return NO;
+    }else{
+        
+        return YES;
+    }
+    
 }
 
 
@@ -89,6 +103,9 @@
     
     [super pushViewController:viewController animated:animated];
 }
+
+
+
 
 
 - (void)didReceiveMemoryWarning {

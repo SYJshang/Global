@@ -27,17 +27,29 @@
         self.payName.textColor = [UIColor blackColor];
         self.payName.font = [UIFont systemFontOfSize:AdaptedWidth(14)];
         [self.contentView addSubview:self.payName];
-        self.payName.sd_layout.leftSpaceToView(self.icon,5).centerYEqualToView(self.icon).heightIs(20).rightSpaceToView(self.contentView,50);
+        self.payName.sd_layout.leftSpaceToView(self.icon,5).centerYEqualToView(self.icon).heightIs(20).widthIs(80);
         
         
         self.access = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"我的_进入箭头"]];
         [self.contentView addSubview:self.access];
         self.access.sd_layout.rightSpaceToView(self.contentView,10).centerYEqualToView(self.contentView).heightIs(20).widthIs(13);
         
+        
+        self.isReal = [[UILabel alloc]init];
+        self.isReal.textColor = [UIColor blackColor];
+        self.isReal.font = [UIFont systemFontOfSize:AdaptedWidth(14)];
+        [self.contentView addSubview:self.isReal];
+        self.isReal.textAlignment = NSTextAlignmentRight;
+        self.isReal.sd_layout.leftSpaceToView(self.payName,10).centerYEqualToView(self.icon).heightIs(20).rightSpaceToView(self.access,10);
+        
+        
         UIView *line = [[UIView alloc]init];
         line.backgroundColor = BackGray;
         [self.contentView addSubview:line];
         line.sd_layout.leftSpaceToView(self.contentView,10).rightSpaceToView(self.contentView,10).bottomSpaceToView(self.contentView,0).heightIs(0.5);
+        
+        
+        
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         

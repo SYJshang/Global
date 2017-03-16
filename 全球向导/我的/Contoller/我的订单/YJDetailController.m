@@ -95,11 +95,12 @@
 
 // 添加所有子控制器
 - (void)setupChildViewController {
-    // 订单详情
+    // 订单状态
     YJOrderStateController *oneVC = [[YJOrderStateController alloc] init];
     [self addChildViewController:oneVC];
-    // 订单状态
+    // 订单详情
     YJDetailOrderController *twoVC = [[YJDetailOrderController alloc] init];
+    twoVC.ID = self.orderID;
     [self addChildViewController:twoVC];
 }
 

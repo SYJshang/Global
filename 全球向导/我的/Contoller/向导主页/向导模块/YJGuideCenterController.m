@@ -11,6 +11,7 @@
 #import "YJServerStateVC.h"
 #import "YJGCenterController.h"
 #import "YJPayTypeVC.h"
+#import "YJMinePropertyVC.h"
 
 
 @interface YJGuideCenterController ()<UITableViewDelegate,UITableViewDataSource>
@@ -64,7 +65,7 @@
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -119,8 +120,15 @@
                 line.hidden = YES;
                 
                 break;
-                
             case 2:
+                
+                cell.textLabel.text = @"我的财产";
+                cell.imageView.image = [UIImage imageNamed:@"My_property"];
+                line.hidden = YES;
+                
+                break;
+                
+            case 3:
                 
                 cell.textLabel.text = @"退订政策";
                 cell.imageView.image = [UIImage imageNamed:@"unsubscribe_policy"];
@@ -171,16 +179,66 @@
         
         XXLog(@"点击了%ld",(long)indexPath.row);
         [self.navigationController pushViewController:[YJServerStateVC new] animated:YES];
-    }
-    
-    if (indexPath.section == 2) {
+    }else if (indexPath.section == 2) {
+        
+        XXLog(@"点击了%ld",(long)indexPath.row);
+        [self getIsRealName];
+        
+    }else if (indexPath.section == 3) {
         
         XXLog(@"点击了%ld",(long)indexPath.row);
         
+    }else{
+        XXLog(@"点击了%ld",(long)indexPath.row);
+ 
     }
     
+}
+
+
+//获取是否绑定状态
+- (void)getIsRealName{
+    
+    [WBHttpTool GET:[NSString stringWithFormat:@"%@/guide/accountBind/viewCur",BaseUrl] parameters:nil success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        XXLog(@"%@",dict);
+        if ([dict[@"code"] isEqualToString:@"1"] ) {
+            
+            NSString *str = dict[@"data"][@"alipayAccount"];
+            XXLog(@"%@",str);
+            
+            if (![str isEqual:[NSNull null]]) {
+                
+                [self.navigationController pushViewController:[YJMinePropertyVC new] animated:YES];
+
+            }else{
+                SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"未绑定支付宝，请绑定支付宝之后重试" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                    
+                }];
+                alert.sure_btnTitleColor = TextColor;
+                [alert show];
+                
+            }
+            
+        }else{
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
+            
+        }
+        
+        
+        
+    } failure:^(NSError *error) {
+        XXLog(@"......%@",error);
+        
+    }];
     
 }
+
 
 
 

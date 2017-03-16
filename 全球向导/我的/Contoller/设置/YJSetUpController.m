@@ -227,37 +227,28 @@
     if (indexPath.section == 0 && indexPath.row == 1) {
         
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-        
-        // Set the determinate mode to show task progress.
-//        hud.mode = MBProgressHUDModeDeterminate;
-        hud.label.text = NSLocalizedString(@"正在清理...", @"HUD loading title");
-        
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
-            // Do something useful in the background and update the HUD periodically.
-            sleep(2.);
-            [YJCache clearFile];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-           
-            UIImage *image = [[UIImage imageNamed:@"smile"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-            hud.customView = imageView;
-            hud.mode = MBProgressHUDModeCustomView;
-            hud.label.text = NSLocalizedString(@"完成", @"HUD completed title");
-           
-            });
-            
-            sleep(1);
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [hud hideAnimated:YES];
-                [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
-                
+        hud.contentColor = [UIColor whiteColor];
+        hud.color = [UIColor blackColor];
+        hud.label.text = NSLocalizedString(@"正在清理内存...", @"HUD loading title");
 
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^ {
+            //在后台进行有用的操作并定期更新HUD。
+            sleep(2);
+            [YJCache clearFile];
+            dispatch_async(dispatch_get_main_queue(),^ {
+                hud.mode = MBProgressHUDModeText;
+                hud.contentColor = [UIColor whiteColor];
+                hud.color = [UIColor blackColor];
+                hud.label.text = NSLocalizedString(@"清除成功!", @"HUD message title");
+                [hud hideAnimated:YES afterDelay:2.f];
+                
+                [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
             });
+
             
         });
-
-
+        
+        
 }
     
     if (indexPath.section == 0 && indexPath.row == 2) {
@@ -282,6 +273,7 @@
         }];
         
         UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"发送" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+           
             [YJCache clearFile];
             [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
         }];

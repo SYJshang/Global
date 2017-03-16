@@ -8,10 +8,13 @@
 
 #import "YJPayTypeVC.h"
 #import "YJPayFormCell.h"
+#import "YJPayBindingVC.h"
 
 @interface YJPayTypeVC ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
+
+@property (nonatomic, assign) BOOL isReal;
 
 @end
 
@@ -27,6 +30,9 @@
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"付款类型" font:19.0];
+    
+    [self getIsRealName];
+
 }
 
 - (void)back{
@@ -47,9 +53,50 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:1.0];
     [self.tableView registerClass:[YJPayFormCell class] forCellReuseIdentifier:@"cell"];
+    
+    self.isReal = NO;
+    
 
     // Do any additional setup after loading the view.
 }
+
+//获取是否绑定状态
+- (void)getIsRealName{
+    
+    [WBHttpTool GET:[NSString stringWithFormat:@"%@/guide/accountBind/viewCur",BaseUrl] parameters:nil success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        XXLog(@"%@",dict);
+        if ([dict[@"code"] isEqualToString:@"1"] ) {
+            
+            NSString *str = dict[@"data"][@"alipayAccount"];
+            XXLog(@"%@",str);
+            
+            if (![str isEqual:[NSNull null]]) {
+                self.isReal = YES;
+            }else{
+                self.isReal = NO;
+            }
+            
+        }else{
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
+
+        }
+        
+        [self.tableView reloadData];
+        
+        
+    } failure:^(NSError *error) {
+        XXLog(@"......%@",error);
+        
+    }];
+    
+}
+
 
 #pragma mark - table view dataSource
 
@@ -58,36 +105,33 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return 50 * KHeight_Scale;
+    return 60;
     
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    
+    return 10;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    YJPayFormCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    if (cell == nil) {
-        cell = [[YJPayFormCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-    }
-    switch (indexPath.row) {
-        case 0:
-            cell.icon.image = [UIImage imageNamed:@"微信"];
-            cell.payName.text = @"微信支付";
-            break;
-        case 1:
-            cell.icon.image = [UIImage imageNamed:@"支付宝A"];
-            cell.payName.text = @"支付宝支付";
-            break;
-        default:
-            break;
-    }
-    
-    
-    return cell;
+        YJPayFormCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+        cell.icon.image = [UIImage imageNamed:@"支付宝A"];
+        cell.payName.text = @"支付宝支付";
+        if (self.isReal == YES) {
+            cell.isReal.text = @"已绑定";
+            cell.isReal.textColor = TextColor;
+        }else{
+            cell.isReal.text = @"未绑定";
+            cell.isReal.textColor = [UIColor lightGrayColor];
+        }
+        return cell;
 }
 
 #pragma mark - table view delegate
@@ -97,9 +141,51 @@
     if (indexPath.row == 0) {
         
         
+        if (self.isReal) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否立即绑定微信账号" preferredStyle:UIAlertControllerStyleAlert];
+            
+            
+            //修改title
+            
+            NSMutableAttributedString *alertControllerStr = [[NSMutableAttributedString alloc] initWithString:@"提示"];
+            
+            [alertControllerStr addAttribute:NSForegroundColorAttributeName value:TextColor range:NSMakeRange(0, alertControllerStr.length)];
+            
+            [alertControllerStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:17] range:NSMakeRange(0, alertControllerStr.length)];
+            
+            [alert setValue:alertControllerStr forKey:@"attributedTitle"];
+            
+            //修改message
+            
+            NSMutableAttributedString *alertControllerMessageStr = [[NSMutableAttributedString alloc] initWithString:@"是否解除绑定"];
+            
+            [alertControllerMessageStr addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0, alertControllerMessageStr.length)];
+            
+            [alertControllerMessageStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16] range:NSMakeRange(0, alertControllerMessageStr.length)];
+            
+            [alert setValue:alertControllerMessageStr forKey:@"attributedMessage"];
+            
+            
+            
+            UIAlertAction *action = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            [action setValue:[UIColor grayColor] forKey:@"titleTextColor"];
+            
+            UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                //取消绑定
+                [self cancleBinding];
+            }];
+            
+            [alert addAction:action];
+            [alert addAction:action1];
+            [self presentViewController:alert animated:YES completion:nil];
+            
 
+        }else{
         
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否绑定微信账号，绑定后更改请去设置页面" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否立即绑定账号" preferredStyle:UIAlertControllerStyleAlert];
         
         
         //修改title
@@ -114,7 +200,7 @@
         
         //修改message
         
-        NSMutableAttributedString *alertControllerMessageStr = [[NSMutableAttributedString alloc] initWithString:@"是否绑定微信账号，绑定后更改请去设置页面"];
+        NSMutableAttributedString *alertControllerMessageStr = [[NSMutableAttributedString alloc] initWithString:@"是否立即绑定账号"];
         
         [alertControllerMessageStr addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0, alertControllerMessageStr.length)];
         
@@ -130,58 +216,51 @@
         [action setValue:[UIColor grayColor] forKey:@"titleTextColor"];
 
         UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"现在绑定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
+            [self.navigationController pushViewController:[YJPayBindingVC new] animated:YES];
         }];
         
         [alert addAction:action];
         [alert addAction:action1];
         [self presentViewController:alert animated:YES completion:nil];
         
+        }
     }
-    
-    if (indexPath.row == 1) {
+}
+
+//取消绑定
+- (void)cancleBinding{
+  
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/guide/accountBind/unbindAlipay",BaseUrl] parameters:nil success:^(id responseObject) {
         
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否绑定微信账号，绑定后更改请去设置页面" preferredStyle:UIAlertControllerStyleAlert];
-        
-        
-        //修改title
-        
-        NSMutableAttributedString *alertControllerStr = [[NSMutableAttributedString alloc] initWithString:@"提示"];
-        
-        [alertControllerStr addAttribute:NSForegroundColorAttributeName value:TextColor range:NSMakeRange(0, alertControllerStr.length)];
-        
-        [alertControllerStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:17] range:NSMakeRange(0, alertControllerStr.length)];
-        
-        [alert setValue:alertControllerStr forKey:@"attributedTitle"];
-        
-        //修改message
-        
-        NSMutableAttributedString *alertControllerMessageStr = [[NSMutableAttributedString alloc] initWithString:@"是否绑定支付宝账号，绑定后更改请去设置页面"];
-        
-        [alertControllerMessageStr addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0, alertControllerMessageStr.length)];
-        
-        [alertControllerMessageStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16] range:NSMakeRange(0, alertControllerMessageStr.length)];
-        
-        [alert setValue:alertControllerMessageStr forKey:@"attributedMessage"];
-        
-        
-        
-        UIAlertAction *action = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        XXLog(@"%@",dict);
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.contentColor = [UIColor whiteColor];
+            hud.color = [UIColor blackColor];
+            hud.label.text = NSLocalizedString(@"解除绑定成功!", @"HUD message title");
+            [hud hideAnimated:YES afterDelay:2.f];
+
+            self.isReal = NO;
+            [self.tableView reloadData];
             
-        }];
-        [action setValue:[UIColor grayColor] forKey:@"titleTextColor"];
+        }else{
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
+        }
         
-        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"现在绑定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-        }];
         
-        [alert addAction:action];
-        [alert addAction:action1];
-        [self presentViewController:alert animated:YES completion:nil];
+    } failure:^(NSError *error) {
         
-    }
+    }];
     
 }
+
+
 
 
 - (void)didReceiveMemoryWarning {

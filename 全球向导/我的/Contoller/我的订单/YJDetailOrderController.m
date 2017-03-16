@@ -9,6 +9,8 @@
 #import "YJDetailOrderController.h"
 #import "YJDescOrderCell.h"
 #import "YJConfirmCell.h"
+#import "YJUserOrderDetailModel.h"
+#import "YJSerModel.h"
 
 
 @interface YJDetailOrderController ()<UITableViewDelegate,UITableViewDataSource>
@@ -18,6 +20,11 @@
 @property (nonatomic, strong) NSArray *titleArr;
 
 @property (nonatomic, strong) NSArray *descArr;
+
+@property (nonatomic, strong) NSMutableArray *serverList; //服务列表
+@property (nonatomic, strong) NSDictionary *payMethodMap; //支付方式
+
+@property (nonatomic, strong) YJUserOrderDetailModel *userlModel; //详情
 
 @end
 
@@ -52,9 +59,12 @@
     [self.tableView registerClass:[YJDescOrderCell class] forCellReuseIdentifier:@"cell"];
     [self.tableView registerClass:[YJConfirmCell class] forCellReuseIdentifier:@"cell1"];
     
-    self.titleArr = @[@"时间",@"人数",@"联系电话",@"徒步陪同",@"其他备注",@"合计"];
-    self.descArr = @[@"1天",@"6人",@"1234567890",@"￥100 * 3",@"无",@"￥3000"];
+    self.titleArr = @[@"订单号",@"购买时间",@"人数",@"开始时间",@"结束时间",@"服务天数",@"联系电话",@"微信",@"其他备注",@"支付方式",@"支付金额"];
+    self.payMethodMap = [NSDictionary dictionary];
+
+//    self.descArr = @[@"1天",@"6人",@"1234567890",@"￥100 * 3",@"无",@"￥3000"];
     
+    [self getNetWork];
     // Do any additional setup after loading the view.
 }
 
@@ -92,22 +102,60 @@
     
 }
 
+- (void)getNetWork{
+   
+    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+    [parameter setObject:self.ID forKey:@"orderId"];
+    
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myOrder/findByOrderId",BaseUrl] parameters:parameter success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        XXLog(@"%@",dict);
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            
+            XXLog(@"成功");
+            
+            self.userlModel = [YJUserOrderDetailModel mj_objectWithKeyValues:dict[@"data"][@"order"]];
+            self.serverList = [YJSerModel mj_objectArrayWithKeyValuesArray:dict[@"data"][@"orderDetailList"]];
+            self.payMethodMap = dict[@"data"][@"payMethodMap"];
+            
+            [self.tableView reloadData];
+            
+            
+            
+        }
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    
+}
+
 
 #pragma mark - table view dataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return 7;
+    if (section == 0) {
+        return 1;
+    }else if(section == 1){
+        return self.titleArr.count;
+
+        }else{
+            return self.serverList.count;
+ 
+        }
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
 
-    if (indexPath.row == 0) {
+    if (indexPath.row == 0 && indexPath.section == 0) {
         return 120;
     }
 
@@ -119,31 +167,77 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
-        if (indexPath.row == 0) {
-            YJConfirmCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            return cell;
-        }
-    
-        if (indexPath.row > 0 && indexPath.row < 7) {
-            
-            YJDescOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-            cell.name.text = self.titleArr[indexPath.row - 1];
-            cell.desc.text = self.descArr[indexPath.row - 1];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            return cell;
-        }
+    if (indexPath.section == 0) {
         
-    static NSString *cellIdentifier = @"MTCell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if(cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    }
-    return cell;
-}
+        
+            
+            YJConfirmCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
+            [cell.icon sd_setImageWithURL:[NSURL URLWithString:self.userlModel.showPicUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+            cell.name.text = [NSString stringWithFormat:@"%@/%@",self.userlModel.realName,self.userlModel.smallTitle];
+            return cell;
+        }else if (indexPath.section == 1){
+            
+//            @[@"订单号",@"购买时间",@"人数",@"开始时间",@"结束时间",@"服务天数",@"联系电话",@"微信",@"其他备注",@"支付方式",@"支付金额"]
+            YJDescOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+            cell.name.text  =  self.titleArr[indexPath.row];
+            switch (indexPath.row) {
+                case 0:
+                    cell.desc.text = self.userlModel.orderNo;
+                    break;
+                case 1:
+                    cell.desc.text = self.userlModel.buyTime;
+                    break;
+                case 2:
+                    cell.desc.text = [NSString stringWithFormat:@"%ld人",self.userlModel.personNumber];
+                    break;
+                case 3:
+                    cell.desc.text = self.userlModel.beginDate;
+                    break;
+                case 4:
+                    cell.desc.text = self.userlModel.endDate;
+                    break;
+                case 5:
+                    cell.desc.text = [NSString stringWithFormat:@"%ld天",self.userlModel.serviceNumber];
+//                    cell.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"我的_进入箭头"]];
+                    break;
+                case 6:
+                    cell.desc.text = self.userlModel.phone;
+                    break;
+                case 7:
+                    cell.desc.text = self.userlModel.wechat;
+                    break;
+                case 8:
+                    cell.desc.text = self.userlModel.remark;
+                    break;
+                case 9:
+                    cell.desc.text = self.userlModel.payMethodName;
+                    break;
+                case 10:
+                    cell.desc.text = [NSString stringWithFormat:@"￥%ld",(long)self.userlModel.totalMoney];
+                    break;
+                default:
+                    break;
+            }
 
+            
+            return cell;
+
+            
+        }else if (indexPath.section == 2){
+        
+        YJDescOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+        YJSerModel *model = self.serverList[indexPath.row];
+        cell.name.text = model.productName;
+        cell.desc.text = model.productDesc;
+        
+        return cell;
+    }
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    return cell;
+
+
+}
 #pragma mark - table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

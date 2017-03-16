@@ -13,5 +13,7 @@
 @property (nonatomic, strong) NSString *albumId;
 @property (nonatomic, strong) NSString *album; //相册名称
 
+@property (nonatomic, strong) NSString *corPic;
+
 
 @end

@@ -18,7 +18,7 @@
 @property (nonatomic , copy) NSString              * picUrls;
 @property (nonatomic , copy) NSString              * bigTitle;
 @property (nonatomic , copy) NSString              * picIdList;
-@property (nonatomic , strong) NSString            * colNumber;
+@property (nonatomic , assign) NSInteger              colNumber;
 @property (nonatomic , assign) NSInteger              userId;
 @property (nonatomic , copy) NSString              * ip;
 @property (nonatomic , copy) NSString              * addTime;

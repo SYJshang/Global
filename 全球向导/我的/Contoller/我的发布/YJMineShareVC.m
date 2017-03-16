@@ -211,15 +211,15 @@
     NSMutableDictionary *parmeter = [NSMutableDictionary dictionary];
     [parmeter setObject:curee forKey:@"currentPage"];
     
-    [WBHttpTool Post:[NSString stringWithFormat:@"%@/guide/guideRec/list",BaseUrl] parameters:parmeter success:^(id responseObject) {
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myUserRec/list",BaseUrl] parameters:parmeter success:^(id responseObject) {
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         XXLog(@"%@",dict);
         
         if ([dict[@"code"] isEqualToString:@"1"]) {
             
-            self.totalCout = [YJNearbyModel mj_objectArrayWithKeyValuesArray:dict[@"data"][@"guideRecList"]];
-            self.pageModel = [YJPageModel mj_objectWithKeyValues:dict[@"data"][@"queryGuideRec"][@"page"]];
+            self.totalCout = [YJNearbyModel mj_objectArrayWithKeyValuesArray:dict[@"data"][@"userRecList"]];
+            self.pageModel = [YJPageModel mj_objectWithKeyValues:dict[@"data"][@"queryUserRec"][@"page"]];
             
             for (YJNearbyModel *model in self.orderList) {
                 [self.totalCout addObject:model];

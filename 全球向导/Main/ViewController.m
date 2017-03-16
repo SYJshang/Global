@@ -647,7 +647,7 @@
 #pragma mark - 其他delegate
 - (void)Lunbo:(NSInteger)index{
     
-    YJLunboWebVC *web = [[YJLunboWebVC alloc]init];
+    YJLunboWebVC  *web = [[YJLunboWebVC alloc]init];
     if (self.lunboImgArr.count > 0) {
         web.url = self.lunboImgArr[index];
     }

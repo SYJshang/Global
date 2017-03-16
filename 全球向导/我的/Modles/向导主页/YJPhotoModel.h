@@ -25,5 +25,6 @@
 @property (nonatomic, strong) NSString *picNumber;
 @property (nonatomic, strong) NSString *addTime;
 @property (nonatomic, strong) NSString *upTime;
+@property (nonatomic, strong) NSString *coverPicUrl;
 
 @end

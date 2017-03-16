@@ -15,6 +15,8 @@
     
     UIActivityIndicatorView *activityIndicatorView;
     UIView *opaqueView;
+    UIButton *colBtn;
+    UIButton *share;
 }
 
 
@@ -34,11 +36,30 @@
     self.navigationController.navigationBar.barTintColor = BackGray;
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setImage:[UIImage imageNamed:@"coliectionNoraml"] forState:UIControlStateNormal];
-    btn.frame = CGRectMake(0, 10, 22, 22);
-    [btn addTarget:self action:@selector(collect:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:btn];    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"向导类型" font:19.0];
+   
+    colBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [colBtn addTarget:self action:@selector(collect:) forControlEvents:UIControlEventTouchUpInside];
+    [colBtn setImage:[UIImage imageNamed:@"coliectionNoraml"] forState:UIControlStateNormal];
+    colBtn.selected = NO;
+    [colBtn sizeToFit];
+    UIBarButtonItem *informationCardItem = [[UIBarButtonItem alloc] initWithCustomView:colBtn];
+    
+    share = [UIButton buttonWithType:UIButtonTypeCustom];
+    [share addTarget:self action:@selector(share:) forControlEvents:UIControlEventTouchUpInside];
+    [share setImage:[UIImage imageNamed:@"shareIcon"] forState:UIControlStateNormal];
+    [share setImage:[UIImage imageNamed:@"share"] forState:UIControlStateHighlighted];
+    share.selected = NO;
+    [share sizeToFit];
+    UIBarButtonItem *settingBtnItem = [[UIBarButtonItem alloc] initWithCustomView:share];
+    
+    
+    self.navigationItem.rightBarButtonItems  = @[informationCardItem,settingBtnItem];
+    
+    
+    
+    
+    
+    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"向导类型" font:19.0];
 }
 
 - (void)back{
@@ -47,9 +68,100 @@
     
 }
 
+- (void)share:(UIButton *)btn{
+    
+    XXLog(@"分享");
+    
+}
+
 - (void)collect:(UIButton *)btn{
     
-    [btn setImage:[UIImage imageNamed:@"collect-select"] forState:UIControlStateNormal];
+    if (btn.selected == NO) {
+        //点击收藏
+        NSMutableDictionary *parmeter = [NSMutableDictionary dictionary];
+        [parmeter setObject:self.ID forKey:@"recId"];
+        XXLog(@"%@",self.ID);
+        
+        [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myColUserRec/add",BaseUrl] parameters:parmeter success:^(id responseObject) {
+            
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+            XXLog(@"%@",dict[@"code"]);
+            XXLog(@"%@",dict);
+            if ([dict[@"code"] isEqualToString:@"1"]) {
+                
+                [btn setImage:[UIImage imageNamed:@"collect-select"] forState:UIControlStateNormal];
+                [btn setTitleColor:TextColor forState:UIControlStateNormal];
+                btn.selected = YES;
+                
+                
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                hud.mode = MBProgressHUDModeText;
+                hud.contentColor = [UIColor whiteColor];
+                hud.color = [UIColor blackColor];
+                hud.label.text = NSLocalizedString(@"收藏成功!", @"HUD message title");
+                [hud hideAnimated:YES afterDelay:2.f];
+                
+                
+            }else{
+                SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                }];
+                alert.sure_btnTitleColor = TextColor;
+                [alert show];
+            }
+            
+            
+        } failure:^(NSError *error) {
+            
+        }];
+        
+        
+        
+    }else{
+        
+        //点击取消收藏
+        NSMutableDictionary *parmeter = [NSMutableDictionary dictionary];
+        [parmeter setObject:self.ID forKey:@"recId"];
+        XXLog(@"%@",self.ID);
+        [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myColUserRec/cancelByRecId",BaseUrl] parameters:parmeter success:^(id responseObject) {
+            
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+            XXLog(@"%@",dict[@"code"]);
+            XXLog(@"%@",dict);
+            if ([dict[@"code"] isEqualToString:@"1"]) {
+                
+                [btn setImage:[UIImage imageNamed:@"coliectionNoraml"] forState:UIControlStateNormal];
+                [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                btn.selected = NO;
+                
+                
+                
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                hud.mode = MBProgressHUDModeText;
+                hud.contentColor = [UIColor whiteColor];
+                hud.color = [UIColor blackColor];
+                hud.label.text = NSLocalizedString(@"取消收藏成功!", @"HUD message title");
+                [hud hideAnimated:YES afterDelay:2.f];
+                
+                
+            }else{
+                SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                }];
+                alert.sure_btnTitleColor = TextColor;
+                [alert show];
+            }
+            
+            
+        } failure:^(NSError *error) {
+            
+        }];
+        
+        
+        
+    }
+    
+    
+    
+    
 }
 
 - (void)viewDidLoad {
@@ -80,10 +192,52 @@
     [opaqueView addSubview:activityIndicatorView];
     
     
+    [self getNetWork];
     
     // Do any additional setup after loading the view.
 }
 
+- (void)getNetWork{
+    
+    [WBHttpTool GET:[NSString stringWithFormat:@"%@/mainUserRec/toView/%@",BaseUrl,self.ID] parameters:nil success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        
+        XXLog(@"%@",dict);
+        
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            
+            
+            NSString *col = [NSString stringWithFormat:@"%@",dict[@"data"][@"isCol"]];
+            XXLog(@"收藏状态%@",col);
+            
+            if ([col isEqualToString:@"0"]) {
+                
+                [colBtn setImage:[UIImage imageNamed:@"coliectionNoraml"] forState:UIControlStateNormal];
+                colBtn.selected = NO;
+                
+            }else{
+                [colBtn setImage:[UIImage imageNamed:@"collect-select"] forState:UIControlStateNormal];
+                colBtn.selected = YES;
+            }
+            
+            
+        }else{
+            
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
+            
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    
+}
 
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
     [activityIndicatorView startAnimating];

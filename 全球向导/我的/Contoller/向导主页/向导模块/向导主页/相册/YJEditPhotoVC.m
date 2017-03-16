@@ -86,6 +86,9 @@ static CGFloat navH = 64;
     
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem itemWithTarget:self action:@selector(onNavButtonTapped:event:) title:@"编辑" titleColor:[UIColor whiteColor] font:AdaptedWidth(16)];
 
+    //加载布局
+    [self configCollectionView];
+
     
     
     self.shadowImage = self.navigationController.navigationBar.shadowImage;
@@ -93,6 +96,7 @@ static CGFloat navH = 64;
     
     CGFloat offsetY = self.collectionView.contentOffset.y;
     [self changeNavAlphaWithConnentOffset:offsetY];
+    
     
     
 }
@@ -170,8 +174,6 @@ static CGFloat navH = 64;
     
     _selectedPhotos = [NSMutableArray array];
     _selectedAssets = [NSMutableArray array];
-    [self configCollectionView];
-    
     //加载网络图片
     [self getPhotoLsit];
 
@@ -201,6 +203,13 @@ static CGFloat navH = 64;
                 NSString *str = model.url;
                 [self.modelsArray addObject:str];
             }
+            
+            YJPhotoLsitModel *model = self.photoLsitArr.firstObject;
+            [self.headerView sd_setImageWithURL:[NSURL URLWithString:model.url] placeholderImage:[UIImage imageNamed:@"bg2"]];
+            [self.headerView setImageToBlur:self.headerView.image
+                                 blurRadius:5
+                            completionBlock:^(){
+                            }];
             
             [self.collectionView reloadData];
             
@@ -309,14 +318,13 @@ static CGFloat navH = 64;
     
     
     self.headerView = [[UIImageView alloc]init];
-    self.headerView.frame = CGRectMake(0, - imageH - 5, screen_width, imageH - 5);
+    self.headerView.frame = CGRectMake(0, - 205, screen_width, 195);
     
-    //    self.headerView.image = [UIImage imageNamed:@"bg2"];
-    [self.headerView setImageToBlur:[UIImage imageNamed:@"bg2"]
+    [self.headerView sd_setImageWithURL:[NSURL URLWithString:self.corPic] placeholderImage:[UIImage imageNamed:@"bg2"]];
+    [self.headerView setImageToBlur:self.headerView.image
                          blurRadius:5
                     completionBlock:^(){
                     }];
-    self.headerView.contentMode = UIViewContentModeScaleAspectFill;
     [self.collectionView addSubview:self.headerView];
     [self.collectionView insertSubview:self.headerView atIndex:0];
     self.headerView.userInteractionEnabled = YES;
@@ -329,9 +337,6 @@ static CGFloat navH = 64;
     self.albumName.textAlignment = NSTextAlignmentCenter;
     [self.headerView addSubview:self.albumName];
     self.albumName.sd_layout.centerYEqualToView(self.headerView).centerXEqualToView(self.headerView).widthIs(200).heightIs(20);
-    
-    YJPhotoLsitModel *model = self.photoLsitArr.firstObject;
-    [self.headerView sd_setImageWithURL:[NSURL URLWithString:model.url] placeholderImage:[UIImage imageNamed:@"bg2"]];
     self.albumName.text = self.album;
 
 

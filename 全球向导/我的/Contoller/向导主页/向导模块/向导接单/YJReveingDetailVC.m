@@ -132,6 +132,7 @@
     [WBHttpTool GET:[NSString stringWithFormat:@"%@/guide/trade/findByOrderId",BaseUrl] parameters:parameter success:^(id responseObject) {
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        XXLog(@"%@",dict);
         
         if ([dict[@"code"] isEqualToString:@"1"]) {
             

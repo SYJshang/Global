@@ -110,12 +110,6 @@
         }
         
         
-        //        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        //
-        //            [self.tableView.mj_footer endRefreshing];
-        //
-        //        });
-        
     }];
 
     
@@ -245,6 +239,7 @@
     YJNFindGuideModel *model = self.newFindArr[indexPath.row];
     YJGuideRecVC *vc = [[YJGuideRecVC alloc]init];
     vc.ID = model.ID;
+    vc.colState = model.colNumber;
     [self.navigationController pushViewController:vc animated:YES];
     
 }

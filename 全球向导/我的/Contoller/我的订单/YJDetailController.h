@@ -10,4 +10,6 @@
 
 @interface YJDetailController : UIViewController
 
+@property (nonatomic, strong) NSString *orderID;
+
 @end

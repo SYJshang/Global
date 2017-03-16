@@ -46,7 +46,7 @@
         self.num.sd_layout.rightSpaceToView(self.imageV,10).bottomSpaceToView(self.imageV,10).heightIs(20).widthIs(150);
         self.num.text = @"浏览次数 9999";
         self.num.textColor = [UIColor whiteColor];
-        self.num.font = [UIFont systemFontOfSize:13.0];
+        self.num.font = [UIFont systemFontOfSize:AdaptedWidth(13)];
         self.num.textAlignment = NSTextAlignmentRight;
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -63,7 +63,7 @@
     self.title.text = shareList.bigTitle;
     self.descTitle.text = shareList.smallTitle;
     [self.imageV sd_setImageWithURL:[NSURL URLWithString:shareList.coverPicUrl] placeholderImage:[UIImage imageNamed:@"bg2"]];
-    self.num.text = [NSString stringWithFormat:@"收藏数:%@",shareList.colNumber];
+    self.num.text = [NSString stringWithFormat:@"收藏数:%ld",(long)shareList.colNumber];
 }
 
 - (void)awakeFromNib {
