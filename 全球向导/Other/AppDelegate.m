@@ -23,8 +23,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
+    //测试上传demo
     
-    // Override point for customization after application launch.
     //请求获取位置服务
     CLLocationManager *location=[[CLLocationManager alloc]init];
     
