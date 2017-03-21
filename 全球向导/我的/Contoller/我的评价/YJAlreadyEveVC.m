@@ -11,6 +11,7 @@
 #import "YJEvaWaitModel.h"
 #import "YJPageModel.h"
 #import "NoNetwork.h"
+#import "YJGuideDetailVC.h"
 
 
 @interface YJAlreadyEveVC ()<UITableViewDelegate,UITableViewDataSource,YJBtnClickEvE>
@@ -258,22 +259,12 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     YJAllOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    if(cell == nil) {
-        cell = [[YJAllOrderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-    }
+
     
     cell.delegate = self;
     YJEvaWaitModel *model = self.totalCout[indexPath.row];
     cell.orderState = 2;
     cell.evaModel = model;
-//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    cell.stateLab.text = @"待评价";
-//    cell.stateLab.textColor = TextColor;
-//    cell.disOrder.hidden = YES;
-//    cell.relation.hidden = YES;
-//    [cell.buyOrder setTitle:@"再次预定" forState:UIControlStateNormal];
-//    [cell.relation setTitle:@"再次预定" forState:UIControlStateNormal];
-    
     return cell;
 }
 
@@ -285,16 +276,21 @@
 
 
 
-- (void)btnDidClickPlusButton:(NSInteger)ViewTag{
+- (void)btnDidClickPlusButton:(UIButton *)ViewTag{
     
-    if (ViewTag == 1) {
+    YJAllOrderCell *cell = (YJAllOrderCell *)[[ViewTag superview]superview];
+    //获取cell
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    //获取当前选中cell
+    //    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    YJOrderListModel *model = self.totalCout[indexPath.row];
+    
+    if (ViewTag.tag == 1) {
 //        [self.navigationController pushViewController:[YJEvaluationController new] animated:YES];
         XXLog(@"1");
-
-    }
-    
-    if (ViewTag == 2) {
-        XXLog(@"再次预定");
+        YJGuideDetailVC *vc = [[YJGuideDetailVC alloc]init];
+        vc.guideId = model.guideId;
+        [self.navigationController pushViewController:vc animated:YES];
     }
     
 }

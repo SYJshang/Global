@@ -22,6 +22,7 @@
 #import "YJNewFindModel.h"
 #import "YJBNetWorkNotifionTool.h"
 #import "YJLunboWebVC.h"
+#import "YJLocaController.h"
 
 
 
@@ -45,6 +46,8 @@
 
 
 @property (nonatomic, strong) UIButton *areaBtn; //地区按钮
+
+@property (nonatomic, strong) NSString *cityID;
 
 @end
 
@@ -142,8 +145,7 @@
     [super viewWillAppear:animated];
 //    self.navigationController.navigationBar.translucent = NO;
 //    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    //设置导航控制器
-    [self setNavitaion];
+
 
    
 
@@ -176,8 +178,14 @@
     [super viewDidLoad];
     self.guideType = [NSDictionary dictionary];
     
+    //设置导航控制器
+    [self setNavitaion];
        //设置tableView
     [self setTable];
+    
+    
+    self.cityID = [[NSUserDefaults standardUserDefaults] objectForKey:@"city"];
+    
 
     //请求网络
     [self getNetWork];
@@ -227,7 +235,9 @@
 - (void)getNetWork{
     
     NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
-    [parameter setObject:@"" forKey:@"cityId"];
+    if (self.cityID) {
+        [parameter setObject:self.cityID forKey:@"cityId"];
+    }
     [WBHttpTool GET:[NSString stringWithFormat:@"%@/mainApp/list",BaseUrl] parameters:parameter success:^(id responseObject) {
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
@@ -268,7 +278,9 @@
 - (void)getMoreData{
     
     NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
-    [parameter setObject:@"" forKey:@"cityId"];
+    if (self.cityID) {
+        [parameter setObject:self.cityID forKey:@"cityId"];
+    }
     [WBHttpTool GET:[NSString stringWithFormat:@"%@/mainApp/list",BaseUrl] parameters:parameter success:^(id responseObject) {
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
@@ -323,7 +335,14 @@
     [self.areaBtn setImage:[UIImage imageNamed:@"position"] forState:UIControlStateNormal];
     self.areaBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
     [self.areaBtn setTitleColor:TextColor forState:UIControlStateNormal];
-    [self.areaBtn setTitle:@"宁波" forState:UIControlStateNormal];
+    
+    NSString *cityName = [[NSUserDefaults standardUserDefaults] objectForKey:@"cityName"];
+    if (cityName) {
+        [self.areaBtn setTitle:cityName forState:UIControlStateNormal];
+
+    }else{
+        [self.areaBtn setTitle:@"北京市" forState:UIControlStateNormal];
+    }
     [self.areaBtn addTarget:self action:@selector(location) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:self.areaBtn];
     self.navigationItem.leftBarButtonItem = leftItem;
@@ -338,78 +357,6 @@
     
 }
 
-/*
--(void)viewTapped:(UITapGestureRecognizer*)tap {
-    
-    [self.seacher endEditing:YES];
-    
-}
-
-
-
-//自定义导航栏搜索框
-- (void)setNavitaionSearch{
-    
-    
-    self.seacher = [[CLSeachBar alloc] initWithFrame:CGRectMake(0, 7,Width * 0.6, 30)];
-    self.navigationItem.titleView = self.seacher;
-    self.seacher.delegate = self;
-    [self styleOne:self.seacher];
-
-
-    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    leftBtn.frame = CGRectMake(0, 7, 50, 30);
-    leftBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
-    [leftBtn setTitleColor:TextColor forState:UIControlStateNormal];
-//    leftBtn.backgroundColor = [UIColor orangeColor];
-    [leftBtn setTitle:@"北京" forState:UIControlStateNormal];
-//    [leftBtn setImage:[UIImage imageNamed:@"arrow_right"] forState:UIControlStateNormal];
-    [leftBtn addTarget:self action:@selector(location:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem * leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
-    self.navigationItem.leftBarButtonItem = leftItem;
-
-    
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setImage:[UIImage imageNamed:@"addhao"] forState:UIControlStateNormal];
-    btn.frame = CGRectMake(0, 10, 22, 22);
-    [btn addTarget:self action:@selector(onNavButtonTapped:event:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
-    
-}
-
-
-
-- (void)styleOne:(CLSeachBar *)search
-{
-    search.placeholder = @"搜索向导/推荐";
-    
-    search.returnKeyType = UIReturnKeySearch;
-    search.font = [UIFont systemFontOfSize:16];
-    search.textColor = [UIColor whiteColor];
-    [search setValue:[UIFont boldSystemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
-    [search setValue:[UIColor redColor] forKeyPath:@"_placeholderLabel.textColor"];
-    search.textColor = [UIColor blackColor];
-    //修改为圆角
-    search.layer.masksToBounds = YES;
-    search.layer.cornerRadius = search.frame.size.height*0.2;
-    search.layer.borderWidth = 1;
-    search.layer.borderColor = TextColor.CGColor;
-    search.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    
-    UIImageView *imageView = [[UIImageView alloc] init];
-    imageView.image = [UIImage imageNamed:@"search"];
-    search.leftView = imageView;
-    // 设置左边的view永远显示
-    search.leftViewMode = UITextFieldViewModeUnlessEditing;
-    // 设置右边永远显示清除按钮
-    search.clearButtonMode = UITextFieldViewModeWhileEditing;
-}
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField{
-
-    XXLog(@"开始编辑");
-}
-*/
 
 -(void)onNavButtonTapped:(UIBarButtonItem *)sender event:(UIEvent *)event
 {
@@ -475,18 +422,46 @@
 
 - (void)location{
     
-    YJAreaMianVC *locati = [[YJAreaMianVC alloc]init];
-    [locati returnTitle:^(NSString *cityname, NSNumber *cityID) {
+    YJLocaController *locati = [[YJLocaController alloc]init];
+    [locati returnText:^(NSString *cityname) {
+        
     self.navigationController.navigationBar.tintColor = TextColor;
     [self.areaBtn setTitle:cityname forState:UIControlStateNormal];
-
     XXLog(@"%@",self.areaBtn.titleLabel.text);
+        
+        NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
+        NSArray *cityArr = [userdefault objectForKey:@"cityArr"];
+        NSArray *cityID = [userdefault objectForKey:@"cityID"];
+        XXLog(@"cityArr .........%@",cityArr);
+        XXLog(@"cityID .........%@",cityID);
+        [cityArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            if ([obj isEqualToString:cityname]) {
+                XXLog(@"%ld",idx);
+                [userdefault removeObjectForKey:@"city"];
+                [userdefault removeObjectForKey:@"cityName"];
+
+                self.cityID = cityID[idx];
+                XXLog(@"%@",self.cityID);
+                
+                [userdefault setObject:self.cityID forKey:@"city"];
+                [userdefault setObject:cityname forKey:@"cityName"];
+
+                [self.tableView.mj_header beginRefreshing];
+                
+            }
+            
+        }];
+        
+        
     }];
 
 
     [self.navigationController pushViewController:locati animated:YES];
     
 }
+
+
 
 
 #pragma mark - table view delegate

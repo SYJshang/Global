@@ -78,6 +78,7 @@
             lable.tag = 10000 + i;
             if (lable.tag == 10000) {
                 lable.isCLick = YES;
+                [self clinicTitle:lable.text withClinicChoose:YES];
             }
             
             lable.clinicDele = self;
@@ -150,6 +151,9 @@
 -(void)addTheLableInStoreArray:(NSString *)titleName
 {
     
+    if (titleName == nil) {
+        titleName = @"10000000";
+    }
     
     [self.titleArray addObject:titleName];
     XXLog(@"%@",self.titleArray);

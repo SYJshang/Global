@@ -10,7 +10,7 @@
 
 //@interface YJLocaController : UIViewController
 
-typedef void(^ReturnCityName)(NSString *cityname,NSNumber *cityID);
+typedef void(^ReturnCityName)(NSString *cityname);
 
 @interface YJLocaController : UIViewController
 

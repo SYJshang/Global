@@ -23,6 +23,8 @@
 
 @property (nonatomic, strong) NSArray  *orderDetailList;
 
+@property (nonatomic, strong) NSString *orderId;
+
 //phone = 123456;
 //remark = Sdfgh;
 //totalMoney = 300;

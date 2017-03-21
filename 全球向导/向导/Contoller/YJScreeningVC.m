@@ -66,15 +66,15 @@
         
         YJSexModel *model1 = [[YJSexModel alloc]init];
         model1.name = @"默认";
-        model1.valueId = @"2";
+        model1.valueId = @"10000000";
         
         YJSexModel *model2 = [[YJSexModel alloc]init];
         model2.name = @"男";
-        model2.valueId = @"0";
+        model2.valueId = @"1";
         
         YJSexModel *model3 = [[YJSexModel alloc]init];
         model3.name = @"女";
-        model3.valueId = @"1";
+        model3.valueId = @"0";
 
     _sexTypeArr = [NSMutableArray arrayWithObjects:model1,model2,model3, nil];
     
@@ -156,10 +156,12 @@
         
         YJGuideTypeModel *guideModel = [[YJGuideTypeModel alloc]init];
         guideModel.name = @"默认";
+        guideModel.valueId = @"10000000";
         [self.guideTypeArr insertObject:guideModel atIndex:0];
         
         YJPriceModel *priceModel = [[YJPriceModel alloc]init];
         priceModel.name = @"默认";
+        priceModel.valueId = @"10000000";
         [self.priceTypeArr insertObject:priceModel atIndex:0];
         
         [self.tableView reloadData];
@@ -177,10 +179,6 @@
     [self.arritle addObject:M];
     
     M = [[MCELLSelect alloc]init];
-//    NSMutableArray *gType = [NSMutableArray array];
-//    for (YJGuideTypeModel *model in self.guideTypeArr) {
-//        [gType addObject:model.name];
-//    }
     M.arrLabel = self.priceTypeArr;
     M.title = @"价格区间(元/天)";
     M.seleType = CL_SeleType_Radio;

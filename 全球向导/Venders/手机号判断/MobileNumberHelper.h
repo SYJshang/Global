@@ -22,7 +22,7 @@
 //密码判断
 + (BOOL)isValidPassword:(NSString *)passWordString;
 //正则表达式封装
-+ (BOOL)isValidateByRegex:(NSString *)regex;
+//+ (BOOL)isValidateByRegex:(NSString *)regex;
 
 
 @end

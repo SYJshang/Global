@@ -98,9 +98,8 @@
     [self.view addSubview:_mainScrollView];
     
     YJLocaController *oneVC = [[YJLocaController alloc] init];
-    [oneVC returnText:^(NSString *cityname,NSNumber *cityID) {
+    [oneVC returnText:^(NSString *cityname) {
         self.arerTitle = cityname;
-        self.cityID = cityID;
     }];
     [self.mainScrollView addSubview:oneVC.view];
     [self addChildViewController:oneVC];
@@ -123,18 +122,16 @@
 - (void)setupChildViewController {
     // 精选
     YJLocaController *oneVC = [[YJLocaController alloc] init];
-    [oneVC returnText:^(NSString *cityname,NSNumber *cityID) {
+    [oneVC returnText:^(NSString *cityname) {
         self.arerTitle = cityname;
-        self.cityID = cityID;
     }];
 
     [self addChildViewController:oneVC];
     
     // 电视剧
     YJLocaAbroadVC *twoVC = [[YJLocaAbroadVC alloc] init];
-    [twoVC returnText:^(NSString *cityname,NSNumber *cityID) {
+    [twoVC returnText:^(NSString *cityname) {
         self.arerTitle = cityname;
-        self.cityID = cityID;
     }];
     [self addChildViewController:twoVC];
     

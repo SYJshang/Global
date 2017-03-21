@@ -431,7 +431,7 @@
 }
 - (void)popRootViewControllerWithName:(NSString *)cityName cityID:(NSNumber *)cityID
 {
-    self.returnBlock(cityName,cityID);
+    self.returnBlock(cityName);
     
     [self.navigationController popViewControllerAnimated:YES];
     

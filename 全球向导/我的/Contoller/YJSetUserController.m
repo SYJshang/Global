@@ -199,7 +199,7 @@
 //    if (indexPath.row == 0) {
 //        return 60;
 //    }
-    return 60;
+    return 60 * KHeight_Scale;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

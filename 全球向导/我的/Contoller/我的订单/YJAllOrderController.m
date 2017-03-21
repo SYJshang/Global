@@ -13,6 +13,8 @@
 #import "YJPageModel.h"
 #import "NoNetwork.h"
 #import "YJConfirmController.h"
+#import "YJEvaluationController.h"
+#import "YJGuideDetailVC.h"
 
 
 
@@ -226,7 +228,7 @@
                 [self.totalCout addObject:model];
             }
 
-            if (self.orderList.count < self.pageModel.pageSize) {
+            if (self.totalCout.count < self.pageModel.totalCount) {
                 [self.tableView.mj_footer endRefreshingWithNoMoreData];
             }else{
                 [self.tableView.mj_footer endRefreshing];
@@ -352,13 +354,16 @@
             
             if (ViewTag.tag == 1) {
                 XXLog(@"再次预定");
-                YJConfirmController *vc = [[YJConfirmController alloc]init];
-                vc.orderID = model.ID;
+                YJGuideDetailVC *vc = [[YJGuideDetailVC alloc]init];
+                vc.guideId = model.guideId;
                 [self.navigationController pushViewController:vc animated:YES];
                 
             }else{
                
                 XXLog(@"去评价");
+                YJEvaluationController *VC = [[YJEvaluationController alloc]init];
+                VC.ID = model.ID;
+                [self.navigationController pushViewController:VC animated:YES];
             }
         }
             

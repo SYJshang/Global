@@ -29,15 +29,15 @@
 
 @property (nonatomic, assign) int      currentPage;//当前页面
 @property (nonatomic, strong) NSString *cityId;//当前城市
-@property (nonatomic, strong) NSString *beginPrice;//开始价格
-@property (nonatomic, strong) NSString *endPrice;//结束价格
+//@property (nonatomic, strong) NSString *beginPrice;//开始价格
+@property (nonatomic, strong) NSString *priceRange;//结束价格
 @property (nonatomic, strong) NSString *sex;//性别
 @property (nonatomic, strong) NSString *type;//类型
 
 @property (nonatomic, strong) YJPageModel *pageModel;
 @property (nonatomic, strong) YJCityModel *cityModel;
 
-//@property (nonatomic, strong) NSMutableArray *guidTypeArr;  //向导类型
+@property (nonatomic, strong) NSMutableArray *totalCout;  //总列表
 //@property (nonatomic, strong) NSMutableArray *priceTypeArr;  //价格区间类型
 @property (nonatomic, strong) NSMutableArray *guideList; //向导列表
 @property (nonatomic, strong) NoNetwork *noNetWork;
@@ -49,14 +49,14 @@
 @implementation YJGuideController
 
 #pragma mark - 懒加载
-//- (NSMutableArray *)guidTypeArr{
-//    
-//    if (_guidTypeArr == nil) {
-//        _guidTypeArr = [NSMutableArray array];
-//    }
-//    
-//    return _guidTypeArr;
-//}
+- (NSMutableArray *)totalCout{
+    
+    if (_totalCout == nil) {
+        _totalCout = [NSMutableArray array];
+    }
+    
+    return _totalCout;
+}
 //
 //- (NSMutableArray *)priceTypeArr{
 //    
@@ -77,6 +77,10 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
+    
+    NSUserDefaults *defults = [NSUserDefaults standardUserDefaults];
+    self.cityId = [defults objectForKey:@"city"];
+    
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.view.backgroundColor = BackGray;
@@ -111,12 +115,41 @@
     [self.view addSubview:self.noNetWork];
 }
 
+- (void)noDatas{
+    
+    self.collectionView.hidden = YES;
+    
+    [self.noNetWork removeFromSuperview];
+    
+    self.noNetWork = [[NoNetwork alloc]init];
+    self.noNetWork.btrefresh.hidden = YES;
+    self.noNetWork.titleLabel.text = @"暂无数据\n去其他地方转转吧";
+    __weak typeof(self) weakSelf = self;
+    self.noNetWork.btnBlock = ^{
+        [weakSelf getNetWork];
+    };
+    [self.view addSubview:self.noNetWork];
+}
+
+
+
 
 - (void)handleNotification:(NSNotification *)notification{
     
     if ([notification is:@"backData"]) {
         
         NSArray *arr = notification.object;
+        
+//        @property (nonatomic, strong) NSString *priceRange;//结束价格
+//        @property (nonatomic, strong) NSString *sex;//性别
+//        @property (nonatomic, strong) NSString *type;//类型
+        
+        self.sex = arr.firstObject;
+        self.type = arr[1];
+        self.priceRange = arr[2];
+        
+        
+        
         XXLog(@"......%@",arr);
     }
 }
@@ -127,7 +160,6 @@
     self.currentPage = 1;
     
     [self setNavitaionSearch];
-    
     
     
     //创建瀑布流布局
@@ -178,7 +210,7 @@
 //     上拉刷新
     self.collectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         
-        if (self.guideList.count < 19) {
+        if (self.guideList.count < self.totalCout.count) {
             [self.collectionView.mj_footer endRefreshingWithNoMoreData];
         }else{
             [self getMoreData];
@@ -193,16 +225,14 @@
     if (self.cityId) {
         [parametr setObject:self.cityId forKey:@"cityId"];
     }
-    if (self.beginPrice) {
-        [parametr setObject:self.beginPrice forKey:@"beginPrice"];
+    if (self.priceRange && ![self.priceRange isEqualToString:@"默认"] && ![self.priceRange isEqualToString:@"10000000"]) {
+        [parametr setObject:self.priceRange forKey:@"priceRange"];
     }
-    if (self.endPrice) {
-        [parametr setObject:self.endPrice forKey:@"endPrice"];
-    }
-    if (self.sex) {
+
+    if (self.sex && ![self.sex isEqualToString:@"默认"] && ![self.sex isEqualToString:@"10000000"]) {
         [parametr setObject:self.sex forKey:@"sex"];
     }
-    if (self.type) {
+    if (self.type && ![self.type isEqualToString:@"默认"] && ![self.type isEqualToString:@"10000000"]) {
         [parametr setObject:self.type forKey:@"type"];
     }
     
@@ -225,16 +255,25 @@
 
             
             self.pageModel = [YJPageModel mj_objectWithKeyValues:data[@"queryGuide"][@"page"]];
-            self.guideList = [YJGuideModel mj_objectArrayWithKeyValuesArray:data[@"guideList"]];
+            self.totalCout = [YJGuideModel mj_objectArrayWithKeyValuesArray:data[@"guideList"]];
             self.cityModel = [YJCityModel mj_objectWithKeyValues:data[@"city"]];
             
-            [self.collectionView.mj_footer endRefreshing];
-
+            if (self.totalCout.count == 0) {
+                [self noDatas];
+                
+            }
                 [self.collectionView reloadData];
 //            [self.collectionView.mj_header endRefreshing];
             
 
+        }else{
+            
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
         }
+
         
     } failure:^(NSError *error) {
       
@@ -264,11 +303,9 @@
     if (self.cityId) {
         [parametr setObject:self.cityId forKey:@"cityId"];
     }
-    if (self.beginPrice) {
-        [parametr setObject:self.beginPrice forKey:@"beginPrice"];
-    }
-    if (self.endPrice) {
-        [parametr setObject:self.endPrice forKey:@"endPrice"];
+
+    if (self.priceRange) {
+        [parametr setObject:self.priceRange forKey:@"priceRange"];
     }
     if (self.sex) {
         [parametr setObject:self.sex forKey:@"sex"];
@@ -278,7 +315,7 @@
     }
     
     
-    [WBHttpTool GET:[NSString stringWithFormat:@"%@/mainGuide/listInit",BaseUrl] parameters:parametr success:^(id responseObject) {
+    [WBHttpTool GET:[NSString stringWithFormat:@"%@/mainGuide/list",BaseUrl] parameters:parametr success:^(id responseObject) {
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         XXLog(@"%@",dict);
@@ -292,6 +329,19 @@
             self.pageModel = [YJPageModel mj_objectWithKeyValues:data[@"queryGuide"][@"page"]];
             self.guideList = [YJGuideModel mj_objectArrayWithKeyValuesArray:data[@"guideList"]];
             self.cityModel = [YJCityModel mj_objectWithKeyValues:data[@"city"]];
+            
+            
+            for (YJGuideModel *model in self.guideList) {
+                [self.totalCout addObject:model];
+            }
+            
+            if (self.guideList.count < self.pageModel.pageSize) {
+                [self.collectionView.mj_footer endRefreshingWithNoMoreData];
+            }else{
+                [self.collectionView.mj_footer endRefreshing];
+            }
+
+            
             
             [self.collectionView reloadData];
             [self.collectionView.mj_header endRefreshing];
@@ -372,9 +422,9 @@
 - (CGFloat)waterfallLayout:(XRWaterfallLayout *)waterfallLayout itemHeightForWidth:(CGFloat)itemWidth atIndexPath:(NSIndexPath *)indexPath {
     //根据图片的原始尺寸，及显示宽度，等比例缩放来计算显示高度
     
-    int y = (arc4random() % 80) + 240;
+//    int y = (arc4random() % 80) + 240;
     
-    return y * KHeight_Scale;
+    return 260;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
@@ -385,13 +435,13 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    NSMutableArray *listCount = [NSMutableArray array];
-    for (int i = 0; i < self.guideList.count; i ++) {
-        YJGuideModel *model = self.guideList[i];
-        [listCount addObject:model];
-    }
+//    NSMutableArray *listCount = [NSMutableArray array];
+//    for (int i = 0; i < self.guideList.count; i ++) {
+//        YJGuideModel *model = self.guideList[i];
+//        [listCount addObject:model];
+//    }
     
-    return listCount.count;
+    return self.totalCout.count;
 }
 
 
@@ -401,7 +451,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     YJGuideCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    YJGuideModel *model = self.guideList[indexPath.row];
+    YJGuideModel *model = self.totalCout[indexPath.row];
     cell.guideModel = model;
     
 //    cell.imageURL = self.images[indexPath.item].imageURL;
@@ -411,13 +461,13 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
 
-    NSMutableArray *listCount = [NSMutableArray array];
-    for (int i = 0; i < self.guideList.count; i ++) {
-        YJGuideModel *model = self.guideList[i];
-        [listCount addObject:model];
-    }
+//    NSMutableArray *listCount = [NSMutableArray array];
+//    for (int i = 0; i < self.totalCout.count; i ++) {
+//        YJGuideModel *model = self.guideList[i];
+//        [listCount addObject:model];
+//    }
     YJGuideDetailVC *vc = [[YJGuideDetailVC alloc]init];
-    YJGuideModel *modle = listCount[indexPath.row];
+    YJGuideModel *modle = self.totalCout[indexPath.row];
     vc.guideId = modle.ID;
     [self.navigationController pushViewController:vc animated:YES];
     

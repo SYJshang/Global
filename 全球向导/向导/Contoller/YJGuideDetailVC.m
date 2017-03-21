@@ -16,6 +16,8 @@
 #import "YJServerModel.h"
 #import "YJEvaModel.h"
 #import "YJLoginFirstController.h"
+#import <UShareUI/UShareUI.h>
+
 
 
 @interface YJGuideDetailVC ()<UITableViewDelegate,UITableViewDataSource,IntroDetailDelegate>
@@ -147,11 +149,13 @@
 
 - (void)setTableView{
     
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height - 108) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height - 108) style:UITableViewStyleGrouped];
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.automaticallyAdjustsScrollViewInsets = NO; //默认是YES
+    self.tableView.tableFooterView = [UIView new];
+
 
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:1.0];
@@ -189,6 +193,97 @@
         scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
     }
 }
+    
+- (void)showBottomCircleView
+{
+    [UMSocialUIManager removeAllCustomPlatformWithoutFilted];
+    [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewPostionType = UMSocialSharePageGroupViewPositionType_Bottom;
+    [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageItemStyleType = UMSocialPlatformItemViewBackgroudType_IconAndBGRadius;
+#ifdef UM_Swift
+    [UMSocialSwiftInterface showShareMenuViewInWindowWithPlatformSelectionBlockWithSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary* userInfo) {
+#else
+        [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+#endif
+            [self shareImageAndTextToPlatformType:platformType];
+        }];
+    }
+     
+     //分享图片和文字
+     - (void)shareImageAndTextToPlatformType:(UMSocialPlatformType)platformType
+    {
+        //创建分享消息对象
+        UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+        
+        //创建网页内容对象
+        NSString * thumbURL =  @"https://ss0.baidu.com/-Po3dSag_xI4khGko9WTAnF6hhy/image/h%3D360/sign=8e6787f779899e51678e3c1272a6d990/e824b899a9014c08d59b7caf087b02087bf4f41c.jpg";
+        UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"分享test" descr:@"这是一个分享内容，就是看看能不能分享出去" thumImage:thumbURL];
+        //设置网页地址
+        shareObject.webpageUrl = @"http://www.globaleguide.com";
+        
+        //分享消息对象设置分享内容对象
+        messageObject.shareObject = shareObject;
+        
+#ifdef UM_Swift
+        [UMSocialSwiftInterface shareWithPlattype:platformType messageObject:messageObject viewController:self completion:^(UMSocialShareResponse * data, NSError * error) {
+#else
+            //调用分享接口
+            [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
+#endif
+                if (error) {
+                    UMSocialLogInfo(@"************Share fail with error %@*********",error);
+                }else{
+                    if ([data isKindOfClass:[UMSocialShareResponse class]]) {
+                        UMSocialShareResponse *resp = data;
+                        //分享结果消息
+                        UMSocialLogInfo(@"response message is %@",resp.message);
+                        //第三方原始返回的数据
+                        UMSocialLogInfo(@"response originalResponse data is %@",resp.originalResponse);
+                        
+                    }else{
+                        UMSocialLogInfo(@"response data is %@",data);
+                    }
+                }
+                [self alertWithError:error];
+            }];
+        }
+         
+ - (void)setPinterstInfo:(UMSocialMessageObject *)messageObj
+{
+    messageObj.moreInfo = @{@"source_url": @"http://www.umeng.com",
+                            @"app_name": @"U-Share",
+                            @"suggested_board_name": @"UShareProduce",
+                            @"description": @"U-Share: best social bridge"};
+}
+
+- (void)alertWithError:(NSError *)error
+{
+    NSString *result = nil;
+    if (!error) {
+        result = [NSString stringWithFormat:@"Share succeed"];
+    }
+    else{
+        NSMutableString *str = [NSMutableString string];
+        if (error.userInfo) {
+            for (NSString *key in error.userInfo) {
+                [str appendFormat:@"%@ = %@\n", key, error.userInfo[key]];
+            }
+        }
+        if (error) {
+            result = [NSString stringWithFormat:@"Share fail with error code: %d\n%@",(int)error.code, str];
+        }
+        else{
+            result = [NSString stringWithFormat:@"Share fail"];
+        }
+    }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"share"
+                                                    message:result
+                                                   delegate:nil
+                                          cancelButtonTitle:NSLocalizedString(@"sure", @"确定")
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+
 
 - (void)setImage{
     
@@ -231,6 +326,8 @@
     
     //分享
     self.shareBtn = [YJDIYButton buttonWithFrame:CGRectMake(0, 0, 0, 0) title:@"分享" imageName:@"share" Block:^{
+        
+        [self showBottomCircleView];
         
     }];
     [self.shareBtn setImageEdgeInsets:UIEdgeInsetsMake(-5, 25, -5, 0)];
@@ -409,9 +506,14 @@
 
 #pragma mark - table view dataSource
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    
-    return 30;
+ -(CGFloat)tableView:(UITableView*)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 30.f;
+}
+ 
+ -(CGFloat)tableView:(UITableView*)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.01f;
 }
 
 

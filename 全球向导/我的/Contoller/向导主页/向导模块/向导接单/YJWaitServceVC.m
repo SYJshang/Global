@@ -74,13 +74,13 @@
     [self.tableView registerClass:[YJGOrderCell class] forCellReuseIdentifier:@"cell"];
     [self.tableView registerClass:[YJOrderBgCell class] forCellReuseIdentifier:@"cell1"];
     
-    self.countDown = [[CountDown alloc] init];
-    __weak __typeof(self) weakSelf= self;
-    ///每秒回调一次
-    [self.countDown countDownWithPER_SECBlock:^{
-        [weakSelf updateTimeInVisibleCells];
-    }];
-    
+//    self.countDown = [[CountDown alloc] init];
+//    __weak __typeof(self) weakSelf= self;
+//    ///每秒回调一次
+//    [self.countDown countDownWithPER_SECBlock:^{
+//        [weakSelf updateTimeInVisibleCells];
+//    }];
+//    
     
     //初始化
     self.successTypeMap = [NSDictionary dictionary];
@@ -290,6 +290,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     YJGOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    cell.timeLab.hidden = YES;
+    cell.timeIcon.hidden = YES;
     
     YJGuideReceiveModel *model = self.totalCout[indexPath.row];
     cell.timeLab.text = [self getNowTimeWithString:model.limitTime];

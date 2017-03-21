@@ -45,6 +45,9 @@
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+    //把选中数组存成全局变量
+    [self getUserInfo];
+
     
 }
 
@@ -155,19 +158,18 @@
     
     [self setTableView];
     
-    //把选中数组存成全局变量
-    [self getUserInfo];
     
     // Do any additional setup after loading the view.
 }
 
 - (void)setTableView{
     
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height - 64) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height - 64) style:UITableViewStyleGrouped];
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.automaticallyAdjustsScrollViewInsets = NO; //默认是YES
+    self.tableView.tableFooterView = [UIView new];
 
 //    [self setImage];
     
@@ -342,14 +344,24 @@
     
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == 0) {
-        return 0;
-    }else{
-        return 20;
-    }
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+//    if (section == 0) {
+//        return 0;
+//    }else{
+//        return 0;
+//    }
+//}
 
+-(CGFloat)tableView:(UITableView*)tableView heightForHeaderInSection:(NSInteger)section
+    {
+        return 10.f;
+    }
+    
+-(CGFloat)tableView:(UITableView*)tableView heightForFooterInSection:(NSInteger)section
+    
+    {
+        return 0.01f;
+    }
 
 
 

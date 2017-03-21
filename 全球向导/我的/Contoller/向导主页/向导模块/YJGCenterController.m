@@ -9,7 +9,6 @@
 #import "YJGCenterController.h"
 #import "YJTableVC.h"
 #import "UIImage+ImageEffects.h"
-//#import "YJCustomHeader.h"
 #import "CustomHeader.h"
 #import "YJMyFindVC.h"
 #import "YJDateVC.h"

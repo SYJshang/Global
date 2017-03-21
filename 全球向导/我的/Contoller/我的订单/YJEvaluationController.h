@@ -10,4 +10,6 @@
 
 @interface YJEvaluationController : UIViewController
 
+@property (nonatomic, strong) NSString *ID;
+
 @end

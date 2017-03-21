@@ -284,6 +284,7 @@
             [self.receiveBtn setTitle:@"接单" forState:UIControlStateNormal];
             [self.relationBtn setTitle:@"联系用户" forState:UIControlStateNormal];
             [self.refuseBtn setTitle:@"拒绝订单" forState:UIControlStateNormal];
+            
             break;
        
         default:

@@ -255,6 +255,19 @@
 		1ACA586D1DC7240F003D640A /* YJRegsiterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ACA586C1DC7240F003D640A /* YJRegsiterController.m */; };
 		1ACA58711DC7334C003D640A /* ZYKeyboardUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ACA58701DC7334C003D640A /* ZYKeyboardUtil.m */; };
 		1ACAFDDA1E30AB3200F1B52B /* YJRelateDayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ACAFDD91E30AB3200F1B52B /* YJRelateDayCell.m */; };
+		1ACF0E2E1E7FC72A003E27E1 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1ACF0E2C1E7FC72A003E27E1 /* AlipaySDK.bundle */; };
+		1ACF0E2F1E7FC72A003E27E1 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACF0E2D1E7FC72A003E27E1 /* AlipaySDK.framework */; };
+		1ACF0E311E7FC75D003E27E1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACF0E301E7FC75D003E27E1 /* SystemConfiguration.framework */; };
+		1ACF0E331E7FC772003E27E1 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACF0E321E7FC772003E27E1 /* CoreTelephony.framework */; };
+		1ACF0E351E7FC781003E27E1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACF0E341E7FC781003E27E1 /* QuartzCore.framework */; };
+		1ACF0E371E7FC78D003E27E1 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACF0E361E7FC78D003E27E1 /* CoreText.framework */; };
+		1ACF0E391E7FC79A003E27E1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACF0E381E7FC79A003E27E1 /* CoreGraphics.framework */; };
+		1ACF0E3B1E7FC7A6003E27E1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACF0E3A1E7FC7A6003E27E1 /* UIKit.framework */; };
+		1ACF0E3D1E7FC7B2003E27E1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACF0E3C1E7FC7B2003E27E1 /* Foundation.framework */; };
+		1ACF0E3F1E7FC7BD003E27E1 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACF0E3E1E7FC7BD003E27E1 /* CFNetwork.framework */; };
+		1ACF0E411E7FC7C9003E27E1 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACF0E401E7FC7C9003E27E1 /* CoreMotion.framework */; };
+		1ACF0E441E7FC808003E27E1 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACF0E421E7FC7EA003E27E1 /* libc++.tbd */; };
+		1ACF0E461E7FC81D003E27E1 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACF0E451E7FC81D003E27E1 /* libz.tbd */; };
 		1AD2BAC31DD1A9C5003A246C /* YJConfirmController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AD2BAC21DD1A9C5003A246C /* YJConfirmController.m */; };
 		1AD2BAC61DD1AB0F003A246C /* YJConfirmCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AD2BAC51DD1AB0F003A246C /* YJConfirmCell.m */; };
 		1AD2BAC91DD1BD76003A246C /* YJDescOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AD2BAC81DD1BD76003A246C /* YJDescOrderCell.m */; };
@@ -365,6 +378,9 @@
 		1AFD22621DDAA7FA00DA255D /* YJOderDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AFD22611DDAA7FA00DA255D /* YJOderDataController.m */; };
 		1AFD22651DDAF90A00DA255D /* YJTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AFD22641DDAF90A00DA255D /* YJTextViewController.m */; };
 		1AFD22691DDAF9BA00DA255D /* UITextView+YLTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AFD22681DDAF9BA00DA255D /* UITextView+YLTextView.m */; };
+		3AC798333FBA4166B10A428E /* libPods-全球向导.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E424E676DD0DD9888A3D6FB7 /* libPods-全球向导.a */; };
+		5B8DC9C33B6FEED637B53AE6 /* libPods-全球向导Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F3B0E159382CC6767658D3E0 /* libPods-全球向导Tests.a */; };
+		BB0AD0B1A1F263BD6B7D82B7 /* libPods-全球向导UITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D63AB21A2774C633D582FB /* libPods-全球向导UITests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -865,6 +881,19 @@
 		1ACA58701DC7334C003D640A /* ZYKeyboardUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYKeyboardUtil.m; sourceTree = "<group>"; };
 		1ACAFDD81E30AB3200F1B52B /* YJRelateDayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJRelateDayCell.h; sourceTree = "<group>"; };
 		1ACAFDD91E30AB3200F1B52B /* YJRelateDayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJRelateDayCell.m; sourceTree = "<group>"; };
+		1ACF0E2C1E7FC72A003E27E1 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
+		1ACF0E2D1E7FC72A003E27E1 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
+		1ACF0E301E7FC75D003E27E1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		1ACF0E321E7FC772003E27E1 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		1ACF0E341E7FC781003E27E1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		1ACF0E361E7FC78D003E27E1 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		1ACF0E381E7FC79A003E27E1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		1ACF0E3A1E7FC7A6003E27E1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		1ACF0E3C1E7FC7B2003E27E1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1ACF0E3E1E7FC7BD003E27E1 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		1ACF0E401E7FC7C9003E27E1 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		1ACF0E421E7FC7EA003E27E1 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		1ACF0E451E7FC81D003E27E1 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		1AD2BAC11DD1A9C5003A246C /* YJConfirmController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJConfirmController.h; sourceTree = "<group>"; };
 		1AD2BAC21DD1A9C5003A246C /* YJConfirmController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJConfirmController.m; sourceTree = "<group>"; };
 		1AD2BAC41DD1AB0F003A246C /* YJConfirmCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJConfirmCell.h; sourceTree = "<group>"; };
@@ -959,8 +988,8 @@
 		1AF3ABA91E66A1D000F5E568 /* YJPhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJPhotoModel.m; sourceTree = "<group>"; };
 		1AF559F21DDDB811004AA101 /* LYButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LYButton.h; sourceTree = "<group>"; };
 		1AF559F31DDDB811004AA101 /* LYButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYButton.m; sourceTree = "<group>"; };
-		1AF9286D1DF7F1DC004B666F /* YJEvaluationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJEvaluationController.h; sourceTree = "<group>"; };
-		1AF9286E1DF7F1DC004B666F /* YJEvaluationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJEvaluationController.m; sourceTree = "<group>"; };
+		1AF9286D1DF7F1DC004B666F /* YJEvaluationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YJEvaluationController.h; path = "../我的订单/YJEvaluationController.h"; sourceTree = "<group>"; };
+		1AF9286E1DF7F1DC004B666F /* YJEvaluationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YJEvaluationController.m; path = "../我的订单/YJEvaluationController.m"; sourceTree = "<group>"; };
 		1AF928911DF7F8D4004B666F /* LxGridViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LxGridViewFlowLayout.h; sourceTree = "<group>"; };
 		1AF928921DF7F8D4004B666F /* LxGridViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LxGridViewFlowLayout.m; sourceTree = "<group>"; };
 		1AF928931DF7F8D4004B666F /* TZTestCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZTestCell.h; sourceTree = "<group>"; };
@@ -1084,6 +1113,15 @@
 		1AFD22641DDAF90A00DA255D /* YJTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJTextViewController.m; sourceTree = "<group>"; };
 		1AFD22671DDAF9BA00DA255D /* UITextView+YLTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+YLTextView.h"; sourceTree = "<group>"; };
 		1AFD22681DDAF9BA00DA255D /* UITextView+YLTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+YLTextView.m"; sourceTree = "<group>"; };
+		34293BBDFB376C2E38BAD4C7 /* Pods-全球向导UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-全球向导UITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-全球向导UITests/Pods-全球向导UITests.debug.xcconfig"; sourceTree = "<group>"; };
+		50D63AB21A2774C633D582FB /* libPods-全球向导UITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-全球向导UITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FA6346CB6B898327326824B /* Pods-全球向导.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-全球向导.debug.xcconfig"; path = "Pods/Target Support Files/Pods-全球向导/Pods-全球向导.debug.xcconfig"; sourceTree = "<group>"; };
+		B0AEB5FE73586FDA83675728 /* Pods-全球向导Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-全球向导Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-全球向导Tests/Pods-全球向导Tests.release.xcconfig"; sourceTree = "<group>"; };
+		B5F90DD7C6857DCD889B5633 /* Pods-全球向导UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-全球向导UITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-全球向导UITests/Pods-全球向导UITests.release.xcconfig"; sourceTree = "<group>"; };
+		CE2ECB13E2C598B35A44D310 /* Pods-全球向导.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-全球向导.release.xcconfig"; path = "Pods/Target Support Files/Pods-全球向导/Pods-全球向导.release.xcconfig"; sourceTree = "<group>"; };
+		DE95D8B9737D436B2C0A1B69 /* Pods-全球向导Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-全球向导Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-全球向导Tests/Pods-全球向导Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		E424E676DD0DD9888A3D6FB7 /* libPods-全球向导.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-全球向导.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F3B0E159382CC6767658D3E0 /* libPods-全球向导Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-全球向导Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1091,8 +1129,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1ACF0E461E7FC81D003E27E1 /* libz.tbd in Frameworks */,
+				1ACF0E441E7FC808003E27E1 /* libc++.tbd in Frameworks */,
+				1ACF0E411E7FC7C9003E27E1 /* CoreMotion.framework in Frameworks */,
+				1ACF0E3F1E7FC7BD003E27E1 /* CFNetwork.framework in Frameworks */,
+				1ACF0E3D1E7FC7B2003E27E1 /* Foundation.framework in Frameworks */,
+				1ACF0E3B1E7FC7A6003E27E1 /* UIKit.framework in Frameworks */,
+				1ACF0E391E7FC79A003E27E1 /* CoreGraphics.framework in Frameworks */,
+				1ACF0E371E7FC78D003E27E1 /* CoreText.framework in Frameworks */,
+				1ACF0E351E7FC781003E27E1 /* QuartzCore.framework in Frameworks */,
+				1ACF0E331E7FC772003E27E1 /* CoreTelephony.framework in Frameworks */,
+				1ACF0E311E7FC75D003E27E1 /* SystemConfiguration.framework in Frameworks */,
 				1AB1C8691DBFB347007032C4 /* MapKit.framework in Frameworks */,
 				1AB1C8671DBFB32D007032C4 /* CoreLocation.framework in Frameworks */,
+				1ACF0E2F1E7FC72A003E27E1 /* AlipaySDK.framework in Frameworks */,
+				3AC798333FBA4166B10A428E /* libPods-全球向导.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1100,6 +1151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B8DC9C33B6FEED637B53AE6 /* libPods-全球向导Tests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1107,6 +1159,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB0AD0B1A1F263BD6B7D82B7 /* libPods-全球向导UITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1336,6 +1389,8 @@
 				1A03A6BF1E077616007EB922 /* YJEveWiatVC.m */,
 				1A03A6C11E077711007EB922 /* YJAlreadyEveVC.h */,
 				1A03A6C21E077711007EB922 /* YJAlreadyEveVC.m */,
+				1AF9286D1DF7F1DC004B666F /* YJEvaluationController.h */,
+				1AF9286E1DF7F1DC004B666F /* YJEvaluationController.m */,
 			);
 			path = "我的评价";
 			sourceTree = "<group>";
@@ -1366,6 +1421,7 @@
 				1A26D1031DB8612B006A6363 /* 全球向导UITests */,
 				1A26D0DD1DB8612B006A6363 /* Products */,
 				1AB1C8651DBFB32D007032C4 /* Frameworks */,
+				649215A9EB858CFA5C614147 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1382,6 +1438,7 @@
 		1A26D0DE1DB8612B006A6363 /* 全球向导 */ = {
 			isa = PBXGroup;
 			children = (
+				1ACF0E2B1E7FC6AF003E27E1 /* ThirdSDK */,
 				1AFD22581DD9AD0F00DA255D /* Tool */,
 				1ACA58641DC32E24003D640A /* 登录注册 */,
 				1AE0FC4F1DC197A700417351 /* 我的 */,
@@ -1919,8 +1976,22 @@
 		1AB1C8651DBFB32D007032C4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1ACF0E451E7FC81D003E27E1 /* libz.tbd */,
+				1ACF0E421E7FC7EA003E27E1 /* libc++.tbd */,
+				1ACF0E401E7FC7C9003E27E1 /* CoreMotion.framework */,
+				1ACF0E3E1E7FC7BD003E27E1 /* CFNetwork.framework */,
+				1ACF0E3C1E7FC7B2003E27E1 /* Foundation.framework */,
+				1ACF0E3A1E7FC7A6003E27E1 /* UIKit.framework */,
+				1ACF0E381E7FC79A003E27E1 /* CoreGraphics.framework */,
+				1ACF0E361E7FC78D003E27E1 /* CoreText.framework */,
+				1ACF0E341E7FC781003E27E1 /* QuartzCore.framework */,
+				1ACF0E321E7FC772003E27E1 /* CoreTelephony.framework */,
+				1ACF0E301E7FC75D003E27E1 /* SystemConfiguration.framework */,
 				1AB1C8681DBFB347007032C4 /* MapKit.framework */,
 				1AB1C8661DBFB32D007032C4 /* CoreLocation.framework */,
+				E424E676DD0DD9888A3D6FB7 /* libPods-全球向导.a */,
+				F3B0E159382CC6767658D3E0 /* libPods-全球向导Tests.a */,
+				50D63AB21A2774C633D582FB /* libPods-全球向导UITests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1970,6 +2041,15 @@
 				1ACA58701DC7334C003D640A /* ZYKeyboardUtil.m */,
 			);
 			path = Keyboard;
+			sourceTree = "<group>";
+		};
+		1ACF0E2B1E7FC6AF003E27E1 /* ThirdSDK */ = {
+			isa = PBXGroup;
+			children = (
+				1ACF0E2C1E7FC72A003E27E1 /* AlipaySDK.bundle */,
+				1ACF0E2D1E7FC72A003E27E1 /* AlipaySDK.framework */,
+			);
+			path = ThirdSDK;
 			sourceTree = "<group>";
 		};
 		1AD8CBA41DC8275300B7E64D /* CountDown */ = {
@@ -2484,8 +2564,6 @@
 				1A443C0E1DF9525D00CC1AC2 /* YJDetailOrderController.m */,
 				1A6C74681DFA4ECF002A9481 /* YJOrderStateController.h */,
 				1A6C74691DFA4ECF002A9481 /* YJOrderStateController.m */,
-				1AF9286D1DF7F1DC004B666F /* YJEvaluationController.h */,
-				1AF9286E1DF7F1DC004B666F /* YJEvaluationController.m */,
 				1AF928911DF7F8D4004B666F /* LxGridViewFlowLayout.h */,
 				1AF928921DF7F8D4004B666F /* LxGridViewFlowLayout.m */,
 				1AF928931DF7F8D4004B666F /* TZTestCell.h */,
@@ -2660,6 +2738,19 @@
 			path = YLTextView;
 			sourceTree = "<group>";
 		};
+		649215A9EB858CFA5C614147 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7FA6346CB6B898327326824B /* Pods-全球向导.debug.xcconfig */,
+				CE2ECB13E2C598B35A44D310 /* Pods-全球向导.release.xcconfig */,
+				DE95D8B9737D436B2C0A1B69 /* Pods-全球向导Tests.debug.xcconfig */,
+				B0AEB5FE73586FDA83675728 /* Pods-全球向导Tests.release.xcconfig */,
+				34293BBDFB376C2E38BAD4C7 /* Pods-全球向导UITests.debug.xcconfig */,
+				B5F90DD7C6857DCD889B5633 /* Pods-全球向导UITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2667,9 +2758,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1A26D1091DB8612B006A6363 /* Build configuration list for PBXNativeTarget "全球向导" */;
 			buildPhases = (
+				8C7D6A28507A8BB53D6A9EF5 /* [CP] Check Pods Manifest.lock */,
 				1A26D0D81DB8612B006A6363 /* Sources */,
 				1A26D0D91DB8612B006A6363 /* Frameworks */,
 				1A26D0DA1DB8612B006A6363 /* Resources */,
+				4170D0299EEEF9BF26BE4C3B /* [CP] Embed Pods Frameworks */,
+				0B20C37F5758EEEF38C4AF1B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2684,9 +2778,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1A26D10C1DB8612B006A6363 /* Build configuration list for PBXNativeTarget "全球向导Tests" */;
 			buildPhases = (
+				B460095BE1ADF348A5BACD55 /* [CP] Check Pods Manifest.lock */,
 				1A26D0F11DB8612B006A6363 /* Sources */,
 				1A26D0F21DB8612B006A6363 /* Frameworks */,
 				1A26D0F31DB8612B006A6363 /* Resources */,
+				69508A1F696038ED9109740F /* [CP] Embed Pods Frameworks */,
+				B60AE69297ADDE4D91622760 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2702,9 +2799,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1A26D10F1DB8612B006A6363 /* Build configuration list for PBXNativeTarget "全球向导UITests" */;
 			buildPhases = (
+				C15392369E4D3454D02AB091 /* [CP] Check Pods Manifest.lock */,
 				1A26D0FC1DB8612B006A6363 /* Sources */,
 				1A26D0FD1DB8612B006A6363 /* Frameworks */,
 				1A26D0FE1DB8612B006A6363 /* Resources */,
+				A2422BB431269222CFBB2B6C /* [CP] Embed Pods Frameworks */,
+				EA3ECDDE027B2A28C6C8C6E7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2768,6 +2868,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1ACF0E2E1E7FC72A003E27E1 /* AlipaySDK.bundle in Resources */,
 				1A78871D1E1DE084004F3271 /* SGLocationPickerSheetView.xib in Resources */,
 				1A7887141E1DE084004F3271 /* Address.plist in Resources */,
 				1AFCC8171E260A2F00450852 /* MJRefresh.bundle in Resources */,
@@ -2815,6 +2916,144 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0B20C37F5758EEEF38C4AF1B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-全球向导/Pods-全球向导-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4170D0299EEEF9BF26BE4C3B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-全球向导/Pods-全球向导-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		69508A1F696038ED9109740F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-全球向导Tests/Pods-全球向导Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8C7D6A28507A8BB53D6A9EF5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A2422BB431269222CFBB2B6C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-全球向导UITests/Pods-全球向导UITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B460095BE1ADF348A5BACD55 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B60AE69297ADDE4D91622760 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-全球向导Tests/Pods-全球向导Tests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C15392369E4D3454D02AB091 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		EA3ECDDE027B2A28C6C8C6E7 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-全球向导UITests/Pods-全球向导UITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1A26D0D81DB8612B006A6363 /* Sources */ = {
@@ -3282,12 +3521,18 @@
 		};
 		1A26D10A1DB8612B006A6363 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7FA6346CB6B898327326824B /* Pods-全球向导.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 522M7RQ9Z7;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/全球向导/ThirdSDK",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "全球向导/Other/PrefixHeader.pch";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/全球向导";
 				INFOPLIST_FILE = "全球向导/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -3299,12 +3544,18 @@
 		};
 		1A26D10B1DB8612B006A6363 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CE2ECB13E2C598B35A44D310 /* Pods-全球向导.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 522M7RQ9Z7;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/全球向导/ThirdSDK",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "全球向导/Other/PrefixHeader.pch";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/全球向导";
 				INFOPLIST_FILE = "全球向导/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -3316,6 +3567,7 @@
 		};
 		1A26D10D1DB8612B006A6363 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DE95D8B9737D436B2C0A1B69 /* Pods-全球向导Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = "全球向导Tests/Info.plist";
@@ -3328,6 +3580,7 @@
 		};
 		1A26D10E1DB8612B006A6363 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B0AEB5FE73586FDA83675728 /* Pods-全球向导Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = "全球向导Tests/Info.plist";
@@ -3340,6 +3593,7 @@
 		};
 		1A26D1101DB8612B006A6363 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 34293BBDFB376C2E38BAD4C7 /* Pods-全球向导UITests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = "全球向导UITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -3351,6 +3605,7 @@
 		};
 		1A26D1111DB8612B006A6363 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B5F90DD7C6857DCD889B5633 /* Pods-全球向导UITests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = "全球向导UITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

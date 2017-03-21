@@ -28,7 +28,7 @@
         [self.contentView addSubview:self.icon];
         self.icon.sd_layout.rightSpaceToView(self.img,5).centerYEqualToView(self.img).heightIs(50 * KHeight_Scale).widthIs(50 * KHeight_Scale);
         self.icon.layer.masksToBounds = YES;
-        self.icon.layer.cornerRadius = (self.icon.width * KHeight_Scale) / 2;
+        self.icon.layer.cornerRadius = self.icon.width / 2;
         self.icon.layer.borderWidth = 1.0;
         self.icon.layer.borderColor = BackGray.CGColor;
         

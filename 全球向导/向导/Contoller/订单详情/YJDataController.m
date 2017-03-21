@@ -36,8 +36,29 @@
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"日期选择" font:19.0];
     UIBarButtonItem * leftItem = [UIBarButtonItem itemWithTarget:self action:@selector(back) image:@"back" highImage:@"back"];
-    self.navigationItem.leftBarButtonItem = leftItem;
+    UIBarButtonItem * rightItem = [UIBarButtonItem itemWithTarget:self action:@selector(finsh) title:@"完成" titleColor:TextColor font:AdaptedWidth(16)];
 
+    self.navigationItem.leftBarButtonItem = leftItem;
+    self.navigationItem.rightBarButtonItem = rightItem;
+
+}
+
+- (void)finsh{
+    
+    //选择的天数
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *select = [userDefaults objectForKey:saveSelectArr];
+    if (select.count > 0 ) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        
+        SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"请选择日期后提交" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            
+        }];
+        alert.sure_btnTitleColor = TextColor;
+        [alert show];
+    }
+    
 }
 
 - (void)viewDidLoad {

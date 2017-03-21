@@ -46,7 +46,7 @@
 @property (nonatomic , copy) NSString              * orderNo;
 @property (nonatomic , copy) NSString              * payIp;
 @property (nonatomic , assign) NSInteger              personNumber;
-@property (nonatomic , assign) NSInteger              guideId;
+@property (nonatomic , strong) NSString            * guideId;
 @property (nonatomic , copy) NSString              * bigTitle;
 @property (nonatomic , assign) NSInteger              refundMoney;
 @property (nonatomic , assign) NSInteger              successType;

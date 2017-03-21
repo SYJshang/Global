@@ -12,7 +12,8 @@
 #import "YJEvaWaitModel.h"
 #import "YJPageModel.h"
 #import "NoNetwork.h"
-//#import "YJOrderListModel.h"
+#import "YJConfirmController.h"
+#import "YJGuideDetailVC.h"
 
 
 @interface YJEveWiatVC ()<UITableViewDelegate,UITableViewDataSource,YJBtnClickEvE>
@@ -202,19 +203,18 @@
         
         if ([dict[@"code"] isEqualToString:@"1"]) {
             
-            self.totalCout = [YJEvaWaitModel mj_objectArrayWithKeyValuesArray:dict[@"data"][@"evaWaitList"]];
+            self.orderList = [YJEvaWaitModel mj_objectArrayWithKeyValuesArray:dict[@"data"][@"evaWaitList"]];
             self.pageModel = [YJPageModel mj_objectWithKeyValues:dict[@"data"][@"queryEvaWait"][@"page"]];
             
             for (YJEvaWaitModel *model in self.orderList) {
                 [self.totalCout addObject:model];
             }
             
-            if (self.orderList.count < 2) {
+            if (self.totalCout.count == self.pageModel.totalPage) {
                 [self.tableView.mj_footer endRefreshingWithNoMoreData];
             }else{
                 [self.tableView.mj_footer endRefreshing];
             }
-            
             
             [self.tableView reloadData];
         }else{
@@ -279,14 +279,30 @@
 }
 
 
-- (void)btnDidClickPlusButton:(NSInteger)ViewTag{
+- (void)btnDidClickPlusButton:(UIButton *)ViewTag{
     
-    if (ViewTag == 1) {
-        [self.navigationController pushViewController:[YJEvaluationController new] animated:YES];
-    }
+    YJAllOrderCell *cell = (YJAllOrderCell *)[[ViewTag superview]superview];
+    //获取cell
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    //获取当前选中cell
+    //    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    YJOrderListModel *model = self.totalCout[indexPath.row];
+
     
-    if (ViewTag == 2) {
-        XXLog(@"再次预定");
+    if (ViewTag.tag == 1) {
+        XXLog(@"去评价");
+        YJEvaluationController *VC = [[YJEvaluationController alloc]init];
+        VC.ID = model.ID;
+        [self.navigationController pushViewController:VC animated:YES];
+        
+
+        
+    }else{
+        
+               XXLog(@"再次预定");
+        YJGuideDetailVC *vc = [[YJGuideDetailVC alloc]init];
+        vc.guideId = model.guideId;
+        [self.navigationController pushViewController:vc animated:YES];
     }
     
 }

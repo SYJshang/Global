@@ -439,6 +439,7 @@
             case 0:{
                 cell.phoneNum.text = @"联系电话";
                 cell.phoneTF.placeholder = @"请输入手机号（必填）";
+                cell.phoneTF.keyboardType = UIKeyboardTypeNumberPad;
                 
                 Scell.text = ^(NSString *sender){
                     
@@ -599,7 +600,17 @@
     [parmter setObject:self.guideID forKey:@"guideId"];
     [parmter setObject:productIds forKey:@"productIds"];
     [parmter setObject:numbers forKey:@"numbers"];
-    [parmter setObject:phone forKey:@"phone"];
+    if (phone.length == 11) {
+        [parmter setObject:phone forKey:@"phone"];
+    }else{
+        SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"手机号格式有误" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            
+            return;
+            
+        }];
+        alert.sure_btnTitleColor = TextColor;
+        [alert show];
+    }
     [parmter setObject:wechat forKey:@"wechat"];
     [parmter setObject:remark forKey:@"remark"];
     
@@ -629,6 +640,7 @@
             YJConfirmController *vc = [[YJConfirmController alloc]init];
             
             YJOrderFinshModel *model = [YJOrderFinshModel mj_objectWithKeyValues:dict[@"data"]];
+            vc.orderID = model.orderId;
             vc.model = model;
             [self.navigationController pushViewController:vc animated:YES];
         }else{

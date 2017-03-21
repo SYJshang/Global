@@ -17,6 +17,9 @@
 #import "LxGridViewFlowLayout.h"
 #import "TZImageManager.h"
 #import "TZVideoPlayerController.h"
+#import "BANetManager.h"
+
+
 
 @interface YJEvaluationController ()<TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate>
 
@@ -37,6 +40,9 @@
 //相册
 @property (nonatomic, strong) UIImagePickerController *imagePickerVc;
 @property (nonatomic, strong) UICollectionView *collectionView;
+
+
+@property (nonatomic, strong) NSString *photoID; //图片上传id
 
 @end
 
@@ -63,11 +69,12 @@
 
 - (void)back{
     
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 - (void)finsh{
     
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self eveaData];
 }
 
 - (void)viewDidLoad {
@@ -75,6 +82,8 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     [self setArtile];
+    
+    self.photoID = @"";
     
     _selectedPhotos = [NSMutableArray array];
     _selectedAssets = [NSMutableArray array];
@@ -87,19 +96,119 @@
 //设置上边头像及输入文字信息布局
 - (void)setArtile{
     
-    self.icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"456"]];
-    [self.view addSubview:self.icon];
-    self.icon.sd_layout.leftSpaceToView(self.view,10).topSpaceToView(self.view,5).widthIs(80).heightIs(80);
+//    self.icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"456"]];
+//    [self.view addSubview:self.icon];
+//    self.icon.sd_layout.leftSpaceToView(self.view,10).topSpaceToView(self.view,5).widthIs(80).heightIs(80);
     
     self.textView = [[UITextView alloc]init];
     [self.view addSubview:self.textView];
-    self.textView.sd_layout.leftSpaceToView(self.icon,10).topSpaceToView(self.view,5).rightSpaceToView(self.view,10).heightIs(160);
+    self.textView.sd_layout.leftSpaceToView(self.view,10).topSpaceToView(self.view,5).rightSpaceToView(self.view,10).heightIs(160);
     self.textView.placeholder = @"亲~~ 您可以在这里输入评价那~~";
-    self.textView.limitLength = @300;
-    self.textView.font = [UIFont systemFontOfSize:15.0];
+    self.textView.limitLength = @20;
+    self.textView.font = [UIFont systemFontOfSize:AdaptedWidth(15)];
     self.textView.textColor = [UIColor colorWithRed:70.0 / 255.0 green:70.0 / 255.0 blue:70.0 / 255.0 alpha:1.0];
 
 }
+
+#pragma mark - 提交评论信息
+- (void)eveaData{
+    
+    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+    [parameter setObject:self.ID forKey:@"orderId"];
+    if (self.photoID) {
+        [parameter setObject:self.photoID forKey:@"picIds"];
+    }
+    [parameter setObject:self.textView.text forKey:@"eva"];
+    
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myEva/evaByOrderId",BaseUrl] parameters:parameter success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        XXLog(@"%@",dict);
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.contentColor = [UIColor whiteColor];
+            hud.color = [UIColor blackColor];
+            hud.label.text = NSLocalizedString(@"上传评论成功!", @"HUD message title");
+            [hud hideAnimated:YES afterDelay:2.f];
+            [self.navigationController popViewControllerAnimated:YES];
+
+        }else{
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+            }];
+            [alert show];
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    
+}
+
+
+- (void)PostImage{
+    
+    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+    [parameter setObject:@"json" forKey:@"format"];
+    //    [parameter setObject:@"" forKey:@""];
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.contentColor = [UIColor whiteColor];
+    hud.color = [UIColor blackColor];
+    hud.label.text = NSLocalizedString(@"正在上传图片...", @"HUD loading title");
+    
+    [BANetManager ba_uploadImageWithUrlString:[NSString stringWithFormat:@"%@/uploadCM?dir=image",BaseUrl] parameters:parameter imageArray:_selectedPhotos fileName:[NSString stringWithFormat:@"%ld.png",_selectedPhotos.count] successBlock:^(id response) {
+        
+        NSDictionary *dict = response;
+        XXLog(@"%@",dict);
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            //            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.contentColor = [UIColor whiteColor];
+            hud.color = [UIColor blackColor];
+            hud.label.text = NSLocalizedString(@"上传照片成功!", @"HUD message title");
+            [hud hideAnimated:YES afterDelay:2.f];
+            
+            NSMutableArray *arr = dict[@"data"];
+            for (NSDictionary *photo in arr) {
+                
+                NSString *ID = photo[@"id"];
+                self.photoID = [NSString stringWithFormat:@"%@%@,",self.photoID,ID];
+                XXLog(@"%@",self.photoID);
+                
+            }
+            
+            
+        }else{
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+            }];
+            [alert show];
+        }
+        
+    } failurBlock:^(NSError *error) {
+        
+        SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"上传图片失败" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            
+        }];
+        [alert show];
+        
+    } upLoadProgress:^(int64_t bytesProgress, int64_t totalBytesProgress) {
+        
+    }];
+    
+    [BANetManager ba_uploadImageWithUrlString:nil parameters:nil imageArray:nil fileName:nil successBlock:^(id response) {
+        
+    } failurBlock:^(NSError *error) {
+        
+    } upLoadProgress:^(int64_t bytesProgress, int64_t totalBytesProgress) {
+        
+    }];
+    
+}
+
 
 
 
@@ -170,11 +279,12 @@
     if (indexPath.row == _selectedPhotos.count) {
         cell.imageView.image = [UIImage imageNamed:@"AlbumAddBtn.png"];
         cell.deleteBtn.hidden = YES;
-//        cell.gifLable.hidden = YES;
+        cell.gifLable.hidden = YES;
     } else {
         cell.imageView.image = _selectedPhotos[indexPath.row];
         cell.asset = _selectedAssets[indexPath.row];
-        cell.deleteBtn.hidden = NO;
+        cell.deleteBtn.hidden = YES;
+        cell.gifLable.hidden = YES;
     }
     cell.deleteBtn.tag = indexPath.row;
     [cell.deleteBtn addTarget:self action:@selector(deleteBtnClik:) forControlEvents:UIControlEventTouchUpInside];
@@ -367,29 +477,7 @@
 
 #pragma mark - UIAlertViewDelegate
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-//#pragma clang diagnostic pop
-//    if (buttonIndex == 1) { // 去设置界面，开启相机访问权限
-//        if (iOS8Later) {
-//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-//        } else {
-//            NSURL *privacyUrl;
-//            if (alertView.tag == 1) {
-//                privacyUrl = [NSURL URLWithString:@"prefs:root=Privacy&path=PHOTOS"];
-//            } else {
-//                privacyUrl = [NSURL URLWithString:@"prefs:root=Privacy&path=CAMERA"];
-//            }
-//            if ([[UIApplication sharedApplication] canOpenURL:privacyUrl]) {
-//                [[UIApplication sharedApplication] openURL:privacyUrl];
-//            } else {
-//                UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"抱歉" message:@"无法跳转到隐私设置页面，请手动前往设置页面，谢谢" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-//                [alert show];
-//            }
-//        }
-//    }
-//}
+
 
 #pragma mark - TZImagePickerControllerDelegate
 
@@ -414,6 +502,8 @@
     _isSelectOriginalPhoto = isSelectOriginalPhoto;
     [_collectionView reloadData];
     // _collectionView.contentSize = CGSizeMake(0, ((_selectedPhotos.count + 2) / 3 ) * (_margin + _itemWH));
+    
+    [self PostImage];
     
     // 1.打印图片名字
     [self printAssetsName:assets];

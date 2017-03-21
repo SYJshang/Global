@@ -19,22 +19,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/&#x5730;&#x533a;&#x9009;&#x62e9;/&#x57ce;&#x5e02;&#x5217;&#x8868;/YJLocaController.m"
-            timestampString = "505638814.97538"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "388"
-            endingLineNumber = "388"
-            landmarkName = "-updateSearchResultsForSearchController:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/&#x9996;&#x9875;/Contoller/YJLocaAbroadVC.m"
             timestampString = "505634004.936938"
             startingColumnNumber = "9223372036854775807"
@@ -90,6 +74,38 @@
             startingLineNumber = "101"
             endingLineNumber = "101"
             landmarkName = "-collect:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/&#x5411;&#x5bfc;/Views/YJAllSelectCell.m"
+            timestampString = "511443119.684076"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
+            landmarkName = "-handleInCheckBoxIndex:withClinicChoose:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/&#x5411;&#x5bfc;/Contoller/&#x8ba2;&#x5355;&#x8be6;&#x60c5;/YJConfirmController.m"
+            timestampString = "511696568.878834"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "305"
+            endingLineNumber = "305"
+            landmarkName = "-payOrder"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

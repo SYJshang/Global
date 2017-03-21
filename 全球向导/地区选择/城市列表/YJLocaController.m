@@ -144,10 +144,18 @@
                 for (NSDictionary *citys in array) {
                     YJCityModel *openCH = [YJCityModel mj_objectWithKeyValues:citys];
                     [self.allCityArray addObject:openCH.name];
-                    [self.cityID addObject:[NSNumber numberWithInt:openCH.ID]];
+                    [self.cityID addObject:openCH.ID];
                     XXLog(@"%@",self.allCityArray);
                     XXLog(@"%@",self.cityID);
+                    
+                    NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
+                    [userdefault removeObjectForKey:@"cityArr"];
+                    [userdefault removeObjectForKey:@"cityID"];
                 }
+                
+                NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
+                [userdefault setObject:self.allCityArray forKey:@"cityArr"];
+                [userdefault setObject:self.cityID forKey:@"cityID"];
             }
             
             [_keys addObjectsFromArray:[[_allCitysDictionary allKeys] sortedArrayUsingSelector:@selector(compare:)]];
@@ -343,12 +351,12 @@
         NSNumber *cityID = [NSNumber numberWithInt:model.ID];
         [cityIdArr addObject:cityID];
     }
-    [self popRootViewControllerWithName:letterArr[indexPath.row] cityID:cityIdArr[indexPath.row]];
+    [self popRootViewControllerWithName:letterArr[indexPath.row]];
 }
 
 -(void)SelectCityNameInCollectionBy:(NSString *)cityName
 {
-    [self popRootViewControllerWithName:cityName cityID:_cityID.firstObject];
+    [self popRootViewControllerWithName:cityName];
 }
 #pragma mark - UISearchResultsUpdating
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
@@ -399,7 +407,7 @@
 {
     self.searchController.searchBar.text = @"";
     [self.searchController dismissViewControllerAnimated:NO completion:nil];
-    [self popRootViewControllerWithName:cityName cityID:cityID];
+    [self popRootViewControllerWithName:cityName];
     
 }
 
@@ -417,9 +425,9 @@
 {
     self.returnBlock = block;
 }
-- (void)popRootViewControllerWithName:(NSString *)cityName cityID:(NSNumber *)cityID
+- (void)popRootViewControllerWithName:(NSString *)cityName
 {
-    self.returnBlock(cityName,cityID);
+    self.returnBlock(cityName);
     
     [self.navigationController popViewControllerAnimated:YES];
     

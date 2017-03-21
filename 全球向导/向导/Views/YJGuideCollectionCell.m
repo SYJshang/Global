@@ -22,6 +22,7 @@
         
         self.imgV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"find_guide"]];
         [self.contentView addSubview:self.imgV];
+        self.imgV.contentMode = UIViewContentModeScaleAspectFill;
         self.imgV.sd_layout.leftSpaceToView(self.contentView,0).rightSpaceToView(self.contentView,0).topSpaceToView(self.contentView,0).bottomSpaceToView(self.contentView,40);
         
         

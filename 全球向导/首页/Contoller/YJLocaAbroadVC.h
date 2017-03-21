@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^ReturnCityName)(NSString *cityname,NSNumber *cityID);
+typedef void(^ReturnCityName)(NSString *cityname);
 
 @interface YJLocaAbroadVC : UIViewController
 

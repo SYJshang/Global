@@ -292,7 +292,17 @@
     YJGOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
     YJGuideReceiveModel *model = self.totalCout[indexPath.row];
-    cell.timeLab.text = [self getNowTimeWithString:model.limitTime];
+    
+    if (model.status == 1 || model.status == 7 || model.status == 2) {
+        cell.timeIcon.hidden = NO;
+        cell.timeLab.hidden = NO;
+        cell.timeLab.text = [self getNowTimeWithString:model.limitTime];
+
+    }else{
+        cell.timeIcon.hidden = YES;
+        cell.timeLab.hidden = YES;
+    }
+    
     
     cell.userInfo = self.userInfoMap;
     cell.orderState = self.orderStatusMap;
@@ -363,6 +373,12 @@
             [hud hideAnimated:YES afterDelay:2.f];
             
             [self.tableView reloadData];
+        }else{
+            
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
         }
         
         
@@ -390,7 +406,14 @@
             [hud hideAnimated:YES afterDelay:2.f];
             
             [self.tableView reloadData];
+        }else{
+            
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
         }
+
         
         
     } failure:^(NSError *error) {
@@ -421,14 +444,31 @@
         
 //        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         YJGuideReceiveModel *model = self.totalCout[cell.tag];
-        cell.timeLab.text = [self getNowTimeWithString:model.limitTime];
-        if ([cell.timeLab.text isEqualToString:@"00:00:00"] || model.status == 6) {
-            cell.stateLab.text = @"交易关闭";
-            cell.timeLab.text = @"00:00:00";
-            cell.timeLab.textColor = [UIColor grayColor];
+        
+        if (model.status == 1 || model.status == 7 || model.status == 2) {
+
+            cell.timeLab.text = [self getNowTimeWithString:model.limitTime];
+            if ([cell.timeLab.text isEqualToString:@"00:00:00"]) {
+                cell.stateLab.text = @"交易关闭";
+                cell.timeLab.text = @"00:00:00";
+                cell.timeLab.textColor = [UIColor grayColor];
+               
+                cell.timeIcon.hidden = YES;
+                cell.timeLab.hidden = YES;
+                
+            }else{
+                cell.timeLab.textColor = TextColor;
+            }
+
+            
         }else{
-            cell.timeLab.textColor = TextColor;
+            if (model.status == 6) {
+                cell.stateLab.text = @"交易关闭";
+                cell.timeLab.text = @"00:00:00";
+                cell.timeLab.textColor = [UIColor grayColor];
+            }
         }
+
     }
 }
 -(NSString *)getNowTimeWithString:(NSString *)aTimeString{

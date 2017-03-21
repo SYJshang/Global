@@ -12,6 +12,7 @@
 #import "YJOrderListModel.h"
 #import "YJPageModel.h"
 #import "NoNetwork.h"
+#import "YJConfirmController.h"
 
 @interface YJWaitBuyController ()<UITableViewDataSource,UITableViewDelegate,YJBtnClickEvE>
 
@@ -270,11 +271,11 @@
     [self.navigationController pushViewController:[YJDetailController new] animated:YES];
 }
 
-
-#pragma mark - Customer Deletage
+#pragma mark - Custom Deletae
 - (void)btnDidClickPlusButton:(UIButton *)ViewTag{
     
     XXLog(@"点击了第 %ld 个按钮",ViewTag.tag);
+    
     YJAllOrderCell *cell = (YJAllOrderCell *)[[ViewTag superview]superview];
     //获取cell
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
@@ -285,103 +286,25 @@
         XXLog(@"联系向导");
         
     }else if (ViewTag.tag == 2){
-        [self getRefundMoney:model.ID];
+        YJConfirmController *vc = [[YJConfirmController alloc]init];
+        vc.orderID = model.ID;
+        [self.navigationController pushViewController:vc animated:YES];
         
     }else{
+        [self cancleOrder:model.ID];
+        XXLog(@"取消订单");
         
-        [self affirmOrder:model.ID];
     }
-
-}
-
-
-//确认订单
-- (void)affirmOrder:(NSString *)orderId{
-    
-    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
-    [parameter setObject:orderId forKey:@"orderId"];
-    [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myOrder/confirm",BaseUrl] parameters:parameter success:^(id responseObject) {
-        
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-        XXLog(@"%@",dict);
-        
-        if ([dict[@"code"] isEqualToString:@"1"]) {
-            
-            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-            hud.mode = MBProgressHUDModeText;
-            hud.contentColor = [UIColor whiteColor];
-            hud.color = [UIColor blackColor];
-            hud.label.text = NSLocalizedString(@"确认成功!", @"HUD message title");
-            [hud hideAnimated:YES afterDelay:2.f];
-            
-            [self.tableView.mj_header beginRefreshing];
-            
-        }else{
-            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
-                
-            }];
-            alert.sure_btnTitleColor = TextColor;
-            [alert show];
-            
-        }
-        
-        
-    } failure:^(NSError *error) {
-        
-    }];
-    
     
 }
 
 
-//获取退款金额
-- (void)getRefundMoney:(NSString *)orderId{
+//取消待支付、待接单订单
+- (void)cancleOrder:(NSString *)orderId{
     
     NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
     [parameter setObject:orderId forKey:@"orderId"];
-    [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myOrder/findRefundMoney",BaseUrl] parameters:parameter success:^(id responseObject) {
-        
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-        XXLog(@"%@",dict);
-        
-        if ([dict[@"code"] isEqualToString:@"1"]) {
-            
-            NSString *title = [NSString stringWithFormat:@"当前可退款金额%@，确认无误后点击取消订单",dict[@"data"][@"refundMoney"]];
-            
-            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:title alertViewBottomViewType:SGAlertViewBottomViewTypeTwo didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
-                
-                if (index == 1) {
-                    [self cancleOrderForFinsh:orderId money:dict[@"data"][@"refundMoney"]];
-                }
-                
-            }];
-            alert.sure_btnTitleColor = TextColor;
-            alert.sure_btnTitle = @"确认取消";
-            [alert show];
-            
-        }else{
-            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
-                
-            }];
-            alert.sure_btnTitleColor = TextColor;
-            [alert show];
-            
-        }
-        
-        
-    } failure:^(NSError *error) {
-        
-    }];
-    
-}
-
-//取消待服务订单
-- (void)cancleOrderForFinsh:(NSString *)orderId money:(NSString *)money{
-    
-    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
-    [parameter setObject:orderId forKey:@"orderId"];
-    [parameter setObject:money forKey:@"refundMoney"];
-    [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myOrder/cancel2",BaseUrl] parameters:parameter success:^(id responseObject) {
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myOrder/cancel",BaseUrl] parameters:parameter success:^(id responseObject) {
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         XXLog(@"%@",dict);
@@ -394,8 +317,7 @@
             hud.label.text = NSLocalizedString(@"取消成功!", @"HUD message title");
             [hud hideAnimated:YES afterDelay:2.f];
             
-            [self.tableView.mj_header beginRefreshing];
-            
+            [self.tableView reloadData];
         }else{
             SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
                 
@@ -407,8 +329,6 @@
         
         
     } failure:^(NSError *error) {
-        
-        XXLog(@"%@",error);
         
     }];
 }

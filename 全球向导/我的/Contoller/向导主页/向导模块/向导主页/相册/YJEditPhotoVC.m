@@ -379,6 +379,8 @@ static CGFloat navH = 64;
         photoBrowser.delegate = self;
         photoBrowser.currentImageIndex = indexPath.row;
         photoBrowser.imageCount = self.modelsArray.count;
+        photoBrowser.sourceImagesContainerView = self.collectionView;
+
         
         [photoBrowser show];
         
