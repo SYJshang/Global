@@ -21,7 +21,7 @@
 
 
 
-@interface YJEvaluationController ()<TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate>
+@interface YJEvaluationController ()<TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate,UITextViewDelegate>
 
 {
     NSMutableArray *_selectedPhotos;
@@ -101,6 +101,7 @@
 //    self.icon.sd_layout.leftSpaceToView(self.view,10).topSpaceToView(self.view,5).widthIs(80).heightIs(80);
     
     self.textView = [[UITextView alloc]init];
+    self.textView.delegate = self;
     [self.view addSubview:self.textView];
     self.textView.sd_layout.leftSpaceToView(self.view,10).topSpaceToView(self.view,5).rightSpaceToView(self.view,10).heightIs(160);
     self.textView.placeholder = @"亲~~ 您可以在这里输入评价那~~";
@@ -108,6 +109,11 @@
     self.textView.font = [UIFont systemFontOfSize:AdaptedWidth(15)];
     self.textView.textColor = [UIColor colorWithRed:70.0 / 255.0 green:70.0 / 255.0 blue:70.0 / 255.0 alpha:1.0];
 
+}
+    
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesBegan:touches withEvent:event];
+    [self.view endEditing:YES];
 }
 
 #pragma mark - 提交评论信息
@@ -127,13 +133,16 @@
         if ([dict[@"code"] isEqualToString:@"1"]) {
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
             hud.mode = MBProgressHUDModeText;
-            hud.contentColor = [UIColor whiteColor];
+            hud.labelColor = [UIColor whiteColor];
             hud.color = [UIColor blackColor];
-            hud.label.text = NSLocalizedString(@"上传评论成功!", @"HUD message title");
-            [hud hideAnimated:YES afterDelay:2.f];
+            hud.labelText = NSLocalizedString(@"上传评论成功!", @"HUD message title");
+            [hud hide:YES afterDelay:2.0];
             [self.navigationController popViewControllerAnimated:YES];
 
         }else{
+            
+            [self.view endEditing:YES];
+            
             SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
                 
             }];
@@ -155,9 +164,9 @@
     //    [parameter setObject:@"" forKey:@""];
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    hud.contentColor = [UIColor whiteColor];
+    hud.labelColor = [UIColor whiteColor];
     hud.color = [UIColor blackColor];
-    hud.label.text = NSLocalizedString(@"正在上传图片...", @"HUD loading title");
+    hud.labelText = NSLocalizedString(@"正在上传图片...", @"HUD message title");
     
     [BANetManager ba_uploadImageWithUrlString:[NSString stringWithFormat:@"%@/uploadCM?dir=image",BaseUrl] parameters:parameter imageArray:_selectedPhotos fileName:[NSString stringWithFormat:@"%ld.png",_selectedPhotos.count] successBlock:^(id response) {
         
@@ -166,10 +175,10 @@
         if ([dict[@"code"] isEqualToString:@"1"]) {
             //            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
             hud.mode = MBProgressHUDModeText;
-            hud.contentColor = [UIColor whiteColor];
+            hud.labelColor = [UIColor whiteColor];
             hud.color = [UIColor blackColor];
-            hud.label.text = NSLocalizedString(@"上传照片成功!", @"HUD message title");
-            [hud hideAnimated:YES afterDelay:2.f];
+            hud.labelText = NSLocalizedString(@"上传图片成功！", @"HUD message title");
+            [hud hide:YES afterDelay:2.0];
             
             NSMutableArray *arr = dict[@"data"];
             for (NSDictionary *photo in arr) {
@@ -542,9 +551,7 @@
 }
 
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self.view endEditing:YES];
-}
+
 
 #pragma mark - Private
 

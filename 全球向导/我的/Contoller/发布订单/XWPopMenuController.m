@@ -290,23 +290,37 @@
 
     }else if(btn.tag == 1001){
         
-//            self.timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(returnUpVC) userInfo:nil repeats:YES];
-//            [UIView animateWithDuration:0.2 animations:^{
-//                _closeImgView.transform = CGAffineTransformRotate(_closeImgView.transform, -M_PI_2*1.5);
-//        }];
         
         YJTravelController *publishVC = [[YJTravelController alloc]init];
+        publishVC.state = @"1";
         [self.navigationController pushViewController:publishVC animated:YES];
     }else{
-
-//            self.timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(returnUpVC) userInfo:nil repeats:YES];
-//            [UIView animateWithDuration:0.2 animations:^{
-//                _closeImgView.transform = CGAffineTransformRotate(_closeImgView.transform, -M_PI_2*1.5);
-//        }];
         
-        YJTravelController *publishVC = [[YJTravelController alloc]init];
-        [self.navigationController  pushViewController:publishVC animated:YES];
+        NSInteger state = [self.guideSate integerValue];
+        
+        if (state == 2) {
+            YJTravelController *publishVC = [[YJTravelController alloc]init];
+            publishVC.state = @"2";
+            [self.navigationController  pushViewController:publishVC animated:YES];
+  
+        }else{
+            
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"当前不是向导状态,无法发布向导内容" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+               
+                self.timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(returnUpVC) userInfo:nil repeats:YES];
+                
+                [UIView animateWithDuration:0.3 animations:^{
+                    
+                    _closeImgView.transform = CGAffineTransformRotate(_closeImgView.transform, -M_PI_2*1.5);
+                }];
 
+                
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
+        }
+        
+        
     }
     
     

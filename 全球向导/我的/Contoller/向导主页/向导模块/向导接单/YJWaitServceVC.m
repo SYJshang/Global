@@ -14,6 +14,7 @@
 #import "CountDown.h"
 #import "YJGuideReceiveModel.h"
 #import "YJPageModel.h"
+#import "YJChatVC.h"
 
 
 @interface YJWaitServceVC ()<UITableViewDelegate,UITableViewDataSource,DisAndReceingClickPush>
@@ -324,7 +325,13 @@
             case 2:{
                 
                 SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"是否联系用户" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                    
+                    YJChatVC *vc = [[YJChatVC alloc]initWithConversationChatter:model.buyerId conversationType:EMConversationTypeChat];
+                    [self.navigationController pushViewController:vc animated:YES];
+
+                    
                 }];
+                
                 alert.sure_btnTitleColor = TextColor;
                 [alert show];
             }
@@ -358,10 +365,11 @@
         if ([dict[@"code"] isEqualToString:@"1"]) {
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
             hud.mode = MBProgressHUDModeText;
-            hud.contentColor = [UIColor whiteColor];
+            hud.labelColor = [UIColor whiteColor];
             hud.color = [UIColor blackColor];
-            hud.label.text = NSLocalizedString(@"拒绝接单成功!", @"HUD message title");
-            [hud hideAnimated:YES afterDelay:2.f];
+            hud.labelText = NSLocalizedString(@"拒绝接单成功", @"HUD message title");
+            [hud hide:YES afterDelay:2.0];
+
             
             [self.tableView reloadData];
         }
@@ -385,10 +393,11 @@
         if ([dict[@"code"] isEqualToString:@"1"]) {
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
             hud.mode = MBProgressHUDModeText;
-            hud.contentColor = [UIColor whiteColor];
+            hud.labelColor = [UIColor whiteColor];
             hud.color = [UIColor blackColor];
-            hud.label.text = NSLocalizedString(@"接单成功!", @"HUD message title");
-            [hud hideAnimated:YES afterDelay:2.f];
+            hud.labelText = NSLocalizedString(@"接单成功！", @"HUD message title");
+            [hud hide:YES afterDelay:2.0];
+
             
             [self.tableView reloadData];
         }

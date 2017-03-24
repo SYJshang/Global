@@ -237,10 +237,10 @@
         if ([dict[@"code"] isEqualToString:@"1"]) {
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
             hud.mode = MBProgressHUDModeText;
-            hud.contentColor = [UIColor whiteColor];
+            hud.labelColor = [UIColor whiteColor];
             hud.color = [UIColor blackColor];
-            hud.label.text = NSLocalizedString(@"解除绑定成功!", @"HUD message title");
-            [hud hideAnimated:YES afterDelay:2.f];
+            hud.labelText = NSLocalizedString(@"接触绑定成功", @"HUD message title");
+            [hud hide:YES afterDelay:2.0];
 
             self.isReal = NO;
             [self.tableView reloadData];

@@ -138,6 +138,7 @@
     [buy setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
 }
+
 - (void)action:(YJButton *)btn{
     
     YJOrderFormController *vc = [[YJOrderFormController alloc]init];
@@ -359,10 +360,10 @@
                 
                 MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
                 hud.mode = MBProgressHUDModeText;
-                hud.contentColor = [UIColor whiteColor];
+                hud.labelColor = [UIColor whiteColor];
                 hud.color = [UIColor blackColor];
-                hud.label.text = NSLocalizedString(@"收藏成功!", @"HUD message title");
-                [hud hideAnimated:YES afterDelay:2.f];
+                hud.labelText = NSLocalizedString(@"收藏成功!", @"HUD message title");
+                [hud hide:YES afterDelay:2.0];
 
                 
             }else if ([dict[@"code"] isEqualToString:@"10096"]){
@@ -418,11 +419,11 @@
                     
                     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
                     hud.mode = MBProgressHUDModeText;
-                    hud.contentColor = [UIColor whiteColor];
+                    hud.mode = MBProgressHUDModeText;
+                    hud.labelColor = [UIColor whiteColor];
                     hud.color = [UIColor blackColor];
-                    hud.label.text = NSLocalizedString(@"取消收藏成功!", @"HUD message title");
-                    [hud hideAnimated:YES afterDelay:2.f];
-                    
+                    hud.labelText = NSLocalizedString(@"取消收藏成功!", @"HUD message title");
+                    [hud hide:YES afterDelay:2.0];
                     
                 }else if ([dict[@"code"] isEqualToString:@"10088"]){
                     SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"该收藏不存在！" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
@@ -506,12 +507,12 @@
 
 #pragma mark - table view dataSource
 
- -(CGFloat)tableView:(UITableView*)tableView heightForHeaderInSection:(NSInteger)section
+ -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 30.f;
 }
  
- -(CGFloat)tableView:(UITableView*)tableView heightForFooterInSection:(NSInteger)section
+ -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     return 0.01f;
 }

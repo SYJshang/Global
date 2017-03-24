@@ -24,6 +24,8 @@
 
 @interface AppDelegate ()
 
+@property (nonatomic, strong)CLLocationManager *location;
+
 @end
 
 @implementation AppDelegate
@@ -33,9 +35,11 @@
     
     // Override point for customization after application launch.
     //请求获取位置服务
-    CLLocationManager *location=[[CLLocationManager alloc]init];
+    self.location = [[CLLocationManager alloc]init];
     
-    [location requestAlwaysAuthorization];
+    [self.location requestAlwaysAuthorization];
+    
+    
 
     
 //    [UINavigationBar appearance].translucent = NO;
@@ -49,38 +53,6 @@
 
     [self.window makeKeyAndVisible];
     
-   
-
-    
-    
-
-//    XRZLog(@"username:%@, password:%@.",name,password);
-
-    
-    
-    
-
-//    NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-//    NSString *historyVersion =[NSFileManager getAppSettingsForObjectWithKey:@"VersionStr"];
-//    if (historyVersion == nil || [historyVersion compare:currentVersion options:NSNumericSearch] == NSOrderedAscending) {
-//        self.first = NO;
-//        [NSFileManager setAppSettingsForObject:currentVersion forKey:@"VersionStr"];
-//        WSMovieController *wsCtrl = [[WSMovieController alloc]init];
-//        wsCtrl.movieURL = [NSURL fileURLWithPath:[[NSBundle mainBundle]pathForResource:@"qidong"ofType:@"mp4"]];
-//        self.window.rootViewController = wsCtrl;
-//        [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"isFirstLogin"];
-//        
-////        YJLoginController *login = [[YJLoginController alloc]init];
-////        self.window.rootViewController = login;
-//        
-//        
-//    }else{
-//        
-//        self.window.rootViewController = [[YJTabBarController alloc] init];
-//
-//    }
-//    self.first = YES;
-    
     //必须设置在makeKeyAndVisible下才能生效  加载引导页
     [self PageLoadingGuide];
     
@@ -88,7 +60,7 @@
     /* 打开日志 */
     [[UMSocialManager defaultManager] openLog:YES];
     // 打开图片水印
-    //[UMSocialGlobal shareInstance].isUsingWaterMark = YES;
+    [UMSocialGlobal shareInstance].isUsingWaterMark = YES;
     [UMSocialGlobal shareInstance].isClearCacheWhenGetUserInfo = NO;
     
     /* 设置友盟appkey */
@@ -98,7 +70,11 @@
     
     [self confitUShareSettings];
 
-
+    //AppKey:注册的AppKey，详细见下面注释。
+    //apnsCertName:推送证书名（不需要加后缀），详细见下面注释。
+    EMOptions *options = [EMOptions optionsWithAppkey:@"1159170320115280#globalguide"];
+    options.apnsCertName = @"globaleguide_Nor";
+    [[EMClient sharedClient] initializeSDKWithOptions:options];
 
 
     // Override point for customization after application launch.
@@ -165,15 +141,18 @@
 }
 
 
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+// APP进入后台
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    [[EMClient sharedClient] applicationDidEnterBackground:application];
 }
 
-
-- (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+// APP将要从后台返回
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+    [[EMClient sharedClient] applicationWillEnterForeground:application];
 }
+
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

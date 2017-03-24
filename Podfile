@@ -12,6 +12,10 @@ target '全球向导' do
     pod 'UMengUShare/Social/ReducedQQ'
     # 集成新浪微博(精简版1M)
     pod 'UMengUShare/Social/ReducedSina'
+    # 集成环信IM(动态库版本)
+    pod 'Hyphenate'
+    pod 'EaseUI', :git => 'https://github.com/easemob/easeui-ios-hyphenate-cocoapods.git'
+
 
   # Pods for 全球向导
 

@@ -104,10 +104,11 @@
                 
                 MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
                 hud.mode = MBProgressHUDModeText;
-                hud.contentColor = [UIColor whiteColor];
+                hud.mode = MBProgressHUDModeText;
+                hud.labelColor = [UIColor whiteColor];
                 hud.color = [UIColor blackColor];
-                hud.label.text = NSLocalizedString(@"收藏成功!", @"HUD message title");
-                [hud hideAnimated:YES afterDelay:2.f];
+                hud.labelText = NSLocalizedString(@"收藏成功", @"HUD message title");
+                [hud hide:YES afterDelay:2.0];
                 
                 
             }else{
@@ -145,10 +146,10 @@
                 
                 MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
                 hud.mode = MBProgressHUDModeText;
-                hud.contentColor = [UIColor whiteColor];
+                hud.labelColor = [UIColor whiteColor];
                 hud.color = [UIColor blackColor];
-                hud.label.text = NSLocalizedString(@"取消收藏成功!", @"HUD message title");
-                [hud hideAnimated:YES afterDelay:2.f];
+                hud.labelText = NSLocalizedString(@"取消收藏成功", @"HUD message title");
+                [hud hide:YES afterDelay:2.0];
                 
                 
             }else{
@@ -190,7 +191,7 @@
     
     //加载网页的方式
     //1.创建并加载远程网页
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://192.168.1.128:8080/web/mainGuideRec/toViewPage/%@",self.ID]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/mainGuideRec/toViewPage/%@",BaseUrl,self.ID]];
     [webView loadRequest:[NSURLRequest requestWithURL:url]];
        
     opaqueView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];

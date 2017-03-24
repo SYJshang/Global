@@ -10,4 +10,6 @@
 
 @interface YJOrderStateController : UIViewController
 
+@property (nonatomic, strong) NSString *orderID;
+
 @end

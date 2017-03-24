@@ -76,6 +76,7 @@
     [self.view addSubview:_mainScrollView];
     
     YJOrderStateController *oneVC = [[YJOrderStateController alloc] init];
+    oneVC.orderID = self.orderID;
     [self.mainScrollView addSubview:oneVC.view];
     [self addChildViewController:oneVC];
     
@@ -97,6 +98,7 @@
 - (void)setupChildViewController {
     // 订单状态
     YJOrderStateController *oneVC = [[YJOrderStateController alloc] init];
+    oneVC.orderID = self.orderID;
     [self addChildViewController:oneVC];
     // 订单详情
     YJDetailOrderController *twoVC = [[YJDetailOrderController alloc] init];

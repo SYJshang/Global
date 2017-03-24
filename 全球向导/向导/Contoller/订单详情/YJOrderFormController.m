@@ -20,6 +20,7 @@
 #import "YJProductModel.h"
 #import "YJRelateDayCell.h"
 #import "YJOrderFinshModel.h"
+#import "YJTableView.h"
 
 
 @interface YJOrderFormController ()<UITableViewDelegate,UITableViewDataSource,MyCustomCellDelegate>{
@@ -33,10 +34,13 @@
     NSString *serviceDates;//服务日期
     NSString *serviceNumber;//服务天数
     NSString *personNumber;//服务人数
+    UITextField *phoneNum;
+    UITextField *wechatNum;
+    UITextField *otherCon;
     
 }
 
-@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) YJTableView *tableView;
 //总价
 @property (nonatomic, strong) UILabel *priceAll;
 //提交
@@ -46,6 +50,8 @@
 @property (nonatomic, strong) NSMutableArray *productArr;//向导服务
 
 @property (nonatomic, strong) YJGuideModel *guideModel;
+    
+
 
 @end
 
@@ -116,6 +122,9 @@
     
     self.title = @"订单详情";
     
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults removeObjectForKey:saveSelectArr];
+    
     if (self.DateArr) {
         [self.DateArr removeAllObjects];
     }
@@ -124,7 +133,7 @@
     //加载一个布局
     [self setLayout];
     
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height - 104) style:UITableViewStylePlain];
+    self.tableView = [[YJTableView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height - 104) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
@@ -142,10 +151,38 @@
     
     [self getNetWork];
     
+    //监听键盘出现和消失
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+
+    
+    
     
     // Do any additional setup after loading the view.
 }
 
+#pragma mark - 监听上移键盘
+#pragma mark 键盘出现
+-(void)keyboardWillShow:(NSNotification *)note
+{
+    CGRect keyBoardRect=[note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, keyBoardRect.size.height, 0);
+}
+#pragma mark 键盘消失
+-(void)keyboardWillHide:(NSNotification *)note
+{
+    self.tableView.contentInset = UIEdgeInsetsZero;
+}
+
+//- (UIView *)hitTest:(CGPoint)point withEvent:(nullable UIEvent *)event(UIEvent *)event{
+//    id view = [super hitTest:point withEvent:event];
+//    return view;
+//    
+//}
+
+
+    
+    
 - (void)getNetWork{
     
     [WBHttpTool GET:[NSString stringWithFormat:@"%@/mainGuide/toBuy/%@",BaseUrl,self.guideID] parameters:nil success:^(id responseObject) {
@@ -226,10 +263,25 @@
     
     [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder)to:nil from:nil forEvent:nil];
 //    [self.tableView reloadData];
-    [self postData];
     
+    [self postData];
+
+   
     NSLog(@"提交订单");
 }
+    
+    
+
+    
+    
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    //    [self.numCode resignFirstResponder];
+    [phoneNum resignFirstResponder];
+    [wechatNum resignFirstResponder];
+    [otherCon resignFirstResponder];
+    return YES;
+}
+    
 
 #pragma mark - table view dataSource
 
@@ -440,6 +492,8 @@
                 cell.phoneNum.text = @"联系电话";
                 cell.phoneTF.placeholder = @"请输入手机号（必填）";
                 cell.phoneTF.keyboardType = UIKeyboardTypeNumberPad;
+//                phoneNum = cell.phoneTF;
+//                phoneNum.delegate = self;
                 
                 Scell.text = ^(NSString *sender){
                     
@@ -453,6 +507,9 @@
             case 1:{
                 cell.phoneNum.text = @"微信号";
                 cell.phoneTF.placeholder = @"请输入微信号（选填）";
+//                wechatNum = cell.phoneTF;
+//                wechatNum.delegate = self;
+
                 Scell.text = ^(NSString *sender){
                     
                     wechat = sender;
@@ -476,6 +533,9 @@
             __weak typeof(cell) Scell = cell;
             cell.phoneNum.text = @"其他备注";
             cell.phoneTF.placeholder = @"(选填)";
+//            otherCon = cell.phoneTF;
+//            otherCon.delegate = self;
+            
             Scell.text = ^(NSString *sender){
                 
                 remark = sender;
@@ -506,6 +566,17 @@
         }
     }
 }
+
+#pragma mark - 取消第一响应
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    
+    [self.tableView endEditing:YES];
+    
+}
+
+
+
+
 
 -(void)btnClick:(UITableViewCell *)cell andFlag:(int)flag
 {
@@ -603,16 +674,18 @@
     if (phone.length == 11) {
         [parmter setObject:phone forKey:@"phone"];
     }else{
-        SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"手机号格式有误" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+        SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"手机号格式有误,请退出页面从新进入" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
             
-            return;
-            
+            [self.navigationController popViewControllerAnimated:YES];
         }];
         alert.sure_btnTitleColor = TextColor;
         [alert show];
+        return;
     }
-    [parmter setObject:wechat forKey:@"wechat"];
-    [parmter setObject:remark forKey:@"remark"];
+
+        [parmter setObject:wechat forKey:@"wechat"];
+        [parmter setObject:remark forKey:@"remark"];
+    
     
     //选择的天数
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];

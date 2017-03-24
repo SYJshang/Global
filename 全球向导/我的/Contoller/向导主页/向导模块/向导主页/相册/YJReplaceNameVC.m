@@ -84,10 +84,11 @@
             
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
             hud.mode = MBProgressHUDModeText;
-            hud.contentColor = [UIColor whiteColor];
+            hud.labelColor = [UIColor whiteColor];
             hud.color = [UIColor blackColor];
-            hud.label.text = NSLocalizedString(@"修改名称成功!", @"HUD message title");
-            [hud hideAnimated:YES afterDelay:2.f];
+            hud.labelText = NSLocalizedString(@"修改名称成功！", @"HUD message title");
+            [hud hide:YES afterDelay:2.0];
+
             
             UIViewController *vc = self.navigationController.viewControllers[2];
             [self.navigationController popToViewController:vc animated:YES];

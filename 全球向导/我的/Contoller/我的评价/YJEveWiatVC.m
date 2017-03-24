@@ -36,6 +36,13 @@
 
 @implementation YJEveWiatVC
 
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    [self getNetWork];
+    
+}
+
 - (NSMutableArray *)totalCout{
     
     if (_totalCout == nil) {
@@ -292,10 +299,8 @@
     if (ViewTag.tag == 1) {
         XXLog(@"去评价");
         YJEvaluationController *VC = [[YJEvaluationController alloc]init];
-        VC.ID = model.ID;
+        VC.ID = model.orderId;
         [self.navigationController pushViewController:VC animated:YES];
-        
-
         
     }else{
         

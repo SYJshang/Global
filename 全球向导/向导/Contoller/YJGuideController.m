@@ -84,8 +84,17 @@
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.view.backgroundColor = BackGray;
+    self.navigationItem.titleView = [UILabel titleWithColor:TextColor title:@"向导" font:AdaptedWidth(19.0)];
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setImage:[UIImage imageNamed:@"screening"] forState:UIControlStateNormal];
+    btn.frame = CGRectMake(0, 10, 22, 22);
+    [btn addTarget:self action:@selector(location:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
+
+
     
     [self observeNotification:@"backData"];
+
 
     
     if ([[YJBNetWorkNotifionTool stringFormStutas] isEqualToString:@"3"]) {
@@ -159,7 +168,7 @@
     
     self.currentPage = 1;
     
-    [self setNavitaionSearch];
+//    [self setNavitaionSearch];
     
     
     //创建瀑布流布局
@@ -359,11 +368,7 @@
     
 }
 
--(void)viewTapped:(UITapGestureRecognizer *)tap {
-    
-    [self.seacher endEditing:YES];
-    
-}
+
 
 
 - (void)setNavitaionSearch{
@@ -372,12 +377,7 @@
     self.seacher = [[CLSeachBar alloc] initWithFrame:CGRectMake(0, 7,screen_width * 0.6, 30)];
     self.navigationItem.titleView = self.seacher;
     
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setImage:[UIImage imageNamed:@"screening"] forState:UIControlStateNormal];
-    btn.frame = CGRectMake(0, 10, 22, 22);
-    [btn addTarget:self action:@selector(location:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
-
+    
     [self styleOne:self.seacher];
     
 }

@@ -270,10 +270,10 @@ static CGFloat navH = 64;
         if ([dict[@"code"] isEqualToString:@"1"]) {
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
             hud.mode = MBProgressHUDModeText;
-            hud.contentColor = [UIColor whiteColor];
+            hud.labelColor = [UIColor whiteColor];
             hud.color = [UIColor blackColor];
-            hud.label.text = NSLocalizedString(@"删除相册成功!", @"HUD message title");
-            [hud hideAnimated:YES afterDelay:2.f];
+            hud.labelText = NSLocalizedString(@"删除相册成功", @"HUD message title");
+            [hud hide:YES afterDelay:2.0];
             
             [self.navigationController popViewControllerAnimated:YES];
             
@@ -422,10 +422,10 @@ static CGFloat navH = 64;
             
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
             hud.mode = MBProgressHUDModeText;
-            hud.contentColor = [UIColor whiteColor];
+            hud.labelColor = [UIColor whiteColor];
             hud.color = [UIColor blackColor];
-            hud.label.text = NSLocalizedString(@"删除相册成功!", @"HUD message title");
-            [hud hideAnimated:YES afterDelay:2.f];
+            hud.labelText = NSLocalizedString(@"删除相册成功！", @"HUD message title");
+            [hud hide:YES afterDelay:2.0];
 
             [photoBrowser removeFromSuperview];
             [self getPhotoLsit];

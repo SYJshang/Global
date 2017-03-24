@@ -57,10 +57,9 @@
 @property (nonatomic , copy) NSString              * buyIp;
 @property (nonatomic , copy) NSString              * receiveTime;
 @property (nonatomic , copy) NSString              * endDate;
-
-
-
-
+@property (nonatomic, assign) NSInteger            isFinishEva;
+@property (nonatomic, strong) NSString             *orderId;
+@property (nonatomic, strong) NSString             *guideUserId;
 
 
 

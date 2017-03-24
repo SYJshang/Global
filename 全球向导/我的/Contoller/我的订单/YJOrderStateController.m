@@ -7,16 +7,19 @@
 //
 
 #import "YJOrderStateController.h"
-#import "YJStateCell.h"
-#import "YJStateModle.h"
-
-#define WIDTH_OF_PROCESS_LABLE (300 *[UIScreen mainScreen].bounds.size.width / 375)
+#import <WebKit/WebKit.h>
 
 
-@interface YJOrderStateController ()<UITableViewDelegate,UITableViewDataSource>
-//存储数组
-@property(strong,nonatomic)NSMutableArray * dataList;
-@property (nonatomic, strong) UITableView *tableView;
+
+
+@interface YJOrderStateController ()<WKNavigationDelegate>{
+    WKWebView *webView;
+    
+    UIActivityIndicatorView *activityIndicatorView;
+    UIView *opaqueView;
+}
+
+
 
 @end
 
@@ -26,87 +29,106 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    [self initView];
-    [self setData];
-}
--(void)initView{
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height - 108) style:UITableViewStylePlain];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    [self.view addSubview:self.tableView];
-}
-
--(void)setData
-{
-    self.dataList=[NSMutableArray arrayWithCapacity:0];
-    NSDictionary *dic=@{@"timeStr":@"2016-07-20",@"titleStr":@"第一步",@"detailSrtr":@"标题:关于zls是不是宇宙最帅的讨论"};
-    YJStateModle *model=[[YJStateModle alloc]initData:dic];
-    [self.dataList addObject:model];
     
-    NSDictionary *dic2=@{@"timeStr":@"2016-07-21",@"titleStr":@"第二步",@"detailSrtr":@"关于zls是不是宇宙最帅的讨论关于zls是不是宇宙最帅的讨论"};
-    YJStateModle *model2=[[YJStateModle alloc]initData:dic2];
-    [self.dataList addObject:model2];
-    
-    NSDictionary *dic3=@{@"timeStr":@"2016-07-22",@"titleStr":@"第三步",@"detailSrtr":@"关于zls是不是宇宙最帅的讨论关于z"};
-    YJStateModle *model3=[[YJStateModle alloc]initData:dic3];
-    [self.dataList addObject:model3];
-    
-    NSDictionary *dic4=@{@"timeStr":@"2016-07-23",@"titleStr":@"第四步",@"detailSrtr":@"关于zls是不是宇宙最帅的讨论关于zls是不是宇宙最帅的讨论"};
-    YJStateModle *model4=[[YJStateModle alloc]initData:dic4];
-    [self.dataList addObject:model4];
-    
-    NSDictionary *dic5=@{@"timeStr":@"2016-07-24",@"titleStr":@"第五步",@"detailSrtr":@"关于zls是不是宇宙最帅的讨论"};
-    YJStateModle *model5=[[YJStateModle alloc]initData:dic5];
-    [self.dataList addObject:model5];
-    NSDictionary *dic6=@{@"timeStr":@"2016-07-25",@"titleStr":@"第六步",@"detailSrtr":@"关于zls是不是宇宙最"};
-    YJStateModle *model6=[[YJStateModle alloc]initData:dic6];
-    [self.dataList addObject:model6];
-    NSDictionary *dic7=@{@"timeStr":@"2016-07-26",@"titleStr":@"第七步",@"detailSrtr":@"关于zls是"};
-    YJStateModle *model7=[[YJStateModle alloc]initData:dic7];
-    [self.dataList addObject:model7];
-    [self.tableView reloadData];
-    
-}
-
-
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.dataList.count;
-}
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString * iden = @"testTime";
-    YJStateCell * cell = [tableView dequeueReusableCellWithIdentifier:iden];
-    if (!cell) {
-        cell = [[YJStateCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:iden];
+   
+    NSHTTPCookieStorage *myCookie = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (NSHTTPCookie *cookie in [myCookie cookies]) {
+        NSLog(@"%@", cookie);
+        [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie]; // 保存
     }
-    YJStateModle * model = self.dataList[indexPath.row];
-    cell.model = model;
-    if (indexPath.row == self.dataList.count - 1) {
-        cell.verticalLabel2.backgroundColor = TextColor;
-        cell.circleView.backgroundColor = [UIColor whiteColor];
-        cell.circleView.layer.borderColor = TextColor.CGColor;
-    }else{
-        cell.verticalLabel2.backgroundColor =  TextColor;
-        cell.circleView.backgroundColor = TextColor;
-        cell.circleView.layer.borderColor = TextColor.CGColor;
-    }
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    return cell;
+    
+//    // 定义 cookie 要设定的 host
+//    NSURL *cookieHost = [NSURL URLWithString:[NSString stringWithFormat:@"%@/mainApp/list",BaseUrl]];
+//    NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+//    for (NSHTTPCookie *cookie in [cookieJar cookies]) {
+//        NSLog(@"%@", cookie);
+//    }
+//    
+//    // 设定 cookie
+//    NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:
+//                            [NSDictionary dictionaryWithObjectsAndKeys:
+//                             [cookieHost host], NSHTTPCookieDomain,
+//                             [cookieHost path], NSHTTPCookiePath,
+//                             @"token",  NSHTTPCookieName,
+//                             @"3f84681-fe38-46a3-ad57-7a266d329ad8", NSHTTPCookieValue,
+//                             nil]];
+//    
+//    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+    //加载网页的方式
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/userInfo/myOrder/viewOrderStatusPage/%@",BaseUrl,self.orderID]];
+    
+    webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 40, screen_width, screen_height)];
+    [webView setUserInteractionEnabled:YES];//是否支持交互
+    //[webView setDelegate:self];
+    webView.navigationDelegate = self;
+    [webView setOpaque:NO];//opaque是不透明的意思
+    //    [webView setScalesPageToFit:YES];//自动缩放以适应屏幕
+    [self.view addSubview:webView];
+    //1.创建并加载远程网页
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [webView loadRequest:request];
+
+    
+    opaqueView = [[UIView alloc]initWithFrame:CGRectMake(0, 40, screen_width, screen_height)];
+    activityIndicatorView = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
+    [activityIndicatorView setCenter:opaqueView.center];
+    [activityIndicatorView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
+    [opaqueView setBackgroundColor:[UIColor blackColor]];
+    [opaqueView setAlpha:0.6];
+    [self.view addSubview:opaqueView];
+    [opaqueView addSubview:activityIndicatorView];
     
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    YJStateModle * model = self.dataList[indexPath.row];
-    NSDictionary * fontDic = @{NSFontAttributeName:[UIFont systemFontOfSize:12]};
-    CGSize size1 = CGSizeMake(WIDTH_OF_PROCESS_LABLE, 0);
-    CGSize titleLabelSize=[model.detailSrtr boundingRectWithSize:size1 options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading   attributes:fontDic context:nil].size;
-    if (titleLabelSize.height < 15) {
-        titleLabelSize.height = 40;
-    }else{
-        titleLabelSize.height = titleLabelSize.height + 30;
-    }
-    return titleLabelSize.height + 50;
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
+    [activityIndicatorView startAnimating];
+    opaqueView.hidden = NO;
+    
+}
+- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation {
+    
+    
+    
+}
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    
+    [activityIndicatorView startAnimating];
+    opaqueView.hidden = YES;
 }
 
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error{
+    
+    XXLog(@"error code ==  %ld",error.code);
+    if (error.code  == -999) {
+        return;
+    }
+    
+}
+
+//UIWebView如何判断 HTTP 404 等错误
+-(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
+    NSURL *url = [NSURL URLWithString:@"http://www.baidu.com"];
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+    if ((([httpResponse statusCode]/100) == 2)) {
+        // self.earthquakeData = [NSMutableData data];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        
+        [ webView loadRequest:[ NSURLRequest requestWithURL: url]];
+        webView.navigationDelegate = self;
+    } else {
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObject:
+                                  NSLocalizedString(@"HTTP Error",
+                                                    @"Error message displayed when receving a connection error.")
+                                                             forKey:NSLocalizedDescriptionKey];
+        NSError *error = [NSError errorWithDomain:@"HTTP" code:[httpResponse statusCode] userInfo:userInfo];
+        
+        if ([error code] == 404) {
+            webView.hidden = YES;
+        }
+        
+    }
+}
 
 
 

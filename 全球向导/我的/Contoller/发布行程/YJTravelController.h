@@ -10,4 +10,6 @@
 
 @interface YJTravelController : UIViewController
 
+@property (nonatomic, strong) NSString *state;
+
 @end

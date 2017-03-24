@@ -19,6 +19,8 @@
     manger.requestSerializer.timeoutInterval = 10.f;
     [manger.requestSerializer didChangeValueForKey:@"timeoutInterval"];
     
+    [parameters setObject:@"1.0.0" forKey:@"v"];
+    
     [manger GET:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 //AFN请求成功的时候调用
                 //先把请求成功之后要做的事情保存到这个代码块
@@ -48,6 +50,9 @@
     [mgr.requestSerializer willChangeValueForKey:@"timeoutInterval"];
     mgr.requestSerializer.timeoutInterval = 10.f;
     [mgr.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+    
+    [parameters setObject:@"1.0.0" forKey:@"v"];
+
 
     [mgr POST:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         

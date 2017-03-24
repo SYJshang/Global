@@ -69,8 +69,8 @@
         
         if ([dict[@"code"] isEqualToString:@"1"]) {
             
-            NSDictionary *data = dict[@"data"];
-            self.guideStatus = data[@"guideStatus"];
+          NSDictionary *data = dict[@"data"];
+          self.guideStatus = data[@"guideStatus"];
         
           NSDictionary *usrInfo = data[@"userInfo"];
           NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"userInfo.plist"];
@@ -85,7 +85,26 @@
             }
             
             [self setBtnStatus];
-            [self.tableView reloadData];
+            
+            
+            BOOL isAutoLogin = [EMClient sharedClient].options.isAutoLogin;
+            if (!isAutoLogin) {
+                
+                [[EMClient sharedClient] loginWithUsername:self.userModel.ID
+                                                  password:self.userModel.imPwd
+                                                completion:^(NSString *aUsername, EMError *aError) {
+                                                    if (!aError) {
+                                                        NSLog(@"登陆成功");
+                                                        [[EMClient sharedClient].options setIsAutoLogin:YES];
+
+                                                    } else {
+                                                        NSLog(@"登陆失败");
+                                                    }
+                                                }];
+
+            }
+            
+        [self.tableView reloadData];
             
         }else{
             
@@ -107,6 +126,7 @@
     }];
     
 }
+
 
 - (void)setBtnStatus{
     
@@ -428,30 +448,46 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    //    kTipAlert(@"<%ld> selected...", indexPath.row);
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    NSString *code =  [userDefault objectForKey:@"code"];
     
-    if (indexPath.section == 2) {
-       
-        [self.navigationController pushViewController:[YJSetUpController new] animated:YES];
-    }
-    
-    if (indexPath.section == 1 && indexPath.row == 0) {
+    if ([code isEqualToString:@"1"]){
+        if (indexPath.section == 2) {
+            
+            [self.navigationController pushViewController:[YJSetUpController new] animated:YES];
+        }
         
-        [self.navigationController pushViewController:[YJMyOrderController new] animated:YES];
+        if (indexPath.section == 1 && indexPath.row == 0) {
+            
+            [self.navigationController pushViewController:[YJMyOrderController new] animated:YES];
+            
+        }
+        if (indexPath.section == 1 && indexPath.row == 1) {
+            
+            [self.navigationController pushViewController:[YJMineEvaluateVC new] animated:YES];
+            
+        }
         
-    }
-    if (indexPath.section == 1 && indexPath.row == 1) {
+        if (indexPath.section == 1 && indexPath.row == 2) {
+            
+            [self.navigationController pushViewController:[YJMineShareVC new] animated:YES];
+            
+        }
+ 
         
-        [self.navigationController pushViewController:[YJMineEvaluateVC new] animated:YES];
+    }else{
         
-    }
-    
-    if (indexPath.section == 1 && indexPath.row == 2) {
-        
-        [self.navigationController pushViewController:[YJMineShareVC new] animated:YES];
-        
-    }
+        SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"未登录，请登录后重试！" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            [self presentViewController:[YJLoginFirstController new] animated:NO completion:nil];
+        }];
+        alertV.sure_btnTitleColor = TextColor;
+        [alertV show];
 
+        
+    }
+    
+    
+   
 
     
     
@@ -460,16 +496,32 @@
 
 - (void)btnDidClickPlusButton:(NSInteger)ViewTag{
     
-    if (ViewTag == 11) {
-        XWPopMenuController *vc = [[XWPopMenuController alloc]init];
-        UIImage *img = [UIImage imageWithCaputureView:self.view];
-        vc.backImg = img;
-        [self.navigationController pushViewController:vc animated:NO];
-    }else if (ViewTag == 12){
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    NSString *code =  [userDefault objectForKey:@"code"];
+
+    if ([code isEqualToString:@"1"]) {
+        if (ViewTag == 11) {
+            XWPopMenuController *vc = [[XWPopMenuController alloc]init];
+            UIImage *img = [UIImage imageWithCaputureView:self.view];
+            vc.backImg = img;
+            vc.guideSate = self.guideStatus;
+            [self.navigationController pushViewController:vc animated:NO];
+        }else if (ViewTag == 12){
+            
+            [self.navigationController pushViewController:[YJCollectController new] animated:YES];
+            
+        }
+    }else{
         
-        [self.navigationController pushViewController:[YJCollectController new] animated:YES];
-        
+        SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"未登录，请登录后重试！" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+             [self presentViewController:[YJLoginFirstController new] animated:NO completion:nil];
+        }];
+        alertV.sure_btnTitleColor = TextColor;
+        [alertV show];
+
     }
+    
+   
     
 }
 

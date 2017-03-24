@@ -12,6 +12,7 @@
 #import "YJGuideController.h"
 #import "YJNewFindController.h"
 #import "YJMineController.h"
+#import "YJMessageVC.h"
 
 
 #define TextColor [UIColor colorWithRed:255 / 255.0 green:198 / 255.0 blue:0 / 255.0 alpha:1.0]
@@ -40,7 +41,7 @@
     [self addChildVc:fitVC Title:@"新发现" withTitleSize:12.0 andFoneName:@"HelveticaNeue-Bold" selectedImage:@"find" withTitleColor:TextColor unselectedImage:@"find-2" withTitleColor:[UIColor lightGrayColor]];
     
     //消息
-    ViewController *storeVC = [[ViewController alloc]init];
+    YJMessageVC *storeVC = [[YJMessageVC alloc]init];
 //    storeVC.view.backgroundColor = [UIColor yellowColor];
     [self addChildVc:storeVC Title:@"消息" withTitleSize:12.0 andFoneName:@"HelveticaNeue-Bold" selectedImage:@"message2" withTitleColor:TextColor unselectedImage:@"message" withTitleColor:[UIColor lightGrayColor]];
     //我的

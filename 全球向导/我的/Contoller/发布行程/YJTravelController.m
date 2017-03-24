@@ -8,61 +8,47 @@
 //
 
 #import "YJTravelController.h"
-#import "YJIssueTitleCell.h"
-#import "UIImageView+LBBlurredImage.h"
-#import "UINavigationBar+Awesome.h"
-
-static CGFloat imageH = 200;
-static CGFloat navH = 64;
-
-@interface YJTravelController ()<UITableViewDelegate,UITableViewDataSource,SGActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
-
-@property (strong, nonatomic) UITableView *tableView;
-@property (nonatomic, strong) UIImageView *headerView;
-@property (nonatomic, strong) UIImage *shadowImage;
-
-@property (nonatomic, strong) NSMutableArray  *contentLsitArr;//内容列表
+#import <WebKit/WebKit.h>
 
 
+
+
+@interface YJTravelController ()<WKNavigationDelegate>{
+    WKWebView *webView;
+    
+    UIActivityIndicatorView *activityIndicatorView;
+    UIView *opaqueView;
+}
 
 @end
 
 @implementation YJTravelController
 
-- (NSMutableArray *)contentLsitArr{
-    if (_contentLsitArr == nil) {
-        _contentLsitArr = [NSMutableArray array];
-    }
-    
-    return _contentLsitArr;
-}
 
-- (void)viewWillAppear:(BOOL)animated
-{
+
+- (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
-//    [self.navigationController setNavigationBarHidden:YES animated:YES];
-
+    self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.navigationController.navigationBar.translucent = YES;
-
-    
-    self.shadowImage = self.navigationController.navigationBar.shadowImage;
-    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-    
-    CGFloat offsetY = self.tableView.contentOffset.y;
-    [self changeNavAlphaWithConnentOffset:offsetY];
+    self.navigationController.navigationBar.translucent = NO;
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.tintColor = [UIColor grayColor];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"发布" font:19.0];
 }
+
+- (void)back{
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+}
+
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
-    [self.navigationController.navigationBar lt_reset];
-    self.navigationController.navigationBar.shadowImage = self.shadowImage;
-    //    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    //    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     
 }
 
@@ -71,224 +57,94 @@ static CGFloat navH = 64;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Do any additional setup after loading the view, typically from a nib.
+    self.view.backgroundColor = [UIColor whiteColor];
+
+   
     
-    self.tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.tableView.backgroundColor = BackGray;
-    self.tableView.contentInset = UIEdgeInsetsMake(imageH, 0, 0, 0);
-    [self.view addSubview:self.tableView];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.tableView registerClass:[YJIssueTitleCell class] forCellReuseIdentifier:@"title"];
+    webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
+    [webView setUserInteractionEnabled:YES];//是否支持交互
+    //[webView setDelegate:self];
+    webView.navigationDelegate = self;
+    [webView setOpaque:NO];//opaque是不透明的意思
+    //    [webView setScalesPageToFit:YES];//自动缩放以适应屏幕
+    [self.view addSubview:webView];
+    //1.创建并加载远程网页
     
-    self.headerView = [[UIImageView alloc]init];
-    self.headerView.frame = CGRectMake(0, - imageH, screen_width, imageH);
-    
-//    self.headerView.image = [UIImage imageNamed:@"bg2"];
-    [self.headerView setImageToBlur:[UIImage imageNamed:@"bg2"]
-                        blurRadius:5
-                   completionBlock:^(){
-                   }];
-    self.headerView.contentMode = UIViewContentModeScaleAspectFill;
-    [self.tableView addSubview:self.headerView];
-    [self.tableView insertSubview:self.headerView atIndex:0];
-    self.headerView.userInteractionEnabled = YES;
-    
-    YJDIYButton *btn = [YJDIYButton buttonWithtitle:@"更换封面" Block:^{
-        XXLog(@"更换封面");
-        SGActionSheet *sheet = [[SGActionSheet alloc]initWithTitle:@"更换封面" delegate:self cancelButtonTitle:@"取消" otherButtonTitleArray:@[@"相册",@"相机"]];
-        sheet.messageTextColor = TextColor;
-        [sheet show];
+    if ([self.state isEqualToString:@"1"]) {
         
-    }];
-    [self.headerView addSubview:btn];
-    btn.sd_layout.centerXEqualToView(self.headerView).centerYEqualToView(self.headerView).heightIs(AdaptedWidth(30)).widthIs(AdaptedWidth(120));
-    btn.titleLabel.font = [UIFont systemFontOfSize:AdaptedWidth(15)];
-    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    btn.layer.masksToBounds = YES;
-    btn.layer.cornerRadius = 5;
-    btn.layer.borderWidth = 1.0;
-    btn.layer.borderColor = [UIColor whiteColor].CGColor;
-    
-    YJDIYButton *backBtn = [YJDIYButton buttonWithFrame:CGRectMake(10, 25, 10, 15) imageName:@"back" andBlock:^{
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/userInfo/myUserRec/toAdd",BaseUrl]];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        [webView loadRequest:request];
         
-    }];
-    [self.headerView addSubview:backBtn];
-    
-    YJDIYButton *finsh = [YJDIYButton buttonWithtitle:@"发布" Block:^{
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }];
-    [finsh setTitleColor:TextColor forState:UIControlStateNormal];
-    finsh.titleLabel.font = [UIFont systemFontOfSize:AdaptedWidth(15)];
-    [self.headerView addSubview:finsh];
-    finsh.sd_layout.rightSpaceToView(self.headerView,10).topSpaceToView(self.headerView,25).widthIs(40).heightIs(16);
-    
-    UILabel *label = [[UILabel alloc]init];
-    label.text = @"发布行程";
-    label.textColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:AdaptedWidth(17.0)];
-    label.textAlignment = NSTextAlignmentCenter;
-    [self.headerView addSubview:label];
-    label.sd_layout.topSpaceToView(self.headerView,25).centerXEqualToView(self.headerView).widthIs(100).heightIs(20);
-    
-}
-
-//- (void)back{
-//    
-//    [self.navigationController popToRootViewControllerAnimated:YES];
-//}
-
-- (void)finsh{
-    
-    XXLog(@"发布");
-    [self.navigationController popToRootViewControllerAnimated:YES];
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    
-    return 2;
-}
-
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    if (section == 0) {
-        return 2;
-    }else if (section == 1){
-        return self.contentLsitArr.count + 1;
     }else{
-        return 0;
+        
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/guide/guideRec/toAdd",BaseUrl]];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        [webView loadRequest:request];
+        
     }
-}
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row == 0) {
-        return 50;
-    }else{
-        return 100;
-    }
+    
+    
+    
+    
+    opaqueView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
+    activityIndicatorView = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
+    [activityIndicatorView setCenter:opaqueView.center];
+    [activityIndicatorView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
+    [opaqueView setBackgroundColor:[UIColor blackColor]];
+    [opaqueView setAlpha:0.6];
+    [self.view addSubview:opaqueView];
+    [opaqueView addSubview:activityIndicatorView];
+    
 }
 
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
+    [activityIndicatorView startAnimating];
+    opaqueView.hidden = NO;
+    
+}
+- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation {
+    
+    
+    
+}
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    
+    [activityIndicatorView startAnimating];
+    opaqueView.hidden = YES;
+}
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.section == 0) {
-        YJIssueTitleCell *cell = [tableView dequeueReusableCellWithIdentifier:@"title"];
-        if (indexPath.row == 0) {
-            cell.textView.placeholder = @"输入标题（20字）";
-            cell.textView.limitLength = @20;
-        }else if (indexPath.row == 1){
-            cell.textView.placeholder = @"输入简介（100字）";
-            cell.textView.limitLength = @100;
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error{
+    
+    XXLog(@"error code ==  %ld",error.code);
+    if (error.code  == -999) {
+        return;
+    }
+    
+}
+
+//UIWebView如何判断 HTTP 404 等错误
+-(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
+    NSURL *url = [NSURL URLWithString:@"http://www.baidu.com"];
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+    if ((([httpResponse statusCode]/100) == 2)) {
+        // self.earthquakeData = [NSMutableData data];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        
+        [ webView loadRequest:[ NSURLRequest requestWithURL: url]];
+        webView.navigationDelegate = self;
+    } else {
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObject:
+                                  NSLocalizedString(@"HTTP Error",
+                                                    @"Error message displayed when receving a connection error.")
+                                                             forKey:NSLocalizedDescriptionKey];
+        NSError *error = [NSError errorWithDomain:@"HTTP" code:[httpResponse statusCode] userInfo:userInfo];
+        
+        if ([error code] == 404) {
+            webView.hidden = YES;
         }
-        return cell;
-
+        
     }
-    
-    
-    static NSString *ID = @"XXXX";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-    if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
-    }
-    cell.textLabel.text = [NSString stringWithFormat:@"%ld",indexPath.row];
-    return cell;
-}
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-//    UIViewController *vc = [[UIViewController alloc]init];
-//    vc.view.backgroundColor = [UIColor whiteColor];
-//    [self.navigationController pushViewController:vc animated:YES];
-}
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    CGFloat offsetY = scrollView.contentOffset.y;
-    
-    if (offsetY < -imageH) {
-        XXLog(@"开始改变");
-        CGRect f = self.headerView.frame;
-        f.origin.y = offsetY;
-        f.size.height =  -offsetY;
-        self.headerView.frame = f;
-    }
-    
-    [self changeNavAlphaWithConnentOffset:offsetY];
-}
-
--(void)changeNavAlphaWithConnentOffset:(CGFloat)offsetY
-{
-    UIColor *color = [UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1];
-    if (offsetY > -navH * 2 ) {
-        XXLog(@"渐渐不透明");
-        CGFloat alpha = MIN(1, 1 - ((-navH * 2 + navH - offsetY) / navH));
-        [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:alpha]];
-        self.title = @"个人主页";
-    }
-    else {
-        XXLog(@"渐渐透明");
-        [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:0]];
-        self.title = @"";
-    }
-}
-
-
-#pragma mark - actionSheet delegate
-- (void)SGActionSheet:(SGActionSheet *)actionSheet didSelectRowAtIndexPath:(NSInteger)indexPath{
-    
-    if (indexPath == 0) {
-        XXLog(@"打开相册");
-        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
-            UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
-            imagePicker.delegate = self;
-            imagePicker.allowsEditing = YES;
-            imagePicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-            [self presentViewController:imagePicker animated:YES completion:nil];
-        }
-    }else{
-        XXLog(@"打开相机");
-        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-            
-            UIImagePickerController * imagePicker = [[UIImagePickerController alloc]init];
-            imagePicker.delegate = self;
-            imagePicker.allowsEditing = YES;
-            imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            [self presentViewController:imagePicker animated:YES completion:nil];
-        }
-    }
-    
-}
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
-{
-    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
-    NSData  *imgData = UIImageJPEGRepresentation(image, 1);
-    [self.headerView setImageToBlur:image
-                         blurRadius:5
-                    completionBlock:^(){
-                    }];
-    // Set the label text.
-    
-    //选取完图片之后关闭视图
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (UIImage *)blur:(UIImage *)theImage
-{
-    CIContext *context = [CIContext contextWithOptions:nil];
-    CIImage *inputImage = [CIImage imageWithCGImage:theImage.CGImage];
-    
-    CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
-    [filter setValue:inputImage forKey:kCIInputImageKey];
-    [filter setValue:[NSNumber numberWithFloat:15.0f] forKey:@"inputRadius"];
-    CIImage *result = [filter valueForKey:kCIOutputImageKey];
-    
-    CGImageRef cgImage = [context createCGImage:result fromRect:[inputImage extent]];
-    
-    UIImage *returnImage = [UIImage imageWithCGImage:cgImage];
-    CGImageRelease(cgImage);
-    return returnImage;
 }
 
 

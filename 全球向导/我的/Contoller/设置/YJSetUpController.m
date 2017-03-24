@@ -194,26 +194,10 @@
 
 - (void)quit{
     
-    //清空保存的数据
-    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-    [userDefault removeObjectForKey:@"code"];
     
-    //退出
-    [self removeCookie];
     //服务器退出
     [self logOut];
-    
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    hud.mode = MBProgressHUDModeText;
-    hud.contentColor = [UIColor whiteColor];
-    hud.color = [UIColor blackColor];
-    hud.label.text = NSLocalizedString(@"退出成功!", @"HUD message title");
-    [hud hideAnimated:YES afterDelay:3.f];
- 
-    
-    [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
-    
-    
+   
     XXLog(@"退出");
     
 }
@@ -227,9 +211,9 @@
     if (indexPath.section == 0 && indexPath.row == 1) {
         
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-        hud.contentColor = [UIColor whiteColor];
+        hud.labelColor = [UIColor whiteColor];
         hud.color = [UIColor blackColor];
-        hud.label.text = NSLocalizedString(@"正在清理内存...", @"HUD loading title");
+        hud.labelText = NSLocalizedString(@"正在清理内存...", @"HUD loading title");
 
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^ {
             //在后台进行有用的操作并定期更新HUD。
@@ -237,10 +221,11 @@
             [YJCache clearFile];
             dispatch_async(dispatch_get_main_queue(),^ {
                 hud.mode = MBProgressHUDModeText;
-                hud.contentColor = [UIColor whiteColor];
+                hud.mode = MBProgressHUDModeText;
+                hud.labelColor = [UIColor whiteColor];
                 hud.color = [UIColor blackColor];
-                hud.label.text = NSLocalizedString(@"清除成功!", @"HUD message title");
-                [hud hideAnimated:YES afterDelay:2.f];
+                hud.labelText = NSLocalizedString(@"清除成功", @"HUD message title");
+                [hud hide:YES afterDelay:2.0];
                 
                 [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
             });
@@ -302,14 +287,46 @@
 
 //退出
 - (void)logOut{
+   
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     NSString *code = [userDefault objectForKey:@"code"];
+    
     if ([code isEqualToString:@"1"]) {
         
         [WBHttpTool GET:[NSString stringWithFormat:@"%@/user/logout2",BaseUrl] parameters:nil success:^(id responseObject) {
             
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
             XXLog(@"%@",dict);
+            
+            if ([dict[@"code"] isEqualToString:@"1"]) {
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                hud.mode = MBProgressHUDModeText;
+                hud.mode = MBProgressHUDModeText;
+                hud.labelColor = [UIColor whiteColor];
+                hud.color = [UIColor blackColor];
+                hud.labelText = NSLocalizedString(@"退出成功", @"HUD message title");
+                [hud hide:YES afterDelay:2.0];
+                
+                //退出
+                [self removeCookie];
+                
+                //清空保存的数据
+                NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+                [userDefault removeObjectForKey:@"code"];
+
+                
+                
+                EMError *error = [[EMClient sharedClient] logout:YES];
+                if (!error) {
+                    XXLog(@"退出成功");
+                }
+                
+                
+                [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+
+            }
+            
+            
             
         } failure:^(NSError *error) {
             

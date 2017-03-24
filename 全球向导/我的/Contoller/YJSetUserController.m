@@ -53,7 +53,7 @@
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     // Set the label text.
-    hud.label.text = NSLocalizedString(@"提交信息...", @"HUD loading title");
+    hud.labelText = NSLocalizedString(@"提交信息...", @"HUD loading title");
 //    hud.backgroundView.color = [UIColor blackColor];
 
     if (self.imgId) {
@@ -76,19 +76,19 @@
                 if ([code isEqualToString:@"1"]) {
                     
                     hud.mode = MBProgressHUDModeText;
-                    hud.contentColor = [UIColor whiteColor];
+                    hud.labelColor = [UIColor whiteColor];
                     hud.color = [UIColor blackColor];
-                    hud.label.text = NSLocalizedString(@"提交成功!", @"HUD message title");
-                    [hud hideAnimated:YES afterDelay:2.f];
+                    hud.labelText = NSLocalizedString(@"提交成功", @"HUD message title");
+                    [hud hide:YES afterDelay:2.0];
 
                 }else{
                     
                     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:dict[@"msg"] preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                        [hud hideAnimated:YES];
+                        [hud hide:YES];
                     }];
                     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                        [hud hideAnimated:YES];
+                        [hud hide:YES];
                     }];
                     [alertVC addAction:action1];
                     [alertVC addAction:action2];
@@ -99,7 +99,7 @@
                 
                 
             } failure:^(NSError *error) {
-                [hud hideAnimated:YES];
+                [hud hide:YES];
             }];
 
            
@@ -126,19 +126,19 @@
                 if ([code isEqualToString:@"1"]) {
                     
                     hud.mode = MBProgressHUDModeText;
-                    hud.contentColor = [UIColor whiteColor];
+                    hud.labelColor = [UIColor whiteColor];
                     hud.color = [UIColor blackColor];
-                    hud.label.text = NSLocalizedString(@"完成!", @"HUD message title");
-                    [hud hideAnimated:YES afterDelay:2.f];
+                    hud.labelText = NSLocalizedString(@"完成", @"HUD message title");
+                    [hud hide:YES afterDelay:2.0];
                     
             }else{
                     
                     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:dict[@"msg"] preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                        [hud hideAnimated:YES];
+                        [hud hide:YES];
                     }];
                     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                        [hud hideAnimated:YES];
+                        [hud hide:YES];
                     }];
                     [alertVC addAction:action1];
                     [alertVC addAction:action2];
@@ -148,7 +148,7 @@
                 }
                 
             } failure:^(NSError *error) {
-                [hud hideAnimated:YES];
+                [hud hide:YES];
                 XXLog(@"error >>>>%@",error);
             }];
            
@@ -355,7 +355,7 @@
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     // Set the label text.
-    hud.label.text = NSLocalizedString(@"正在上传图片...", @"HUD loading title");
+    hud.labelText = NSLocalizedString(@"正在上传图片...", @"HUD loading title");
 
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         
@@ -389,11 +389,10 @@
                     
                    
                     hud.mode = MBProgressHUDModeText;
-                    hud.contentColor = [UIColor whiteColor];
+                    hud.labelColor = [UIColor whiteColor];
                     hud.color = [UIColor blackColor];
-                    hud.label.text = NSLocalizedString(@"上传照片成功!", @"HUD message title");
-                    [hud hideAnimated:YES afterDelay:2.f];
-
+                    hud.labelText = NSLocalizedString(@"上传照片成功", @"HUD message title");
+                    [hud hide:YES afterDelay:2.0];
                 });
                 
             }else{
@@ -418,13 +417,12 @@
             
                 NSLog(@"%@",error);
             
-            UIImage *image = [[UIImage imageNamed:@"photo_delete"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-            hud.customView = imageView;
-            hud.mode = MBProgressHUDModeCustomView;
-            hud.label.text = NSLocalizedString(@"失败", @"HUD completed title");
-            [hud hideAnimated:YES];
-                 
+                hud.mode = MBProgressHUDModeText;
+                hud.labelColor = [UIColor whiteColor];
+                hud.color = [UIColor blackColor];
+                hud.labelText = NSLocalizedString(@"上传照片失败", @"HUD message title");
+                [hud hide:YES afterDelay:2.0];
+                
              });
         }];
 

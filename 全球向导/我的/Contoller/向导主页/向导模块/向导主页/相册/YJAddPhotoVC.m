@@ -67,10 +67,10 @@
     }else{
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         hud.mode = MBProgressHUDModeText;
-        hud.contentColor = [UIColor whiteColor];
+        hud.labelColor = [UIColor whiteColor];
         hud.color = [UIColor blackColor];
-        hud.label.text = NSLocalizedString(@"请选择照片后上传!", @"HUD message title");
-        [hud hideAnimated:YES afterDelay:2.f];
+        hud.labelText = NSLocalizedString(@"请选择照片后上传", @"HUD message title");
+        [hud hide:YES afterDelay:2.0];
 
     }
     
@@ -107,9 +107,9 @@
 //    [parameter setObject:@"" forKey:@""];
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    hud.contentColor = [UIColor whiteColor];
+    hud.labelColor = [UIColor whiteColor];
     hud.color = [UIColor blackColor];
-    hud.label.text = NSLocalizedString(@"正在上传图片...", @"HUD loading title");
+    hud.labelText = NSLocalizedString(@"正在上传图片...", @"HUD loading title");
     
     [BANetManager ba_uploadImageWithUrlString:[NSString stringWithFormat:@"%@/guide/albumPic/add?dir=image",BaseUrl] parameters:parameter imageArray:_selectedPhotos fileName:[NSString stringWithFormat:@"%ld.png",_selectedPhotos.count] successBlock:^(id response) {
         
@@ -118,10 +118,10 @@
         if ([dict[@"code"] isEqualToString:@"1"]) {
 //            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
             hud.mode = MBProgressHUDModeText;
-            hud.contentColor = [UIColor whiteColor];
+            hud.labelColor = [UIColor whiteColor];
             hud.color = [UIColor blackColor];
-            hud.label.text = NSLocalizedString(@"上传照片成功!", @"HUD message title");
-            [hud hideAnimated:YES afterDelay:2.f];
+            hud.labelText = NSLocalizedString(@"上传照片成功", @"HUD message title");
+            [hud hide:YES afterDelay:2.0];
             
             UIViewController *vc = self.navigationController.viewControllers[2];
             [self.navigationController popToViewController:vc animated:YES];

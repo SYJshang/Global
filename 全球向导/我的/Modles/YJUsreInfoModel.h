@@ -29,7 +29,7 @@
 //status = 1;
 
 //id
-@property (nonatomic, assign) long int ID;
+@property (nonatomic, strong) NSString *ID;
 @property (nonatomic, strong) NSString *headUrl; //头像url
 @property (nonatomic, strong) NSString *upTime; //登录时间
 @property (nonatomic, assign) int loginTimes; //登录次数
@@ -46,6 +46,7 @@
 @property (nonatomic, strong) NSString *previousIp; //上次返回ip
 @property (nonatomic, strong) NSString *email; //邮箱
 @property (nonatomic, assign) int status;
+@property (nonatomic, strong) NSString *imPwd;
 
 
 @end

@@ -360,10 +360,11 @@
                 
                 MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
                 hud.mode = MBProgressHUDModeText;
-                hud.contentColor = [UIColor whiteColor];
+                hud.mode = MBProgressHUDModeText;
+                hud.labelColor = [UIColor whiteColor];
                 hud.color = [UIColor blackColor];
-                hud.label.text = NSLocalizedString(@"登录成功!", @"HUD message title");
-                [hud hideAnimated:YES afterDelay:2.f];                //跳转界面
+                hud.labelText = NSLocalizedString(@"登录成功", @"HUD message title");
+                [hud hide:YES afterDelay:2.0];                //跳转界面
                 [self presentViewController:[YJTabBarController new] animated:YES completion:nil];
             }else{
                 //登录错误提示信息

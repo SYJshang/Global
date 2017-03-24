@@ -12,7 +12,7 @@
 #import "YJRefundDetailVC.h"
 #import "YJGuideRefundModel.h"
 #import "YJPageModel.h"
-
+#import "YJChatVC.h"
 
 @interface YJGuideRefundVC ()<UITableViewDelegate,UITableViewDataSource,relationClickPush>
 @property (nonatomic, strong) UITableView *tableView;
@@ -287,6 +287,10 @@
     XXLog(@">>>>>>>>>>>%ld",model.status);
     
         SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"是否联系用户" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            
+            YJChatVC *vc = [[YJChatVC alloc]initWithConversationChatter:model.buyerId conversationType:EMConversationTypeChat];
+            [self.navigationController pushViewController:vc animated:YES];
+
         }];
         alert.sure_btnTitleColor = TextColor;
         [alert show];

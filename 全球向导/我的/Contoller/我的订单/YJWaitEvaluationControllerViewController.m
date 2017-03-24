@@ -13,6 +13,7 @@
 #import "YJPageModel.h"
 #import "NoNetwork.h"
 #import "YJConfirmController.h"
+#import "YJChatVC.h"
 
 @interface YJWaitEvaluationControllerViewController ()<UITableViewDelegate,UITableViewDataSource,YJBtnClickEvE>
 
@@ -49,7 +50,12 @@
     return _orderList;
 }
 
-
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    [self getNetWork];
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -293,6 +299,8 @@
     YJOrderListModel *model = self.totalCout[indexPath.row];
     if (ViewTag.tag == 1) {
         XXLog(@"联系向导");
+        YJChatVC *vc = [[YJChatVC alloc]initWithConversationChatter:model.guideUserId conversationType:EMConversationTypeChat];
+        [self.navigationController pushViewController:vc animated:YES];
         
     }else if (ViewTag.tag == 2){
         [self getRefundMoney:model.ID];
@@ -319,10 +327,10 @@
             
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
             hud.mode = MBProgressHUDModeText;
-            hud.contentColor = [UIColor whiteColor];
+            hud.labelColor = [UIColor whiteColor];
             hud.color = [UIColor blackColor];
-            hud.label.text = NSLocalizedString(@"确认成功!", @"HUD message title");
-            [hud hideAnimated:YES afterDelay:2.f];
+            hud.labelText = NSLocalizedString(@"确认成功!", @"HUD message title");
+            [hud hide:YES afterDelay:2.0];
             
             [self.tableView.mj_header beginRefreshing];
             
@@ -399,10 +407,12 @@
         if ([dict[@"code"] isEqualToString:@"1"]) {
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
             hud.mode = MBProgressHUDModeText;
-            hud.contentColor = [UIColor whiteColor];
+            hud.mode = MBProgressHUDModeText;
+            hud.labelColor = [UIColor whiteColor];
             hud.color = [UIColor blackColor];
-            hud.label.text = NSLocalizedString(@"取消成功!", @"HUD message title");
-            [hud hideAnimated:YES afterDelay:2.f];
+            hud.labelText = NSLocalizedString(@"取消成功!", @"HUD message title");
+            [hud hide:YES afterDelay:2.0];
+
             
             [self.tableView.mj_header beginRefreshing];
             

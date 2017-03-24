@@ -257,9 +257,9 @@
 - (void)payOrder{
     
     NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
-//    [parameter setObject:self.orderID forKey:@"orderId"];
-    
-    [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myOrder/findAppPay/%@",BaseUrl,self.orderID] parameters:parameter success:^(id responseObject) {
+    [parameter setObject:self.orderID forKey:@"orderId"];
+//      /userInfo/myOrder/findAppPay/%@
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myOrder/pay",BaseUrl] parameters:parameter success:^(id responseObject) {
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         XXLog(@"%@",dict);
@@ -279,10 +279,11 @@
                 
                 MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
                 hud.mode = MBProgressHUDModeText;
-                hud.contentColor = [UIColor whiteColor];
+                hud.labelColor = [UIColor whiteColor];
                 hud.color = [UIColor blackColor];
-                hud.label.text = NSLocalizedString(@"支付成功!", @"HUD message title");
-                [hud hideAnimated:YES afterDelay:2.f];
+                hud.labelText = NSLocalizedString(@"支付成功！", @"HUD message title");
+                [hud hide:YES afterDelay:2.0];
+
                 
                 NSLog(@"reslut = %@",resultDic);
 

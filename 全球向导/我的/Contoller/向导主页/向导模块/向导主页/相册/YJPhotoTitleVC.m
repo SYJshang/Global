@@ -87,10 +87,10 @@
             
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
             hud.mode = MBProgressHUDModeText;
-            hud.contentColor = [UIColor whiteColor];
+            hud.labelColor = [UIColor whiteColor];
             hud.color = [UIColor blackColor];
-            hud.label.text = NSLocalizedString(@"创建相册成功!", @"HUD message title");
-            [hud hideAnimated:YES afterDelay:2.f];
+            hud.labelText = NSLocalizedString(@"创建相册成功", @"HUD message title");
+            [hud hide:YES afterDelay:2.0];
             YJAddPhotoVC *vc = [[YJAddPhotoVC alloc]init];
             vc.albumId = dict[@"data"][@"id"];
             XXLog(@"%@",vc.albumId);

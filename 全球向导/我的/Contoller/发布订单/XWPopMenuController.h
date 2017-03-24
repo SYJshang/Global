@@ -13,4 +13,6 @@
 /**需要模糊效果的图片*/
 @property(strong,nonatomic)UIImage *backImg;
 
+@property (nonatomic, strong) NSString *guideSate;
+
 @end

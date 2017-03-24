@@ -106,10 +106,11 @@
             if ([dict[@"code"] isEqualToString:@"1"]) {
                 MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
                 hud.mode = MBProgressHUDModeText;
-                hud.contentColor = [UIColor whiteColor];
+                hud.mode = MBProgressHUDModeText;
+                hud.labelColor = [UIColor whiteColor];
                 hud.color = [UIColor blackColor];
-                hud.label.text = NSLocalizedString(@"绑定成功!", @"HUD message title");
-                [hud hideAnimated:YES afterDelay:2.f];
+                hud.labelText = NSLocalizedString(@"绑定成功", @"HUD message title");
+                [hud hide:YES afterDelay:2.0];
             }else{
                 SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
                     
@@ -125,10 +126,10 @@
             
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
             hud.mode = MBProgressHUDModeText;
-            hud.contentColor = [UIColor whiteColor];
+            hud.labelColor = [UIColor whiteColor];
             hud.color = [UIColor blackColor];
-            hud.label.text = NSLocalizedString(@"绑定失败!", @"HUD message title");
-            [hud hideAnimated:YES afterDelay:2.f];
+            hud.labelText = NSLocalizedString(@"绑定失败", @"HUD message title");
+            [hud hide:YES afterDelay:2.0];
 
             
         }];

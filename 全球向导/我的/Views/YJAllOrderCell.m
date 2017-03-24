@@ -213,12 +213,21 @@
             [self.buyOrder setTitle:@"联系向导" forState:UIControlStateNormal];
             break;
         case 3:
-            self.disOrder.hidden = YES;
-            self.relation.hidden = NO;
-            self.buyOrder.hidden = NO;
-
-            [self.relation setTitle:@"去评价" forState:UIControlStateNormal];
-            [self.buyOrder setTitle:@"再次预定" forState:UIControlStateNormal];
+            
+            if (model.isFinishEva == 0) {
+                self.disOrder.hidden = YES;
+                self.relation.hidden = NO;
+                self.buyOrder.hidden = NO;
+                
+                [self.relation setTitle:@"去评价" forState:UIControlStateNormal];
+                [self.buyOrder setTitle:@"再次预定" forState:UIControlStateNormal];
+            }else{
+                self.disOrder.hidden = YES;
+                self.relation.hidden = YES;
+                self.buyOrder.hidden = NO;
+                [self.buyOrder setTitle:@"再次预定" forState:UIControlStateNormal];
+            }
+           
             break;
         case 4:
             self.relation.hidden = NO;

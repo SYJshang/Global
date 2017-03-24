@@ -161,7 +161,7 @@
 
 - (void)getNetWork{
     
-    [WBHttpTool GET:[NSString stringWithFormat:@"%@/guide/guideRec/list",BaseUrl] parameters:nil success:^(id responseObject) {
+    [WBHttpTool GET:[NSString stringWithFormat:@"%@/userInfo/myUserRec/list",BaseUrl] parameters:nil success:^(id responseObject) {
         
         self.cureenPage = 1;
         
@@ -170,8 +170,8 @@
         
         if ([dict[@"code"] isEqualToString:@"1"]) {
             
-            self.totalCout = [YJNearbyModel mj_objectArrayWithKeyValuesArray:dict[@"data"][@"guideRecList"]];
-            self.pageModel = [YJPageModel mj_objectWithKeyValues:dict[@"data"][@"queryGuideRec"][@"page"]];
+            self.totalCout = [YJNearbyModel mj_objectArrayWithKeyValuesArray:dict[@"data"][@"userRecList"]];
+            self.pageModel = [YJPageModel mj_objectWithKeyValues:dict[@"data"][@"queryUserRec"][@"page"]];
             
             if (self.totalCout.count == 0) {
                 [self noDatas];
