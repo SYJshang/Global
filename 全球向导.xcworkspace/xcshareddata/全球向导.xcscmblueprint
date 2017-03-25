@@ -1,15 +1,15 @@
 {
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
-    "B5398672B6730A601E1B1BC3EB649BA3920D6183" : {
+    "ff10a8de-9172-1e4b-8a6f-9c61bc49bdf9++723" : {
 
     }
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "B5398672B6730A601E1B1BC3EB649BA3920D6183" : 9223372036854775807
+    "ff10a8de-9172-1e4b-8a6f-9c61bc49bdf9++723" : 9223372036854775807
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "AD96038D-EEBD-4DF6-BED3-01E3E10093DA",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "B5398672B6730A601E1B1BC3EB649BA3920D6183" : "WorkDemo\/"
+    "ff10a8de-9172-1e4b-8a6f-9c61bc49bdf9++723" : "%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC1\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "全球向导",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -18,7 +18,7 @@
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/192.168.1.116:8080\/svn\/xiaomiao",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B5398672B6730A601E1B1BC3EB649BA3920D6183"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "ff10a8de-9172-1e4b-8a6f-9c61bc49bdf9++723"
     }
   ]
 }
