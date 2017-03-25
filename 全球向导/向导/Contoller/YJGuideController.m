@@ -232,7 +232,7 @@
     NSMutableDictionary *parametr = [NSMutableDictionary dictionary];
     
     if (self.cityId) {
-        [parametr setObject:self.cityId forKey:@"cityId"];
+        [parametr setObject:@"1073" forKey:@"cityId"];
     }
     if (self.priceRange && ![self.priceRange isEqualToString:@"默认"] && ![self.priceRange isEqualToString:@"10000000"]) {
         [parametr setObject:self.priceRange forKey:@"priceRange"];

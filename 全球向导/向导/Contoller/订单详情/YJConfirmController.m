@@ -257,9 +257,9 @@
 - (void)payOrder{
     
     NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
-    [parameter setObject:self.orderID forKey:@"orderId"];
+//    [parameter setObject:self.orderID forKey:@"orderId"];
 //      /userInfo/myOrder/findAppPay/%@
-    [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myOrder/pay",BaseUrl] parameters:parameter success:^(id responseObject) {
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myOrder/findAppPay/%@",BaseUrl,self.orderID] parameters:parameter success:^(id responseObject) {
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         XXLog(@"%@",dict);

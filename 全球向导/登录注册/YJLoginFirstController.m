@@ -364,7 +364,26 @@
                 hud.labelColor = [UIColor whiteColor];
                 hud.color = [UIColor blackColor];
                 hud.labelText = NSLocalizedString(@"登录成功", @"HUD message title");
-                [hud hide:YES afterDelay:2.0];                //跳转界面
+                [hud hide:YES afterDelay:2.0];
+                
+                NSArray *nCookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies];
+                NSHTTPCookie *cookie;
+                for (id c in nCookies)
+                {
+                    if ([c isKindOfClass:[NSHTTPCookie class]])
+                    {
+                        cookie=(NSHTTPCookie *)c;
+                        if ([cookie.name isEqualToString:@"SESSION"]) {
+                            NSNumber *sessionOnly = [NSNumber numberWithBool:cookie.sessionOnly];
+                            NSNumber *isSecure = [NSNumber numberWithBool:cookie.isSecure];
+                            NSArray *cookies = [NSArray arrayWithObjects:cookie.name, cookie.value, sessionOnly, cookie.domain, cookie.path, isSecure, nil];
+                            [[NSUserDefaults standardUserDefaults] setObject:cookies forKey:@"cookies"];
+                            break;
+                        }
+                    }
+                }
+                
+                //跳转界面
                 [self presentViewController:[YJTabBarController new] animated:YES completion:nil];
             }else{
                 //登录错误提示信息

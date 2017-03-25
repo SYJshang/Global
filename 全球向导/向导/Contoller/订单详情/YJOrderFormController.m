@@ -34,13 +34,10 @@
     NSString *serviceDates;//服务日期
     NSString *serviceNumber;//服务天数
     NSString *personNumber;//服务人数
-    UITextField *phoneNum;
-    UITextField *wechatNum;
-    UITextField *otherCon;
     
 }
 
-@property (nonatomic, strong) YJTableView *tableView;
+@property (nonatomic, strong) UITableView *tableView;
 //总价
 @property (nonatomic, strong) UILabel *priceAll;
 //提交
@@ -50,8 +47,6 @@
 @property (nonatomic, strong) NSMutableArray *productArr;//向导服务
 
 @property (nonatomic, strong) YJGuideModel *guideModel;
-    
-
 
 @end
 
@@ -87,7 +82,7 @@
     //选择的天数
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults removeObjectForKey:saveSelectArr];
-//    NSMutableArray *select = [userDefaults objectForKey:saveSelectArr];
+    //    NSMutableArray *select = [userDefaults objectForKey:saveSelectArr];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -108,10 +103,10 @@
     serviceDates = @"";//服务日期
     serviceNumber = @"";//服务天数
     personNumber = @"1";
-
+    
     
 }
-    
+
 - (void)back{
     
     [self.navigationController popViewControllerAnimated:YES];
@@ -122,9 +117,6 @@
     
     self.title = @"订单详情";
     
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults removeObjectForKey:saveSelectArr];
-    
     if (self.DateArr) {
         [self.DateArr removeAllObjects];
     }
@@ -133,7 +125,7 @@
     //加载一个布局
     [self setLayout];
     
-    self.tableView = [[YJTableView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height - 104) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height - 104) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
@@ -147,7 +139,7 @@
     [self.tableView registerClass:[YJPhoneNumCell class] forCellReuseIdentifier:@"five"];
     [self.tableView registerClass:[YJSubmitCell class] forCellReuseIdentifier:@"six"];
     [self.tableView registerClass:[YJRelateDayCell class] forCellReuseIdentifier:@"seven"];
-
+    
     
     [self getNetWork];
     
@@ -155,8 +147,6 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 
-    
-    
     
     // Do any additional setup after loading the view.
 }
@@ -174,15 +164,7 @@
     self.tableView.contentInset = UIEdgeInsetsZero;
 }
 
-//- (UIView *)hitTest:(CGPoint)point withEvent:(nullable UIEvent *)event(UIEvent *)event{
-//    id view = [super hitTest:point withEvent:event];
-//    return view;
-//    
-//}
 
-
-    
-    
 - (void)getNetWork{
     
     [WBHttpTool GET:[NSString stringWithFormat:@"%@/mainGuide/toBuy/%@",BaseUrl,self.guideID] parameters:nil success:^(id responseObject) {
@@ -193,11 +175,11 @@
             
             NSDictionary *data = dict[@"data"];
             
-        self.guideModel = [YJGuideModel mj_objectWithKeyValues:data[@"guide"]];
-        self.productArr = [YJProductModel mj_objectArrayWithKeyValuesArray:data[@"productList"]];
-        self.DateArr = data[@"disableDateList"];
-        
-        [self.tableView reloadData];
+            self.guideModel = [YJGuideModel mj_objectWithKeyValues:data[@"guide"]];
+            self.productArr = [YJProductModel mj_objectArrayWithKeyValuesArray:data[@"productList"]];
+            self.DateArr = data[@"disableDateList"];
+            
+            [self.tableView reloadData];
             
         }else if ([dict[@"code"] isEqualToString:@"2"]){
             
@@ -211,7 +193,7 @@
             }];
             alert.sure_btnTitleColor = TextColor;
             [alert show];
-
+            
         }
         
     } failure:^(NSError *error) {
@@ -250,7 +232,7 @@
     self.submitBtn.layer.cornerRadius = 2;
     self.submitBtn.layer.borderColor = [UIColor colorWithRed:255.0 / 255.0 green:230.0 / 255.0 blue:130.0 / 255.0 alpha:1.0].CGColor;
     self.submitBtn.layer.borderWidth = 1;
-
+    
 }
 
 
@@ -262,28 +244,19 @@
 - (void)click:(UIButton *)sender{
     
     [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder)to:nil from:nil forEvent:nil];
-//    [self.tableView reloadData];
-    
+    //    [self.tableView reloadData];
     [self postData];
-
-   
+    
     NSLog(@"提交订单");
 }
-    
-    
-
-    
-    
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    //    [self.numCode resignFirstResponder];
-    [phoneNum resignFirstResponder];
-    [wechatNum resignFirstResponder];
-    [otherCon resignFirstResponder];
-    return YES;
-}
-    
 
 #pragma mark - table view dataSource
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    
+    [self.tableView endEditing:YES];
+}
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 5;
@@ -311,7 +284,7 @@
         return 1;
     }
     
-     return 1;
+    return 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -319,8 +292,8 @@
     if (section < 2 ) {
         return 0;
     }
-
-        return 40;
+    
+    return 40;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -337,18 +310,18 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
-        UIView *view = [[UIView alloc]init];
-        view.backgroundColor = [UIColor whiteColor];
-        UIView *line = [[UIView alloc]init];
-        line.backgroundColor = TextColor;
-        [view addSubview:line];
-        line.sd_layout.leftSpaceToView(view,5).centerYEqualToView(view).heightIs(15).widthIs(2);
-        
-        UILabel *lab = [[UILabel alloc]init];
-        lab.textColor = [UIColor blackColor];
-        lab.font = [UIFont boldSystemFontOfSize:AdaptedWidth(14)];
-        [view addSubview:lab];
-        lab.sd_layout.leftSpaceToView(line,5).centerYEqualToView(view).heightIs(15).rightSpaceToView(view,10);
+    UIView *view = [[UIView alloc]init];
+    view.backgroundColor = [UIColor whiteColor];
+    UIView *line = [[UIView alloc]init];
+    line.backgroundColor = TextColor;
+    [view addSubview:line];
+    line.sd_layout.leftSpaceToView(view,5).centerYEqualToView(view).heightIs(15).widthIs(2);
+    
+    UILabel *lab = [[UILabel alloc]init];
+    lab.textColor = [UIColor blackColor];
+    lab.font = [UIFont boldSystemFontOfSize:AdaptedWidth(14)];
+    [view addSubview:lab];
+    lab.sd_layout.leftSpaceToView(line,5).centerYEqualToView(view).heightIs(15).rightSpaceToView(view,10);
     switch (section) {
         case 2:
             lab.text = @"选择服务类型";
@@ -364,7 +337,7 @@
             break;
     }
     
-        
+    
     return view;
 }
 
@@ -390,21 +363,21 @@
                 Scell.numLab.text = [NSString stringWithFormat:@"%d",Scell.people];
                 personNumber = [NSString stringWithFormat:@"%d",Scell.people];
                 XXLog(@"%@",personNumber);
-
+                
             };
             
             Scell.peoReduBlock = ^{
-            if (Scell.people > 1) {
-                Scell.people --;
-            }
-
-            NSString *peo = [NSString stringWithFormat:@"%d",Scell.people];
-            Scell.numLab.text = peo;
-            personNumber = [NSString stringWithFormat:@"%d",Scell.people];
-
+                if (Scell.people > 1) {
+                    Scell.people --;
+                }
+                
+                NSString *peo = [NSString stringWithFormat:@"%d",Scell.people];
+                Scell.numLab.text = peo;
+                personNumber = [NSString stringWithFormat:@"%d",Scell.people];
+                
             };
             return cell;
-           
+            
         }
         
         if (indexPath.row == 1) {
@@ -417,13 +390,13 @@
                 cell.time.text = [NSString stringWithFormat:@"%lu天",(unsigned long)select.count];
             }
             return cell;
-    }
+        }
         
-}
-
+    }
+    
     if (indexPath.section == 2) {
         
-
+        
         YJProductModel *moddel = self.productArr[indexPath.row];
         
         if (self.productArr.count != 0) {
@@ -431,7 +404,7 @@
         }
         
         XXLog(@"productIds >>>>>>>>>>>>%@",productIds);
-
+        
         
         if (moddel.relateDayNumber == 1) {
             
@@ -442,20 +415,20 @@
             
             YJServerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"four"];
             cell.serverName.text = moddel.name;
-           
+            
             cell.price.text = [NSString stringWithFormat:@"￥%@ *%lu",moddel.price,select.count];
             __weak typeof(cell) Scell = cell;
             Scell.serverBtn.userInteractionEnabled = NO;
-
+            
             _allPrice = [moddel.price integerValue] * select.count;
             self.priceAll.text = [NSString stringWithFormat:@"总计 ￥%ld",_allPrice];
             
             if (self.productArr.count != 0) {
                 
                 numbers = [NSString stringWithFormat:@"%@%ld,",numbers,select.count];
-//                    [self totalPrice:moddel];
-
- 
+                //                    [self totalPrice:moddel];
+                
+                
             }
             
             
@@ -467,17 +440,17 @@
             cell.descLab.text = [NSString stringWithFormat:@"%@ *%d",moddel.price,cell.people];
             cell.numLab.text = [NSString stringWithFormat:@"%d",cell.people];
             cell.delegate = self;
-//            [self totalPrice:moddel];
+            //            [self totalPrice:moddel];
             if (self.productArr.count != 0) {
                 
                 numbers = [NSString stringWithFormat:@"%@%@,",numbers,cell.numLab.text];
-//                [self totalPrice:moddel];
+                //                [self totalPrice:moddel];
                 
                 
             }
             
             XXLog(@"numbers >>>>>>>>>>%@",numbers);
-           
+            
             return cell;
         }
     }
@@ -485,15 +458,13 @@
     if (indexPath.section == 3) {
         YJPhoneNumCell *cell = [tableView dequeueReusableCellWithIdentifier:@"five"];
         __weak typeof(cell) Scell = cell;
-
+        
         
         switch (indexPath.row) {
             case 0:{
                 cell.phoneNum.text = @"联系电话";
                 cell.phoneTF.placeholder = @"请输入手机号（必填）";
                 cell.phoneTF.keyboardType = UIKeyboardTypeNumberPad;
-//                phoneNum = cell.phoneTF;
-//                phoneNum.delegate = self;
                 
                 Scell.text = ^(NSString *sender){
                     
@@ -501,15 +472,12 @@
                     XXLog(@"%@",phone);
                     
                 };
-//                phone = cell.phoneTF.text;
+                //                phone = cell.phoneTF.text;
                 break;
             }
             case 1:{
                 cell.phoneNum.text = @"微信号";
                 cell.phoneTF.placeholder = @"请输入微信号（选填）";
-//                wechatNum = cell.phoneTF;
-//                wechatNum.delegate = self;
-
                 Scell.text = ^(NSString *sender){
                     
                     wechat = sender;
@@ -533,9 +501,6 @@
             __weak typeof(cell) Scell = cell;
             cell.phoneNum.text = @"其他备注";
             cell.phoneTF.placeholder = @"(选填)";
-//            otherCon = cell.phoneTF;
-//            otherCon.delegate = self;
-            
             Scell.text = ^(NSString *sender){
                 
                 remark = sender;
@@ -545,7 +510,7 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }
-}
+    }
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -562,21 +527,10 @@
             YJDataController *vc = [[YJDataController alloc]init];
             vc.arr = self.DateArr;
             [self.navigationController pushViewController:vc animated:YES];
-
+            
         }
     }
 }
-
-#pragma mark - 取消第一响应
--(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
-    
-    [self.tableView endEditing:YES];
-    
-}
-
-
-
-
 
 -(void)btnClick:(UITableViewCell *)cell andFlag:(int)flag
 {
@@ -592,7 +546,7 @@
             //先获取到当期行数据源内容，改变数据源内容，刷新表格
             
             cells.people ++;
-
+            
         }
             break;
         case 101:
@@ -609,11 +563,11 @@
     
     //刷新表格
     [self.tableView reloadData];
-//     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:index,nil] withRowAnimation:UITableViewRowAnimationNone];
+    //     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:index,nil] withRowAnimation:UITableViewRowAnimationNone];
     
     YJProductModel *model = self.productArr[index.row];
     //计算总价
-//    [self totalPrice];
+    //    [self totalPrice];
     [self totalPrice:model];
     
 }
@@ -622,11 +576,11 @@
 {
     
     //每次算完要重置为0，因为每次的都是全部循环算一遍
-     _allPrice = 0;
+    _allPrice = 0;
     productIds = @"";
     self.priceAll.text = [NSString stringWithFormat:@"总计 ￥%ld",_allPrice];
     numbers = @"";
-
+    
     
     //遍历整个数据源，然后判断如果是选中的商品，就计算价格（单价 * 商品数量）
     
@@ -641,25 +595,25 @@
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
             NSMutableArray *select = [userDefaults objectForKey:saveSelectArr];
             
-//            _allPrice = _allPrice + [model.price integerValue] * select.count;
+            //            _allPrice = _allPrice + [model.price integerValue] * select.count;
             XXLog(@"%ld",_allPrice);
-//            numbers = [NSString stringWithFormat:@"%@%ld,",numbers,select.count];
+            //            numbers = [NSString stringWithFormat:@"%@%ld,",numbers,select.count];
             
         }else{
             
             _allPrice = _allPrice + [model.price integerValue] * cell.people;
-//            numbers = [NSString stringWithFormat:@"%@%@,",numbers,cell.numLab.text];
-
-    }
-    
+            //            numbers = [NSString stringWithFormat:@"%@%@,",numbers,cell.numLab.text];
+            
+        }
+        
         XXLog(@"%ld",_allPrice);
         XXLog(@"number >>>>%@",numbers);
         
-    //给总价文本赋值
-    self.priceAll.text = [NSString stringWithFormat:@"总计 ￥%ld",_allPrice];
-    NSLog(@"%@",self.priceAll.text);
-    
-   
+        //给总价文本赋值
+        self.priceAll.text = [NSString stringWithFormat:@"总计 ￥%ld",_allPrice];
+        NSLog(@"%@",self.priceAll.text);
+        
+        
     }
     
 }
@@ -674,23 +628,21 @@
     if (phone.length == 11) {
         [parmter setObject:phone forKey:@"phone"];
     }else{
-        SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"手机号格式有误,请退出页面从新进入" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+        SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"手机号格式有误" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
             
-            [self.navigationController popViewControllerAnimated:YES];
+            return;
+            
         }];
         alert.sure_btnTitleColor = TextColor;
         [alert show];
-        return;
     }
-
-        [parmter setObject:wechat forKey:@"wechat"];
-        [parmter setObject:remark forKey:@"remark"];
-    
+    [parmter setObject:wechat forKey:@"wechat"];
+    [parmter setObject:remark forKey:@"remark"];
     
     //选择的天数
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSMutableArray *select = [userDefaults objectForKey:saveSelectArr];
-
+    
     if (select.count > 0) {
         for (NSString *str in select) {
             serviceDates = [NSString stringWithFormat:@"%@%@,",serviceDates,str];
@@ -700,11 +652,11 @@
     [parmter setObject:serviceDates forKey:@"serviceDates"];
     [parmter setObject:serviceNumber forKey:@"serviceNumber"];
     [parmter setObject:personNumber forKey:@"personNumber"];
-   
+    
     
     XXLog(@"%@",parmter);
-
-
+    
+    
     [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myOrder/orderGuide",BaseUrl] parameters:parmter success:^(id responseObject) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         XXLog(@"%@",dict);
@@ -740,13 +692,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

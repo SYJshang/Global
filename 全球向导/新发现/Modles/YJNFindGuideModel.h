@@ -23,7 +23,7 @@
 @property (nonatomic , assign) NSInteger              type;
 @property (nonatomic , copy) NSString              * picIdList;
 @property (nonatomic , copy) NSString              * ID;
-@property (nonatomic , assign) NSInteger              guideId;
+@property (nonatomic , strong) NSString            *  guideId;
 @property (nonatomic , assign) NSInteger              coverPicId;
 @property (nonatomic , assign) NSInteger              cityId;
 @property (nonatomic , copy) NSString              * addTime;
@@ -38,7 +38,8 @@
 @property (nonatomic , copy) NSString            *  price;
 @property (nonatomic , copy) NSString              * needKnow;
 @property (nonatomic , copy) NSString              * content;
-@property (nonatomic , assign) NSInteger              userId;
+@property (nonatomic , strong) NSString             * userId;
+@property (nonatomic, strong) NSString              *recId;
 
 
 @end

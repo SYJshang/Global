@@ -75,10 +75,15 @@
     [self.imageV sd_setImageWithURL:[NSURL URLWithString:guideModel.coverPhotoUrl] placeholderImage:[UIImage imageNamed:@"123"]];
     [self.icon sd_setImageWithURL:[NSURL URLWithString:guideModel.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
     self.name.text = [NSString stringWithFormat:@"by %@",guideModel.realName];
-//    NSString *type = [self.guideType objectForKey:guideModel.guideDesc];
-    self.position.text = [NSString stringWithFormat:@"|%@|",guideModel.guideDesc];
+    NSString *type = [self.guideType objectForKey:guideModel.type];
+    if (self.state == 1) {
+        self.position.text = [NSString stringWithFormat:@"|%@|",guideModel.guideDesc];
+
+    }else{
+        self.position.text = [NSString stringWithFormat:@"|%@|",type];
+    }
     self.title.text = [NSString stringWithFormat:@"座右铭: %@",guideModel.motto];
-    self.descTitle.text = @"标签: ";
+    self.descTitle.text = @"标  签: 带你去看好看的地方";
 
 }
 

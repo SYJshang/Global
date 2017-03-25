@@ -17,7 +17,7 @@
 @property (nonatomic , copy) NSString              * coverPhotoUrl;
 @property (nonatomic , copy) NSString              * guideDesc;
 @property (nonatomic , strong) NSString            * type;
-@property (nonatomic , assign) NSInteger              userId;
+@property (nonatomic , strong) NSString            *  userId;
 @property (nonatomic , copy) NSString              * headPicId;
 @property (nonatomic , copy) NSString              * motto;
 @property (nonatomic , copy) NSString              * summary;
@@ -25,6 +25,7 @@
 @property (nonatomic , assign) NSInteger              npStatus;
 @property (nonatomic , assign) NSInteger              cityId;
 @property (nonatomic , copy) NSString            *  status;
+@property (nonatomic, strong) NSString            *guideId;
 
 
 @end

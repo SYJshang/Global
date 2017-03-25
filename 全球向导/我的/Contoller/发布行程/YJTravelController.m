@@ -8,13 +8,12 @@
 //
 
 #import "YJTravelController.h"
-#import <WebKit/WebKit.h>
 
 
 
 
-@interface YJTravelController ()<WKNavigationDelegate>{
-    WKWebView *webView;
+@interface YJTravelController ()<UIWebViewDelegate>{
+    UIWebView *webView;
     
     UIActivityIndicatorView *activityIndicatorView;
     UIView *opaqueView;
@@ -29,7 +28,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
-    [self.navigationController setNavigationBarHidden:NO animated:NO];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.navigationController.navigationBar.translucent = NO;
@@ -58,18 +57,22 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
-
-   
     
-    webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
+    
+    
+
+    webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height - 0)];
     [webView setUserInteractionEnabled:YES];//是否支持交互
     //[webView setDelegate:self];
-    webView.navigationDelegate = self;
+    webView.delegate = self;
+    
+    webView.scrollView.showsHorizontalScrollIndicator = NO;
+    webView.scrollView.bounces = NO;
+    
     [webView setOpaque:NO];//opaque是不透明的意思
-    //    [webView setScalesPageToFit:YES];//自动缩放以适应屏幕
+    [webView setScalesPageToFit:YES];//自动缩放以适应屏幕
     [self.view addSubview:webView];
     //1.创建并加载远程网页
-    
     if ([self.state isEqualToString:@"1"]) {
         
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/userInfo/myUserRec/toAdd",BaseUrl]];
@@ -84,9 +87,6 @@
         
     }
     
-    
-    
-    
     opaqueView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
     activityIndicatorView = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
     [activityIndicatorView setCenter:opaqueView.center];
@@ -98,30 +98,47 @@
     
 }
 
-- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
+
+#pragma mark - delegate
+
+-(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+    NSString * requestString = request.URL.absoluteString;
+    NSLog(@"请求的地址：%@",requestString);
+    if ([requestString containsString:@"http://www.globaleguide.com"]){
+
+        [self.navigationController setNavigationBarHidden:NO animated:NO];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        
+    }
+    
+    return YES;
+}
+
+
+- (void)webViewDidStartLoad:(UIWebView *)webView{
     [activityIndicatorView startAnimating];
     opaqueView.hidden = NO;
+
     
 }
-- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation {
-    
-    
-    
-}
-- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView{
     
     [activityIndicatorView startAnimating];
     opaqueView.hidden = YES;
+
 }
 
-- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error{
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
     
-    XXLog(@"error code ==  %ld",error.code);
-    if (error.code  == -999) {
-        return;
-    }
     
 }
+
 
 //UIWebView如何判断 HTTP 404 等错误
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
@@ -132,7 +149,7 @@
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         
         [ webView loadRequest:[ NSURLRequest requestWithURL: url]];
-        webView.navigationDelegate = self;
+//        webView.navigationDelegate = self;
     } else {
         NSDictionary *userInfo = [NSDictionary dictionaryWithObject:
                                   NSLocalizedString(@"HTTP Error",

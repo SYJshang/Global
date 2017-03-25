@@ -12,6 +12,7 @@
 #import "YJNearbyModel.h"
 #import "YJPageModel.h"
 #import "NoNetwork.h"
+#import "YJShareDetailVC.h"
 
 
 @interface YJMineShareVC ()<UITableViewDelegate,UITableViewDataSource>
@@ -294,7 +295,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    //    kTipAlert(@"<%ld> selected...", indexPath.row);
+    YJNearbyModel *model = self.totalCout[indexPath.row];
+    YJShareDetailVC *vc = [[YJShareDetailVC alloc]init];
+    vc.ID = model.ID;
+    [self.navigationController pushViewController:vc animated:YES];
+
 }
 
 

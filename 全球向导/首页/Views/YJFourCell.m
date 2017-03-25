@@ -90,10 +90,13 @@
     self.title.text = guideModel.bigTitle;
     self.descTitle.text = guideModel.smallTitle;
     [self.imageV sd_setImageWithURL:[NSURL URLWithString:guideModel.coverPicUrl] placeholderImage:[UIImage imageNamed:@"123"]];
-    [self.icon sd_setImageWithURL:[NSURL URLWithString:guideModel.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
-    self.num.text = guideModel.colNumber;
-    self.name.text = [NSString stringWithFormat:@"by %@",guideModel.realName];
-    NSString *type = [self.guideType objectForKey:guideModel.type];
+    [self.icon sd_setImageWithURL:[NSURL URLWithString:guideModel.guide[@"headUrl"]] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+    self.num.text = [NSString stringWithFormat:@"收藏数: %@",guideModel.colNumber];
+    self.name.text = [NSString stringWithFormat:@"by %@",guideModel.guide[@"realName"]];
+    
+    NSString *t= [NSString stringWithFormat:@"%@",guideModel.guide[@"type"]];
+    
+    NSString *type = [self.guideType objectForKey:t];
     self.position.text = [NSString stringWithFormat:@"|%@|",type];
 }
 

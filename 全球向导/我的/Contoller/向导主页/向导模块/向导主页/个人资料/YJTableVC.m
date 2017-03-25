@@ -53,14 +53,18 @@
     [WBHttpTool GET:[NSString stringWithFormat:@"%@/guide/getCurrentGuide",BaseUrl] parameters:nil success:^(id responseObject) {
        
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-        NSDictionary *data = dict[@"data"];
         
-        self.infoModel = [YJGuideInformationModel mj_objectWithKeyValues:data[@"guide"]];
-        self.curStatus = data[@"curIdMap"];
-        [self.tableView reloadData];
-        
-        XXLog(@"%@",self.infoModel);
-        XXLog(@"%@",data);
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            NSDictionary *data = dict[@"data"];
+            
+            self.infoModel = [YJGuideInformationModel mj_objectWithKeyValues:data[@"guide"]];
+            self.curStatus = data[@"curIdMap"];
+            [self.tableView reloadData];
+            
+            XXLog(@"%@",self.infoModel);
+            XXLog(@"%@",data);
+ 
+        }
         
     } failure:^(NSError *error) {
         

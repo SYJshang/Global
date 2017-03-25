@@ -433,7 +433,6 @@
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
             XXLog(@".....%@",dict);
         
-        if (dict != nil) {
 
         if ([dict[@"code"] isEqualToString:@"1"]) {
        
@@ -517,8 +516,7 @@
         }];
         
             }
-            
-        }
+        
 
         } failure:^(NSError *error) {
             SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"请求失败！请查看网络等原因！" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {

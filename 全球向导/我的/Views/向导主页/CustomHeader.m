@@ -12,7 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *widthConstraint;
-@property (weak, nonatomic) IBOutlet UILabel *nameLab;
 
 
 @end
@@ -21,8 +20,18 @@
 
 -(void)awakeFromNib
 {
-
+    [super awakeFromNib];
+    
+    self.headImageView.layer.masksToBounds = YES;
+    self.headImageView.layer.cornerRadius = self.headImageView.width / 2;
+    self.headImageView.layer.borderColor = BackGray.CGColor;
+    self.headImageView.layer.borderWidth = 1.0;
+    
+    self.nameLab.textColor = TextColor;
+    
 }
+
+
 
 - (UIImageView *)backgroundImageView {
     return self.imageView;
@@ -33,6 +42,8 @@
     self.bottomConstraint.constant = ratio * 50 + 10;
     self.widthConstraint.constant = 30 + ratio * 70;
     self.nameLab.font = [UIFont systemFontOfSize:24 * ratio];
+    
+    
 //    self.bottomCOnstraint.constant = 30 + ratio * 50;
     
     

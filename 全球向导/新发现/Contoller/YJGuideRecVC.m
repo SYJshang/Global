@@ -9,11 +9,10 @@
 
 #import "YJGuideRecVC.h"
 #import "YJLoginFirstController.h"
-#import <WebKit/WebKit.h>
 
 
-@interface YJGuideRecVC ()<WKNavigationDelegate>{
-    WKWebView *webView;
+@interface YJGuideRecVC ()<UIWebViewDelegate>{
+    UIWebView *webView;
     
     UIActivityIndicatorView *activityIndicatorView;
     UIView *opaqueView;
@@ -32,7 +31,7 @@
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
     self.view.backgroundColor = BackGray;
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.automaticallyAdjustsScrollViewInsets = YES;
     
     self.navigationController.navigationBar.barTintColor = BackGray;
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
@@ -67,7 +66,7 @@
     
     
     
-    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"向导类型" font:19.0];
+    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"向导分享" font:19.0];
 }
 
 - (void)back{
@@ -79,8 +78,24 @@
 - (void)share:(UIButton *)btn{
     
     XXLog(@"分享");
+    [self showBottomCircleView];
     
 }
+
+- (void)showBottomCircleView
+{
+    [UMSocialUIManager removeAllCustomPlatformWithoutFilted];
+    [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewPostionType = UMSocialSharePageGroupViewPositionType_Bottom;
+    [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageItemStyleType = UMSocialPlatformItemViewBackgroudType_IconAndBGRadius;
+#ifdef UM_Swift
+    [UMSocialSwiftInterface showShareMenuViewInWindowWithPlatformSelectionBlockWithSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary* userInfo) {
+#else
+        [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+#endif
+            [self shareWebPageToPlatformType:platformType];
+        }];
+    }
+
 
 - (void)collect:(UIButton *)btn{
     
@@ -175,18 +190,85 @@
 }
 
 
+- (void)shareWebPageToPlatformType:(UMSocialPlatformType)platformType
+{
+    //创建分享消息对象
+    UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+    
+    //创建网页内容对象
+    NSString* thumbURL =  @"https://mobile.umeng.com/images/pic/home/social/img-1.png";
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"全球向导分享" descr:@"欢迎查看全球向导分享内容" thumImage:thumbURL];
+    //设置网页地址
+    shareObject.webpageUrl = [NSString stringWithFormat:@"%@/mainGuideRec/toViewPage/%@",BaseUrl,self.ID];
+    
+    //分享消息对象设置分享内容对象
+    messageObject.shareObject = shareObject;
+    
+#ifdef UM_Swift
+    [UMSocialSwiftInterface shareWithPlattype:platformType messageObject:messageObject viewController:self completion:^(UMSocialShareResponse * data, NSError * error) {
+#else
+        //调用分享接口
+        [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
+#endif
+            if (error) {
+                UMSocialLogInfo(@"************Share fail with error %@*********",error);
+            }else{
+                if ([data isKindOfClass:[UMSocialShareResponse class]]) {
+                    UMSocialShareResponse *resp = data;
+                    //分享结果消息
+                    UMSocialLogInfo(@"response message is %@",resp.message);
+                    //第三方原始返回的数据
+                    UMSocialLogInfo(@"response originalResponse data is %@",resp.originalResponse);
+                    
+                }else{
+                    UMSocialLogInfo(@"response data is %@",data);
+                }
+            }
+            [self alertWithError:error];
+        }];
+    }
+
+ - (void)alertWithError:(NSError *)error
+{
+    NSString *result = nil;
+    if (!error) {
+        result = [NSString stringWithFormat:@"Share succeed"];
+    }
+    else{
+        NSMutableString *str = [NSMutableString string];
+        if (error.userInfo) {
+            for (NSString *key in error.userInfo) {
+                [str appendFormat:@"%@ = %@\n", key, error.userInfo[key]];
+            }
+        }
+        if (error) {
+            result = [NSString stringWithFormat:@"Share fail with error code: %d\n%@",(int)error.code, str];
+        }
+        else{
+            result = [NSString stringWithFormat:@"Share fail"];
+        }
+    }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"share"
+                                                    message:result
+                                                   delegate:nil
+                                          cancelButtonTitle:NSLocalizedString(@"sure", @"确定")
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+ 
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.title = @"详情";
     // Do any additional setup after loading the view.
-    webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 64, screen_width, screen_height - 64)];
+    webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
     [webView setUserInteractionEnabled:YES];//是否支持交互
     //[webView setDelegate:self];
-    webView.navigationDelegate = self;
+    webView.delegate = self;
     [webView setOpaque:NO];//opaque是不透明的意思
-//    [webView setScalesPageToFit:YES];//自动缩放以适应屏幕
+    [webView setScalesPageToFit:YES];//自动缩放以适应屏幕
     [self.view addSubview:webView];
     
     //加载网页的方式
@@ -251,31 +333,18 @@
 }
 
 
-- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation{
+- (void)webViewDidStartLoad:(UIWebView *)webView{
     
     [activityIndicatorView startAnimating];
     opaqueView.hidden = NO;
-    
 }
-- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation {
-    
-    
-    
-}
-- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView{
     
     [activityIndicatorView startAnimating];
     opaqueView.hidden = YES;
 }
 
-- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error{
-    
-    XXLog(@"error code ==  %ld",error.code);
-    if (error.code  == -999) {
-        return;
-    }
-    
-}
 
 //UIWebView如何判断 HTTP 404 等错误
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
@@ -286,7 +355,7 @@
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         
         [ webView loadRequest:[ NSURLRequest requestWithURL: url]];
-        webView.navigationDelegate = self;
+        webView.delegate = self;
     } else {
         NSDictionary *userInfo = [NSDictionary dictionaryWithObject:
                                   NSLocalizedString(@"HTTP Error",

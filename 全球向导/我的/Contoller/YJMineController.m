@@ -12,7 +12,7 @@
 #import "YJRegsiterController.h"
 #import "YJLoginFirstController.h"
 #import "YJCollectController.h"
-//#import "UINavigationBar+Awesome.h"
+#import "UIImageView+LBBlurredImage.h"
 #import "YJSetUpController.h"
 #import "YJMyOrderController.h"
 #import "YJGuideCenterController.h"
@@ -82,6 +82,7 @@
             XXLog(@"%@",self.userModel);
             if (self.userModel.headUrl) {
                 [self.icon sd_setImageWithURL:[NSURL URLWithString:self.userModel.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+                [self.topImageView sd_setImageWithURL:[NSURL URLWithString:self.userModel.headUrl] placeholderImage:[UIImage imageNamed:@"bg2"]];
             }
             
             [self setBtnStatus];
@@ -229,6 +230,10 @@
     
     self.topImageView = [[UIImageView alloc] initWithFrame:(CGRectMake(0, -200, screen_width, 200))];
     _topImageView.image = [UIImage imageNamed:@"bg2"];
+    [self.topImageView setImageToBlur:self.topImageView.image
+                           blurRadius:5
+                      completionBlock:^(){
+                      }];
     _topImageView.contentMode = UIViewContentModeScaleAspectFill;
     _topImageView.clipsToBounds = YES;
     self.topImageView.userInteractionEnabled = YES;

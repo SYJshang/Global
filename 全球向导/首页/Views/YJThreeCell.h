@@ -11,6 +11,8 @@
 
 @interface YJThreeCell : UITableViewCell
 
+@property (nonatomic, assign) NSInteger state;
+
 //大图片
 @property (nonatomic, strong) UIImageView *imageV;
 //标题

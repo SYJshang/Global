@@ -61,16 +61,16 @@ static NSInteger const pageNum = 3;
 //设置scrollview
 - (void)createScrollView {
     self.scrollView.backgroundColor = [UIColor whiteColor];
-    NSArray *imageNameArr = @[@"01", @"02", @"3"];
+    NSArray *imageNameArr = @[@"1", @"2", @"3"];
     if (iphone5x_4_0) {
-        imageNameArr = @[@"01", @"02", @"3"];
+        imageNameArr = @[@"1", @"2", @"3"];
     }else if (iphone6_4_7 || iphone6Plus_5_5) {
-        imageNameArr = @[@"01", @"02", @"3"];
+        imageNameArr = @[@"1", @"2", @"3"];
     }
     
    [imageNameArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(idx * SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-       NSString *path = [[NSBundle mainBundle] pathForResource:obj ofType:@"png"];
+       NSString *path = [[NSBundle mainBundle] pathForResource:obj ofType:@"jpg"];
        imageView.image = [UIImage imageWithContentsOfFile:path];
        imageView.contentMode = UIViewContentModeScaleToFill;
        imageView.userInteractionEnabled = YES;

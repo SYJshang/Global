@@ -12,6 +12,7 @@
 #import "YJNearbyModel.h"
 #import "YJPageModel.h"
 #import "NoNetwork.h"
+#import "YJShareDetailVC.h"
 
 @interface YJShareCollectVC ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -256,7 +257,10 @@
 #pragma mark - table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    YJShareDetailVC *vc = [[YJShareDetailVC alloc]init];
+    YJNearbyModel *model = self.totalCout[indexPath.row];
+    vc.ID = model.recId;
+    [self.navigationController pushViewController:vc animated:YES];
     
 }
 

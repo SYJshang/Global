@@ -12,6 +12,7 @@
 #import "YJNFindGuideModel.h"
 #import "YJPageModel.h"
 #import "NoNetwork.h"
+#import "YJGuideRecVC.h"
 
 
 @interface YJFindCollectVC ()<UITableViewDelegate,UITableViewDataSource>
@@ -293,7 +294,10 @@
 #pragma mark - table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    YJGuideRecVC *vc = [[YJGuideRecVC alloc]init];
+    YJNFindGuideModel *model = self.totalCout[indexPath.row];
+    vc.ID = model.recId;
+    [self.navigationController pushViewController:vc animated:YES];
     
 }
 

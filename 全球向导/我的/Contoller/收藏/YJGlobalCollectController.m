@@ -12,7 +12,7 @@
 #import "YJPageModel.h"
 #import "YJGuideModel.h"
 #import "NoNetwork.h"
-#import "YJEvaluationController.h"
+#import "YJGuideDetailVC.h"
 
 
 @interface YJGlobalCollectController ()<UITableViewDelegate,UITableViewDataSource>
@@ -156,22 +156,25 @@
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         
-        self.totalCout = [YJGuideModel mj_objectArrayWithKeyValuesArray:dict[@"data"][@"colGuideList"]];
-        
-        self.pageModel = [YJPageModel mj_objectWithKeyValues:dict[@"data"][@"queryColGuide"][@"page"]];
-        
-        
-        XXLog(@"%ld",self.pageModel.nextPage);
-        
-        if (self.totalCout.count == 0) {
-            [self noDatas];
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            self.totalCout = [YJGuideModel mj_objectArrayWithKeyValuesArray:dict[@"data"][@"colGuideList"]];
+            
+            self.pageModel = [YJPageModel mj_objectWithKeyValues:dict[@"data"][@"queryColGuide"][@"page"]];
+            
+            
+            XXLog(@"%ld",self.pageModel.nextPage);
+            
+            if (self.totalCout.count == 0) {
+                [self noDatas];
+            }
+            
+            
+            [self.tableView.mj_header endRefreshing];
+            [self.tableView.mj_footer endRefreshing];
+            [self.tableView reloadData];
+  
         }
-
-        
-        [self.tableView.mj_header endRefreshing];
-        [self.tableView.mj_footer endRefreshing];
-        [self.tableView reloadData];
-
+       
         
     } failure:^(NSError *error) {
         [self.tableView.mj_header endRefreshing];
@@ -262,8 +265,9 @@
     YJThreeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
     YJGuideModel *model = self.totalCout[indexPath.row];
+    cell.state = 1;
     cell.guideModel = model;
-    
+
     
     if (model.status == 0) {
         
@@ -296,7 +300,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    [self.navigationController pushViewController:[YJEvaluationController new] animated:YES];
+    YJGuideDetailVC *vc = [[YJGuideDetailVC alloc]init];
+    YJGuideModel *model = self.totalCout[indexPath.row];
+    vc.guideId = model.guideId;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 

@@ -36,11 +36,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/&#x6211;&#x7684;/Contoller/YJSetUserController.m"
-            timestampString = "510056680.348611"
+            timestampString = "512067678.088004"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
             landmarkName = "-finsh"
             landmarkType = "7">
          </BreakpointContent>

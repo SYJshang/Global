@@ -14,12 +14,16 @@
 #import "YJDateVC.h"
 #import "YJPhotoVC.h"
 #import "YJServerStateVC.h"
+#import "YJGuideInformationModel.h"
+
 //#import "UIImage+ImageEffects.h"
 
 void *CustomHeaderInsetObserver = &CustomHeaderInsetObserver;
 @interface YJGCenterController ()
 
 @property (nonatomic, strong) CustomHeader *header;
+@property (nonatomic, strong) YJGuideInformationModel *infoModel;
+
 
 
 @end
@@ -103,8 +107,38 @@ void *CustomHeaderInsetObserver = &CustomHeaderInsetObserver;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    [self getNetWork];
    
+}
+
+- (void)getNetWork{
+    
+    [WBHttpTool GET:[NSString stringWithFormat:@"%@/guide/getCurrentGuide",BaseUrl] parameters:nil success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            NSDictionary *data = dict[@"data"];
+            
+            self.infoModel = [YJGuideInformationModel mj_objectWithKeyValues:data[@"guide"]];
+            
+            [self.header.imageView sd_setImageWithURL:[NSURL URLWithString:self.infoModel.coverPhotoUrl] placeholderImage:[UIImage imageNamed:@"bg2"]];
+            [self.header.headImageView sd_setImageWithURL:[NSURL URLWithString:self.infoModel.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+            self.header.nameLab.text = self.infoModel.realName;
+            
+//            self.curStatus = data[@"curIdMap"];
+//            [self.tableView reloadData];
+//            
+            XXLog(@"%@",self.infoModel);
+            XXLog(@"%@",data);
+            
+        }
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    
+ 
 }
 
 -(UIImage *)createImageWithColor: (UIColor *) color

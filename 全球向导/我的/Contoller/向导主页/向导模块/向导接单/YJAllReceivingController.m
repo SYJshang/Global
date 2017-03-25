@@ -356,6 +356,10 @@
                     break;
             }
 
+        }else{
+            
+            YJChatVC *vc = [[YJChatVC alloc]initWithConversationChatter:model.buyerId conversationType:EMConversationTypeChat];
+            [self.navigationController pushViewController:vc animated:YES];
         }
 }
 

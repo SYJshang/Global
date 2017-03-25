@@ -7,13 +7,12 @@
 //
 
 #import "YJOrderStateController.h"
-#import <WebKit/WebKit.h>
 
 
 
 
-@interface YJOrderStateController ()<WKNavigationDelegate>{
-    WKWebView *webView;
+@interface YJOrderStateController ()<UIWebViewDelegate>{
+    UIWebView *webView;
     
     UIActivityIndicatorView *activityIndicatorView;
     UIView *opaqueView;
@@ -31,37 +30,12 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
    
-    NSHTTPCookieStorage *myCookie = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-    for (NSHTTPCookie *cookie in [myCookie cookies]) {
-        NSLog(@"%@", cookie);
-        [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie]; // 保存
-    }
+      NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/userInfo/myOrder/viewOrderStatusPage/%@",BaseUrl,self.orderID]];
     
-//    // 定义 cookie 要设定的 host
-//    NSURL *cookieHost = [NSURL URLWithString:[NSString stringWithFormat:@"%@/mainApp/list",BaseUrl]];
-//    NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-//    for (NSHTTPCookie *cookie in [cookieJar cookies]) {
-//        NSLog(@"%@", cookie);
-//    }
-//    
-//    // 设定 cookie
-//    NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:
-//                            [NSDictionary dictionaryWithObjectsAndKeys:
-//                             [cookieHost host], NSHTTPCookieDomain,
-//                             [cookieHost path], NSHTTPCookiePath,
-//                             @"token",  NSHTTPCookieName,
-//                             @"3f84681-fe38-46a3-ad57-7a266d329ad8", NSHTTPCookieValue,
-//                             nil]];
-//    
-//    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
-    //加载网页的方式
-    
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/userInfo/myOrder/viewOrderStatusPage/%@",BaseUrl,self.orderID]];
-    
-    webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 40, screen_width, screen_height)];
+    webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 40, screen_width, screen_height)];
     [webView setUserInteractionEnabled:YES];//是否支持交互
     //[webView setDelegate:self];
-    webView.navigationDelegate = self;
+    webView.delegate = self;
     [webView setOpaque:NO];//opaque是不透明的意思
     //    [webView setScalesPageToFit:YES];//自动缩放以适应屏幕
     [self.view addSubview:webView];
@@ -81,56 +55,21 @@
     
 }
 
-- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
+
+- (void)webViewDidStartLoad:(UIWebView *)webView{
     [activityIndicatorView startAnimating];
     opaqueView.hidden = NO;
     
-}
-- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation {
-    
-    
     
 }
-- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView{
     
     [activityIndicatorView startAnimating];
     opaqueView.hidden = YES;
-}
-
-- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error{
-    
-    XXLog(@"error code ==  %ld",error.code);
-    if (error.code  == -999) {
-        return;
-    }
     
 }
-
-//UIWebView如何判断 HTTP 404 等错误
--(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
-    NSURL *url = [NSURL URLWithString:@"http://www.baidu.com"];
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    if ((([httpResponse statusCode]/100) == 2)) {
-        // self.earthquakeData = [NSMutableData data];
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-        
-        [ webView loadRequest:[ NSURLRequest requestWithURL: url]];
-        webView.navigationDelegate = self;
-    } else {
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObject:
-                                  NSLocalizedString(@"HTTP Error",
-                                                    @"Error message displayed when receving a connection error.")
-                                                             forKey:NSLocalizedDescriptionKey];
-        NSError *error = [NSError errorWithDomain:@"HTTP" code:[httpResponse statusCode] userInfo:userInfo];
-        
-        if ([error code] == 404) {
-            webView.hidden = YES;
-        }
-        
-    }
-}
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

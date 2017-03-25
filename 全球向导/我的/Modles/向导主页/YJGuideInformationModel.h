@@ -55,6 +55,8 @@
 //userId = 1;
 //version = "<null>";
 
+@property (nonatomic, strong) NSString *coverPhotoUrl;
+@property (nonatomic, strong) NSString *headUrl;
 
 /**
  真实姓名

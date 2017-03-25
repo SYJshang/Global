@@ -11,7 +11,6 @@
 #import "YJSecondCell.h"
 #import "YJThreeCell.h"
 #import "YJFourCell.h"
-#import "CLSeachBar.h"
 #import "FTPopOverMenu.h"
 #import "YJAreaMianVC.h"
 #import "NSObject+YJJsonOrModel.h"
@@ -23,6 +22,12 @@
 #import "YJBNetWorkNotifionTool.h"
 #import "YJLunboWebVC.h"
 #import "YJLocaController.h"
+#import "YJMoreUserShareVC.h"
+#import "YJMoreGuideVC.h"
+#import "YJGuideRecVC.h"
+#import "YJShareDetailVC.h"
+#import "YJGuideDetailVC.h"
+
 
 
 
@@ -68,74 +73,7 @@
 //    [self hsUpdateApp];
 }
 
-/**
- *  天朝专用检测app更新
- */
--(void)hsUpdateApp
-{
-    //2先获取当前工程项目版本号
-    NSDictionary *infoDic=[[NSBundle mainBundle] infoDictionary];
-    NSLog(@"%@",infoDic);
-    NSString *currentVersion=infoDic[@"CFBundleShortVersionString"];
-    
-    //3从网络获取appStore版本号
-    NSError *error;
-    NSData *response = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/cn/lookup?id=%@",STOREAPPID]]] returningResponse:nil error:nil];
-    if (response == nil) {
-        NSLog(@"你没有连接网络哦");
-        return;
-    }
-    NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:&error];
-    if (error) {
-        NSLog(@"hsUpdateAppError:%@",error);
-        return;
-    }
-    //    NSLog(@"%@",appInfoDic);
-    NSArray *array = appInfoDic[@"results"];
-    
-    if (array.count < 1) {
-        NSLog(@"此APPID为未上架的APP或者查询不到");
-        return;
-    }
-    
-    NSDictionary *dic = array[0];
-    NSString *appStoreVersion = dic[@"version"];
-    //打印版本号
-    NSLog(@"当前版本号:%@\n商店版本号:%@",currentVersion,appStoreVersion);
-    //设置版本号
-    currentVersion = [currentVersion stringByReplacingOccurrencesOfString:@"." withString:@""];
-    if (currentVersion.length==2) {
-        currentVersion  = [currentVersion stringByAppendingString:@"0"];
-    }else if (currentVersion.length==1){
-        currentVersion  = [currentVersion stringByAppendingString:@"00"];
-    }
-    appStoreVersion = [appStoreVersion stringByReplacingOccurrencesOfString:@"." withString:@""];
-    if (appStoreVersion.length==2) {
-        appStoreVersion  = [appStoreVersion stringByAppendingString:@"0"];
-    }else if (appStoreVersion.length==1){
-        appStoreVersion  = [appStoreVersion stringByAppendingString:@"00"];
-    }
-    
-    //4当前版本号小于商店版本号,就更新
-    if([currentVersion floatValue] < [appStoreVersion floatValue])
-    {
-        UIAlertController *alercConteoller = [UIAlertController alertControllerWithTitle:@"版本有更新" message:[NSString stringWithFormat:@"检测到新版本(%@),是否更新?",dic[@"version"]] preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            //此处加入应用在app store的地址，方便用户去更新，一种实现方式如下
-            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/us/app/id%@?ls=1&mt=8", STOREAPPID]];
-            [[UIApplication sharedApplication] openURL:url];
-        }];
-        UIAlertAction *actionNo = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            
-        }];
-        [alercConteoller addAction:actionYes];
-        [alercConteoller addAction:actionNo];
-        [self presentViewController:alercConteoller animated:YES completion:nil];
-    }else{
-        NSLog(@"版本号好像比商店大噢!检测到不需要更新");
-    }
-    
-}
+
 
 
 
@@ -147,7 +85,8 @@
 //    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
 
 
-   
+    self.automaticallyAdjustsScrollViewInsets = NO;
+
 
     NSString *str = [YJBNetWorkNotifionTool stringFormStutas];
     XXLog(@"%@",str);
@@ -186,10 +125,6 @@
     
     self.cityID = [[NSUserDefaults standardUserDefaults] objectForKey:@"city"];
     
-
-    //请求网络
-    [self getNetWork];
-    
 }
 
 - (void)setTable{
@@ -227,7 +162,7 @@
     [weakSelf.tableView.mj_header beginRefreshing];
     
     weakSelf.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        [self getNetWork];
+        [self getMoreData];
     }];
 //    weakSelf.tableView.mj_footer.hidden = YES;
 }
@@ -255,9 +190,7 @@
             [self.tableView reloadData];
             //获取完成数据之后结束刷新
             [self.tableView.mj_header endRefreshing];
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            self.tableView.mj_footer.hidden = YES;
-
+            [self.tableView.mj_footer endRefreshing];
 
         }else{
             
@@ -526,6 +459,26 @@
             
             XXLog(@"section >>>> %ld",section);
             
+            if (section == 1) {
+                
+                 [self.navigationController pushViewController:[YJMoreGuideVC new] animated:YES];
+               
+//            [self.navigationController pushViewController:[YJGuideController new] animated:YES];
+//#import "YJGuideRecommendController.h"
+//#import "YJVisitorRCController.h"
+                
+            }else if (section == 2){
+//                [self.navigationController pushViewController:[YJMoreGuideVC new] animated:YES];
+                
+            }else{
+                
+                [self.navigationController pushViewController:[YJMoreUserShareVC new] animated:YES];
+
+            }
+            
+            
+            
+            
         }];
 
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -616,6 +569,31 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     XXLog(@"当前组%ld 当前行%ld",indexPath.section,indexPath.row);
+    
+    if (indexPath.section == 1) {
+        YJGuideRecVC *vc = [[YJGuideRecVC alloc]init];
+        vc.ID = self.userModel.guideRec.ID;
+        [self.navigationController pushViewController:vc animated:YES];
+        
+    }else if (indexPath.section == 2){
+//        self.userModel.guide
+        
+       
+        
+        YJGuideDetailVC *vc = [[YJGuideDetailVC alloc]init];
+        YJGuideModel *guideModel = self.userModel.guide;
+        vc.guideId = guideModel.ID;
+        [self.navigationController pushViewController:vc animated:YES];
+
+        
+    }else if (indexPath.section == 3){
+        NSArray *shareList = self.userModel.userRecList;
+        YJNearbyModel *model = shareList[indexPath.row];
+        YJShareDetailVC *vc = [[YJShareDetailVC alloc]init];
+        vc.ID = model.ID;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
     
 }
 

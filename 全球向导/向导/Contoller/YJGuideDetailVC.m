@@ -16,8 +16,9 @@
 #import "YJServerModel.h"
 #import "YJEvaModel.h"
 #import "YJLoginFirstController.h"
-#import <UShareUI/UShareUI.h>
-
+#import "YJAllEveVC.h"
+#import "YJUserGuideCenterVC.h"
+#import "YJChatVC.h"
 
 
 @interface YJGuideDetailVC ()<UITableViewDelegate,UITableViewDataSource,IntroDetailDelegate>
@@ -36,6 +37,7 @@
 @property (nonatomic, strong) NSMutableArray *evaListArr;//评论
 
 @property (nonatomic, assign) int isCol; //是否收藏
+
 
 @end
 
@@ -80,6 +82,7 @@
     [self setBtn];
     //添加tableView
     [self setTableView];
+    [self getNetWork];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -120,6 +123,7 @@
     [guide_home setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [guide_home setTitle:@"向导主页" forState:UIControlStateNormal];
     [guide_home setImage:[UIImage imageNamed:@"guide_home"] forState:UIControlStateNormal];
+    [guide_home addTarget:self action:@selector(mainList) forControlEvents:UIControlEventTouchUpInside];
     
     
     YJButton *contact_guide = [[YJButton alloc]initWithFrame:CGRectMake(screen_width / 4, screen_height - 107, screen_width / 4, 43)];
@@ -128,6 +132,7 @@
     [contact_guide setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [contact_guide setTitle:@"联系向导" forState:UIControlStateNormal];
     [contact_guide setImage:[UIImage imageNamed:@"contact_guide"] forState:UIControlStateNormal];
+    [contact_guide addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *buy = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.view addSubview:buy];
@@ -139,11 +144,27 @@
     
 }
 
+- (void)call{
+    
+    YJChatVC *vc = [[YJChatVC alloc]initWithConversationChatter:@"24" conversationType:EMConversationTypeChat];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+
 - (void)action:(YJButton *)btn{
     
     YJOrderFormController *vc = [[YJOrderFormController alloc]init];
     vc.guideID = self.guideId;
     [self.navigationController pushViewController:vc animated:YES];
+    
+}
+
+- (void)mainList{
+    
+    YJUserGuideCenterVC *vc = [[YJUserGuideCenterVC alloc]init];
+    vc.ID = self.guideId;
+    [self.navigationController pushViewController:vc animated:YES];
+    
     
 }
 
@@ -474,9 +495,19 @@
     [WBHttpTool GET:[NSString stringWithFormat:@"%@/mainGuide/toView/%@",BaseUrl,self.guideId] parameters:nil success:^(id responseObject) {
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        
+        
+        
         if ([dict[@"code"] isEqualToString:@"1"]) {
             NSDictionary *data = dict[@"data"];
             self.guideModel = [YJGuideModel mj_objectWithKeyValues:data[@"guide"]];
+            
+            [self.bigImg sd_setImageWithURL:[NSURL URLWithString:self.guideModel.coverPhotoUrl] placeholderImage:[UIImage imageNamed:@"bg2"]];
+            self.name.text = self.guideModel.realName;
+            self.GuideType.text = self.guideModel.guideDesc;
+            [self.topView sd_setImageWithURL:[NSURL URLWithString:self.guideModel.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+
+            
             self.serverListArr = [YJServerModel mj_objectArrayWithKeyValuesArray:data[@"productList"]];
             self.evaListArr = [YJEvaModel mj_objectArrayWithKeyValuesArray:data[@"evaFinishList"]];
             NSString *iscol = data[@"isCol"];
@@ -617,7 +648,9 @@
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
             }
             YJDIYButton *btn = [YJDIYButton buttonWithtitle:@"查看更多评论" Block:^{
-                
+                YJAllEveVC *vc = [[YJAllEveVC alloc]init];
+                vc.ID = self.guideId;
+                [self.navigationController pushViewController:vc animated:YES];
                 XXLog(@"查看更多评论");
             }];
             [cell.contentView addSubview:btn];

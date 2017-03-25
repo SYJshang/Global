@@ -78,10 +78,6 @@
 }
 
 
-//- (void)reduceBtn:(UIButton *)sender{
-//    
-//    
-//}
 
 
 
