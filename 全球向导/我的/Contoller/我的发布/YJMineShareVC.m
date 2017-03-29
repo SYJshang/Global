@@ -56,14 +56,14 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.automaticallyAdjustsScrollViewInsets = YES;
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
-    self.navigationController.navigationBar.translucent = NO;
+//    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"我的发布" font:19.0];
+    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:YJLocalizedString(@"我的发布") font:19.0];
 }
 
 - (void)back{

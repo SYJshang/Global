@@ -36,7 +36,7 @@
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"我的评价" font:19.0];
+    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:YJLocalizedString(@"我的评价") font:19.0];
 }
 
 - (void)back{
@@ -57,7 +57,7 @@
     [self setupChildViewController];
     
     
-    self.titles = @[@"待评价", @"已评价"];
+    self.titles = @[YJLocalizedString(@"待评价"), YJLocalizedString(@"已评价")];
     self.topTitleView = [SGTopTitleView topTitleViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
     self.topTitleView.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1.0];
     self.topTitleView.titleAndIndicatorColor = TextColor;

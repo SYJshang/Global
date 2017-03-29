@@ -34,8 +34,9 @@
     
     self.titleArr = @[@"真实姓名",@"身份证验证",@"向导类型",@"生日",@"性别",@"目前身份"];
 
-    
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 44, screen_width, screen_height - 44) style:UITableViewStylePlain];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, screen_width, screen_height) style:UITableViewStylePlain];
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;

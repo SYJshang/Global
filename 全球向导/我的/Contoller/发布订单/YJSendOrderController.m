@@ -44,7 +44,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title= @"发布订单";
+    self.title= YJLocalizedString(@"发布订单");
     
     
 //    [self setLaoutView];
@@ -184,7 +184,7 @@
         
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [cell addSubview:btn];
-        [btn setTitle:@"发布" forState:UIControlStateNormal];
+        [btn setTitle:YJLocalizedString(@"发布") forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(sendOder) forControlEvents:UIControlEventTouchUpInside];
         btn.backgroundColor = TextColor;

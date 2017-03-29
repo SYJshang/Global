@@ -34,7 +34,7 @@
         self.publishImg.sd_layout.centerXEqualToView(view1).centerYEqualToView(view1).widthIs(50 * KWidth_Scale).heightIs(KWidth_Scale * 50).topSpaceToView(view1,15);
         
         self.publishLab = [[UILabel alloc]init];
-        self.publishLab.text = @"发布";
+        self.publishLab.text = YJLocalizedString(@"发布");
         self.publishLab.textColor = [UIColor grayColor];
         self.publishLab.font = [UIFont systemFontOfSize:14.0];
         self.publishLab.textAlignment = NSTextAlignmentCenter;
@@ -63,7 +63,7 @@
         self.collectImg.sd_layout.centerXEqualToView(view1).centerYEqualToView(view1).widthIs(KWidth_Scale * 50).heightIs(KWidth_Scale * 50).topSpaceToView(view2,15);
         
         self.collectLab = [[UILabel alloc]init];
-        self.collectLab.text = @"收藏";
+        self.collectLab.text = YJLocalizedString(@"收藏");
         self.collectLab.textColor = [UIColor grayColor];
         self.collectLab.font = [UIFont systemFontOfSize:14.0];
         self.collectLab.textAlignment = NSTextAlignmentCenter;

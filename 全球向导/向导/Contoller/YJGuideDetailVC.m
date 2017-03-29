@@ -71,13 +71,13 @@
     self.isOpen = YES;
     
     self.view.backgroundColor = BackGray;
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.automaticallyAdjustsScrollViewInsets = YES;
     
-    self.navigationController.navigationBar.translucent = NO;
+//    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"向导类型" font:19.0];
+    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:YJLocalizedString(@"向导类型") font:19.0];
 
     [self setBtn];
     //添加tableView
@@ -88,7 +88,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+//    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 
@@ -111,34 +111,34 @@
     
     UIView *view = [[UIView alloc]init];
     [self.view addSubview:view];
-    view.frame = CGRectMake(0, screen_height - 108, screen_width, 1);
+    view.frame = CGRectMake(0, screen_height - 44, screen_width, 1);
     view.backgroundColor = BackGray;
     
     
     
     
-    YJButton *guide_home = [[YJButton alloc]initWithFrame:CGRectMake(0, screen_height - 107, screen_width / 4, 43)];
+    YJButton *guide_home = [[YJButton alloc]initWithFrame:CGRectMake(0, screen_height - 44, screen_width / 4, 43)];
     [self.view addSubview:guide_home];
     [guide_home setBackgroundColor:[UIColor whiteColor]];
     [guide_home setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [guide_home setTitle:@"向导主页" forState:UIControlStateNormal];
+    [guide_home setTitle:YJLocalizedString(@"向导主页") forState:UIControlStateNormal];
     [guide_home setImage:[UIImage imageNamed:@"guide_home"] forState:UIControlStateNormal];
     [guide_home addTarget:self action:@selector(mainList) forControlEvents:UIControlEventTouchUpInside];
     
     
-    YJButton *contact_guide = [[YJButton alloc]initWithFrame:CGRectMake(screen_width / 4, screen_height - 107, screen_width / 4, 43)];
+    YJButton *contact_guide = [[YJButton alloc]initWithFrame:CGRectMake(screen_width / 4, screen_height - 44, screen_width / 4, 43)];
     [self.view addSubview:contact_guide];
     [contact_guide setBackgroundColor:[UIColor whiteColor]];
     [contact_guide setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [contact_guide setTitle:@"联系向导" forState:UIControlStateNormal];
+    [contact_guide setTitle:YJLocalizedString(@"联系向导") forState:UIControlStateNormal];
     [contact_guide setImage:[UIImage imageNamed:@"contact_guide"] forState:UIControlStateNormal];
     [contact_guide addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *buy = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.view addSubview:buy];
-    buy.frame = CGRectMake(screen_width / 2, screen_height - 107, screen_width - screen_width / 2, 43);
+    buy.frame = CGRectMake(screen_width / 2, screen_height - 44, screen_width - screen_width / 2, 43);
     buy.backgroundColor = TextColor;
-    [buy setTitle:@"付款" forState:UIControlStateNormal];
+    [buy setTitle:YJLocalizedString(@"付款") forState:UIControlStateNormal];
     [buy addTarget:self action:@selector(action:) forControlEvents:UIControlEventTouchUpInside];
     [buy setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
@@ -171,11 +171,10 @@
 
 - (void)setTableView{
     
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height - 108) style:UITableViewStyleGrouped];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, screen_width, screen_height - 108) style:UITableViewStyleGrouped];
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.automaticallyAdjustsScrollViewInsets = NO; //默认是YES
     self.tableView.tableFooterView = [UIView new];
 
 
@@ -360,7 +359,7 @@
     
     
     //收藏
-    self.collectBtn = [YJDIYButton buttonWithFrame:CGRectMake(0, 0, 0, 0) title:@"收藏" imageName:@"coliectionNoraml" Block:^{
+    self.collectBtn = [YJDIYButton buttonWithFrame:CGRectMake(0, 0, 0, 0) title:YJLocalizedString(@"收藏") imageName:@"coliectionNoraml" Block:^{
         if (self.collectBtn.selected == NO) {
             //点击收藏
             NSMutableDictionary *parmeter = [NSMutableDictionary dictionary];
@@ -557,11 +556,11 @@
     label.textColor = [UIColor blackColor];
     label.font = [UIFont systemFontOfSize:AdaptedWidth(15)];
     if (section == 0) {
-        label.text = @"向导简介";
+        label.text = YJLocalizedString(@"向导简介");
     }else if (section == 1){
-        label.text = @"提供服务项";
+        label.text = YJLocalizedString(@"提供服务项");
     }else if (section == 2){
-        label.text = @"游客评论";
+        label.text =YJLocalizedString(@"游客评论");
     }
     [view addSubview:label];
     return view;

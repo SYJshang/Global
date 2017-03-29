@@ -54,7 +54,7 @@
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"向导推荐" font:AdaptedWidth(19)];
+    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:YJLocalizedString(@"向导推荐") font:AdaptedWidth(19)];
 }
 
 - (void)back{

@@ -81,10 +81,10 @@
     NSUserDefaults *defults = [NSUserDefaults standardUserDefaults];
     self.cityId = [defults objectForKey:@"city"];
     
-    self.navigationController.navigationBar.translucent = NO;
+//    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.view.backgroundColor = BackGray;
-    self.navigationItem.titleView = [UILabel titleWithColor:TextColor title:@"向导" font:AdaptedWidth(19.0)];
+    self.navigationItem.titleView = [UILabel titleWithColor:TextColor title:YJLocalizedString(@"向导") font:AdaptedWidth(19.0)];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setImage:[UIImage imageNamed:@"screening"] forState:UIControlStateNormal];
     btn.frame = CGRectMake(0, 10, 22, 22);
@@ -198,7 +198,7 @@
     
     
     //创建collectionView
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, screen_width,screen_height - 64) collectionViewLayout:waterfall];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, screen_width,screen_height) collectionViewLayout:waterfall];
     self.collectionView.contentInset = UIEdgeInsetsMake(150, 0, 0, 0);
     
     self.cityImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"nearby"]];
@@ -232,7 +232,7 @@
     NSMutableDictionary *parametr = [NSMutableDictionary dictionary];
     
     if (self.cityId) {
-        [parametr setObject:@"1073" forKey:@"cityId"];
+        [parametr setObject:self.cityId forKey:@"cityId"];
     }
     if (self.priceRange && ![self.priceRange isEqualToString:@"默认"] && ![self.priceRange isEqualToString:@"10000000"]) {
         [parametr setObject:self.priceRange forKey:@"priceRange"];

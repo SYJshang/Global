@@ -23,7 +23,7 @@
         self.icon.layer.borderWidth = 1;
         
         self.payName = [[UILabel alloc]init];
-        self.payName.text = @"微信支付";
+        self.payName.text = YJLocalizedString(@"微信");
         self.payName.textColor = [UIColor blackColor];
         self.payName.font = [UIFont systemFontOfSize:AdaptedWidth(14)];
         [self.contentView addSubview:self.payName];

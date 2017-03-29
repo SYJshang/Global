@@ -116,7 +116,7 @@
     
     self.price.attributedText = AttributedStr;
     
-    self.num.text = [NSString stringWithFormat:@"收藏数 %ld",model.colNumber];
+    self.num.text = [NSString stringWithFormat:@"%@ %ld",YJLocalizedString(@"收藏"),model.colNumber];
 
 }
 

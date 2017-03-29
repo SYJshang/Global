@@ -250,7 +250,12 @@
     self.icon.sd_layout.rightSpaceToView(self.view,20).bottomEqualToView(self.iconCode).widthIs(80).heightIs(30 * KHeight_Scale);
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(refuseIcon)];
     [self.icon addGestureRecognizer:tap];
-    [WBHttpTool GET:[NSString stringWithFormat:@"%@/verifyCode/create",BaseUrl] parameters:nil success:^(id responseObject) {
+    
+    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+    NSString *deviceId = [KeychainIDFA IDFA];
+    [parameter setObject:deviceId forKey:@"deviceId"];
+    
+    [WBHttpTool GET:[NSString stringWithFormat:@"%@/verify/create",BaseUrl] parameters:parameter success:^(id responseObject) {
         self.icon.image = [[UIImage alloc]initWithData:responseObject];
         XXLog(@"成功");
     } failure:^(NSError *error) {
@@ -323,8 +328,13 @@
 //刷新图片验证码
 - (void)refuseIcon{
     
-    [WBHttpTool GET:[NSString stringWithFormat:@"%@/verifyCode/create",BaseUrl] parameters:nil success:^(id responseObject) {
+    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+    NSString *deviceId = [KeychainIDFA IDFA];
+    [parameter setObject:deviceId forKey:@"deviceId"];
+    
+    [WBHttpTool GET:[NSString stringWithFormat:@"%@/verify/create",BaseUrl] parameters:parameter success:^(id responseObject) {
         self.icon.image = [[UIImage alloc]initWithData:responseObject];
+        XXLog(@"成功");
     } failure:^(NSError *error) {
         SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"请求失败，请检查网络等原因！" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
         }];
@@ -332,6 +342,7 @@
         [alertV show];
         XXLog(@"失败");
     }];
+    
 }
 
 - (void)login{
@@ -346,7 +357,7 @@
         NSString *deviceId = [KeychainIDFA IDFA];
         [parameter setObject:deviceId forKey:@"deviceId"];
         XXLog(@"%@",parameter);
-        NSString *url = [NSString stringWithFormat:@"%@/loginProcess",BaseUrl];
+        NSString *url = [NSString stringWithFormat:@"%@/user/loginProcess",BaseUrl];
         
         XXLog(@"%@",url);
         
@@ -392,8 +403,13 @@
                 alertV.sure_btnTitleColor = TextColor;
                 [alertV show];
 
-                [WBHttpTool GET:[NSString stringWithFormat:@"%@/verifyCode/create",BaseUrl] parameters:nil success:^(id responseObject) {
+                NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+                NSString *deviceId = [KeychainIDFA IDFA];
+                [parameter setObject:deviceId forKey:@"deviceId"];
+                
+                [WBHttpTool GET:[NSString stringWithFormat:@"%@/verify/create",BaseUrl] parameters:parameter success:^(id responseObject) {
                     self.icon.image = [[UIImage alloc]initWithData:responseObject];
+                    XXLog(@"成功");
                 } failure:^(NSError *error) {
                     SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"请求失败，请检查网络等原因！" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
                     }];
@@ -401,6 +417,7 @@
                     [alertV show];
                     XXLog(@"失败");
                 }];
+                
             }
             
         } failure:^(NSError *error) {
@@ -419,17 +436,21 @@
         alertV.sure_btnTitleColor = TextColor;
         [alertV show];
         
-        [WBHttpTool GET:[NSString stringWithFormat:@"%@/verifyCode/create",BaseUrl] parameters:nil success:^(id responseObject) {
+        NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+        NSString *deviceId = [KeychainIDFA IDFA];
+        [parameter setObject:deviceId forKey:@"deviceId"];
+        
+        [WBHttpTool GET:[NSString stringWithFormat:@"%@/verify/create",BaseUrl] parameters:parameter success:^(id responseObject) {
             self.icon.image = [[UIImage alloc]initWithData:responseObject];
-            
+            XXLog(@"成功");
         } failure:^(NSError *error) {
-            
-            XXLog(@"失败");
             SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"请求失败，请检查网络等原因！" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
             }];
             alertV.sure_btnTitleColor = TextColor;
             [alertV show];
+            XXLog(@"失败");
         }];
+        
     }
     
 }

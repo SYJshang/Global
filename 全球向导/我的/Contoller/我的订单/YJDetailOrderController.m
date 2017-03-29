@@ -82,7 +82,7 @@
     [self.view addSubview:guide_home];
     [guide_home setBackgroundColor:[UIColor whiteColor]];
     [guide_home setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [guide_home setTitle:@"向导主页" forState:UIControlStateNormal];
+    [guide_home setTitle:YJLocalizedString(@"向导主页") forState:UIControlStateNormal];
     [guide_home setImage:[UIImage imageNamed:@"guide_home"] forState:UIControlStateNormal];
     
     
@@ -90,14 +90,14 @@
     [self.view addSubview:contact_guide];
     [contact_guide setBackgroundColor:[UIColor whiteColor]];
     [contact_guide setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [contact_guide setTitle:@"联系向导" forState:UIControlStateNormal];
+    [contact_guide setTitle:YJLocalizedString(@"联系向导") forState:UIControlStateNormal];
     [contact_guide setImage:[UIImage imageNamed:@"contact_guide"] forState:UIControlStateNormal];
     
     UIButton *buy = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.view addSubview:buy];
     buy.frame = CGRectMake(160 * KWidth_Scale, screen_height - 103, screen_width - (160 * KWidth_Scale), 39);
     buy.backgroundColor = TextColor;
-    [buy setTitle:@"付款" forState:UIControlStateNormal];
+    [buy setTitle:YJLocalizedString(@"付款") forState:UIControlStateNormal];
     [buy setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
 }

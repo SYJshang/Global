@@ -63,7 +63,7 @@
     self.title.text = shareList.bigTitle;
     self.descTitle.text = shareList.smallTitle;
     [self.imageV sd_setImageWithURL:[NSURL URLWithString:shareList.coverPicUrl] placeholderImage:[UIImage imageNamed:@"bg2"]];
-    self.num.text = [NSString stringWithFormat:@"收藏数:%ld",(long)shareList.colNumber];
+    self.num.text = [NSString stringWithFormat:@"%@:%ld",YJLocalizedString(@"收藏"),(long)shareList.colNumber];
 }
 
 - (void)awakeFromNib {

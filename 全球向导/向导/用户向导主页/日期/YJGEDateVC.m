@@ -30,6 +30,7 @@
     
    
 
+    self.automaticallyAdjustsScrollViewInsets = NO;
 
     
     //加载日期布局

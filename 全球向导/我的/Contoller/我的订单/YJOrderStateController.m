@@ -7,6 +7,7 @@
 //
 
 #import "YJOrderStateController.h"
+#import "YJLoginFirstController.h"
 
 
 
@@ -37,7 +38,7 @@
     //[webView setDelegate:self];
     webView.delegate = self;
     [webView setOpaque:NO];//opaque是不透明的意思
-    //    [webView setScalesPageToFit:YES];//自动缩放以适应屏幕
+    [webView setScalesPageToFit:YES];//自动缩放以适应屏幕
     [self.view addSubview:webView];
     //1.创建并加载远程网页
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -71,10 +72,31 @@
     
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+    NSString * requestString = request.URL.absoluteString;
+    NSLog(@"请求的地址：%@",requestString);
+    if ([requestString containsString:@"http://www.globaleguide.com"]){
+        
+        [self.navigationController setNavigationBarHidden:NO animated:NO];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        
+    }else if ([requestString containsString:@"http://globaleguide.com:8080/user/login"]){
+        
+        SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"未登录" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            
+            [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+            
+        }];
+        alert.sure_btnTitleColor = TextColor;
+        [alert show];
+    }
+    
+    return YES;
 }
+
+
+
+
 
 /*
 #pragma mark - Navigation

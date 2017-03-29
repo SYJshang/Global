@@ -34,7 +34,7 @@
     
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"订单" font:19.0];
+    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:YJLocalizedString(@"订单详情") font:19.0];
     UIBarButtonItem * leftItem = [UIBarButtonItem itemWithTarget:self action:@selector(back) image:@"back" highImage:@"back"];
     self.navigationItem.leftBarButtonItem = leftItem;
 }
@@ -51,7 +51,7 @@
     // 1.添加所有子控制器
     [self setupChildViewController];
     
-    self.titles = @[@"订单状态", @"订单详情"];
+    self.titles = @[YJLocalizedString(@"订单状态"), YJLocalizedString(@"订单详情")];
     // , @"NBA", @"新闻", @"娱乐", @"音乐", @"网络电影"
     self.topTitleView = [SGTopTitleView topTitleViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
     self.topTitleView.backgroundColor = BackGray;

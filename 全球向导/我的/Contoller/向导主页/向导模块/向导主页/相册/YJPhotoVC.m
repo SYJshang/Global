@@ -202,7 +202,7 @@
 
 -(NSString *)segmentTitle
 {
-    return @"相册";
+    return YJLocalizedString(@"向导相册");
 }
 
 -(UIScrollView *)streachScrollView

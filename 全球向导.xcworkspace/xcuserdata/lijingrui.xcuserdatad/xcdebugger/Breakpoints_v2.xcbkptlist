@@ -26,7 +26,7 @@
                   moduleName = "&#x5168;&#x7403;&#x5411;&#x5bfc;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/lijingrui/Desktop/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC1/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC/%E5%90%91%E5%AF%BC/Contoller/YJGuideController.m"
-                  timestampString = "512111883.324791"
+                  timestampString = "512474336.617494"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "280"
@@ -41,7 +41,7 @@
                   moduleName = "&#x5168;&#x7403;&#x5411;&#x5bfc;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/lijingrui/Desktop/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC1/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC/%E5%90%91%E5%AF%BC/Contoller/YJGuideController.m"
-                  timestampString = "512111883.327945"
+                  timestampString = "512474336.619878"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "281"
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/&#x767b;&#x5f55;&#x6ce8;&#x518c;/YJRegsiterController.m"
-            timestampString = "512031141.952889"
+            timestampString = "512463403.932863"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "640"
-            endingLineNumber = "640"
+            startingLineNumber = "641"
+            endingLineNumber = "641"
             landmarkName = "-getNum:"
             landmarkType = "7">
             <Locations>
@@ -74,26 +74,26 @@
                   moduleName = "&#x5168;&#x7403;&#x5411;&#x5bfc;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/lijingrui/Desktop/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC1/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC/%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C/YJRegsiterController.m"
-                  timestampString = "512111883.334226"
+                  timestampString = "512474336.626832"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "640"
-                  endingLineNumber = "640"
+                  startingLineNumber = "641"
+                  endingLineNumber = "641"
                   offsetFromSymbolStart = "1144">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__31-[YJRegsiterController getNum:]_block_invoke_3.436"
+                  symbolName = "__31-[YJRegsiterController getNum:]_block_invoke_3.441"
                   moduleName = "&#x5168;&#x7403;&#x5411;&#x5bfc;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/lijingrui/Desktop/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC1/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC/%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C/YJRegsiterController.m"
-                  timestampString = "512111883.336172"
+                  timestampString = "512474336.629746"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "641"
-                  endingLineNumber = "641"
+                  startingLineNumber = "642"
+                  endingLineNumber = "642"
                   offsetFromSymbolStart = "56">
                </Location>
             </Locations>
@@ -106,107 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/&#x767b;&#x5f55;&#x6ce8;&#x518c;/YJRegsiterController.m"
-            timestampString = "512031141.952889"
+            timestampString = "512463403.932863"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "626"
-            endingLineNumber = "626"
-            landmarkName = "-getNum:"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__31-[YJRegsiterController getNum:]_block_invoke.428"
-                  moduleName = "&#x5168;&#x7403;&#x5411;&#x5bfc;"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lijingrui/Desktop/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC1/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC/%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C/YJRegsiterController.m"
-                  timestampString = "512111883.341012"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "626"
-                  endingLineNumber = "626"
-                  offsetFromSymbolStart = "70">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__31-[YJRegsiterController getNum:]_block_invoke_2.429"
-                  moduleName = "&#x5168;&#x7403;&#x5411;&#x5bfc;"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lijingrui/Desktop/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC1/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC/%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C/YJRegsiterController.m"
-                  timestampString = "512111883.343478"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "628"
-                  endingLineNumber = "628"
-                  offsetFromSymbolStart = "64">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/&#x767b;&#x5f55;&#x6ce8;&#x518c;/YJRegsiterController.m"
-            timestampString = "512031141.952889"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "612"
-            endingLineNumber = "612"
-            landmarkName = "-getNum:"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__31-[YJRegsiterController getNum:]_block_invoke.419"
-                  moduleName = "&#x5168;&#x7403;&#x5411;&#x5bfc;"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lijingrui/Desktop/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC1/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC/%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C/YJRegsiterController.m"
-                  timestampString = "512111883.34863"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "612"
-                  endingLineNumber = "612"
-                  offsetFromSymbolStart = "70">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__31-[YJRegsiterController getNum:]_block_invoke_2.420"
-                  moduleName = "&#x5168;&#x7403;&#x5411;&#x5bfc;"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lijingrui/Desktop/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC1/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC/%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C/YJRegsiterController.m"
-                  timestampString = "512111883.350833"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "614"
-                  endingLineNumber = "614"
-                  offsetFromSymbolStart = "64">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/&#x767b;&#x5f55;&#x6ce8;&#x518c;/YJRegsiterController.m"
-            timestampString = "512031141.952889"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "583"
-            endingLineNumber = "583"
+            startingLineNumber = "586"
+            endingLineNumber = "586"
             landmarkName = "-getNum:"
             landmarkType = "7">
             <Locations>
@@ -218,12 +122,12 @@
                   moduleName = "&#x5168;&#x7403;&#x5411;&#x5bfc;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/lijingrui/Desktop/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC1/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC/%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C/YJRegsiterController.m"
-                  timestampString = "512111883.356274"
+                  timestampString = "512474336.63556"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "583"
-                  endingLineNumber = "583"
-                  offsetFromSymbolStart = "236">
+                  startingLineNumber = "586"
+                  endingLineNumber = "586"
+                  offsetFromSymbolStart = "242">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -233,11 +137,11 @@
                   moduleName = "&#x5168;&#x7403;&#x5411;&#x5bfc;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/lijingrui/Desktop/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC1/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC/%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C/YJRegsiterController.m"
-                  timestampString = "512111883.358169"
+                  timestampString = "512474336.638525"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "584"
-                  endingLineNumber = "584"
+                  startingLineNumber = "587"
+                  endingLineNumber = "587"
                   offsetFromSymbolStart = "56">
                </Location>
             </Locations>
@@ -256,22 +160,6 @@
             startingLineNumber = "305"
             endingLineNumber = "305"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/&#x6211;&#x7684;/Contoller/&#x53d1;&#x5e03;&#x884c;&#x7a0b;/YJTravelController.m"
-            timestampString = "512111758.104766"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
-            landmarkName = "-viewDidLoad"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

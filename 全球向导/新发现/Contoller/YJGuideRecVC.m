@@ -37,11 +37,7 @@
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     
-//    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [btn setImage:[UIImage imageNamed:@"coliectionNoraml"] forState:UIControlStateNormal];
-//    btn.frame = CGRectMake(0, 10, 22, 22);
-//    [btn addTarget:self action:@selector(collect:) forControlEvents:UIControlEventTouchUpInside];
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
+
     
     
     
@@ -66,7 +62,7 @@
     
     
     
-    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"向导分享" font:19.0];
+    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:YJLocalizedString(@"向导分享") font:19.0];
 }
 
 - (void)back{
@@ -75,6 +71,122 @@
     
 }
 
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.title = @"详情";
+    // Do any additional setup after loading the view.
+    webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
+    [webView setUserInteractionEnabled:YES];//是否支持交互
+    //[webView setDelegate:self];
+    webView.delegate = self;
+    [webView setOpaque:NO];//opaque是不透明的意思
+    [webView setScalesPageToFit:YES];//自动缩放以适应屏幕
+    [self.view addSubview:webView];
+    
+    //加载网页的方式
+    //1.创建并加载远程网页
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/mainGuideRec/toViewPage/%@",BaseUrl,self.ID]];
+    [webView loadRequest:[NSURLRequest requestWithURL:url]];
+    
+    opaqueView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
+    activityIndicatorView = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
+    [activityIndicatorView setCenter:opaqueView.center];
+    [activityIndicatorView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
+    [opaqueView setBackgroundColor:[UIColor blackColor]];
+    [opaqueView setAlpha:0.6];
+    [self.view addSubview:opaqueView];
+    [opaqueView addSubview:activityIndicatorView];
+    
+    [self getNetWork];
+    
+    // Do any additional setup after loading the view.
+}
+
+
+- (void)getNetWork{
+    
+    [WBHttpTool GET:[NSString stringWithFormat:@"%@/mainGuideRec/toView/%@",BaseUrl,self.ID] parameters:nil success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        
+        XXLog(@"%@",dict);
+        
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            
+            
+            NSString *col = [NSString stringWithFormat:@"%@",dict[@"data"][@"isCol"]];
+            XXLog(@"收藏状态%@",col);
+            
+            if ([col isEqualToString:@"0"]) {
+                
+                [colBtn setImage:[UIImage imageNamed:@"coliectionNoraml"] forState:UIControlStateNormal];
+                colBtn.selected = NO;
+                
+            }else{
+                [colBtn setImage:[UIImage imageNamed:@"collect-select"] forState:UIControlStateNormal];
+                colBtn.selected = YES;
+            }
+            
+            
+        }else{
+            
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
+            
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    
+}
+
+
+- (void)webViewDidStartLoad:(UIWebView *)webView{
+    
+    [activityIndicatorView startAnimating];
+    opaqueView.hidden = NO;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView{
+    
+    [activityIndicatorView startAnimating];
+    opaqueView.hidden = YES;
+}
+
+
+//UIWebView如何判断 HTTP 404 等错误
+-(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
+    NSURL *url = [NSURL URLWithString:@"http://www.baidu.com"];
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+    if ((([httpResponse statusCode]/100) == 2)) {
+        // self.earthquakeData = [NSMutableData data];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        
+        [ webView loadRequest:[ NSURLRequest requestWithURL: url]];
+        webView.delegate = self;
+    } else {
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObject:
+                                  NSLocalizedString(@"HTTP Error",
+                                                    @"Error message displayed when receving a connection error.")
+                                                             forKey:NSLocalizedDescriptionKey];
+        NSError *error = [NSError errorWithDomain:@"HTTP" code:[httpResponse statusCode] userInfo:userInfo];
+        
+        if ([error code] == 404) {
+            webView.hidden = YES;
+        }
+        
+    }
+}
+
+
+
 - (void)share:(UIButton *)btn{
     
     XXLog(@"分享");
@@ -82,19 +194,76 @@
     
 }
 
-- (void)showBottomCircleView
+
+- (void)shareWebPageToPlatformType:(UMSocialPlatformType)platformType
 {
-    [UMSocialUIManager removeAllCustomPlatformWithoutFilted];
-    [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewPostionType = UMSocialSharePageGroupViewPositionType_Bottom;
-    [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageItemStyleType = UMSocialPlatformItemViewBackgroudType_IconAndBGRadius;
+    //创建分享消息对象
+    UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+    
+    //创建网页内容对象
+    NSString* thumbURL =  @"https://mobile.umeng.com/images/pic/home/social/img-1.png";
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"全球向导分享" descr:@"欢迎查看全球向导分享内容" thumImage:thumbURL];
+    //设置网页地址
+    shareObject.webpageUrl = [NSString stringWithFormat:@"%@/mainGuideRec/toViewPage/%@",BaseUrl,self.ID];
+    
+    //分享消息对象设置分享内容对象
+    messageObject.shareObject = shareObject;
+    
 #ifdef UM_Swift
-    [UMSocialSwiftInterface showShareMenuViewInWindowWithPlatformSelectionBlockWithSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary* userInfo) {
+    [UMSocialSwiftInterface shareWithPlattype:platformType messageObject:messageObject viewController:self completion:^(UMSocialShareResponse * data, NSError * error) {
 #else
-        [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+        //调用分享接口
+        [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
 #endif
-            [self shareWebPageToPlatformType:platformType];
+            if (error) {
+                UMSocialLogInfo(@"************Share fail with error %@*********",error);
+            }else{
+                if ([data isKindOfClass:[UMSocialShareResponse class]]) {
+                    UMSocialShareResponse *resp = data;
+                    //分享结果消息
+                    UMSocialLogInfo(@"response message is %@",resp.message);
+                    //第三方原始返回的数据
+                    UMSocialLogInfo(@"response originalResponse data is %@",resp.originalResponse);
+                    
+                }else{
+                    UMSocialLogInfo(@"response data is %@",data);
+                }
+            }
+            [self alertWithError:error];
         }];
     }
+     
+ - (void)alertWithError:(NSError *)error
+ {
+     NSString *result = nil;
+     if (!error) {
+         result = [NSString stringWithFormat:@"Share succeed"];
+     }
+     else{
+         NSMutableString *str = [NSMutableString string];
+         if (error.userInfo) {
+             for (NSString *key in error.userInfo) {
+                 [str appendFormat:@"%@ = %@\n", key, error.userInfo[key]];
+             }
+         }
+         if (error) {
+             result = [NSString stringWithFormat:@"Share fail with error code: %d\n%@",(int)error.code, str];
+         }
+         else{
+             result = [NSString stringWithFormat:@"Share fail"];
+         }
+     }
+     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"share"
+                                                     message:result
+                                                    delegate:nil
+                                           cancelButtonTitle:NSLocalizedString(@"sure", @"确定")
+                                           otherButtonTitles:nil];
+     [alert show];
+ }
+     
+     
+     
+
 
 
 - (void)collect:(UIButton *)btn{
@@ -169,7 +338,7 @@
                 
             }else{
                 SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
-                 
+                    
                 }];
                 alert.sure_btnTitleColor = TextColor;
                 [alert show];
@@ -183,192 +352,32 @@
         
         
     }
-
+    
     
     
     
 }
 
 
-- (void)shareWebPageToPlatformType:(UMSocialPlatformType)platformType
+
+- (void)showBottomCircleView
 {
-    //创建分享消息对象
-    UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
-    
-    //创建网页内容对象
-    NSString* thumbURL =  @"https://mobile.umeng.com/images/pic/home/social/img-1.png";
-    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"全球向导分享" descr:@"欢迎查看全球向导分享内容" thumImage:thumbURL];
-    //设置网页地址
-    shareObject.webpageUrl = [NSString stringWithFormat:@"%@/mainGuideRec/toViewPage/%@",BaseUrl,self.ID];
-    
-    //分享消息对象设置分享内容对象
-    messageObject.shareObject = shareObject;
-    
+    [UMSocialUIManager removeAllCustomPlatformWithoutFilted];
+    [UMSocialShareUIConfig shareInstance].sharePageGroupViewConfig.sharePageGroupViewPostionType = UMSocialSharePageGroupViewPositionType_Bottom;
+    [UMSocialShareUIConfig shareInstance].sharePageScrollViewConfig.shareScrollViewPageItemStyleType = UMSocialPlatformItemViewBackgroudType_IconAndBGRadius;
 #ifdef UM_Swift
-    [UMSocialSwiftInterface shareWithPlattype:platformType messageObject:messageObject viewController:self completion:^(UMSocialShareResponse * data, NSError * error) {
+    [UMSocialSwiftInterface showShareMenuViewInWindowWithPlatformSelectionBlockWithSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary* userInfo) {
 #else
-        //调用分享接口
-        [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
+        [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
 #endif
-            if (error) {
-                UMSocialLogInfo(@"************Share fail with error %@*********",error);
-            }else{
-                if ([data isKindOfClass:[UMSocialShareResponse class]]) {
-                    UMSocialShareResponse *resp = data;
-                    //分享结果消息
-                    UMSocialLogInfo(@"response message is %@",resp.message);
-                    //第三方原始返回的数据
-                    UMSocialLogInfo(@"response originalResponse data is %@",resp.originalResponse);
-                    
-                }else{
-                    UMSocialLogInfo(@"response data is %@",data);
-                }
-            }
-            [self alertWithError:error];
+            [self shareWebPageToPlatformType:platformType];
         }];
     }
 
- - (void)alertWithError:(NSError *)error
-{
-    NSString *result = nil;
-    if (!error) {
-        result = [NSString stringWithFormat:@"Share succeed"];
-    }
-    else{
-        NSMutableString *str = [NSMutableString string];
-        if (error.userInfo) {
-            for (NSString *key in error.userInfo) {
-                [str appendFormat:@"%@ = %@\n", key, error.userInfo[key]];
-            }
-        }
-        if (error) {
-            result = [NSString stringWithFormat:@"Share fail with error code: %d\n%@",(int)error.code, str];
-        }
-        else{
-            result = [NSString stringWithFormat:@"Share fail"];
-        }
-    }
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"share"
-                                                    message:result
-                                                   delegate:nil
-                                          cancelButtonTitle:NSLocalizedString(@"sure", @"确定")
-                                          otherButtonTitles:nil];
-    [alert show];
-}
+
+     
  
 
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    self.title = @"详情";
-    // Do any additional setup after loading the view.
-    webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
-    [webView setUserInteractionEnabled:YES];//是否支持交互
-    //[webView setDelegate:self];
-    webView.delegate = self;
-    [webView setOpaque:NO];//opaque是不透明的意思
-    [webView setScalesPageToFit:YES];//自动缩放以适应屏幕
-    [self.view addSubview:webView];
-    
-    //加载网页的方式
-    //1.创建并加载远程网页
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/mainGuideRec/toViewPage/%@",BaseUrl,self.ID]];
-    [webView loadRequest:[NSURLRequest requestWithURL:url]];
-       
-    opaqueView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
-    activityIndicatorView = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
-    [activityIndicatorView setCenter:opaqueView.center];
-    [activityIndicatorView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
-    [opaqueView setBackgroundColor:[UIColor blackColor]];
-    [opaqueView setAlpha:0.6];
-    [self.view addSubview:opaqueView];
-    [opaqueView addSubview:activityIndicatorView];
-    
-    [self getNetWork];
-    
-    // Do any additional setup after loading the view.
-}
-
-- (void)getNetWork{
-    
-    [WBHttpTool GET:[NSString stringWithFormat:@"%@/mainGuideRec/toView/%@",BaseUrl,self.ID] parameters:nil success:^(id responseObject) {
-        
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-        
-        XXLog(@"%@",dict);
-        
-        if ([dict[@"code"] isEqualToString:@"1"]) {
-            
-            
-            NSString *col = [NSString stringWithFormat:@"%@",dict[@"data"][@"isCol"]];
-            XXLog(@"收藏状态%@",col);
-            
-            if ([col isEqualToString:@"0"]) {
-                
-                [colBtn setImage:[UIImage imageNamed:@"coliectionNoraml"] forState:UIControlStateNormal];
-                colBtn.selected = NO;
-                
-            }else{
-                [colBtn setImage:[UIImage imageNamed:@"collect-select"] forState:UIControlStateNormal];
-                colBtn.selected = YES;
-            }
-            
-            
-        }else{
-            
-            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
-                
-            }];
-            alert.sure_btnTitleColor = TextColor;
-            [alert show];
- 
-        }
-        
-        
-    } failure:^(NSError *error) {
-        
-    }];
-    
-}
-
-
-- (void)webViewDidStartLoad:(UIWebView *)webView{
-    
-    [activityIndicatorView startAnimating];
-    opaqueView.hidden = NO;
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView{
-    
-    [activityIndicatorView startAnimating];
-    opaqueView.hidden = YES;
-}
-
-
-//UIWebView如何判断 HTTP 404 等错误
--(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
-    NSURL *url = [NSURL URLWithString:@"http://www.baidu.com"];
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    if ((([httpResponse statusCode]/100) == 2)) {
-        // self.earthquakeData = [NSMutableData data];
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-        
-        [ webView loadRequest:[ NSURLRequest requestWithURL: url]];
-        webView.delegate = self;
-    } else {
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObject:
-                                  NSLocalizedString(@"HTTP Error",
-                                                    @"Error message displayed when receving a connection error.")
-                                                             forKey:NSLocalizedDescriptionKey];
-        NSError *error = [NSError errorWithDomain:@"HTTP" code:[httpResponse statusCode] userInfo:userInfo];
-        
-        if ([error code] == 404) {
-            webView.hidden = YES;
-        }
-        
-    }
-}
 
 
 - (void)didReceiveMemoryWarning {

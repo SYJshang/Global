@@ -27,12 +27,12 @@
     self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    self.navigationController.navigationBar.translucent = NO;
+    self.automaticallyAdjustsScrollViewInsets = YES;
+//    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"向导中心" font:19.0];
+    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:YJLocalizedString(@"向导中心") font:19.0];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -102,27 +102,27 @@
         switch (indexPath.section) {
             case 0:
                 if (indexPath.row == 0) {
-                    cell.textLabel.text = @"向导主页";
+                    cell.textLabel.text = YJLocalizedString(@"向导主页");
                     cell.imageView.image = [UIImage imageNamed:@"guide_home1"];
                 }else if (indexPath.row == 1){
-                    cell.textLabel.text = @"我的接单";
+                    cell.textLabel.text = YJLocalizedString(@"我的接单");
                     cell.imageView.image = [UIImage imageNamed:@"order_receiving"];
                 }else if (indexPath.row == 2){
-                    cell.textLabel.text = @"我的收款";
+                    cell.textLabel.text = YJLocalizedString(@"我的收款");
                     cell.imageView.image = [UIImage imageNamed:@"gathering"];
                     line.hidden = YES;
                 }
                 break;
             case 1:
                 
-                cell.textLabel.text = @"服务类型";
+                cell.textLabel.text = YJLocalizedString(@"服务类型");
                 cell.imageView.image = [UIImage imageNamed:@"service_type"];
                 line.hidden = YES;
                 
                 break;
             case 2:
                 
-                cell.textLabel.text = @"我的财产";
+                cell.textLabel.text = YJLocalizedString(@"我的财产");
                 cell.imageView.image = [UIImage imageNamed:@"My_property"];
                 line.hidden = YES;
                 
@@ -130,7 +130,7 @@
                 
             case 3:
                 
-                cell.textLabel.text = @"退订政策";
+                cell.textLabel.text = YJLocalizedString(@"退订政策");
                 cell.imageView.image = [UIImage imageNamed:@"unsubscribe_policy"];
                 line.hidden = YES;
                 

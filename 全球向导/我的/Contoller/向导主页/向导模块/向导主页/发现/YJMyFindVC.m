@@ -228,7 +228,7 @@
 #pragma mark - sestemnt delegate
 -(NSString *)segmentTitle
 {
-    return @"我的发现";
+    return YJLocalizedString(@"向导发现");
 }
 
 -(UIScrollView *)streachScrollView

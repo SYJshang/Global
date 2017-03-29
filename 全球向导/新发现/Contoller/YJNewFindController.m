@@ -49,7 +49,7 @@
     [self setupChildViewController];
     
     
-    self.titles = @[@"向导发现", @"游客攻略"];
+    self.titles = @[YJLocalizedString(@"向导发现"), YJLocalizedString(@"游客攻略")];
     // , @"NBA", @"新闻", @"娱乐", @"音乐", @"网络电影"
     self.topTitleView = [SGTopTitleView topTitleViewWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 44)];
     _topTitleView.staticTitleArr = [NSArray arrayWithArray:_titles];

@@ -34,7 +34,7 @@
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"我的订单" font:19.0];
+    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:YJLocalizedString(@"我的订单") font:19.0];
 }
 
 - (void)back{
@@ -54,7 +54,7 @@
     [self setupChildViewController];
     
     
-    self.titles = @[@"全部订单", @"待付款",@"待服务",@"退款/订单"];
+    self.titles = @[YJLocalizedString(@"全部订单"), YJLocalizedString(@"待付款"),YJLocalizedString(@"待服务"),YJLocalizedString(@"退款")];
     // , @"NBA", @"新闻", @"娱乐", @"音乐", @"网络电影"
     self.topTitleView = [SGTopTitleView topTitleViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
     self.topTitleView.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1.0];

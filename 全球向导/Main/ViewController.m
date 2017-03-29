@@ -74,7 +74,12 @@
 }
 
 
-
+- (void)viewWillDisappear:(BOOL)animated{
+    
+    [super viewWillDisappear:animated];
+    
+    self.userModel = nil;
+}
 
 
 
@@ -83,10 +88,9 @@
     [super viewWillAppear:animated];
 //    self.navigationController.navigationBar.translucent = NO;
 //    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-
-
-    self.automaticallyAdjustsScrollViewInsets = NO;
-
+    
+    //设置导航控制器
+    [self setNavitaion];
 
     NSString *str = [YJBNetWorkNotifionTool stringFormStutas];
     XXLog(@"%@",str);
@@ -117,8 +121,7 @@
     [super viewDidLoad];
     self.guideType = [NSDictionary dictionary];
     
-    //设置导航控制器
-    [self setNavitaion];
+    
        //设置tableView
     [self setTable];
     
@@ -127,10 +130,50 @@
     
 }
 
+- (void)setNavitaion{
+    
+    self.view.backgroundColor = BackGray;
+    self.automaticallyAdjustsScrollViewInsets = YES;
+    
+    //    self.navigationController.navigationBar.translucent = NO;
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.tintColor = TextColor;
+    
+    self.areaBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.areaBtn.frame = CGRectMake(0, 7, 50, 30);
+    [self.areaBtn setImageEdgeInsets:UIEdgeInsetsMake(-5,-15, -5, 0)];
+    [self.areaBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -15, 0, -15)];
+    [self.areaBtn setImage:[UIImage imageNamed:@"position"] forState:UIControlStateNormal];
+    self.areaBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
+    [self.areaBtn setTitleColor:TextColor forState:UIControlStateNormal];
+    
+    NSString *cityName = [[NSUserDefaults standardUserDefaults] objectForKey:@"cityName"];
+    if (cityName) {
+        [self.areaBtn setTitle:cityName forState:UIControlStateNormal];
+        
+    }else{
+        [self.areaBtn setTitle:@"北京市" forState:UIControlStateNormal];
+    }
+    [self.areaBtn addTarget:self action:@selector(location) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:self.areaBtn];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setImage:[UIImage imageNamed:@"addhao"] forState:UIControlStateNormal];
+    btn.frame = CGRectMake(0, 10, 22, 22);
+    [btn addTarget:self action:@selector(onNavButtonTapped:event:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
+    
+    self.navigationItem.titleView = [UILabel titleWithColor:TextColor title:YJLocalizedString(@"首页") font:AdaptedWidth(19.0)];
+    
+}
+
+
+
 - (void)setTable{
     
     //穿创建tableView
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Width, Height - 108) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Width, Height) style:UITableViewStylePlain];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //tableView的代理
     
@@ -252,44 +295,6 @@
 }
 
 
-- (void)setNavitaion{
-    
-    self.view.backgroundColor = BackGray;
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    
-    self.navigationController.navigationBar.translucent = NO;
-    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    self.navigationController.navigationBar.tintColor = TextColor;
-    
-    self.areaBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.areaBtn.frame = CGRectMake(0, 7, 50, 30);
-    [self.areaBtn setImageEdgeInsets:UIEdgeInsetsMake(-5,-15, -5, 0)];
-    [self.areaBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -15, 0, -15)];
-    [self.areaBtn setImage:[UIImage imageNamed:@"position"] forState:UIControlStateNormal];
-    self.areaBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
-    [self.areaBtn setTitleColor:TextColor forState:UIControlStateNormal];
-    
-    NSString *cityName = [[NSUserDefaults standardUserDefaults] objectForKey:@"cityName"];
-    if (cityName) {
-        [self.areaBtn setTitle:cityName forState:UIControlStateNormal];
-
-    }else{
-        [self.areaBtn setTitle:@"北京市" forState:UIControlStateNormal];
-    }
-    [self.areaBtn addTarget:self action:@selector(location) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:self.areaBtn];
-    self.navigationItem.leftBarButtonItem = leftItem;
-    
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setImage:[UIImage imageNamed:@"addhao"] forState:UIControlStateNormal];
-    btn.frame = CGRectMake(0, 10, 22, 22);
-    [btn addTarget:self action:@selector(onNavButtonTapped:event:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
-    
-    self.navigationItem.titleView = [UILabel titleWithColor:TextColor title:@"首页" font:AdaptedWidth(19.0)];
-    
-}
-
 
 -(void)onNavButtonTapped:(UIBarButtonItem *)sender event:(UIEvent *)event
 {
@@ -316,7 +321,7 @@
 #else
     
     [FTPopOverMenu showFromEvent:event
-                        withMenu:@[@"发布订单",@"发布行程",@"发布攻略"]
+                        withMenu:@[YJLocalizedString(@"发布订单"),YJLocalizedString(@"发布分享"),YJLocalizedString(@"发布发现")]
                   imageNameArray:@[@"release-found",@"release-order",@"release-strategy"]
                        doneBlock:^(NSInteger selectedIndex) {
                            
@@ -433,11 +438,11 @@
         UILabel *title = [[UILabel alloc]initWithFrame:CGRectMake(screen_width / 2 - 40, 5, 80, 20)];
     
         if (section == 1) {
-            title.text = @"向导推荐";
+            title.text = YJLocalizedString(@"向导推荐");
         }else if (section == 2){
-            title.text = @"发现向导";
+            title.text = YJLocalizedString(@"向导发现");
         }else if (section == 3){
-            title.text = @"用户分享";
+            title.text = YJLocalizedString(@"用户分享");
         }
     
         title.textAlignment = NSTextAlignmentCenter;

@@ -35,7 +35,7 @@
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem itemWithTarget:self action:@selector(detail) title:@"明细" titleColor:[UIColor grayColor] font:AdaptedWidth(17)];
-    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"我的财产" font:19.0];
+    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:YJLocalizedString(@"我的财产") font:19.0];
 
     [self getNetWok];
 

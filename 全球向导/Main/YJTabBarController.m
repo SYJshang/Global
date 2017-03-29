@@ -30,24 +30,24 @@
     //主页
     ViewController *main = [[ViewController alloc]init] ;
 //    main.view.backgroundColor = [UIColor redColor];
-    [self addChildVc:main Title:@"目的地" withTitleSize:12.0 andFoneName:@"HelveticaNeue-Bold" selectedImage:@"home2" withTitleColor:TextColor unselectedImage:@"home" withTitleColor:[UIColor lightGrayColor]];
+    [self addChildVc:main Title:YJLocalizedString(@"目的地") withTitleSize:12.0 andFoneName:@"HelveticaNeue-Bold" selectedImage:@"home2" withTitleColor:TextColor unselectedImage:@"home" withTitleColor:[UIColor lightGrayColor]];
     //向导
     YJGuideController  *caseVC = [[YJGuideController alloc]init];
 //    caseVC.view.backgroundColor = [UIColor grayColor];
-    [self addChildVc:caseVC Title:@"向导" withTitleSize:12.0 andFoneName:@"HelveticaNeue-Bold" selectedImage:@"guide" withTitleColor:TextColor unselectedImage:@"guide2" withTitleColor:[UIColor lightGrayColor]];
+    [self addChildVc:caseVC Title:YJLocalizedString(@"向导") withTitleSize:12.0 andFoneName:@"HelveticaNeue-Bold" selectedImage:@"guide" withTitleColor:TextColor unselectedImage:@"guide2" withTitleColor:[UIColor lightGrayColor]];
     //新发现
     YJNewFindController *fitVC = [[YJNewFindController alloc]init];
 //    fitVC.view.backgroundColor = [UIColor greenColor];
-    [self addChildVc:fitVC Title:@"新发现" withTitleSize:12.0 andFoneName:@"HelveticaNeue-Bold" selectedImage:@"find" withTitleColor:TextColor unselectedImage:@"find-2" withTitleColor:[UIColor lightGrayColor]];
+    [self addChildVc:fitVC Title:YJLocalizedString(@"新发现") withTitleSize:12.0 andFoneName:@"HelveticaNeue-Bold" selectedImage:@"find" withTitleColor:TextColor unselectedImage:@"find-2" withTitleColor:[UIColor lightGrayColor]];
     
     //消息
     YJMessageVC *storeVC = [[YJMessageVC alloc]init];
 //    storeVC.view.backgroundColor = [UIColor yellowColor];
-    [self addChildVc:storeVC Title:@"消息" withTitleSize:12.0 andFoneName:@"HelveticaNeue-Bold" selectedImage:@"message2" withTitleColor:TextColor unselectedImage:@"message" withTitleColor:[UIColor lightGrayColor]];
+    [self addChildVc:storeVC Title:YJLocalizedString(@"消息") withTitleSize:12.0 andFoneName:@"HelveticaNeue-Bold" selectedImage:@"message2" withTitleColor:TextColor unselectedImage:@"message" withTitleColor:[UIColor lightGrayColor]];
     //我的
     YJMineController *MyVC = [[YJMineController alloc]init];
 //    MyVC.view.backgroundColor = [UIColor purpleColor];
-    [self addChildVc:MyVC Title:@"我的" withTitleSize:12.0 andFoneName:@"HelveticaNeue-Bold" selectedImage:@"me2" withTitleColor:TextColor unselectedImage:@"me" withTitleColor:[UIColor lightGrayColor]];
+    [self addChildVc:MyVC Title:YJLocalizedString(@"我的") withTitleSize:12.0 andFoneName:@"HelveticaNeue-Bold" selectedImage:@"me2" withTitleColor:TextColor unselectedImage:@"me" withTitleColor:[UIColor lightGrayColor]];
 
     
     // Do any additional setup after loading the view.

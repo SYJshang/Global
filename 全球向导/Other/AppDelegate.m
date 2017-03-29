@@ -18,6 +18,7 @@
 
 //#import "WSMovieController.h"
 
+static NSString *appLanguage = @"appLanguage";
 
 #define USHARE_DEMO_APPKEY @"58cfb59fc8957663c8001a9e"
 
@@ -32,6 +33,10 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    
+    //避免启动页图片一闪而过的现象
+    [NSThread sleepForTimeInterval:3.0];
     
     // Override point for customization after application launch.
     //请求获取位置服务
@@ -56,6 +61,8 @@
     //必须设置在makeKeyAndVisible下才能生效  加载引导页
     [self PageLoadingGuide];
     
+    //设置语言
+    [self setLangueage];
     
     /* 打开日志 */
     [[UMSocialManager defaultManager] openLog:YES];
@@ -69,13 +76,22 @@
     [self configUSharePlatforms];
     
     [self confitUShareSettings];
+    
+    NSString *apnsCertName = nil;
+
+#if DEBUG
+    apnsCertName = @"globaleguide_Dev";
+#else
+    apnsCertName = @"globaleguide_Nor";
+#endif
 
     //AppKey:注册的AppKey，详细见下面注释。
     //apnsCertName:推送证书名（不需要加后缀），详细见下面注释。
     EMOptions *options = [EMOptions optionsWithAppkey:@"1159170320115280#globalguide"];
-    options.apnsCertName = @"globaleguide_Nor";
+    options.apnsCertName = apnsCertName;
     [[EMClient sharedClient] initializeSDKWithOptions:options];
 
+    
 
     // Override point for customization after application launch.
     return YES;
@@ -130,15 +146,37 @@
         [[DNPageView sharePageView] initPageViewToView:self.window dismiss:^{
             self.first = NO;
             [NSFileManager setAppSettingsForObject:currentVersion forKey:@"VersionStr"];
+            YJLoginController *vc = [[YJLoginController alloc]init];
+            self.window.rootViewController = vc;
         }];
     }
     self.first = YES;
+}
+
+
+
+#pragma mark - 设置语言
+- (void)setLangueage {
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:appLanguage] == nil || [[NSUserDefaults standardUserDefaults] objectForKey:@"state"] == nil) {
+        NSArray  *languages = [NSLocale preferredLanguages];
+        NSString *language = [languages objectAtIndex:0];
+        if ([language hasPrefix:@"zh-Hans"]) {
+            [[NSUserDefaults standardUserDefaults] setObject:@"zh-Hans" forKey:appLanguage];
+        } else if ([language hasPrefix:@"zh-TW"] || [language hasPrefix:@"zh-HK"] || [language hasPrefix:@"zh-Hant"]) {
+            [[NSUserDefaults standardUserDefaults] setObject:@"zh-Hant" forKey:appLanguage];
+        } else if ([language hasPrefix:@"en"]) {
+            [[NSUserDefaults standardUserDefaults] setObject:@"en" forKey:appLanguage];
+        }else{
+            [[NSUserDefaults standardUserDefaults] setObject:@"zh-Hans" forKey:appLanguage];
+        }
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
 }
+
 
 
 // APP进入后台

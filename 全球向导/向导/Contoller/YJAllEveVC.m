@@ -25,12 +25,12 @@
     self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    self.navigationController.navigationBar.translucent = NO;
+//    self.automaticallyAdjustsScrollViewInsets = YES;
+//    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"发布" font:19.0];
+    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"评论" font:19.0];
 }
 
 - (void)back{
@@ -135,6 +135,12 @@
         
     }
 }
+
+//设置状态栏颜色
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleDefault;
+}
+
 
 /*
 #pragma mark - Navigation

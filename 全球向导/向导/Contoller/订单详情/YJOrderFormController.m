@@ -89,7 +89,7 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"订单详情" font:19.0];
+    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:YJLocalizedString(@"订单详情") font:19.0];
     UIBarButtonItem * leftItem = [UIBarButtonItem itemWithTarget:self action:@selector(back) image:@"back" highImage:@"back"];
     self.navigationItem.leftBarButtonItem = leftItem;
     
@@ -115,7 +115,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"订单详情";
     
     if (self.DateArr) {
         [self.DateArr removeAllObjects];
@@ -125,7 +124,7 @@
     //加载一个布局
     [self setLayout];
     
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height - 104) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, screen_width, screen_height - 108) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
@@ -221,7 +220,7 @@
     
     
     self.submitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.submitBtn setTitle:@"确认订单" forState:UIControlStateNormal];
+    [self.submitBtn setTitle:YJLocalizedString(@"确认订单") forState:UIControlStateNormal];
     self.submitBtn.titleLabel.font = [UIFont systemFontOfSize:17.0];
     [self.view addSubview:self.submitBtn];
     [self.submitBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -324,13 +323,13 @@
     lab.sd_layout.leftSpaceToView(line,5).centerYEqualToView(view).heightIs(15).rightSpaceToView(view,10);
     switch (section) {
         case 2:
-            lab.text = @"选择服务类型";
+            lab.text = YJLocalizedString(@"服务类型");
             break;
         case 3:
-            lab.text = @"联系方式";
+            lab.text = YJLocalizedString(@"联系方式");
             break;
         case 4:
-            lab.text = @"其他备注";
+            lab.text = YJLocalizedString(@"其他备注");
             break;
             
         default:
@@ -421,8 +420,7 @@
             Scell.serverBtn.userInteractionEnabled = NO;
             
             _allPrice = [moddel.price integerValue] * select.count;
-            self.priceAll.text = [NSString stringWithFormat:@"总计 ￥%ld",_allPrice];
-            
+            self.priceAll.text = [NSString stringWithFormat:@"%@ ￥%ld",YJLocalizedString(@"总计"),_allPrice];
             if (self.productArr.count != 0) {
                 
                 numbers = [NSString stringWithFormat:@"%@%ld,",numbers,select.count];
@@ -476,7 +474,7 @@
                 break;
             }
             case 1:{
-                cell.phoneNum.text = @"微信号";
+                cell.phoneNum.text = YJLocalizedString(@"微信");
                 cell.phoneTF.placeholder = @"请输入微信号（选填）";
                 Scell.text = ^(NSString *sender){
                     
@@ -578,7 +576,7 @@
     //每次算完要重置为0，因为每次的都是全部循环算一遍
     _allPrice = 0;
     productIds = @"";
-    self.priceAll.text = [NSString stringWithFormat:@"总计 ￥%ld",_allPrice];
+    self.priceAll.text = [NSString stringWithFormat:@"%@ ￥%ld",YJLocalizedString(@"总计"),_allPrice];
     numbers = @"";
     
     
@@ -610,7 +608,7 @@
         XXLog(@"number >>>>%@",numbers);
         
         //给总价文本赋值
-        self.priceAll.text = [NSString stringWithFormat:@"总计 ￥%ld",_allPrice];
+        self.priceAll.text = [NSString stringWithFormat:@"%@ ￥%ld",YJLocalizedString(@"总计"),_allPrice];
         NSLog(@"%@",self.priceAll.text);
         
         

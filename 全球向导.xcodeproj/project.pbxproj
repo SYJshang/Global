@@ -116,6 +116,9 @@
 		1A2F11871E697E67002506FC /* SDBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2F11811E697E67002506FC /* SDBrowserImageView.m */; };
 		1A2F11881E697E67002506FC /* SDPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2F11831E697E67002506FC /* SDPhotoBrowser.m */; };
 		1A2F11891E697E67002506FC /* SDWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2F11861E697E67002506FC /* SDWaitingView.m */; };
+		1A2F4A5F1E8A4C6900656B5F /* YJLanguageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2F4A5E1E8A4C6900656B5F /* YJLanguageVC.m */; };
+		1A2F4A621E8A588100656B5F /* YJLocalized.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A2F4A641E8A588100656B5F /* YJLocalized.strings */; };
+		1A2F4A691E8A5A1E00656B5F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A2F4A6B1E8A5A1E00656B5F /* InfoPlist.strings */; };
 		1A3DFA9A1DD01F1A004F1A63 /* YJOrderFormController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3DFA991DD01F1A004F1A63 /* YJOrderFormController.m */; };
 		1A3DFA9E1DD02B24004F1A63 /* YJNameIconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3DFA9D1DD02B24004F1A63 /* YJNameIconCell.m */; };
 		1A3DFAA11DD0619A004F1A63 /* YJAddNumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3DFAA01DD0619A004F1A63 /* YJAddNumCell.m */; };
@@ -587,6 +590,16 @@
 		1A2F11841E697E67002506FC /* SDPhotoBrowserConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoBrowserConfig.h; sourceTree = "<group>"; };
 		1A2F11851E697E67002506FC /* SDWaitingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWaitingView.h; sourceTree = "<group>"; };
 		1A2F11861E697E67002506FC /* SDWaitingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWaitingView.m; sourceTree = "<group>"; };
+		1A2F4A5D1E8A4C6900656B5F /* YJLanguageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJLanguageVC.h; sourceTree = "<group>"; };
+		1A2F4A5E1E8A4C6900656B5F /* YJLanguageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJLanguageVC.m; sourceTree = "<group>"; };
+		1A2F4A631E8A588100656B5F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/YJLocalized.strings; sourceTree = "<group>"; };
+		1A2F4A651E8A589900656B5F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		1A2F4A661E8A589A00656B5F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/YJLocalized.strings"; sourceTree = "<group>"; };
+		1A2F4A6A1E8A5A1E00656B5F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		1A2F4A6C1E8A5A4000656B5F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1A2F4A6D1E8B3EA000656B5F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		1A2F4A6E1E8B3EA000656B5F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/YJLocalized.strings"; sourceTree = "<group>"; };
+		1A2F4A6F1E8B3EA100656B5F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		1A3DFA981DD01F1A004F1A63 /* YJOrderFormController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJOrderFormController.h; sourceTree = "<group>"; };
 		1A3DFA991DD01F1A004F1A63 /* YJOrderFormController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJOrderFormController.m; sourceTree = "<group>"; };
 		1A3DFA9C1DD02B24004F1A63 /* YJNameIconCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJNameIconCell.h; sourceTree = "<group>"; };
@@ -1410,6 +1423,8 @@
 				1A26D1171DB861E1006A6363 /* AppDelegate.m */,
 				1A26D1191DB861E1006A6363 /* LaunchScreen.storyboard */,
 				1AE0FC391DC18E8600417351 /* PrefixHeader.pch */,
+				1A2F4A641E8A588100656B5F /* YJLocalized.strings */,
+				1A2F4A6B1E8A5A1E00656B5F /* InfoPlist.strings */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -1538,6 +1553,8 @@
 				1A5E4D281DF547E500136053 /* YJSetUpController.m */,
 				1A12C16D1E1112D500213F95 /* YJAmendPasswordVC.h */,
 				1A12C16E1E1112D500213F95 /* YJAmendPasswordVC.m */,
+				1A2F4A5D1E8A4C6900656B5F /* YJLanguageVC.h */,
+				1A2F4A5E1E8A4C6900656B5F /* YJLanguageVC.m */,
 				1A5E4D361DF68A9700136053 /* 关于我们 */,
 			);
 			path = "设置";
@@ -2673,6 +2690,8 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
+				"zh-Hant",
 			);
 			mainGroup = 1A26D0D31DB8612B006A6363;
 			productRefGroup = 1A26D0DD1DB8612B006A6363 /* Products */;
@@ -2710,8 +2729,10 @@
 				1A95F28B1E00DA2E00EA8B82 /* CustomHeader.xib in Resources */,
 				1A02766F1E84D0F0008E8E25 /* 3.jpg in Resources */,
 				1A78871B1E1DE084004F3271 /* SGLocationPickerCenterView.xib in Resources */,
+				1A2F4A691E8A5A1E00656B5F /* InfoPlist.strings in Resources */,
 				1A26D1221DB861E1006A6363 /* LaunchScreen.storyboard in Resources */,
 				1A0DF31D1DBFAA2300E2EE9F /* CityViewCell.xib in Resources */,
+				1A2F4A621E8A588100656B5F /* YJLocalized.strings in Resources */,
 				1A02766D1E84D0F0008E8E25 /* 1.jpg in Resources */,
 				1AF3AB5C1E655F4B00F5E568 /* TZImagePickerController.bundle in Resources */,
 			);
@@ -3017,6 +3038,7 @@
 				1A5ED9611DC9F07F002FAF0A /* DataManager.m in Sources */,
 				1A9423821E66C50100CEA243 /* UIButton+AFNetworking.m in Sources */,
 				1AF928AC1DF94130004B666F /* YJDrawbackCell.m in Sources */,
+				1A2F4A5F1E8A4C6900656B5F /* YJLanguageVC.m in Sources */,
 				1A03834B1E6FE67200A54525 /* YJGuideReceiveModel.m in Sources */,
 				1AED504D1E85722D006A1C98 /* YJUserGuideCenterVC.m in Sources */,
 				1A2C8B901DD571EB0017F068 /* XWPopMenuController.m in Sources */,
@@ -3216,8 +3238,30 @@
 			isa = PBXVariantGroup;
 			children = (
 				1A26D11A1DB861E1006A6363 /* Base */,
+				1A2F4A651E8A589900656B5F /* zh-Hans */,
+				1A2F4A6D1E8B3EA000656B5F /* zh-Hant */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		1A2F4A641E8A588100656B5F /* YJLocalized.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1A2F4A631E8A588100656B5F /* en */,
+				1A2F4A661E8A589A00656B5F /* zh-Hans */,
+				1A2F4A6E1E8B3EA000656B5F /* zh-Hant */,
+			);
+			name = YJLocalized.strings;
+			sourceTree = "<group>";
+		};
+		1A2F4A6B1E8A5A1E00656B5F /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1A2F4A6A1E8A5A1E00656B5F /* zh-Hans */,
+				1A2F4A6C1E8A5A4000656B5F /* en */,
+				1A2F4A6F1E8B3EA100656B5F /* zh-Hant */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -3227,6 +3271,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -3274,6 +3319,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";

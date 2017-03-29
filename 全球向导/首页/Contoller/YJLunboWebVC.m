@@ -8,10 +8,9 @@
 //
 
 #import "YJLunboWebVC.h"
-#import <WebKit/WebKit.h>
 
-@interface YJLunboWebVC ()<WKNavigationDelegate>{
-    WKWebView *webView;
+@interface YJLunboWebVC ()<UIWebViewDelegate>{
+    UIWebView *webView;
     
     UIActivityIndicatorView *activityIndicatorView;
     UIView *opaqueView;
@@ -45,12 +44,12 @@
     
     self.title = @"详情";
     // Do any additional setup after loading the view.
-    webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
+    webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
     [webView setUserInteractionEnabled:YES];//是否支持交互
     //[webView setDelegate:self];
-    webView.navigationDelegate = self;
+    webView.delegate = self;
     [webView setOpaque:NO];//opaque是不透明的意思
-//    [webView setScalesPageToFit:YES];//自动缩放以适应屏幕
+    [webView setScalesPageToFit:YES];//自动缩放以适应屏幕
     [self.view addSubview:webView];
     
     //加载网页的方式
@@ -79,32 +78,28 @@
 }
 
 
-
-
-- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
+- (void)webViewDidStartLoad:(UIWebView *)webView{
+    
     [activityIndicatorView startAnimating];
     opaqueView.hidden = NO;
-
 }
-- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation {
 
+- (void)webViewDidFinishLoad:(UIWebView *)webView{
     
-    
-}
-- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
-
     [activityIndicatorView startAnimating];
     opaqueView.hidden = YES;
+
 }
 
-- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error{
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
     
     XXLog(@"error code ==  %ld",error.code);
     if (error.code  == -999) {
         return;
     }
-
 }
+
+
 
 //UIWebView如何判断 HTTP 404 等错误
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
@@ -115,7 +110,7 @@
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         
         [ webView loadRequest:[ NSURLRequest requestWithURL: url]];
-        webView.navigationDelegate = self;
+        webView.delegate = self;
     } else {
         NSDictionary *userInfo = [NSDictionary dictionaryWithObject:
                                   NSLocalizedString(@"HTTP Error",

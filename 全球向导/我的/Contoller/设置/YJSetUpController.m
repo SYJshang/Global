@@ -12,8 +12,9 @@
 #import "YJAboutUsController.h"
 #import "YJAmendPasswordVC.h"
 #import "YJLoginFirstController.h"
-#import "MBProgressHUD.h"
-#import "UIImageView+WebCache.h"
+//#import "MBProgressHyjUD.h"
+//#import "UIImageView+WebCache.h"
+#import "YJLanguageVC.h"
 
 @interface YJSetUpController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -35,7 +36,7 @@
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
 
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"设置" font:19.0];
+    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:YJLocalizedString(@"设置") font:19.0];
     
 }
 
@@ -79,7 +80,7 @@
     }
     
     if (section == 1) {
-        return 2;
+        return 3;
     }
     
     return 1;
@@ -107,19 +108,17 @@
         
         switch (indexPath.row) {
             case 0:
-//                NSDictionary *infoDic=[[NSBundle mainBundle] infoDictionary];
-//                NSLog(@"%@",infoDic);
-//                NSString *currentVersion=infoDic[@"CFBundleShortVersionString"];
 
-               cell.title.text = @"当前版本";
+
+               cell.title.text = YJLocalizedString(@"当前版本");
                 cell.time.text = currentVersion;
                 break;
             case 1:
-                cell.title.text = @"清空缓存";
+                cell.title.text = YJLocalizedString(@"清空缓存");
                 cell.time.text = str;
                 break;
             case 2:
-                cell.title.text = @"修改密码";
+                cell.title.text = YJLocalizedString(@"修改密码");
                 cell.time.text = @"";
                 break;
                 
@@ -134,11 +133,15 @@
         YJTimeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"first"];
         switch (indexPath.row) {
             case 0:
-                cell.title.text = @"意见反馈";
+                cell.title.text = YJLocalizedString(@"意见反馈");
                 cell.time.text = @"";
                 break;
             case 1:
-                cell.title.text = @"关于我们";
+                cell.title.text = YJLocalizedString(@"关于我们");
+                cell.time.text = @"";
+                break;
+            case 2:
+                cell.title.text = YJLocalizedString(@"设置语言");
                 cell.time.text = @"";
                 break;
                 
@@ -161,7 +164,7 @@
         if ([code isEqualToString:@"1"]) {
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             [cell addSubview:btn];
-            [btn setTitle:@"退出登录" forState:UIControlStateNormal];
+            [btn setTitle:YJLocalizedString(@"退出登录") forState:UIControlStateNormal];
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [btn addTarget:self action:@selector(quit) forControlEvents:UIControlEventTouchUpInside];
             btn.backgroundColor = TextColor;
@@ -271,6 +274,11 @@
     
     if (indexPath.section == 1 && indexPath.row == 1) {
         [self.navigationController pushViewController:[YJAboutUsController new] animated:YES];
+    }
+    
+    if (indexPath.section == 1 && indexPath.row == 2) {
+        [self.navigationController pushViewController:[YJLanguageVC new] animated:YES];
+
     }
     
     

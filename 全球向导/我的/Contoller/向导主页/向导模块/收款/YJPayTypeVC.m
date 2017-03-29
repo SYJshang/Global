@@ -29,7 +29,7 @@
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"付款类型" font:19.0];
+    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:YJLocalizedString(@"付款类型") font:19.0];
     
     [self getIsRealName];
 
@@ -123,7 +123,7 @@
     
         YJPayFormCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
         cell.icon.image = [UIImage imageNamed:@"支付宝A"];
-        cell.payName.text = @"支付宝支付";
+        cell.payName.text = YJLocalizedString(@"支付宝");
         if (self.isReal == YES) {
             cell.isReal.text = @"已绑定";
             cell.isReal.textColor = TextColor;

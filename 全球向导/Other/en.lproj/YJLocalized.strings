@@ -1,0 +1,85 @@
+/* 
+  YJLocalized.strings
+  全球向导
+
+  Created by SYJ on 2017/3/28.
+  Copyright © 2017年 尚勇杰. All rights reserved.
+*/
+
+
+"目的地"="Home";
+"首页"="Home";
+"发现向导”=“Finding guide";
+"用户分享"="User share";
+"收藏数"="Collection";
+"向导"="Guide";
+"新发现"="Find";
+"消息"="Message";
+"我的"="Mine";
+"发布订单"="Order";
+"发布分享"="share";
+"发布发现"="discovery";
+"向导分享"="Wizard sharing";
+"向导推荐"="recommended";
+"用户推荐"="User recommen";
+"向导类型"="Guide type";
+"向导主页"="guide page";
+"联系向导"="ask guide";
+"付款"="payment";
+"分享"="share";
+"收藏"="Collection";
+"合计"="Total";
+"确认订单"="Confirm order";
+"微信"="WeChat";
+"支付宝"="Alipay";
+"订单详情"="Order details";
+"向导发现"="Wizard discovery";
+"游客攻略"="Tourist Raiders";
+"发布"="Release";
+"我的订单"="My order";
+"全部订单"="All order";
+"待付款"="Pending payment";
+"待服务"="Pending service";
+"待接单"="Waiting list";
+"退款"="refund";
+"我的评价"="My evaluation";
+"待评价"="Pending evaluation";
+"已评价"="Already evaluated";
+"我的发布"="My release";
+"设置"="Setting";
+"客服中心"="Call center";
+"当前版本"="current version";
+"清空缓存"="wipe cache";
+"意见反馈"="Feedback";
+"关于我们"="About us";
+"设置语言"="Set language";
+"退出登录"="Exit login";
+"语言"="language";
+"跟随系统"="Following system";
+"中文"="Chinese";
+"英文"="English";
+"繁体中文"="Chinese Traditional";
+"修改密码"="Modify password";
+"旧密码"="Old password";
+"请输入旧密码"="Please enter old password";
+"新密码"="New password";
+"请输入新密码"="Please enter a new password";
+"我的接单"="My order";
+"我的收款"="My collection";
+"服务类型"="Service type";
+"我的财产"="My property";
+"退订政策"="Unsubscribe policy";
+"付款类型"="Payment type";
+"编辑服务"="Edit service";
+"服务价格"="Service price";
+"服务名称"="Service name";
+"服务描述"="Service description";
+"订单状态"="Order status";
+"向导中心"="Wizard Center";
+"向导发布"="Publishing";
+"向导相册"="Album";
+"向导行程"="Stroke";
+"向导资料"="Data";
+
+
+

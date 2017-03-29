@@ -31,7 +31,7 @@
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"我的财产" font:19.0];
+    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:YJLocalizedString(@"我的财产") font:19.0];
     
 }
 
@@ -74,7 +74,7 @@
     
     UILabel *name = [[UILabel alloc]init];
     [view addSubview:name];
-    name.text = @"支付宝账号";
+    name.text = YJLocalizedString(@"支付宝");
     name.textColor = [UIColor grayColor];
     name.textAlignment = NSTextAlignmentLeft;
     name.font = [UIFont systemFontOfSize:AdaptedWidth(16)];

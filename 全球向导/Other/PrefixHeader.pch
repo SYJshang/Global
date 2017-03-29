@@ -78,9 +78,9 @@
 
 #define Document_Path  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0]
 
-#define BaseUrl @"http://globaleguide.com:8080/web"
+#define BaseUrl @"http://globaleguide.com:8082"
 
-
+#define YJLocalizedString(key)  [NSString stringWithFormat:@"%@", [[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"appLanguage"]] ofType:@"lproj"]] localizedStringForKey:(key) value:nil table:@"YJLocalized"]]
 
 
 // Include any system framework and library headers here that should be included in all compilation units.

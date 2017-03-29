@@ -58,7 +58,7 @@
     
     
     
-    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"用户分享" font:19.0];
+    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:YJLocalizedString(@"用户分享") font:19.0];
 }
 
 - (void)back{

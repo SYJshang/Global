@@ -141,7 +141,7 @@
         //联系用户
         self.relationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.contentView addSubview:self.relationBtn];
-        [self.relationBtn setTitle:@"联系向导" forState:UIControlStateNormal];
+        [self.relationBtn setTitle:YJLocalizedString(@"联系向导") forState:UIControlStateNormal];
         [self.relationBtn setTitleColor:TextColor forState:UIControlStateNormal];
         [self.relationBtn setBackgroundColor:[UIColor whiteColor]];
         self.relationBtn.titleLabel.font = [UIFont systemFontOfSize:AdaptedWidth(14)];

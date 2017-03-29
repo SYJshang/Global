@@ -93,7 +93,7 @@
 #pragma mark - delegate
 -(NSString *)segmentTitle
 {
-    return @"向导日程";
+    return YJLocalizedString(@"向导行程");
 }
 
 -(UIScrollView *)streachScrollView

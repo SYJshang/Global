@@ -31,7 +31,7 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"订单确认" font:19.0];
+    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:YJLocalizedString(@"订单确认") font:19.0];
     UIBarButtonItem * leftItem = [UIBarButtonItem itemWithTarget:self action:@selector(back) image:@"back" highImage:@"back"];
     self.navigationItem.leftBarButtonItem = leftItem;
 }
@@ -206,12 +206,12 @@
         YJPayFormCell *cell = [tableView dequeueReusableCellWithIdentifier:@"second"];
         if (indexPath.row == 0) {
             cell.icon.image = [UIImage imageNamed:@"微信"];
-            cell.payName.text = @"微信支付";
+            cell.payName.text = YJLocalizedString(@"微信");
         }
         
         if (indexPath.row == 1) {
             cell.icon.image = [UIImage imageNamed:@"支付宝A"];
-            cell.payName.text = @"支付宝支付";
+            cell.payName.text = YJLocalizedString(@"支付宝");
         }
        
         

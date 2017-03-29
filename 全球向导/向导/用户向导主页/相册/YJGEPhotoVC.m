@@ -47,8 +47,10 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+
     
-//    self.view.userInteractionEnabled = YES;
+    self.view.userInteractionEnabled = YES;
 
     //创建一个layout布局类
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
@@ -57,7 +59,7 @@
     //设置每个item的大小为100*100
     //layout.itemSize = CGSizeMake(100, 100);
     //创建collectionView 通过一个布局策略layout来创建
-    UICollectionView * collect = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 44, screen_width, screen_height - 44) collectionViewLayout:layout];
+    UICollectionView * collect = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 64, screen_width, screen_height) collectionViewLayout:layout];
     collect.backgroundColor = [UIColor whiteColor];
     //代理设置
     collect.delegate = self;

@@ -8,6 +8,7 @@
 //
 
 #import "YJTravelController.h"
+#import "YJLoginFirstController.h"
 
 
 
@@ -104,7 +105,7 @@
 
 #pragma mark - delegate
 
--(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     NSString * requestString = request.URL.absoluteString;
     NSLog(@"请求的地址：%@",requestString);
     if ([requestString containsString:@"http://www.globaleguide.com"]){
@@ -112,6 +113,15 @@
         [self.navigationController setNavigationBarHidden:NO animated:NO];
         [self.navigationController popToRootViewControllerAnimated:YES];
         
+    }else if ([requestString containsString:@"http://globaleguide.com:8080/user/login"]){
+        
+        SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"未登录" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            
+            [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+            
+        }];
+        alert.sure_btnTitleColor = TextColor;
+        [alert show];
     }
     
     return YES;

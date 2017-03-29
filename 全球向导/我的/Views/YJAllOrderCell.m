@@ -91,7 +91,7 @@
     //付款按钮
     self.buyOrder = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.contentView addSubview:self.buyOrder];
-    [self.buyOrder setTitle:@"付款" forState:UIControlStateNormal];
+    [self.buyOrder setTitle:YJLocalizedString(@"付款") forState:UIControlStateNormal];
     self.buyOrder.titleLabel.font = [UIFont systemFontOfSize:AdaptedWidth(14)];
     [self.buyOrder setTitleColor:TextColor forState:UIControlStateNormal];
     [self.buyOrder setBackgroundColor:[UIColor whiteColor]];
@@ -200,7 +200,7 @@
             self.relation.hidden = NO;
             self.buyOrder.hidden = NO;
             [self.disOrder setTitle:@"取消订单" forState:UIControlStateNormal];
-            [self.relation setTitle:@"立即付款" forState:UIControlStateNormal];
+            [self.relation setTitle:YJLocalizedString(@"付款") forState:UIControlStateNormal];
             [self.buyOrder setTitle:@"联系向导" forState:UIControlStateNormal];
 
             break;

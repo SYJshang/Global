@@ -411,20 +411,20 @@
         switch (indexPath.section) {
             case 1:
                 if (indexPath.row == 0) {
-            cell.textLabel.text = @"我的订单";
+            cell.textLabel.text = YJLocalizedString(@"我的订单");
             cell.imageView.image = [UIImage imageNamed:@"my-order"];
                 }else if (indexPath.row == 1){
-            cell.textLabel.text = @"我的评价";
+            cell.textLabel.text = YJLocalizedString(@"我的评价");
             cell.imageView.image = [UIImage imageNamed:@"my-evaluation"];
                 }else if (indexPath.row == 2){
-            cell.textLabel.text = @"我的发布";
+            cell.textLabel.text = YJLocalizedString(@"我的发布");
             cell.imageView.image = [UIImage imageNamed:@"my-publish"];
             line.hidden = YES;
                 }
                 break;
             case 2:
                 
-            cell.textLabel.text = @"设置";
+            cell.textLabel.text = YJLocalizedString(@"设置");
             cell.imageView.image = [UIImage imageNamed:@"settings"];
             line.hidden = YES;
                 
@@ -432,7 +432,7 @@
             
             case 3:
                 
-            cell.textLabel.text = @"客服中心";
+            cell.textLabel.text = YJLocalizedString(@"客服中心");
             cell.imageView.image = [UIImage imageNamed:@"service-center"];
             line.hidden = YES;
                 
@@ -531,7 +531,10 @@
 }
 
 
-
+//设置状态栏颜色
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
 
 
 

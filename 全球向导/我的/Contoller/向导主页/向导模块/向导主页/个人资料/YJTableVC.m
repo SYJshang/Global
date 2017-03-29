@@ -74,7 +74,7 @@
 
 -(NSString *)segmentTitle
 {
-    return @"我的资料";
+    return YJLocalizedString(@"向导资料");
 }
 
 -(UIScrollView *)streachScrollView
