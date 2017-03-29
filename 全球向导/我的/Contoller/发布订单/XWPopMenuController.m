@@ -65,7 +65,7 @@
         
         _ary = [NSArray array];
         
-        _ary = @[YJLocalizedString(@"发布订单"),YJLocalizedString(@"发布分享"),YJLocalizedString(@"发布发现")];
+        _ary = @[@"发布订单",@"发布行程",@"发布攻略"];
     }
     
     return _ary;
@@ -219,7 +219,7 @@
     for (int i = 0; i < self.ary.count; i++) {
         
 //        NSArray *arrTitle = @[@"文字",@"照片",@"链接",@"视频",@"寻亲",@"文章"];
-        NSArray *arrTitle = @[YJLocalizedString(@"发布订单"),YJLocalizedString(@"发布订单"),YJLocalizedString(@"发布发现")];
+        NSArray *arrTitle = @[@"发布订单",YJLocalizedString(@"发布订单"),YJLocalizedString(@"发布发现")];
         
         
         PublishMenuButton *btn = [PublishMenuButton buttonWithType:UIButtonTypeCustom];

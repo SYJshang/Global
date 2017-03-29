@@ -63,7 +63,7 @@
     self.pwdOld = [[UILabel alloc]init];
     [self.view addSubview:self.pwdOld];
     self.pwdOld.font = [UIFont systemFontOfSize:AdaptedWidth(16)];
-    self.pwdOld.text = @"旧密码";
+    self.pwdOld.text = YJLocalizedString(@"旧密码");
     self.pwdOld.textColor = [UIColor blackColor];
     self.pwdOld.sd_layout.leftSpaceToView(self.view,20).topSpaceToView(self.view,60).heightIs(30 * KHeight_Scale).widthIs(60 * KWidth_Scale);
     
@@ -72,7 +72,7 @@
     [self.view addSubview:self.pwdTfOld];
     self.pwdTfOld.font = [UIFont systemFontOfSize:AdaptedWidth(15)];
     self.pwdTfOld.borderStyle = UITextBorderStyleNone;
-    self.pwdTfOld.placeholder = @"请输入旧密码";
+    self.pwdTfOld.placeholder = YJLocalizedString(@"请输入旧密码");
     self.pwdTfOld.secureTextEntry = YES;
     self.pwdTfOld.sd_layout.leftSpaceToView(self.pwdOld,5).rightSpaceToView(self.view,20).centerYEqualToView(self.pwdOld).heightIs(30 * KHeight_Scale);
     
@@ -85,7 +85,7 @@
     self.pwdNew = [[UILabel alloc]init];
     [self.view addSubview:self.pwdNew];
     self.pwdNew.font = [UIFont systemFontOfSize:AdaptedWidth(16)];
-    self.pwdNew.text = @"新密码";
+    self.pwdNew.text = YJLocalizedString(@"新密码");
     self.pwdNew.textColor = [UIColor blackColor];
     self.pwdNew.sd_layout.leftSpaceToView(self.view,20).topSpaceToView(line,20).heightIs(30 * KHeight_Scale).widthIs(60 * KWidth_Scale);
     
@@ -94,7 +94,7 @@
     [self.view addSubview:self.pwdTfNew];
     self.pwdTfNew.font = [UIFont systemFontOfSize:AdaptedWidth(15)];
     self.pwdTfNew.borderStyle = UITextBorderStyleNone;
-    self.pwdTfNew.placeholder = @"请输入新密码";
+    self.pwdTfNew.placeholder = YJLocalizedString(@"请输入新密码");
     self.pwdTfNew.secureTextEntry = YES;
     self.pwdTfNew.sd_layout.leftSpaceToView(self.pwdNew,5).rightSpaceToView(self.view,20).centerYEqualToView(self.pwdNew).heightIs(30 * KHeight_Scale);
     
