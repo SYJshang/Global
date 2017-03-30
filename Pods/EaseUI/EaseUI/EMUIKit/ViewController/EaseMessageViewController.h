@@ -494,6 +494,7 @@ shouldSendHasReadAckForMessage:(EMMessage *)message
 - (void)showMenuViewController:(UIView *)showInView
                  andIndexPath:(NSIndexPath *)indexPath
                   messageType:(EMMessageBodyType)messageType;
+
 /*!
  @method
  @brief 判断消息是否要发送已读回执

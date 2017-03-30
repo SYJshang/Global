@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YJChatCell : UITableViewCell
+@interface YJChatCell : UITableViewCell<IModelCell>
 
 @property (nonatomic, strong) UIImageView *icon;
 @property (nonatomic, strong) UILabel *name;
 @property (nonatomic, strong) UILabel *message;
 @property (nonatomic, strong) UILabel *time;
+@property (nonatomic, strong) UILabel *badge;
+
+@property (strong, nonatomic) id<IConversationModel> model;
 
 @end

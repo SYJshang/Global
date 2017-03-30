@@ -33,7 +33,7 @@
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"我的收藏" font:19.0];
+    self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:YJLocalizedString(@"收藏") font:19.0];
 }
 
 - (void)back{
@@ -53,7 +53,7 @@
     [self setupChildViewController];
     
     
-    self.titles = @[@"向导", @"发现",@"分享"];
+    self.titles = @[YJLocalizedString(@"向导"), YJLocalizedString(@"新发现"),YJLocalizedString(@"分享")];
 
     self.topTitleView = [SGTopTitleView topTitleViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
     self.topTitleView.backgroundColor = BackGray;

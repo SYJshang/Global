@@ -15,6 +15,7 @@ target '全球向导' do
     # 集成环信IM(动态库版本)
     pod 'Hyphenate'
     pod 'EaseUI', :git => 'https://github.com/easemob/easeui-ios-hyphenate-cocoapods.git'
+    pod 'FMDB'
 
 
   # Pods for 全球向导

@@ -27,6 +27,7 @@
 #import "YJGuideRecVC.h"
 #import "YJShareDetailVC.h"
 #import "YJGuideDetailVC.h"
+#import "YJUsreInfoModel.h"
 
 
 
@@ -88,6 +89,8 @@
     [super viewWillAppear:animated];
 //    self.navigationController.navigationBar.translucent = NO;
 //    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    
+    [self getUserInfo];
     
     //设置导航控制器
     [self setNavitaion];
@@ -209,6 +212,58 @@
     }];
 //    weakSelf.tableView.mj_footer.hidden = YES;
 }
+
+
+
+- (void)getUserInfo{
+    
+    [WBHttpTool GET:[NSString stringWithFormat:@"%@/user/getCurrentUserInfo",BaseUrl] parameters:nil success:^(id responseObject) {
+        
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        XXLog(@"%@",dict);
+        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+        [userDefault setObject:dict[@"code"] forKey:@"code"];
+        
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            
+            NSDictionary *data = dict[@"data"];
+            YJUsreInfoModel *userModel = [YJUsreInfoModel mj_objectWithKeyValues:data[@"userInfo"]];
+            
+            BOOL isAutoLogin = [EMClient sharedClient].options.isAutoLogin;
+            if (!isAutoLogin) {
+                
+                [[EMClient sharedClient] loginWithUsername:userModel.ID
+                                                  password:userModel.imPwd
+                                                completion:^(NSString *aUsername, EMError *aError) {
+                                                    if (!aError) {
+                                                        NSLog(@"登陆成功");
+                                                        [[EMClient sharedClient].options setIsAutoLogin:YES];
+                                                        
+                                                    } else {
+                                                        NSLog(@"登陆失败");
+                                                    }
+                                                }];
+                
+            }
+            
+            [self.tableView reloadData];
+            
+        }else{
+            
+            return ;
+        
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    
+}
+
+
+
 
 - (void)getNetWork{
     

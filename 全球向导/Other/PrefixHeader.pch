@@ -9,7 +9,6 @@
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
 
-#define saveSelectArr @"saveSelectArr"
 
 
 #import "SDAutoLayout.h"
@@ -81,6 +80,14 @@
 #define BaseUrl @"http://globaleguide.com:8082"
 
 #define YJLocalizedString(key)  [NSString stringWithFormat:@"%@", [[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"appLanguage"]] ofType:@"lproj"]] localizedStringForKey:(key) value:nil table:@"YJLocalized"]]
+
+
+#define saveSelectArr @"saveSelectArr"
+
+
+#define kChatUserId @"ChatUserId"// 环信账号
+#define kChatUserNick @"ChatUserNick"
+#define kChatUserPic @"ChatUserPic"
 
 
 // Include any system framework and library headers here that should be included in all compilation units.

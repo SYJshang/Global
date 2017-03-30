@@ -17,6 +17,7 @@
     
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
+        self.accessibilityIdentifier = @"table_cell";
         self.icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"HeaderIcon"]];
         [self.contentView addSubview:self.icon];
         self.icon.sd_layout.centerYEqualToView(self.contentView).heightIs(65).widthIs(65).leftSpaceToView(self.contentView,10);
@@ -42,7 +43,22 @@
         self.time.textColor = [UIColor lightGrayColor];
         self.time.textAlignment = NSTextAlignmentRight;
         self.time.font = [UIFont systemFontOfSize:AdaptedWidth(13)];
-        self.time.sd_layout.rightSpaceToView(self.contentView, 10).centerYEqualToView(self.contentView).widthIs(100).heightIs(15);
+        self.time.sd_layout.rightSpaceToView(self.contentView, 10).centerYEqualToView(self.name).widthIs(100).heightRatioToView(self.name, 1);
+        
+        
+        self.badge = [[UILabel alloc]init];
+        [self.contentView addSubview:self.badge];
+        self.badge.textColor = [UIColor whiteColor];
+        self.badge.textAlignment = NSTextAlignmentCenter;
+        self.badge.backgroundColor = [UIColor redColor];
+        self.badge.font = [UIFont systemFontOfSize:AdaptedWidth(11)];
+        self.badge.sd_layout.rightSpaceToView(self.contentView, 10).centerYEqualToView(self.message).widthIs(20).heightIs(20);
+        self.badge.layer.masksToBounds = YES;
+        self.badge.layer.cornerRadius = 8;
+        self.badge.text = @"1";
+        
+        
+        
         
         UIView *line = [[UIView alloc]init];
         [self.contentView addSubview:line];
@@ -57,15 +73,45 @@
     
 }
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
++ (NSString *)cellIdentifierWithModel:(id)model
+{
+    return @"EaseConversationCell";
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
++ (CGFloat)cellHeightWithModel:(id)model
+{
+    return 80;
 }
 
+
+
+
+- (void)setModel:(id<IConversationModel>)model{
+    
+    _model = model;
+    
+    if ([model.title length] > 0) {
+        self.name.text = model.title;
+    }else{
+        self.name.text = model.conversation.conversationId;
+    }
+    
+    if ([model.avatarURLPath length] > 0){
+            [self.icon sd_setImageWithURL:[NSURL URLWithString:model.avatarURLPath] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+        } else {
+            if (model.avatarImage) {
+                self.icon.image = [UIImage imageNamed:@"HeaderIcon"];
+            }
+        }
+    
+    if (model.conversation.unreadMessagesCount == 0) {
+        self.badge.hidden = YES;
+    }
+    else{
+        self.badge.hidden = NO;
+        self.badge.text = [NSString stringWithFormat:@"%d",model.conversation.unreadMessagesCount];
+    }
+
+    
+}
 @end
