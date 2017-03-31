@@ -8,6 +8,11 @@
 
 #import <EaseUI/EaseUI.h>
 
-@interface YJChatVC : EaseMessageViewController
+@interface YJChatVC : EaseMessageViewController<EaseMessageViewControllerDelegate, EaseMessageViewControllerDataSource>
+
+- (void)showMenuViewController:(UIView *)showInView
+                  andIndexPath:(NSIndexPath *)indexPath
+                   messageType:(EMMessageBodyType)messageType;
+
 
 @end

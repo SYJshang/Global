@@ -43,7 +43,7 @@
  @param conversation 会话对象
  @result 返回实现协议IConversationModel的model对象
  */
-- (EaseConversationModel *)YJMessageVC:(YJMessageVC *)YJMessageVC
+- (id<IConversationModel>)YJMessageVC:(YJMessageVC *)YJMessageVC
                                     modelForConversation:(EMConversation *)conversation;
 
 @optional

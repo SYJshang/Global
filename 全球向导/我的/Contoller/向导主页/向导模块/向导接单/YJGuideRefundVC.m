@@ -278,7 +278,7 @@
     
 }
 
-- (void)btnClickEnvent:(UIButton *)sender{
+- (void)btnClickEve:(UIButton *)sender{
     
     YJOrderBgCell *cell = (YJOrderBgCell *)[[sender superview] superview];
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
@@ -286,16 +286,18 @@
     YJGuideRefundModel *model = self.totalCout[indexPath.row];
     XXLog(@">>>>>>>>>>>%ld",model.status);
     
-        SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"是否联系用户" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
-            
-            YJChatVC *vc = [[YJChatVC alloc]initWithConversationChatter:model.buyerId conversationType:EMConversationTypeChat];
-            [self.navigationController pushViewController:vc animated:YES];
-
-        }];
-        alert.sure_btnTitleColor = TextColor;
-        [alert show];
+    [self goToChat:model];
 
 }
+
+- (void)goToChat:(YJGuideRefundModel *)model{
+    
+    YJChatVC *vc = [[YJChatVC alloc]initWithConversationChatter:model.buyerId conversationType:EMConversationTypeChat];
+    NSString *text1 = self.userInfoMap[model.buyerId];
+    vc.title = text1;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 
 #pragma mark - table view delegate
 

@@ -330,8 +330,7 @@
             
             if (ViewTag.tag == 1) {
                 XXLog(@"联系向导");
-                YJChatVC *vc = [[YJChatVC alloc]initWithConversationChatter:model.guideUserId conversationType:EMConversationTypeChat];
-                [self.navigationController pushViewController:vc animated:YES];
+                [self goToChat:model];
                 
             }else if (ViewTag.tag == 2){
                 YJConfirmController *vc = [[YJConfirmController alloc]init];
@@ -350,8 +349,7 @@
             
             if (ViewTag.tag == 1) {
                 XXLog(@"联系向导");
-                YJChatVC *vc = [[YJChatVC alloc]initWithConversationChatter:model.guideUserId conversationType:EMConversationTypeChat];
-                [self.navigationController pushViewController:vc animated:YES];
+                [self goToChat:model];
                 
             }else if (ViewTag.tag == 2){
                 [self getRefundMoney:model.ID];
@@ -386,8 +384,8 @@
             
             if (ViewTag.tag == 1) {
                 XXLog(@"联系向导");
-                YJChatVC *vc = [[YJChatVC alloc]initWithConversationChatter:model.guideUserId conversationType:EMConversationTypeChat];
-                [self.navigationController pushViewController:vc animated:YES];
+                [self goToChat:model];
+
                 
             }else{
                 
@@ -400,8 +398,7 @@
             
             if (ViewTag.tag == 1) {
                 XXLog(@"联系向导");
-                YJChatVC *vc = [[YJChatVC alloc]initWithConversationChatter:model.guideUserId conversationType:EMConversationTypeChat];
-                [self.navigationController pushViewController:vc animated:YES];
+                [self goToChat:model];
                 
             }else{
                 
@@ -414,8 +411,7 @@
             
             if (ViewTag.tag == 1) {
                 XXLog(@"联系向导");
-                YJChatVC *vc = [[YJChatVC alloc]initWithConversationChatter:model.guideUserId conversationType:EMConversationTypeChat];
-                [self.navigationController pushViewController:vc animated:YES];
+                [self goToChat:model];
                 
             }else{
                 
@@ -429,8 +425,8 @@
             
             if (ViewTag.tag == 1) {
                 XXLog(@"联系向导");
-                YJChatVC *vc = [[YJChatVC alloc]initWithConversationChatter:model.guideUserId conversationType:EMConversationTypeChat];
-                [self.navigationController pushViewController:vc animated:YES];
+                [self goToChat:model];
+
                 
             }else{
                 
@@ -446,8 +442,8 @@
             
             if (ViewTag.tag == 1) {
                 XXLog(@"联系向导");
-                YJChatVC *vc = [[YJChatVC alloc]initWithConversationChatter:model.guideUserId conversationType:EMConversationTypeChat];
-                [self.navigationController pushViewController:vc animated:YES];
+                [self goToChat:model];
+
                 
             }
             break;
@@ -456,6 +452,13 @@
         
         
     }
+}
+
+- (void)goToChat:(YJOrderListModel *)model{
+    
+    YJChatVC *vc = [[YJChatVC alloc]initWithConversationChatter:model.guideUserId conversationType:EMConversationTypeChat];
+    vc.title = model.bigTitle;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 //确认订单

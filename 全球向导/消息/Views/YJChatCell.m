@@ -90,14 +90,21 @@
     
     _model = model;
     
-    if ([model.title length] > 0) {
-        self.name.text = model.title;
+    
+    
+    EMMessage *message = _model.conversation.lastReceivedMessage;
+    NSDictionary *dic = message.ext;
+    XXLog(@"%@",dic);
+    
+    
+    if ([model.title length] > 0 && dic) {
+        self.name.text = dic[@"MyNickName"];
     }else{
         self.name.text = model.conversation.conversationId;
     }
     
-    if ([model.avatarURLPath length] > 0){
-            [self.icon sd_setImageWithURL:[NSURL URLWithString:model.avatarURLPath] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+    if (dic){
+            [self.icon sd_setImageWithURL:[NSURL URLWithString:dic[@"MyPicUrl"]] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
         } else {
             if (model.avatarImage) {
                 self.icon.image = [UIImage imageNamed:@"HeaderIcon"];

@@ -291,8 +291,7 @@
     YJOrderListModel *model = self.totalCout[indexPath.row];
     if (ViewTag.tag == 1) {
         XXLog(@"联系向导");
-        YJChatVC *vc = [[YJChatVC alloc]initWithConversationChatter:model.guideUserId conversationType:EMConversationTypeChat];
-        [self.navigationController pushViewController:vc animated:YES];
+        [self goToChat:model];
         
     }else if (ViewTag.tag == 2){
         YJConfirmController *vc = [[YJConfirmController alloc]init];
@@ -306,6 +305,14 @@
     }
     
 }
+
+- (void)goToChat:(YJOrderListModel *)model{
+    
+    YJChatVC *vc = [[YJChatVC alloc]initWithConversationChatter:model.guideUserId conversationType:EMConversationTypeChat];
+    vc.title = model.bigTitle;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 
 
 //取消待支付、待接单订单

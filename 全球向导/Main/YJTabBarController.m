@@ -12,7 +12,7 @@
 #import "YJGuideController.h"
 #import "YJNewFindController.h"
 #import "YJMineController.h"
-#import "YJMessageVC.h"
+#import "YJMessageListVC.h"
 
 
 
@@ -42,7 +42,7 @@
     [self addChildVc:fitVC Title:YJLocalizedString(@"新发现") withTitleSize:12.0 andFoneName:@"HelveticaNeue-Bold" selectedImage:@"find" withTitleColor:TextColor unselectedImage:@"find-2" withTitleColor:[UIColor lightGrayColor]];
     
     //消息
-    YJMessageVC *storeVC = [[YJMessageVC alloc]init];
+    YJMessageListVC *storeVC = [[YJMessageListVC alloc]init];
 //    storeVC.view.backgroundColor = [UIColor yellowColor];
     [self addChildVc:storeVC Title:YJLocalizedString(@"消息") withTitleSize:12.0 andFoneName:@"HelveticaNeue-Bold" selectedImage:@"message2" withTitleColor:TextColor unselectedImage:@"message" withTitleColor:[UIColor lightGrayColor]];
     //我的

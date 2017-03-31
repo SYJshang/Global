@@ -109,17 +109,21 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+   
+//    NSIndexPath *index = [self.tableView indexPathForSelectedRow];
+
     
-    if (_delegate && [_delegate respondsToSelector:@selector(conversationListViewController:didSelectConversationModel:)]) {
-        EaseConversationModel *model = [self.dataArray objectAtIndex:indexPath.row];
-        [_delegate YJMessageVC:self didSelectConversationModel:model];
-    } else {
-        EaseConversationModel *model = [self.dataArray objectAtIndex:indexPath.row];
-        EaseMessageViewController *viewController = [[EaseMessageViewController alloc] initWithConversationChatter:model.conversation.conversationId conversationType:model.conversation.type];
-        viewController.title = model.title;
-        [self.navigationController pushViewController:viewController animated:YES];
-    }
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    
+//    if (_delegate && [_delegate respondsToSelector:@selector(YJMessageVC:didSelectConversationModel:)]) {
+//        EaseConversationModel *model = [self.dataArray objectAtIndex:indexPath.row];
+//        [_delegate YJMessageVC:self didSelectConversationModel:model];
+//    } else {
+//        EaseConversationModel *model = [self.dataArray objectAtIndex:indexPath.row];
+//        YJChatVC *viewController = [[YJChatVC alloc] initWithConversationChatter:model.conversation.conversationId conversationType:model.conversation.type];
+//        viewController.title = model.title;
+//        [self.navigationController pushViewController:viewController animated:YES];
+//    }
 }
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -162,8 +166,7 @@
 /*!
  @method
  @brief 加载会话列表
- @discussion
- @result
+
  */
 - (void)tableViewDidTriggerHeaderRefresh
 {
@@ -185,7 +188,7 @@
     for (EMConversation *converstion in sorted) {
         EaseConversationModel *model = nil;
         if (self.dataSource && [self.dataSource respondsToSelector:@selector(conversationListViewController:modelForConversation:)]) {
-            model = [self.dataSource YJMessageVC:self modelForConversation:converstion];
+            model = (EaseConversationModel *)[self.dataSource YJMessageVC:self modelForConversation:converstion];
         }
         else{
             model = [[EaseConversationModel alloc] initWithConversation:converstion];
@@ -231,7 +234,6 @@
 /*!
  @method
  @brief 获取会话最近一条消息内容提示
- @discussion
  @param conversationModel  会话model
  @result 返回传入会话model最近一条消息提示
  */
@@ -272,7 +274,6 @@
 /*!
  @method
  @brief 获取会话最近一条消息时间
- @discussion
  @param conversationModel  会话model
  @result 返回传入会话model最近一条消息时间
  */

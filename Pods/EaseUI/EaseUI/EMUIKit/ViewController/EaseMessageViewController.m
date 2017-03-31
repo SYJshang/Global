@@ -1845,6 +1845,10 @@
     }];
 }
 
+
+#pragma mark - EaseMessageViewControllerDataSource
+
+
 - (void)sendTextMessage:(NSString *)text
 {
     NSDictionary *ext = nil;
@@ -1871,10 +1875,20 @@
 
 - (void)sendTextMessage:(NSString *)text withExt:(NSDictionary*)ext
 {
+    
+    NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"userInfo.plist"];
+    NSDictionary *data = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    if (dict) {
+        [dict setObject:data[@"nickName"] forKey:@"MyNickName"];
+        [dict setObject:data[@"headUrl"] forKey:@"MyPicUrl"];
+    }
+    
     EMMessage *message = [EaseSDKHelper sendTextMessage:text
                                                    to:self.conversation.conversationId
                                           messageType:[self _messageTypeFromConversationType]
-                                           messageExt:ext];
+                                           messageExt:dict];
     [self _sendMessage:message];
 }
 
@@ -1882,17 +1896,35 @@
                           longitude:(double)longitude
                          andAddress:(NSString *)address
 {
+    NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"userInfo.plist"];
+    NSDictionary *data = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    if (dict) {
+        [dict setObject:data[@"nickName"] forKey:@"MyNickName"];
+        [dict setObject:data[@"headUrl"] forKey:@"MyPicUrl"];
+    }
+
     EMMessage *message = [EaseSDKHelper sendLocationMessageWithLatitude:latitude
                                                             longitude:longitude
                                                               address:address
                                                                    to:self.conversation.conversationId
                                                           messageType:[self _messageTypeFromConversationType]
-                                                           messageExt:nil];
+                                                           messageExt:dict];
     [self _sendMessage:message];
 }
 
 - (void)sendImageMessageWithData:(NSData *)imageData
 {
+    NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"userInfo.plist"];
+    NSDictionary *data = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    if (dict) {
+        [dict setObject:data[@"nickName"] forKey:@"MyNickName"];
+        [dict setObject:data[@"headUrl"] forKey:@"MyPicUrl"];
+    }
+    
     id progress = nil;
     if (_dataSource && [_dataSource respondsToSelector:@selector(messageViewController:progressDelegateForMessageBodyType:)]) {
         progress = [_dataSource messageViewController:self progressDelegateForMessageBodyType:EMMessageBodyTypeImage];
@@ -1904,12 +1936,21 @@
     EMMessage *message = [EaseSDKHelper sendImageMessageWithImageData:imageData
                                                                    to:self.conversation.conversationId
                                                           messageType:[self _messageTypeFromConversationType]
-                                                           messageExt:nil];
+                                                           messageExt:dict];
     [self _sendMessage:message];
 }
 
 - (void)sendImageMessage:(UIImage *)image
 {
+    NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"userInfo.plist"];
+    NSDictionary *data = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    if (dict) {
+        [dict setObject:data[@"nickName"] forKey:@"MyNickName"];
+        [dict setObject:data[@"headUrl"] forKey:@"MyPicUrl"];
+    }
+    
     id progress = nil;
     if (_dataSource && [_dataSource respondsToSelector:@selector(messageViewController:progressDelegateForMessageBodyType:)]) {
         progress = [_dataSource messageViewController:self progressDelegateForMessageBodyType:EMMessageBodyTypeImage];
@@ -1921,13 +1962,23 @@
     EMMessage *message = [EaseSDKHelper sendImageMessageWithImage:image
                                                              to:self.conversation.conversationId
                                                     messageType:[self _messageTypeFromConversationType]
-                                                     messageExt:nil];
+                                                     messageExt:dict];
     [self _sendMessage:message];
 }
 
 - (void)sendVoiceMessageWithLocalPath:(NSString *)localPath
                              duration:(NSInteger)duration
 {
+    NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"userInfo.plist"];
+    NSDictionary *data = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    if (dict) {
+        [dict setObject:data[@"nickName"] forKey:@"MyNickName"];
+        [dict setObject:data[@"headUrl"] forKey:@"MyPicUrl"];
+    }
+    
+    
     id progress = nil;
     if (_dataSource && [_dataSource respondsToSelector:@selector(messageViewController:progressDelegateForMessageBodyType:)]) {
         progress = [_dataSource messageViewController:self progressDelegateForMessageBodyType:EMMessageBodyTypeVoice];
@@ -1940,12 +1991,21 @@
                                                            duration:duration
                                                                  to:self.conversation.conversationId
                                                         messageType:[self _messageTypeFromConversationType]
-                                                         messageExt:nil];
+                                                         messageExt:dict];
     [self _sendMessage:message];
 }
 
 - (void)sendVideoMessageWithURL:(NSURL *)url
 {
+    NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"userInfo.plist"];
+    NSDictionary *data = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    if (dict) {
+        [dict setObject:data[@"nickName"] forKey:@"MyNickName"];
+        [dict setObject:data[@"headUrl"] forKey:@"MyPicUrl"];
+    }
+    
     id progress = nil;
     if (_dataSource && [_dataSource respondsToSelector:@selector(messageViewController:progressDelegateForMessageBodyType:)]) {
         progress = [_dataSource messageViewController:self progressDelegateForMessageBodyType:EMMessageBodyTypeVideo];
@@ -1957,7 +2017,7 @@
     EMMessage *message = [EaseSDKHelper sendVideoMessageWithURL:url
                                                            to:self.conversation.conversationId
                                                   messageType:[self _messageTypeFromConversationType]
-                                                   messageExt:nil];
+                                                   messageExt:dict];
     [self _sendMessage:message];
 }
 

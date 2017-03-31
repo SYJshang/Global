@@ -238,6 +238,7 @@
 		1AC0362D1E778073005FCB65 /* CHTTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC0362C1E778073005FCB65 /* CHTTextView.m */; };
 		1AC036301E77904A005FCB65 /* YJPayBindingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC0362F1E77904A005FCB65 /* YJPayBindingVC.m */; };
 		1AC036341E77DD1D005FCB65 /* YJMinePropertyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC036331E77DD1D005FCB65 /* YJMinePropertyVC.m */; };
+		1AC148DC1E8E34AC00C7805E /* YJMessageListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC148DB1E8E34AC00C7805E /* YJMessageListVC.m */; };
 		1ACA58671DC32E85003D640A /* YJLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ACA58661DC32E85003D640A /* YJLoginController.m */; };
 		1ACA586A1DC32EBC003D640A /* YJLoginFirstController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ACA58691DC32EBC003D640A /* YJLoginFirstController.m */; };
 		1ACA586D1DC7240F003D640A /* YJRegsiterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ACA586C1DC7240F003D640A /* YJRegsiterController.m */; };
@@ -832,6 +833,8 @@
 		1AC0362F1E77904A005FCB65 /* YJPayBindingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJPayBindingVC.m; sourceTree = "<group>"; };
 		1AC036321E77DD1D005FCB65 /* YJMinePropertyVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJMinePropertyVC.h; sourceTree = "<group>"; };
 		1AC036331E77DD1D005FCB65 /* YJMinePropertyVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJMinePropertyVC.m; sourceTree = "<group>"; };
+		1AC148DA1E8E34AC00C7805E /* YJMessageListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJMessageListVC.h; sourceTree = "<group>"; };
+		1AC148DB1E8E34AC00C7805E /* YJMessageListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJMessageListVC.m; sourceTree = "<group>"; };
 		1ACA58651DC32E85003D640A /* YJLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJLoginController.h; sourceTree = "<group>"; };
 		1ACA58661DC32E85003D640A /* YJLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJLoginController.m; sourceTree = "<group>"; };
 		1ACA58681DC32EBC003D640A /* YJLoginFirstController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJLoginFirstController.h; sourceTree = "<group>"; };
@@ -2204,6 +2207,8 @@
 			children = (
 				1A25B7481E83B90B000B49AF /* YJMessageVC.h */,
 				1A25B7491E83B90B000B49AF /* YJMessageVC.m */,
+				1AC148DA1E8E34AC00C7805E /* YJMessageListVC.h */,
+				1AC148DB1E8E34AC00C7805E /* YJMessageListVC.m */,
 				1A25B74B1E83BACD000B49AF /* YJChatVC.h */,
 				1A25B74C1E83BACD000B49AF /* YJChatVC.m */,
 			);
@@ -2966,6 +2971,7 @@
 				1A78871A1E1DE084004F3271 /* SGLocationPickerCenterView.m in Sources */,
 				1A0DF3261DBFAA2300E2EE9F /* SearchResult.m in Sources */,
 				1AF3AB911E6567DD00F5E568 /* YJPhotoVC.m in Sources */,
+				1AC148DC1E8E34AC00C7805E /* YJMessageListVC.m in Sources */,
 				1AF3AB961E6567DD00F5E568 /* YJEditServerVC.m in Sources */,
 				1A5ED9641DC9F176002FAF0A /* SZYKeychain.m in Sources */,
 				1A7887651E1F2C9A004F3271 /* YJCityModel.m in Sources */,

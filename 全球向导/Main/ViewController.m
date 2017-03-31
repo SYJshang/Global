@@ -102,6 +102,23 @@
         //设置网络状态
         [self NetWorks];
     }
+    
+    __weak __typeof(self) weakSelf = self;
+
+    //添加刷新
+    weakSelf.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self getNetWork];
+    }];
+    
+    //    weakSelf.tableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:weakSelf refreshingAction:@selector(getNetWork)];
+    //自动更改透明度
+    weakSelf.tableView.mj_header.automaticallyChangeAlpha = YES;
+    [weakSelf.tableView.mj_header beginRefreshing];
+    
+    weakSelf.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        [self getMoreData];
+    }];
+
 }
 
 //设置网络状态
@@ -197,20 +214,7 @@
     [_tableView registerClass:[YJSecondCell class] forCellReuseIdentifier:@"secCell"];
     [_tableView registerClass:[YJThreeCell class] forCellReuseIdentifier:@"thCell"];
     [_tableView registerClass:[YJFourCell class] forCellReuseIdentifier:@"forCell"];
-    //添加刷新
-    weakSelf.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        [self getNetWork];
-    }];
-    
-    //    weakSelf.tableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:weakSelf refreshingAction:@selector(getNetWork)];
-    //自动更改透明度
-    weakSelf.tableView.mj_header.automaticallyChangeAlpha = YES;
-    [weakSelf.tableView.mj_header beginRefreshing];
-    
-    weakSelf.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        [self getMoreData];
-    }];
-//    weakSelf.tableView.mj_footer.hidden = YES;
+  //    weakSelf.tableView.mj_footer.hidden = YES;
 }
 
 
@@ -228,6 +232,12 @@
         if ([dict[@"code"] isEqualToString:@"1"]) {
             
             NSDictionary *data = dict[@"data"];
+            
+            NSDictionary *usrInfo = data[@"userInfo"];
+            NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"userInfo.plist"];
+            [NSKeyedArchiver archiveRootObject:usrInfo toFile:path];
+            
+
             YJUsreInfoModel *userModel = [YJUsreInfoModel mj_objectWithKeyValues:data[@"userInfo"]];
             
             BOOL isAutoLogin = [EMClient sharedClient].options.isAutoLogin;
