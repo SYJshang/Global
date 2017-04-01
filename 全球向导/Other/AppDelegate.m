@@ -23,13 +23,44 @@ static NSString *appLanguage = @"appLanguage";
 #define USHARE_DEMO_APPKEY @"58cfb59fc8957663c8001a9e"
 
 
-@interface AppDelegate ()
+@interface AppDelegate ()<EMChatManagerDelegate>
 
 @property (nonatomic, strong)CLLocationManager *location;
 
 @end
 
 @implementation AppDelegate
+
+- (void)didReceiveMessages:(NSArray *)aMessages
+{
+    for (EMMessage *message in aMessages) {
+        
+        EaseMessageModel *model = [[EaseMessageModel alloc] initWithMessage:message];
+        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+        
+        [userDefault setObject:model.message.ext forKey:model.message.from];
+        [userDefault synchronize];
+        
+//        
+//        if ([self.conversation.conversationId isEqualToString:message.conversationId]) {
+//            [self addMessageToDataSource:message progress:nil];
+//            
+//            [self _sendHasReadResponseForMessages:@[message]
+//                                           isRead:NO];
+//            
+//            if ([self _shouldMarkMessageAsRead])
+//            {
+//                [self.conversation markMessageAsReadWithId:message.messageId error:nil];
+//            }
+//        }
+    }
+}
+
+
+- (void)dealloc{
+    
+    [[EMClient sharedClient].chatManager removeDelegate:self];
+}
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -90,6 +121,9 @@ static NSString *appLanguage = @"appLanguage";
     EMOptions *options = [EMOptions optionsWithAppkey:@"1159170320115280#globalguide"];
     options.apnsCertName = apnsCertName;
     [[EMClient sharedClient] initializeSDKWithOptions:options];
+    
+    
+    [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
 
     
 

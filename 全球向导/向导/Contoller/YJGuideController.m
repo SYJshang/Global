@@ -259,7 +259,7 @@
             NSDictionary *data = dict[@"data"];
             
             //存储字典，在下个筛选页面会用到
-            NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"userInfo.plist"];
+            NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"user.plist"];
             [NSKeyedArchiver archiveRootObject:data toFile:path];
 
             

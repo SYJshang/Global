@@ -33,7 +33,7 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     
-    self.navigationController.navigationBar.translucent = NO;
+//    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
@@ -53,6 +53,19 @@
 }
 
 
+- (void)viewWillDisappear:(BOOL)animated{
+    
+    [super viewWillDisappear:animated];
+    
+    
+//    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+//    [userDefault removeObjectForKey:@"formss"];
+    
+    //    [userDefault setObject:model.message.ext forKey:@"formss"];
+    //    [userDefault synchronize];
+    
+
+}
 
 
 
@@ -168,6 +181,8 @@
 //    }
 }
 
+
+
 #pragma mark - EaseMessageViewControllerDataSource
 
 - (id<IMessageModel>)messageViewController:(EaseMessageViewController *)viewController
@@ -181,10 +196,18 @@
     NSDictionary *data = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    if (dict) {
+    if (data) {
         [dict setObject:data[@"nickName"] forKey:@"MyNickName"];
         [dict setObject:data[@"headUrl"] forKey:@"MyPicUrl"];
     }
+    
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    
+//    [userDefault setObject:model.message.ext forKey:@"formss"];
+//    [userDefault synchronize];
+    
+    NSDictionary *ext = [userDefault objectForKey:model.message.from];
+    
 
     if (model.isSender) {
         
@@ -198,24 +221,21 @@
         //头像占位图
         model.failImageName = @"HeaderIcon.png";
         
-        
-        
-        
     }else{
         NSLog(@"对方发送");
         
+       
         
         
         //头像
-        model.avatarURLPath = model.message.ext[@"MyPicUrl"];
+        model.avatarURLPath = ext[@"MyPicUrl"];
         //NSLog(@"+++++++______+++%@",model.avatarURLPath);
         //昵称
-        model.nickname = model.message.ext[@"MyNickName"];
+        model.nickname = ext[@"MyNickName"];
+        
+        
         //头像占位图
         model.failImageName = @"HeaderIcon.png";
-        
-
-        
     }
     //NSLog(@"+++++++++++%@",model.message);
     return model;

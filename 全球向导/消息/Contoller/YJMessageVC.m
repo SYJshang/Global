@@ -24,7 +24,6 @@
     
     
     
-    [self tableViewDidTriggerHeaderRefresh];
     
 }
 
@@ -43,7 +42,8 @@
     self.showRefreshHeader = YES;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    
+    [self tableViewDidTriggerHeaderRefresh];
+
 
 }
 

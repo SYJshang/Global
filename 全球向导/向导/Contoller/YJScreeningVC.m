@@ -147,7 +147,7 @@
 //            NSDictionary *data = dict[@"data"];
     
             //类型
-        NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"userInfo.plist"];
+        NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"user.plist"];
         NSDictionary *data = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     
         self.guideTypeArr = [YJGuideTypeModel mj_objectArrayWithKeyValuesArray:data[@"guideTypeList"]];

@@ -146,7 +146,8 @@
 
 - (void)call{
     
-    YJChatVC *vc = [[YJChatVC alloc]initWithConversationChatter:@"24" conversationType:EMConversationTypeChat];
+    YJChatVC *vc = [[YJChatVC alloc]initWithConversationChatter:self.guideModel.userId conversationType:EMConversationTypeChat];
+    vc.title = self.guideModel.realName;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -495,7 +496,7 @@
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         
-        
+        XXLog(@"%@",dict);
         
         if ([dict[@"code"] isEqualToString:@"1"]) {
             NSDictionary *data = dict[@"data"];

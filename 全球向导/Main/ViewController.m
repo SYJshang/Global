@@ -231,14 +231,14 @@
         
         if ([dict[@"code"] isEqualToString:@"1"]) {
             
-            NSDictionary *data = dict[@"data"];
+            NSDictionary *da = dict[@"data"];
             
-            NSDictionary *usrInfo = data[@"userInfo"];
+            NSDictionary *usrInfo = da[@"userInfo"];
             NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"userInfo.plist"];
             [NSKeyedArchiver archiveRootObject:usrInfo toFile:path];
             
 
-            YJUsreInfoModel *userModel = [YJUsreInfoModel mj_objectWithKeyValues:data[@"userInfo"]];
+            YJUsreInfoModel *userModel = [YJUsreInfoModel mj_objectWithKeyValues:da[@"userInfo"]];
             
             BOOL isAutoLogin = [EMClient sharedClient].options.isAutoLogin;
             if (!isAutoLogin) {

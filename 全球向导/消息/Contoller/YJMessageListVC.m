@@ -30,6 +30,7 @@
     [self networkStateView];
         
     [self tableViewDidTriggerHeaderRefresh];
+    XXLog(@"%@",self.dataArray);
     [self removeEmptyConversationsFromDB];
 }
 
@@ -69,7 +70,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     
-    YJChatCell *cell = (YJChatCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+//    YJChatCell *cell = (YJChatCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     
     self.index = indexPath;
     

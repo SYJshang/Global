@@ -1542,6 +1542,7 @@
 - (void)didReceiveMessages:(NSArray *)aMessages
 {
     for (EMMessage *message in aMessages) {
+        
         if ([self.conversation.conversationId isEqualToString:message.conversationId]) {
             [self addMessageToDataSource:message progress:nil];
             
@@ -1880,7 +1881,7 @@
     NSDictionary *data = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    if (dict) {
+    if (data) {
         [dict setObject:data[@"nickName"] forKey:@"MyNickName"];
         [dict setObject:data[@"headUrl"] forKey:@"MyPicUrl"];
     }
@@ -1900,7 +1901,7 @@
     NSDictionary *data = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    if (dict) {
+    if (data) {
         [dict setObject:data[@"nickName"] forKey:@"MyNickName"];
         [dict setObject:data[@"headUrl"] forKey:@"MyPicUrl"];
     }
@@ -1920,7 +1921,7 @@
     NSDictionary *data = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    if (dict) {
+    if (data) {
         [dict setObject:data[@"nickName"] forKey:@"MyNickName"];
         [dict setObject:data[@"headUrl"] forKey:@"MyPicUrl"];
     }
@@ -1946,7 +1947,7 @@
     NSDictionary *data = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    if (dict) {
+    if (data) {
         [dict setObject:data[@"nickName"] forKey:@"MyNickName"];
         [dict setObject:data[@"headUrl"] forKey:@"MyPicUrl"];
     }
@@ -1973,7 +1974,7 @@
     NSDictionary *data = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    if (dict) {
+    if (data) {
         [dict setObject:data[@"nickName"] forKey:@"MyNickName"];
         [dict setObject:data[@"headUrl"] forKey:@"MyPicUrl"];
     }
@@ -2001,7 +2002,7 @@
     NSDictionary *data = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    if (dict) {
+    if (data) {
         [dict setObject:data[@"nickName"] forKey:@"MyNickName"];
         [dict setObject:data[@"headUrl"] forKey:@"MyPicUrl"];
     }

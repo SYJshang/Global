@@ -18,9 +18,9 @@
 #import "EaseBubbleView.h"
 
 /** @brief 缩略图宽度(当缩略图宽度为0或者宽度大于高度时) */
-#define kEMMessageImageSizeWidth 120
+#define kEMMessageImageSizeWidth 160
 /** @brief 缩略图高度(当缩略图高度为0或者宽度小于高度时) */
-#define kEMMessageImageSizeHeight 120
+#define kEMMessageImageSizeHeight 180
 /** @brief 位置消息cell的高度 */
 #define kEMMessageLocationHeight 95
 /** @brief 语音消息cell的高度 */
