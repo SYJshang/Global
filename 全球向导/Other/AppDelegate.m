@@ -40,19 +40,7 @@ static NSString *appLanguage = @"appLanguage";
         
         [userDefault setObject:model.message.ext forKey:model.message.from];
         [userDefault synchronize];
-        
-//        
-//        if ([self.conversation.conversationId isEqualToString:message.conversationId]) {
-//            [self addMessageToDataSource:message progress:nil];
-//            
-//            [self _sendHasReadResponseForMessages:@[message]
-//                                           isRead:NO];
-//            
-//            if ([self _shouldMarkMessageAsRead])
-//            {
-//                [self.conversation markMessageAsReadWithId:message.messageId error:nil];
-//            }
-//        }
+
     }
 }
 
@@ -122,16 +110,51 @@ static NSString *appLanguage = @"appLanguage";
     options.apnsCertName = apnsCertName;
     [[EMClient sharedClient] initializeSDKWithOptions:options];
     
+    application.applicationIconBadgeNumber = 0;
     
+
+    
+    //iOS8以上 注册APNS
+//    if (NSClassFromString(@"UNUserNotificationCenter")) {
+//        [[UNUserNotificationCenter currentNotificationCenter] requestAuthorizationWithOptions:UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert completionHandler:^(BOOL granted, NSError *error) {
+//            if (granted) {
+//#if !TARGET_IPHONE_SIMULATOR
+//                [application registerForRemoteNotifications];
+//#endif
+//            }
+//        }];
+//        return;
+//    }
+    
+    if([application respondsToSelector:@selector(registerUserNotificationSettings:)])
+    {
+        UIUserNotificationType notificationTypes = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:notificationTypes categories:nil];
+        [application registerUserNotificationSettings:settings];
+    }
+    
+#if !TARGET_IPHONE_SIMULATOR
+    if ([application respondsToSelector:@selector(registerForRemoteNotifications)]) {
+        [application registerForRemoteNotifications];
+    }else{
+        UIRemoteNotificationType notificationTypes = UIRemoteNotificationTypeBadge |
+        UIRemoteNotificationTypeSound |
+        UIRemoteNotificationTypeAlert;
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
+    }
+#endif
+    
+    //添加监听在线推送消息
     [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
+    [[EMClient sharedClient] setApnsNickname:@"全球向导"];
 
     
-
+//    
     // Override point for customization after application launch.
     return YES;
 }
-    
-    
+
+
 - (void)confitUShareSettings{
         /*
          * 打开图片水印
@@ -153,7 +176,7 @@ static NSString *appLanguage = @"appLanguage";
 - (void)configUSharePlatforms
     {
         /* 设置微信的appKey和appSecret */
-        [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wxdc1e388c3822c80b" appSecret:@"3baf1193c85774b3fd9d18447d76cab0" redirectURL:@"http://mobile.umeng.com/social"];
+        [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wxa373ab30fe698506" appSecret:@"a2c5c231bd2943d880427e4110057ae1" redirectURL:@"http://mobile.umeng.com/social"];
         /*
          * 移除相应平台的分享，如微信收藏
          */
@@ -205,6 +228,43 @@ static NSString *appLanguage = @"appLanguage";
         }
     }
 }
+
+
+#pragma mark - 注册推送，把deviceToken传递给sdk
+
+//监听环信在线推送消息
+- (void)messagesDidReceive:(NSArray *)aMessages{
+    
+#if !TARGET_IPHONE_SIMULATOR
+//    [self playSoundAndVibration];
+    
+    BOOL isAppActivity = [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive;
+    if (!isAppActivity) {
+//        [self showNotificationWithMessage:message];
+    }
+#endif
+    //aMessages是一个对象,包含了发过来的所有信息,怎么提取想要的信息我会在后面贴出来.
+}
+
+//- (void)playSoundAndVibration{
+//    
+//    
+//}
+
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+    
+    [[EMClient sharedClient] bindDeviceToken:deviceToken];
+    
+}
+
+// 注册deviceToken失败
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    NSLog(@"error -- %@",error);
+}
+
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

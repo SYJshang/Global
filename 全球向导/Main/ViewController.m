@@ -228,6 +228,7 @@
         XXLog(@"%@",dict);
         NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
         [userDefault setObject:dict[@"code"] forKey:@"code"];
+        [userDefault synchronize];
         
         if ([dict[@"code"] isEqualToString:@"1"]) {
             

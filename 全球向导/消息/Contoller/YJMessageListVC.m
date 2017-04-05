@@ -10,6 +10,8 @@
 #import "YJMessageListVC.h"
 #import "YJChatVC.h"
 #import "YJChatCell.h"
+#import "NoNetwork.h"
+#import "YJLoginFirstController.h"
 
 @interface YJMessageListVC ()<YJMessageVCDelegate, YJMessageVCDataSource>
 
@@ -17,9 +19,18 @@
 
 @property (nonatomic, strong) NSIndexPath *index;
 
+@property (nonatomic, strong) NoNetwork *noNetWork;
+
 @end
 
 @implementation YJMessageListVC
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self refresh];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -27,18 +38,68 @@
     self.delegate = self;
     self.dataSource = self;
     
-    [self networkStateView];
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    NSString *code = [userDefault objectForKey:@"code"];
+    if ([code isEqualToString:@"1"]) {
+        [self networkStateView];
         
-    [self tableViewDidTriggerHeaderRefresh];
-    XXLog(@"%@",self.dataArray);
-    [self removeEmptyConversationsFromDB];
+        [self tableViewDidTriggerHeaderRefresh];
+        
+        if (self.dataArray.count == 0) {
+            [self noDatas];
+        }
+        XXLog(@"%@",self.dataArray);
+        [self removeEmptyConversationsFromDB];
+
+    }else{
+        
+        [self NetWorks];
+    }
+    
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self refresh];
+//设置网络状态
+- (void)NetWorks{
+    
+    self.tableView.hidden = YES;
+    
+    [self.noNetWork removeFromSuperview];
+    
+    self.noNetWork = [[NoNetwork alloc]init];
+    self.noNetWork.titleLabel.text = @"未登录！\n请重新登录后重试！";
+    __weak typeof(self) weakSelf = self;
+    self.noNetWork.btnBlock = ^{
+        
+        [weakSelf presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+        
+    };
+    [self.noNetWork.btrefresh setTitle:@"登录" forState:UIControlStateNormal];
+    [self.view addSubview:self.noNetWork];
 }
+
+- (void)noDatas{
+    
+    self.tableView.hidden = YES;
+    
+    [self.noNetWork removeFromSuperview];
+    
+    self.noNetWork = [[NoNetwork alloc]init];
+    self.noNetWork.btrefresh.hidden = YES;
+    self.noNetWork.titleLabel.text = @"暂无数据\n赶快去整出动静吧";
+    //    self.noNetWork.imageView.alignmentRectInsets = UIEdgeInsetsMake(0, 0, 40, 0);
+    //    self.noNetWork.titleLabel.alignmentRectInsets = UIEdgeInsetsMake(0, 0, 40, 0);
+    //    self.noNetWork.imageView.frame = CGRectMake(100, screen_height - 340 * KHeight_Scale,screen_width - 200, 160);
+    //    self.noNetWork.titleLabel.frame = CGRectMake(40, self.noNetWork.imageView.bottom , screen_width, 40);
+    self.noNetWork.btnBlock = ^{
+        
+    };
+    self.noNetWork.btrefresh.hidden = YES;
+    [self.view addSubview:self.noNetWork];
+}
+
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -101,7 +101,6 @@
 		1A26D1051DB8612B006A6363 /* ____UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A26D1041DB8612B006A6363 /* ____UITests.m */; };
 		1A26D11F1DB861E1006A6363 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A26D1141DB861E1006A6363 /* ViewController.m */; };
 		1A26D1201DB861E1006A6363 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A26D1171DB861E1006A6363 /* AppDelegate.m */; };
-		1A26D1221DB861E1006A6363 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A26D1191DB861E1006A6363 /* LaunchScreen.storyboard */; };
 		1A2783301E2C63070044FB41 /* YJPriceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A27832F1E2C63070044FB41 /* YJPriceModel.m */; };
 		1A2783331E2C6D760044FB41 /* YJSexModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2783321E2C6D760044FB41 /* YJSexModel.m */; };
 		1A2783361E2CB9AC0044FB41 /* YJProductModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2783351E2CB9AC0044FB41 /* YJProductModel.m */; };
@@ -566,7 +565,6 @@
 		1A26D1141DB861E1006A6363 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = ../../Main/ViewController.m; sourceTree = "<group>"; };
 		1A26D1161DB861E1006A6363 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1A26D1171DB861E1006A6363 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		1A26D11A1DB861E1006A6363 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1A27832E1E2C63070044FB41 /* YJPriceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJPriceModel.h; sourceTree = "<group>"; };
 		1A27832F1E2C63070044FB41 /* YJPriceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJPriceModel.m; sourceTree = "<group>"; };
 		1A2783311E2C6D760044FB41 /* YJSexModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJSexModel.h; sourceTree = "<group>"; };
@@ -599,11 +597,9 @@
 		1A2F4A5D1E8A4C6900656B5F /* YJLanguageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJLanguageVC.h; sourceTree = "<group>"; };
 		1A2F4A5E1E8A4C6900656B5F /* YJLanguageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJLanguageVC.m; sourceTree = "<group>"; };
 		1A2F4A631E8A588100656B5F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/YJLocalized.strings; sourceTree = "<group>"; };
-		1A2F4A651E8A589900656B5F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		1A2F4A661E8A589A00656B5F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/YJLocalized.strings"; sourceTree = "<group>"; };
 		1A2F4A6A1E8A5A1E00656B5F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		1A2F4A6C1E8A5A4000656B5F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		1A2F4A6D1E8B3EA000656B5F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		1A2F4A6E1E8B3EA000656B5F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/YJLocalized.strings"; sourceTree = "<group>"; };
 		1A2F4A6F1E8B3EA100656B5F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		1A2F4A701E8CB4F600656B5F /* YJImgNumView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJImgNumView.h; sourceTree = "<group>"; };
@@ -692,6 +688,7 @@
 		1A6C74721DFA4F1B002A9481 /* YJStateModle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJStateModle.m; sourceTree = "<group>"; };
 		1A6C747C1DFAA405002A9481 /* YJGOrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJGOrderCell.h; sourceTree = "<group>"; };
 		1A6C747D1DFAA405002A9481 /* YJGOrderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJGOrderCell.m; sourceTree = "<group>"; };
+		1A7432CB1E94913500097ACD /* 全球向导.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "全球向导.entitlements"; sourceTree = "<group>"; };
 		1A7886DA1E1B2FB7004F3271 /* YJSetUserInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJSetUserInfoVC.h; sourceTree = "<group>"; };
 		1A7886DB1E1B2FB7004F3271 /* YJSetUserInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJSetUserInfoVC.m; sourceTree = "<group>"; };
 		1A7886E41E1D02D9004F3271 /* YJAreaMianVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJAreaMianVC.h; sourceTree = "<group>"; };
@@ -1377,6 +1374,7 @@
 		1A26D0DE1DB8612B006A6363 /* 全球向导 */ = {
 			isa = PBXGroup;
 			children = (
+				1A7432CB1E94913500097ACD /* 全球向导.entitlements */,
 				1ACF0E2B1E7FC6AF003E27E1 /* ThirdSDK */,
 				1AFD22581DD9AD0F00DA255D /* Tool */,
 				1ACA58641DC32E24003D640A /* 登录注册 */,
@@ -1438,7 +1436,6 @@
 				1A109DB31DB8635300D7A74B /* main.m */,
 				1A26D1161DB861E1006A6363 /* AppDelegate.h */,
 				1A26D1171DB861E1006A6363 /* AppDelegate.m */,
-				1A26D1191DB861E1006A6363 /* LaunchScreen.storyboard */,
 				1AE0FC391DC18E8600417351 /* PrefixHeader.pch */,
 				1A2F4A641E8A588100656B5F /* YJLocalized.strings */,
 				1A2F4A6B1E8A5A1E00656B5F /* InfoPlist.strings */,
@@ -2706,6 +2703,11 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = NA4PKZ6VZL;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					1A26D0F41DB8612B006A6363 = {
 						CreatedOnToolsVersion = 8.0;
@@ -2767,7 +2769,6 @@
 				1A02766F1E84D0F0008E8E25 /* 3.jpg in Resources */,
 				1A78871B1E1DE084004F3271 /* SGLocationPickerCenterView.xib in Resources */,
 				1A2F4A691E8A5A1E00656B5F /* InfoPlist.strings in Resources */,
-				1A26D1221DB861E1006A6363 /* LaunchScreen.storyboard in Resources */,
 				1A0DF31D1DBFAA2300E2EE9F /* CityViewCell.xib in Resources */,
 				1A2F4A621E8A588100656B5F /* YJLocalized.strings in Resources */,
 				1A02766D1E84D0F0008E8E25 /* 1.jpg in Resources */,
@@ -3276,16 +3277,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		1A26D1191DB861E1006A6363 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1A26D11A1DB861E1006A6363 /* Base */,
-				1A2F4A651E8A589900656B5F /* zh-Hans */,
-				1A2F4A6D1E8B3EA000656B5F /* zh-Hant */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
 		1A2F4A641E8A588100656B5F /* YJLocalized.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -3404,6 +3395,8 @@
 			baseConfigurationReference = 7FA6346CB6B898327326824B /* Pods-全球向导.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = "全球向导/全球向导.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = NA4PKZ6VZL;
 				ENABLE_BITCODE = NO;
@@ -3428,6 +3421,8 @@
 			baseConfigurationReference = CE2ECB13E2C598B35A44D310 /* Pods-全球向导.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = "全球向导/全球向导.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = NA4PKZ6VZL;
 				ENABLE_BITCODE = NO;

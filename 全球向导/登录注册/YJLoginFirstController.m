@@ -349,6 +349,8 @@
     
     if ([MobileNumberHelper isMobileNumber:self.nameTf.text] && self.iconCode.text.length == 4 && [MobileNumberHelper isValidPassword:self.passwordTf.text]) {
         
+        [[EMClient sharedClient] logout:YES];
+        
         XXLog(@"判断正确");
         NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
         [parameter setObject:self.nameTf.text forKey:@"username"];
