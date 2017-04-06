@@ -565,6 +565,9 @@
         NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
         [parameter setObject:self.iconCode.text forKey:@"code"];
         [parameter setObject:self.nameTf.text forKey:@"mobile"];
+        NSString *deviceId = [KeychainIDFA IDFA];
+        [parameter setObject:deviceId forKey:@"deviceId"];
+
         
         XXLog(@"%@",parameter);
         NSString *url = [NSString stringWithFormat:@"%@/user/getMobileCodeForReg",BaseUrl];

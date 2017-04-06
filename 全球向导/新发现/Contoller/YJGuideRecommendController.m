@@ -44,6 +44,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = BackGray;
+
+    
     self.currenPage = 1;
     
 //    self.view.backgroundColor = BackGray;

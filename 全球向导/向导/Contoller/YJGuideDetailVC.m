@@ -146,17 +146,49 @@
 
 - (void)call{
     
-    YJChatVC *vc = [[YJChatVC alloc]initWithConversationChatter:self.guideModel.userId conversationType:EMConversationTypeChat];
-    vc.title = self.guideModel.realName;
-    [self.navigationController pushViewController:vc animated:YES];
+    
+    NSString *code = [[NSUserDefaults standardUserDefaults] objectForKey:@"code"];
+    if ([code isEqualToString:@"1"]) {
+        YJChatVC *vc = [[YJChatVC alloc]initWithConversationChatter:self.guideModel.userId conversationType:EMConversationTypeChat];
+        vc.title = self.guideModel.realName;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else{
+        SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"未登录！是否现在登录？" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            
+            [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+            
+        }];
+        alert.sure_btnTitleColor = TextColor;
+        [alert show];
+
+        
+    }
+    
+   
 }
 
 
 - (void)action:(YJButton *)btn{
     
-    YJOrderFormController *vc = [[YJOrderFormController alloc]init];
-    vc.guideID = self.guideId;
-    [self.navigationController pushViewController:vc animated:YES];
+    NSString *code = [[NSUserDefaults standardUserDefaults] objectForKey:@"code"];
+    if ([code isEqualToString:@"1"]) {
+        
+        YJOrderFormController *vc = [[YJOrderFormController alloc]init];
+        vc.guideID = self.guideId;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else{
+        SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"未登录！是否现在登录？" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            
+            [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+        }];
+        alert.sure_btnTitleColor = TextColor;
+        [alert show];
+        
+        
+    }
+    
+    
+   
     
 }
 

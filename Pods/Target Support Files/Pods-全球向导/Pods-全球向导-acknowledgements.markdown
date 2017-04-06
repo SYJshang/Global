@@ -85,6 +85,14 @@ THE SOFTWARE.
 
 Hyphenate Inc. 2016
 
+## JCore
+
+Copyright jpush.cn
+
+## JPush
+
+Copyright jpush.cn
+
 ## MBProgressHUD
 
 Copyright (c) 2009-2015 Matej Bukovinski

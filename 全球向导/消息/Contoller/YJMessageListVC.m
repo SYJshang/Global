@@ -30,13 +30,6 @@
 {
     [super viewWillAppear:animated];
     [self refresh];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    self.showRefreshHeader = YES;
-    self.delegate = self;
-    self.dataSource = self;
     
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     NSString *code = [userDefault objectForKey:@"code"];
@@ -50,11 +43,24 @@
         }
         XXLog(@"%@",self.dataArray);
         [self removeEmptyConversationsFromDB];
-
+        
     }else{
         
         [self NetWorks];
     }
+
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.view.backgroundColor = BackGray;
+
+    
+    self.showRefreshHeader = YES;
+    self.delegate = self;
+    self.dataSource = self;
+    
     
 }
 
@@ -85,7 +91,7 @@
     
     self.noNetWork = [[NoNetwork alloc]init];
     self.noNetWork.btrefresh.hidden = YES;
-    self.noNetWork.titleLabel.text = @"暂无数据\n赶快去整出动静吧";
+    self.noNetWork.titleLabel.text = @"暂无消息！";
     //    self.noNetWork.imageView.alignmentRectInsets = UIEdgeInsetsMake(0, 0, 40, 0);
     //    self.noNetWork.titleLabel.alignmentRectInsets = UIEdgeInsetsMake(0, 0, 40, 0);
     //    self.noNetWork.imageView.frame = CGRectMake(100, screen_height - 340 * KHeight_Scale,screen_width - 200, 160);

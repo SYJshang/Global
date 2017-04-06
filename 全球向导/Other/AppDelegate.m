@@ -13,8 +13,11 @@
 #import "NSFileManager+DN.h"
 #import "DataManager.h"
 #import "YJLoginController.h"
+#import "YJChatVC.h"
+#import "YJMessageListVC.h"
 #import <AlipaySDK/AlipaySDK.h>
 #import <UMSocialCore/UMSocialCore.h>
+#import <UserNotifications/UserNotifications.h>
 
 //#import "WSMovieController.h"
 
@@ -23,9 +26,13 @@ static NSString *appLanguage = @"appLanguage";
 #define USHARE_DEMO_APPKEY @"58cfb59fc8957663c8001a9e"
 
 
-@interface AppDelegate ()<EMChatManagerDelegate>
+@interface AppDelegate ()<EMChatManagerDelegate,JPUSHRegisterDelegate>
 
 @property (nonatomic, strong)CLLocationManager *location;
+
+@property (nonatomic, strong) YJTabBarController *tabBarVC;
+
+
 
 @end
 
@@ -33,6 +40,9 @@ static NSString *appLanguage = @"appLanguage";
 
 - (void)didReceiveMessages:(NSArray *)aMessages
 {
+    
+    BOOL isRefreshCons = YES;
+
     for (EMMessage *message in aMessages) {
         
         EaseMessageModel *model = [[EaseMessageModel alloc] initWithMessage:message];
@@ -40,14 +50,71 @@ static NSString *appLanguage = @"appLanguage";
         
         [userDefault setObject:model.message.ext forKey:model.message.from];
         [userDefault synchronize];
+        
+        BOOL needShowNotification = (message.chatType != EMChatTypeChat) ? [self.tabBarVC _needShowNotification:message.conversationId] : YES;
+        
+        UIApplicationState state = [[UIApplication sharedApplication] applicationState];
+        if (needShowNotification) {
+#if !TARGET_IPHONE_SIMULATOR
+            switch (state) {
+                case UIApplicationStateActive:
+                    [self.tabBarVC playSoundAndVibration];
+                    break;
+                case UIApplicationStateInactive:
+                    [self.tabBarVC playSoundAndVibration];
+                    break;
+                case UIApplicationStateBackground:
+                    [self.tabBarVC showNotificationWithMessage:message];
+                    break;
+                default:
+                    break;
+            }
+#endif
+        }
+        
+        if (self.tabBarVC.chatVC == nil) {
+            self.tabBarVC.chatVC = [self.tabBarVC _getCurrentChatView];
+        }
+        BOOL isChatting = NO;
+        if (self.tabBarVC.chatVC) {
+            isChatting = [message.conversationId isEqualToString:self.tabBarVC.chatVC.conversation.conversationId];
+        }
+        if (self.tabBarVC.chatVC == nil || !isChatting || state == UIApplicationStateBackground) {
+            [self.tabBarVC _handleReceivedAtMessage:message];
+            
+            if (self.tabBarVC.messageList) {
+                [self.tabBarVC.messageList tableViewDidTriggerHeaderRefresh];
+            }
+            
+            if (self) {
+                [self.tabBarVC setupUnreadMessageCount];
+            }
+            return;
+        }
+        
+        if (isChatting) {
+            isRefreshCons = NO;
+        }
 
     }
+    
+    if (isRefreshCons) {
+        if (self.tabBarVC.messageList) {
+            [self.tabBarVC.messageList refresh];
+        }
+        
+        if (self.tabBarVC) {
+            [self.tabBarVC setupUnreadMessageCount];
+        }
+    }
+
 }
 
 
 - (void)dealloc{
     
     [[EMClient sharedClient].chatManager removeDelegate:self];
+    
 }
 
 
@@ -73,7 +140,8 @@ static NSString *appLanguage = @"appLanguage";
     
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
-    self.window.rootViewController = [[YJTabBarController alloc]init];
+    self.tabBarVC = [[YJTabBarController alloc]init];
+    self.window.rootViewController = self.tabBarVC;
 
     [self.window makeKeyAndVisible];
     
@@ -112,8 +180,6 @@ static NSString *appLanguage = @"appLanguage";
     
     application.applicationIconBadgeNumber = 0;
     
-
-    
     //iOS8以上 注册APNS
 //    if (NSClassFromString(@"UNUserNotificationCenter")) {
 //        [[UNUserNotificationCenter currentNotificationCenter] requestAuthorizationWithOptions:UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert completionHandler:^(BOOL granted, NSError *error) {
@@ -123,7 +189,8 @@ static NSString *appLanguage = @"appLanguage";
 //#endif
 //            }
 //        }];
-//        return;
+//        
+//        
 //    }
     
     if([application respondsToSelector:@selector(registerUserNotificationSettings:)])
@@ -147,6 +214,34 @@ static NSString *appLanguage = @"appLanguage";
     //添加监听在线推送消息
     [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
     [[EMClient sharedClient] setApnsNickname:@"全球向导"];
+    
+    
+    //极光
+    //Required
+    //notice: 3.0.0及以后版本注册可以这样写，也可以继续用之前的注册方式
+    JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
+    entity.types = JPAuthorizationOptionAlert|JPAuthorizationOptionBadge|JPAuthorizationOptionSound;
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+        // 可以添加自定义categories
+        // NSSet<UNNotificationCategory *> *categories for iOS10 or later
+        // NSSet<UIUserNotificationCategory *> *categories for iOS8 and iOS9
+    }
+    [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
+    
+    // Optional
+    // 获取IDFA
+    // 如需使用IDFA功能请添加此代码并在初始化方法的advertisingIdentifier参数中填写对应值
+//    NSString *advertisingId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+    
+    // Required
+    // init Push
+    // notice: 2.1.5版本的SDK新增的注册方法，改成可上报IDFA，如果没有使用IDFA直接传nil
+    // 如需继续使用pushConfig.plist文件声明appKey等配置内容，请依旧使用[JPUSHService setupWithOption:launchOptions]方式初始化。
+    [JPUSHService setupWithOption:launchOptions appKey:@"baea3b57c9e2c6e5c81e41ab"
+                          channel:@"App Store"
+                 apsForProduction:0
+            advertisingIdentifier:nil];
+    
 
     
 //    
@@ -232,6 +327,52 @@ static NSString *appLanguage = @"appLanguage";
 
 #pragma mark - 注册推送，把deviceToken传递给sdk
 
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+    
+    [[EMClient sharedClient] bindDeviceToken:deviceToken];
+    /// Required - 注册 DeviceToken
+    [JPUSHService registerDeviceToken:deviceToken];
+    
+}
+
+// 注册deviceToken失败
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    NSLog(@"error -- %@",error);
+    
+}
+
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    [JPUSHService handleRemoteNotification:userInfo];
+
+    if (self.tabBarVC) {
+        [self.tabBarVC jumpToChatList];
+    }
+    [self easemobApplication:application didReceiveRemoteNotification:userInfo];
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    if (self.tabBarVC) {
+        [self.tabBarVC didReceiveLocalNotification:notification];
+    }
+    
+    
+}
+
+
+
+//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler NS_AVAILABLE_IOS(7_0);
+
+- (void)easemobApplication:(UIApplication *)application
+didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    [[EaseSDKHelper shareHelper] hyphenateApplication:application didReceiveRemoteNotification:userInfo];
+}
+
+
+
 //监听环信在线推送消息
 - (void)messagesDidReceive:(NSArray *)aMessages{
     
@@ -250,19 +391,6 @@ static NSString *appLanguage = @"appLanguage";
 //    
 //    
 //}
-
-
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
-    
-    [[EMClient sharedClient] bindDeviceToken:deviceToken];
-    
-}
-
-// 注册deviceToken失败
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
-    NSLog(@"error -- %@",error);
-}
-
 
 
 
@@ -390,6 +518,39 @@ static NSString *appLanguage = @"appLanguage";
     }
     return result;
 }
+
+
+#pragma mark- JPUSHRegisterDelegate
+
+// iOS 10 Support
+- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler {
+    // Required
+    NSDictionary * userInfo = notification.request.content.userInfo;
+    if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        [JPUSHService handleRemoteNotification:userInfo];
+    }
+    completionHandler(UNNotificationPresentationOptionAlert); // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以选择设置
+}
+
+// iOS 10 Support
+- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler {
+    // Required
+    NSDictionary * userInfo = response.notification.request.content.userInfo;
+    if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        [JPUSHService handleRemoteNotification:userInfo];
+    }
+    completionHandler();  // 系统要求执行这个方法
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    
+    // Required, iOS 7 Support
+    [JPUSHService handleRemoteNotification:userInfo];
+    completionHandler(UIBackgroundFetchResultNewData);
+}
+
+
+
 
 
 @end

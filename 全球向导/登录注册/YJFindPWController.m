@@ -435,25 +435,24 @@
         NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
         [parameter setObject:self.nameTf.text forKey:@"mobile"];
         [parameter setObject:self.iconCode.text forKey:@"code"];
-        
-        XXLog(@"%@",parameter);
-        NSString *url = [NSString stringWithFormat:@"%@/user/getUserInfo",BaseUrl];
-        
-        XXLog(@"%@",url);
-        
-    [WBHttpTool Post:url parameters:parameter success:^(id responseObject) {
+        NSString *deviceId = [KeychainIDFA IDFA];
+        [parameter setObject:deviceId forKey:@"deviceId"];
+
+        [WBHttpTool Post:[NSString stringWithFormat:@"%@/user/getUserInfo",BaseUrl] parameters:parameter success:^(id responseObject) {
             
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
             XXLog(@".....%@",dict);
         
 
         if ([dict[@"code"] isEqualToString:@"1"]) {
-       
+            NSMutableDictionary *parame = [NSMutableDictionary dictionary];
             NSString *url = [NSString stringWithFormat:@"%@/user/getMobileCodeForForgetPwd",BaseUrl];
+            NSString *deviceId = [KeychainIDFA IDFA];
+            [parame setObject:deviceId forKey:@"deviceId"];
         
         XXLog(@"%@",url);
 
-        [WBHttpTool Post:url parameters:nil success:^(id responseObject) {
+        [WBHttpTool Post:url parameters:parame success:^(id responseObject) {
             
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
             XXLog(@".....%@",dict);

@@ -7,14 +7,7 @@
 //
 
 #import "YJTabBarController.h"
-#import "YJNavigationController.h"
-#import "ViewController.h"
-#import "YJGuideController.h"
-#import "YJNewFindController.h"
-#import "YJMineController.h"
-#import "YJMessageListVC.h"
-#import "YJChatVC.h"
-#import <UserNotifications/UserNotifications.h>
+
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
@@ -29,14 +22,13 @@ static NSString *kGroupName = @"GroupName";
 
 #define TextColor [UIColor colorWithRed:255 / 255.0 green:198 / 255.0 blue:0 / 255.0 alpha:1.0]
 
-@interface YJTabBarController ()<EMChatManagerDelegate>
+@interface YJTabBarController ()
 
 @property (strong, nonatomic) NSDate *lastPlaySoundDate;
 
+@property (nonatomic, strong) YJNavigationController *nav;
 
-@property (nonatomic, strong) YJMessageListVC *messageList;
 
-@property (nonatomic, strong) YJChatVC *chatVC;
 
 @end
 
@@ -45,7 +37,7 @@ static NSString *kGroupName = @"GroupName";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
+//    [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
     
     //主页
     ViewController *main = [[ViewController alloc]init] ;
@@ -91,80 +83,14 @@ static NSString *kGroupName = @"GroupName";
     
     //选中字体颜色
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:selectColor,NSFontAttributeName:[UIFont fontWithName:foneName size:size]} forState:UIControlStateSelected];
-    YJNavigationController *nav = [[YJNavigationController alloc] initWithRootViewController:childVc];
+    self.nav = [[YJNavigationController alloc] initWithRootViewController:childVc];
     // 添加为子控制器
-    [self addChildViewController:nav];
+    [self addChildViewController:self.nav];
 }
 
-//移除通知
-- (void)dealloc{
-    
-    [[EMClient sharedClient].chatManager removeDelegate:self];
-}
+
 
 #pragma mark - 本地推送实现
-
-- (void)didReceiveMessages:(NSArray *)aMessages{
-    
-    BOOL isRefreshCons = YES;
-    for(EMMessage *message in aMessages){
-        BOOL needShowNotification = (message.chatType != EMChatTypeChat) ? [self _needShowNotification:message.conversationId] : YES;
-        
-        UIApplicationState state = [[UIApplication sharedApplication] applicationState];
-        if (needShowNotification) {
-#if !TARGET_IPHONE_SIMULATOR
-            switch (state) {
-                case UIApplicationStateActive:
-                    [self playSoundAndVibration];
-                    break;
-                case UIApplicationStateInactive:
-                    [self playSoundAndVibration];
-                    break;
-                case UIApplicationStateBackground:
-                    [self showNotificationWithMessage:message];
-                    break;
-                default:
-                    break;
-            }
-#endif
-        }
-        
-        if (self.chatVC == nil) {
-            self.chatVC = [self _getCurrentChatView];
-        }
-        BOOL isChatting = NO;
-        if (_chatVC) {
-            isChatting = [message.conversationId isEqualToString:_chatVC.conversation.conversationId];
-        }
-        if (_chatVC == nil || !isChatting || state == UIApplicationStateBackground) {
-            [self _handleReceivedAtMessage:message];
-            
-            if (self.messageList) {
-                [self.messageList refresh];
-            }
-            
-            if (self) {
-                [self setupUnreadMessageCount];
-            }
-            return;
-        }
-        
-        if (isChatting) {
-            isRefreshCons = NO;
-        }
-    }
-    
-    if (isRefreshCons) {
-        if (self.messageList) {
-            [self.messageList refresh];
-        }
-        
-        if (self) {
-            [self setupUnreadMessageCount];
-        }
-    }
-
-}
 
 - (YJChatVC *)_getCurrentChatView
 {
@@ -391,6 +317,160 @@ static NSString *kGroupName = @"GroupName";
             }
         }
     }
+}
+
+
+#pragma mark - public
+
+- (void)jumpToChatList
+{
+    if ([self.navigationController.topViewController isKindOfClass:[YJChatVC class]]) {
+        //        ChatViewController *chatController = (ChatViewController *)self.navigationController.topViewController;
+        //        [chatController hideImagePicker];
+    }
+    else if(self.messageList)
+    {
+        [self.navigationController popToViewController:self animated:NO];
+        self.messageList.tabBarItem.badgeValue = nil;
+        [self setSelectedViewController:self.messageList];
+    }
+}
+- (void)didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    
+    XXLog(@"%@",self.navigationController.topViewController);
+    if (userInfo)
+    {
+        if ([self.nav.topViewController isKindOfClass:[YJChatVC class]]) {
+            //            ChatViewController *chatController = (ChatViewController *)self.navigationController.topViewController;
+            //            [chatController hideImagePicker];
+        }
+        
+        NSArray *viewControllers = self.nav.viewControllers;
+        [viewControllers enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop){
+            if (obj != self)
+            {
+                if (![obj isKindOfClass:[YJChatVC class]])
+                {
+                    [self.navigationController popViewControllerAnimated:NO];
+                }
+                else
+                {
+                    NSString *conversationChatter = userInfo[kConversationChatter];
+                    YJChatVC *chatViewController = (YJChatVC *)obj;
+                    if (![chatViewController.conversation.conversationId isEqualToString:conversationChatter])
+                    {
+                        [self.navigationController popViewControllerAnimated:NO];
+                        EMChatType messageType = [userInfo[kMessageType] intValue];
+#ifdef REDPACKET_AVALABLE
+                        chatViewController = [[RedPacketChatViewController alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#else
+                        chatViewController = [[YJChatVC alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#endif
+                        [self.navigationController pushViewController:chatViewController animated:NO];
+                    }
+                    *stop= YES;
+                }
+            }
+            else
+            {
+                YJChatVC *chatViewController = nil;
+                NSString *conversationChatter = userInfo[kConversationChatter];
+                EMChatType messageType = [userInfo[kMessageType] intValue];
+#ifdef REDPACKET_AVALABLE
+                chatViewController = [[RedPacketChatViewController alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#else
+                chatViewController = [[YJChatVC alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#endif
+                [self.navigationController pushViewController:chatViewController animated:NO];
+            }
+        }];
+    }else if (self.messageList)
+    {
+        [self.navigationController popToViewController:self animated:NO];
+        self.messageList.tabBarItem.badgeValue = nil;
+        [self setSelectedViewController:self.messageList];
+        
+    }
+}
+
+- (void)didReceiveUserNotification:(UNNotification *)notification
+{
+    NSDictionary *userInfo = notification.request.content.userInfo;
+    if (userInfo)
+    {
+        if ([self.navigationController.topViewController isKindOfClass:[YJChatVC class]]) {
+            //            ChatViewController *chatController = (ChatViewController *)self.navigationController.topViewController;
+            //            [chatController hideImagePicker];
+        }
+        
+        NSArray *viewControllers = self.navigationController.viewControllers;
+        [viewControllers enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop){
+            if (obj != self)
+            {
+               
+                if (![obj isKindOfClass:[YJChatVC class]])
+                {
+                    [self.navigationController popViewControllerAnimated:NO];
+                }
+                else
+                {
+                    NSString *conversationChatter = userInfo[kConversationChatter];
+                    YJChatVC *chatViewController = (YJChatVC *)obj;
+                    if (![chatViewController.conversation.conversationId isEqualToString:conversationChatter])
+                    {
+                        [self.navigationController popViewControllerAnimated:NO];
+                        EMChatType messageType = [userInfo[kMessageType] intValue];
+#ifdef REDPACKET_AVALABLE
+                        chatViewController = [[RedPacketChatViewController alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#else
+                        chatViewController = [[YJChatVC alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#endif
+                        [self.navigationController pushViewController:chatViewController animated:NO];
+                    }
+                    *stop= YES;
+                }
+            }
+            else
+            {
+                YJChatVC *chatViewController = nil;
+                NSString *conversationChatter = userInfo[kConversationChatter];
+                EMChatType messageType = [userInfo[kMessageType] intValue];
+#ifdef REDPACKET_AVALABLE
+                chatViewController = [[RedPacketChatViewController alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#else
+                chatViewController = [[YJChatVC alloc] initWithConversationChatter:conversationChatter conversationType:[self conversationTypeFromMessageType:messageType]];
+#endif
+                [self.navigationController pushViewController:chatViewController animated:NO];
+            }
+        }];
+    }
+    else if (self.messageList)
+    {
+        [self.navigationController popToViewController:self animated:NO];
+        self.messageList.tabBarItem.badgeValue = nil;
+        [self setSelectedViewController:self.messageList];
+    }
+}
+
+- (EMConversationType)conversationTypeFromMessageType:(EMChatType)type
+{
+    EMConversationType conversatinType = EMConversationTypeChat;
+    switch (type) {
+        case EMChatTypeChat:
+            conversatinType = EMConversationTypeChat;
+            break;
+        case EMChatTypeGroupChat:
+            conversatinType = EMConversationTypeGroupChat;
+            break;
+        case EMChatTypeChatRoom:
+            conversatinType = EMConversationTypeChatRoom;
+            break;
+        default:
+            break;
+    }
+    return conversatinType;
 }
 
 
