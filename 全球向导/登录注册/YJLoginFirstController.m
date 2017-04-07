@@ -17,7 +17,6 @@
 #import "WBHttpTool.h"
 #import "YJTabBarController.h"
 #import "MBProgressHUD.h"
-#import "KeychainIDFA.h"
 
 
 
@@ -252,7 +251,7 @@
     [self.icon addGestureRecognizer:tap];
     
     NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
-    NSString *deviceId = [KeychainIDFA IDFA];
+    NSString *deviceId = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceID"];
     [parameter setObject:deviceId forKey:@"deviceId"];
     
     [WBHttpTool GET:[NSString stringWithFormat:@"%@/verify/create",BaseUrl] parameters:parameter success:^(id responseObject) {
@@ -329,7 +328,7 @@
 - (void)refuseIcon{
     
     NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
-    NSString *deviceId = [KeychainIDFA IDFA];
+    NSString *deviceId = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceID"];
     [parameter setObject:deviceId forKey:@"deviceId"];
     
     [WBHttpTool GET:[NSString stringWithFormat:@"%@/verify/create",BaseUrl] parameters:parameter success:^(id responseObject) {
@@ -356,7 +355,7 @@
         [parameter setObject:self.nameTf.text forKey:@"username"];
         [parameter setObject:self.iconCode.text forKey:@"code"];
         [parameter setObject:self.passwordTf.text forKey:@"password"];
-        NSString *deviceId = [KeychainIDFA IDFA];
+        NSString *deviceId = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceID"];
         [parameter setObject:deviceId forKey:@"deviceId"];
         XXLog(@"%@",parameter);
         NSString *url = [NSString stringWithFormat:@"%@/user/loginProcess",BaseUrl];
@@ -406,7 +405,7 @@
                 [alertV show];
 
                 NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
-                NSString *deviceId = [KeychainIDFA IDFA];
+                NSString *deviceId = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceID"];
                 [parameter setObject:deviceId forKey:@"deviceId"];
                 
                 [WBHttpTool GET:[NSString stringWithFormat:@"%@/verify/create",BaseUrl] parameters:parameter success:^(id responseObject) {
@@ -439,7 +438,7 @@
         [alertV show];
         
         NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
-        NSString *deviceId = [KeychainIDFA IDFA];
+        NSString *deviceId = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceID"];
         [parameter setObject:deviceId forKey:@"deviceId"];
         
         [WBHttpTool GET:[NSString stringWithFormat:@"%@/verify/create",BaseUrl] parameters:parameter success:^(id responseObject) {

@@ -46,8 +46,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
     self.view.backgroundColor = BackGray;
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height - 64) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
@@ -257,9 +258,9 @@
 - (void)payOrder{
     
     NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
-//    [parameter setObject:self.orderID forKey:@"orderId"];
+    [parameter setObject:self.orderID forKey:@"orderId"];
 //      /userInfo/myOrder/findAppPay/%@
-    [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myOrder/findAppPay/%@",BaseUrl,self.orderID] parameters:parameter success:^(id responseObject) {
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myOrder/pay",BaseUrl] parameters:parameter success:^(id responseObject) {
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         XXLog(@"%@",dict);
@@ -271,24 +272,24 @@
 //            [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
 //                NSLog(@"reslut = %@",resultDic);
 //            }];
-            
-            NSString *appScheme = @"alisdkdemo";
-            NSString *order = dict[@"data"][@"payParam"];
-            
-            [[AlipaySDK defaultService] payOrder:order fromScheme:appScheme callback:^(NSDictionary *resultDic) {
-                
-                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-                hud.mode = MBProgressHUDModeText;
-                hud.labelColor = [UIColor whiteColor];
-                hud.color = [UIColor blackColor];
-                hud.labelText = NSLocalizedString(@"支付成功！", @"HUD message title");
-                [hud hide:YES afterDelay:2.0];
-
-                
-                NSLog(@"reslut = %@",resultDic);
-
-
-            }];
+//            
+//            NSString *appScheme = @"alisdkdemo";
+//            NSString *order = dict[@"data"][@"payParam"];
+//            
+//            [[AlipaySDK defaultService] payOrder:order fromScheme:appScheme callback:^(NSDictionary *resultDic) {
+//                
+//                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+//                hud.mode = MBProgressHUDModeText;
+//                hud.labelColor = [UIColor whiteColor];
+//                hud.color = [UIColor blackColor];
+//                hud.labelText = NSLocalizedString(@"支付成功！", @"HUD message title");
+//                [hud hide:YES afterDelay:2.0];
+//
+//                
+//                NSLog(@"reslut = %@",resultDic);
+//
+//
+//            }];
 
 
         }else{

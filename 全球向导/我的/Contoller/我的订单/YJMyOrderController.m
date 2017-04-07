@@ -29,8 +29,8 @@
     self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
 
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    self.navigationController.navigationBar.translucent = NO;
+    self.automaticallyAdjustsScrollViewInsets = YES;
+//    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];

@@ -13,7 +13,6 @@
 #import "YJFinshController.h"
 #import "WBHttpTool.h"
 #import "MobileNumberHelper.h"
-#import "KeychainIDFA.h"
 
 
 @interface YJFindPWController ()<UITextFieldDelegate>
@@ -206,7 +205,7 @@
     [self.view addSubview:self.icon];
     
     NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
-    NSString *deviceId = [KeychainIDFA IDFA];
+    NSString *deviceId = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceID"];
     [parameter setObject:deviceId forKey:@"deviceId"];
     
     [WBHttpTool GET:[NSString stringWithFormat:@"%@/verify/create",BaseUrl] parameters:parameter success:^(id responseObject) {
@@ -318,7 +317,7 @@
 - (void)refuseIcon{
     
     NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
-    NSString *deviceId = [KeychainIDFA IDFA];
+    NSString *deviceId = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceID"];
     [parameter setObject:deviceId forKey:@"deviceId"];
     
     [WBHttpTool GET:[NSString stringWithFormat:@"%@/verify/create",BaseUrl] parameters:parameter success:^(id responseObject) {
@@ -342,7 +341,7 @@
         NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
         [parameter setObject:self.numCode.text forKey:@"mobileCode"];
         [parameter setObject:self.passwordTf.text forKey:@"loginPwd"];
-        NSString *deviceId = [KeychainIDFA IDFA];
+        NSString *deviceId = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceID"];
         [parameter setObject:deviceId forKey:@"deviceId"];
         
         XXLog(@"%@",parameter);
@@ -370,7 +369,7 @@
                 
                 
                 NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
-                NSString *deviceId = [KeychainIDFA IDFA];
+                NSString *deviceId = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceID"];
                 [parameter setObject:deviceId forKey:@"deviceId"];
                 
                 [WBHttpTool GET:[NSString stringWithFormat:@"%@/verify/create",BaseUrl] parameters:parameter success:^(id responseObject) {
@@ -435,7 +434,7 @@
         NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
         [parameter setObject:self.nameTf.text forKey:@"mobile"];
         [parameter setObject:self.iconCode.text forKey:@"code"];
-        NSString *deviceId = [KeychainIDFA IDFA];
+        NSString *deviceId = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceID"];
         [parameter setObject:deviceId forKey:@"deviceId"];
 
         [WBHttpTool Post:[NSString stringWithFormat:@"%@/user/getUserInfo",BaseUrl] parameters:parameter success:^(id responseObject) {
@@ -447,7 +446,7 @@
         if ([dict[@"code"] isEqualToString:@"1"]) {
             NSMutableDictionary *parame = [NSMutableDictionary dictionary];
             NSString *url = [NSString stringWithFormat:@"%@/user/getMobileCodeForForgetPwd",BaseUrl];
-            NSString *deviceId = [KeychainIDFA IDFA];
+            NSString *deviceId = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceID"];
             [parame setObject:deviceId forKey:@"deviceId"];
         
         XXLog(@"%@",url);
@@ -476,7 +475,7 @@
                     alertV.sure_btnTitleColor = TextColor;
                     [alertV show];
                     NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
-                    NSString *deviceId = [KeychainIDFA IDFA];
+                    NSString *deviceId = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceID"];
                     [parameter setObject:deviceId forKey:@"deviceId"];
                     
                     [WBHttpTool GET:[NSString stringWithFormat:@"%@/verify/create",BaseUrl] parameters:parameter success:^(id responseObject) {
@@ -512,7 +511,7 @@
         [alertV show];
         
         NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
-        NSString *deviceId = [KeychainIDFA IDFA];
+        NSString *deviceId = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceID"];
         [parameter setObject:deviceId forKey:@"deviceId"];
         
         [WBHttpTool GET:[NSString stringWithFormat:@"%@/verify/create",BaseUrl] parameters:parameter success:^(id responseObject) {

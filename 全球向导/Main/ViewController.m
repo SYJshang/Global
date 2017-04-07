@@ -139,10 +139,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+   
+       
+    
     self.guideType = [NSDictionary dictionary];
-    
-    
-       //设置tableView
+    //设置tableView
     [self setTable];
     
     

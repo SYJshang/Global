@@ -18,6 +18,7 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import <UMSocialCore/UMSocialCore.h>
 #import <UserNotifications/UserNotifications.h>
+#import "KeychainIDFA.h"
 
 //#import "WSMovieController.h"
 
@@ -119,6 +120,15 @@ static NSString *appLanguage = @"appLanguage";
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firsts"]){
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firsts"];
+        
+        NSString *deviceID = [KeychainIDFA IDFA];
+        deviceID = [deviceID stringByReplacingOccurrencesOfString:@"-"withString:@"_"];
+        [[NSUserDefaults standardUserDefaults] setObject:deviceID forKey:@"deviceID"];
+    }
+
     
     
     //避免启动页图片一闪而过的现象
@@ -222,6 +232,9 @@ static NSString *appLanguage = @"appLanguage";
     JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
     entity.types = JPAuthorizationOptionAlert|JPAuthorizationOptionBadge|JPAuthorizationOptionSound;
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+        
+        [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |UIUserNotificationTypeSound |UIUserNotificationTypeAlert)categories:nil];
+
         // 可以添加自定义categories
         // NSSet<UNNotificationCategory *> *categories for iOS10 or later
         // NSSet<UIUserNotificationCategory *> *categories for iOS8 and iOS9
@@ -329,9 +342,17 @@ static NSString *appLanguage = @"appLanguage";
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
     
+    NSString *deviceId = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceID"];
+    [JPUSHService setTags:nil alias:deviceId fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+        
+        NSLog(@"rescode: %d, \ntags: %@, \nalias: %@\n", iResCode, iTags , iAlias);
+
+    }];
+    
     [[EMClient sharedClient] bindDeviceToken:deviceToken];
     /// Required - 注册 DeviceToken
     [JPUSHService registerDeviceToken:deviceToken];
+
     
 }
 
@@ -363,7 +384,6 @@ static NSString *appLanguage = @"appLanguage";
 
 
 
-//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler NS_AVAILABLE_IOS(7_0);
 
 - (void)easemobApplication:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo
@@ -410,7 +430,12 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
 // APP将要从后台返回
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
+    [application setApplicationIconBadgeNumber:0];
+    [application cancelAllLocalNotifications];
+    [JPUSHService setBadge:0];
+    
     [[EMClient sharedClient] applicationWillEnterForeground:application];
+    
 }
 
 
@@ -522,6 +547,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
 
 #pragma mark- JPUSHRegisterDelegate
 
+
 // iOS 10 Support
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler {
     // Required
@@ -542,14 +568,31 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
     completionHandler();  // 系统要求执行这个方法
 }
 
+//2. 如果App状态为正在前台或者点击通知栏的通知消息，苹果的回调函数将被调用
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    // 取得 APNs 标准信息内容
+    NSDictionary *aps = [userInfo valueForKey:@"aps"];
+    NSString *content = [aps valueForKey:@"alert"]; //推送显示的内容
+    NSInteger badge = [[aps valueForKey:@"badge"] integerValue]; //badge数量
+    NSString *sound = [aps valueForKey:@"sound"]; //播放的声音
+    // 取得Extras字段内容
+    NSString *customizeField1 = [userInfo valueForKey:@"customizeExtras"]; //服务端中Extras字段，key是自己定义的
+    NSLog(@"content =[%@], badge=[%ld], sound=[%@], customize field  =[%@]",content,(long)badge,sound,customizeField1);
+    //判断程序是否在前台运行
+    if (application.applicationState ==UIApplicationStateActive) {
+        //如果应用在前台，在这里执行
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"极光推送"message:content delegate:nil cancelButtonTitle:@"ok"otherButtonTitles:nil,nil];
+        [alertView show];
+    }
     
-    // Required, iOS 7 Support
+    // iOS 7 Support Required,处理收到的APNS信息
+    //如果应用在后台，在这里执行
     [JPUSHService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
+    
+    [JPUSHService setBadge:0];//清空JPush服务器中存储的badge值
+    [application setApplicationIconBadgeNumber:0];//小红点清0操作
 }
-
-
 
 
 

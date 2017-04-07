@@ -48,6 +48,9 @@
 
 @property (nonatomic, strong) YJGuideModel *guideModel;
 
+@property (nonatomic, strong) NSString *allNums;
+@property (nonatomic, strong) NSString *allPIds;
+
 @end
 
 @implementation YJOrderFormController
@@ -207,7 +210,7 @@
     self.priceAll = [[UILabel alloc]init];
     self.priceAll.textColor = TextColor;
     self.priceAll.backgroundColor = [UIColor whiteColor];
-    self.priceAll.text = @"合计 ￥100";
+    self.priceAll.text = @"合计 ￥0";
     [self.view addSubview:self.priceAll];
     self.priceAll.textAlignment = NSTextAlignmentCenter;
     self.priceAll.font = [UIFont systemFontOfSize:17.0];
@@ -559,14 +562,15 @@
             break;
     }
     
-    //刷新表格
-    [self.tableView reloadData];
-    //     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:index,nil] withRowAnimation:UITableViewRowAnimationNone];
+  
+//         [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:index,nil] withRowAnimation:UITableViewRowAnimationNone];
     
     YJProductModel *model = self.productArr[index.row];
     //计算总价
     //    [self totalPrice];
     [self totalPrice:model];
+    //刷新表格
+    [self.tableView reloadData];
     
 }
 
@@ -621,8 +625,14 @@
     
     NSMutableDictionary *parmter = [NSMutableDictionary dictionary];
     [parmter setObject:self.guideID forKey:@"guideId"];
-    [parmter setObject:productIds forKey:@"productIds"];
-    [parmter setObject:numbers forKey:@"numbers"];
+    
+    self.allPIds = [self string:productIds];
+    self.allNums = [self string:numbers];
+    
+    [parmter setObject:self.allPIds forKey:@"productIds"];
+    [parmter setObject:self.allNums forKey:@"numbers"];
+    
+    
     if (phone.length == 11) {
         [parmter setObject:phone forKey:@"phone"];
     }else{
@@ -683,6 +693,25 @@
     
 }
 
+
+//字符串分割
+- (NSString *)string:(NSString *)str{
+    
+    NSString *longStr = @"";
+    NSArray *temp = [str componentsSeparatedByString:@","];
+    XXLog(@"%@",temp);
+    
+    for (int i = 0;i < self.productArr.count;i++) {
+        
+        NSString *s = temp[i];
+        longStr = [NSString stringWithFormat:@"%@%@,",longStr,s];
+        XXLog(@"%@",longStr);
+
+    }
+    
+    return longStr;
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

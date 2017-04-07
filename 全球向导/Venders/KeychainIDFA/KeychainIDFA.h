@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 //设置你idfa的Keychain标示,该标示相当于key,而你的IDFA是value
-#define IDFA_STRING @"com.qixin.test.idfa"
+#define IDFA_STRING @"com.xiaomiao.test.idfa"
 
 @interface KeychainIDFA : NSObject
 
