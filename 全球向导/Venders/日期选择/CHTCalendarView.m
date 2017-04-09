@@ -434,6 +434,9 @@ static const CGFloat timeInterval = 8 * 60 * 60;
 
 - (void)clickDay:(NSInteger)day {
 
+    if ([self.selectedDays isKindOfClass:[NSMutableArray class]]) {
+        XXLog(@"%@",self.selectedDays);
+    }
 
     
     
@@ -474,15 +477,43 @@ static const CGFloat timeInterval = 8 * 60 * 60;
             break;
             //currentDayText比dayText小
         case NSOrderedDescending:
-            if ([self.selectedDays containsObject:dayText]) {
-                [self.selectedDays removeObject:dayText];
-            } else {
-                if (!self.selectMany) {
-                    [self.selectedDays removeAllObjects];
+            
+            if (self.isPostDate) {
+                
+                if ([self.selectedDays isKindOfClass:[NSMutableArray class]]) {
+                    XXLog(@"%@",self.selectedDays);
                 }
-                [self.selectedDays addObject:dayText];
+                
+                if ([self.selectedDays containsObject:dayText]) {
+                    [self.selectedDays removeObject:dayText];
+                    [self disDate:dayText];
+                } else {
+                    if (!self.selectMany) {
+                        [self.selectedDays removeAllObjects];
+                    }
+                    [self.selectedDays addObject:dayText];
+                    [self postDate:dayText];
+                }
+                break;
+
+            }else{
+                
+                if ([self.selectedDays isKindOfClass:[NSMutableArray class]]) {
+                    XXLog(@"%@",self.selectedDays);
+                }
+                
+                if ([self.selectedDays containsObject:dayText]) {
+                    [self.selectedDays removeObject:dayText];
+                } else {
+                    if (!self.selectMany) {
+                        [self.selectedDays removeAllObjects];
+                    }
+                    [self.selectedDays addObject:dayText];
+                }
+ 
             }
-                   break;
+            
+                break;
             //currentDayText比dayText相等
         case NSOrderedSame:
         {
@@ -499,22 +530,6 @@ static const CGFloat timeInterval = 8 * 60 * 60;
             break;
     }
     
-    
-//    if (result) {
-//        if ([self.selectedDays containsObject:dayText]) {
-//            [self.selectedDays removeObject:dayText];
-//        } else {
-//            if (!self.selectMany) {
-//                [self.selectedDays removeAllObjects];
-//            }
-//            [self.selectedDays addObject:dayText];
-//        }
-////        [self.selectedDays removeObject:dayText];
-//    }else{
-//        
-//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请选择当前日期日后的时间" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-//        [alert show];
-//    }
         [self reloadInterface];
     
     
@@ -557,5 +572,55 @@ static const CGFloat timeInterval = 8 * 60 * 60;
         self.displayMonth++;
     }
 }
+
+#pragma mark - 上传日期
+- (void)postDate:(NSString *)date{
+    
+    NSMutableDictionary *parametr = [NSMutableDictionary dictionary];
+    [parametr setObject:date forKey:@"useDate"];
+    
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/guide/guideSche/add",BaseUrl] parameters:parametr success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.mode = MBProgressHUDModeText;
+            hud.labelColor = [UIColor whiteColor];
+            hud.color = [UIColor blackColor];
+            hud.labelText = NSLocalizedString(@"上传成功", @"HUD message title");
+            [hud hide:YES afterDelay:2.0];
+
+        }
+        
+    } failure:^(NSError *error) {
+        
+    }];
+}
+#pragma mark - 取消选中日期
+- (void)disDate:(NSString *)date{
+    
+    NSMutableDictionary *parametr = [NSMutableDictionary dictionary];
+    [parametr setObject:date forKey:@"useDate"];
+    
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/guide/guideSche/cancel",BaseUrl] parameters:parametr success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.mode = MBProgressHUDModeText;
+            hud.labelColor = [UIColor whiteColor];
+            hud.color = [UIColor blackColor];
+            hud.labelText = NSLocalizedString(@"取消成功", @"HUD message title");
+            [hud hide:YES afterDelay:2.0];
+            
+        }
+        
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
 
 @end

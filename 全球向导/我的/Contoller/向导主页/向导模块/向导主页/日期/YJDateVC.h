@@ -11,5 +11,8 @@
 
 @interface YJDateVC : UIViewController<ARSegmentControllerDelegate>
 
+@property (nonatomic, strong) NSMutableArray *orderArr;
+@property (nonatomic, strong) NSMutableArray *guideArr;
+
 
 @end

@@ -1,12 +1,12 @@
 PODS:
   - DACircularProgress (2.3.1)
-  - EaseUI (3.3.0):
+  - EaseUI (3.3.1):
     - MJRefresh (~> 3.1.0)
     - MWPhotoBrowser (~> 2.1.1)
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
-  - Hyphenate (3.3.0)
+  - Hyphenate (3.3.1)
   - JCore (1.1.2)
   - JPush (3.0.3):
     - JCore (~> 1.1.1)
@@ -47,14 +47,14 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   EaseUI:
-    :commit: 6a555b3362f695b381da8de6902b43a3fcec3522
+    :commit: c9d710f75c8509826c9e145477f5acee1cf8bef9
     :git: https://github.com/easemob/easeui-ios-hyphenate-cocoapods.git
 
 SPEC CHECKSUMS:
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
-  EaseUI: 477d4115ab4087a2bc258a13d8431f142d5c2028
+  EaseUI: e50a52120dc183d090847709c3a2e24a7048be82
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
-  Hyphenate: 828b314ee8629d34ce0e5ef085eac70b6d4cc89c
+  Hyphenate: 48dd9475340ada20c03a644afc9cb2f13df8f697
   JCore: 9e9bd280a38090d66aca0a7547581cd29804c6eb
   JPush: 8ea7c5bee363191cb5214f5d34ae11e1c5494722
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
@@ -65,4 +65,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 7592f36dde22069575b37bd4fa510bf9454aadd7
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.1.1

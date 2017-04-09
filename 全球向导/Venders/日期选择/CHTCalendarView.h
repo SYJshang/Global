@@ -27,9 +27,19 @@
 
 @interface CHTCalendarView : UIView
 
+
+
+/**
+ * 是否可以上传日期
+ */
+@property (nonatomic, assign) BOOL isPostDate;
+
+
 /**
  *  标记的日期数组
  */
+
+
 @property (nonatomic, strong) NSMutableArray *markedDays;
 /**
  *  标记日期填充颜色

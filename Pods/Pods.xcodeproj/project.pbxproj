@@ -490,6 +490,7 @@
 		35EDF959E10411EB27BD8A47A5B7C245 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSData+ImageContentType.h"; path = "SDWebImage/NSData+ImageContentType.h"; sourceTree = "<group>"; };
 		36B1540D3DB08B1540B40FA261CD5497 /* MJRefreshStateHeader.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MJRefreshStateHeader.m; path = MJRefresh/Custom/Header/MJRefreshStateHeader.m; sourceTree = "<group>"; };
 		372F2B0B17A651ADE3C20F9F48E3C373 /* MJRefreshBackFooter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MJRefreshBackFooter.m; path = MJRefresh/Base/MJRefreshBackFooter.m; sourceTree = "<group>"; };
+		37ABDF783955A5155583BD443373167B /* Hyphenate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Hyphenate.framework; path = ios_IM_Hyphenate_sdk_3.3.1/HyphenateFullSDK/Hyphenate.framework; sourceTree = "<group>"; };
 		38C2CB1881ECF1A16E0338BD95D24A7A /* SDWebImage-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SDWebImage-prefix.pch"; sourceTree = "<group>"; };
 		38DFB0EF433CAC3BC1A2E0C92B944B71 /* SDWebImageDownloaderOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageDownloaderOperation.m; path = SDWebImage/SDWebImageDownloaderOperation.m; sourceTree = "<group>"; };
 		395817992296863AD1BAEDB84D195402 /* Pods-全球向导-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-全球向导-resources.sh"; sourceTree = "<group>"; };
@@ -739,7 +740,6 @@
 		E889C0511110462444F89B28851D1BA1 /* EMCDDeviceManager+Remind.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "EMCDDeviceManager+Remind.h"; path = "EaseUI/EMUIKit/3rdparty/DeviceHelper/internal/EMCDDeviceManager+Remind.h"; sourceTree = "<group>"; };
 		E9735A2E7B5CAD3E1A458EB61431B802 /* SDImageCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDImageCache.h; path = SDWebImage/SDImageCache.h; sourceTree = "<group>"; };
 		E9CCA0F0796C2C00067E8170B1756FE2 /* wav.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = wav.h; path = EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/amrwapper/wav.h; sourceTree = "<group>"; };
-		EA4BB46A4DC0C445FDDF296E72841258 /* Hyphenate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Hyphenate.framework; path = ios_IM_Hyphenate_sdk_3.3.0/HyphenateFullSDK/Hyphenate.framework; sourceTree = "<group>"; };
 		EB47EAB0564A076EE980F3CB4EDB9C67 /* EaseViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = EaseViewController.m; path = EaseUI/EMUIKit/ViewController/EaseViewController.m; sourceTree = "<group>"; };
 		ECDFC2F1197D8C96CE13F50F0CA0E66F /* EaseConvertToCommonEmoticonsHelper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = EaseConvertToCommonEmoticonsHelper.m; path = EaseUI/EMUIKit/Util/EaseConvertToCommonEmoticonsHelper.m; sourceTree = "<group>"; };
 		ED67362BFC53BC672AECF641735C862E /* UIViewController+HUD.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+HUD.m"; path = "EaseUI/EMUIKit/Util/Category/UIViewController+HUD.m"; sourceTree = "<group>"; };
@@ -960,14 +960,6 @@
 			path = "../Target Support Files/MJRefresh";
 			sourceTree = "<group>";
 		};
-		1E71D01DA186477A2927241DDAB7580D /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				EA4BB46A4DC0C445FDDF296E72841258 /* Hyphenate.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		2411B750F0DAB689D61B8E144F6E4CD4 /* MWPhotoBrowser */ = {
 			isa = PBXGroup;
 			children = (
@@ -1106,7 +1098,7 @@
 		475DAC906558B8D235D18AD23B34ED18 /* Hyphenate */ = {
 			isa = PBXGroup;
 			children = (
-				1E71D01DA186477A2927241DDAB7580D /* Frameworks */,
+				CCD281B9EA5CB87AFF9059EC32F3DBDD /* Frameworks */,
 			);
 			name = Hyphenate;
 			path = Hyphenate;
@@ -1565,6 +1557,14 @@
 				E1047F4578B65D431EB085EC54014D9C /* MJRefresh.bundle */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		CCD281B9EA5CB87AFF9059EC32F3DBDD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				37ABDF783955A5155583BD443373167B /* Hyphenate.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		D7D134C5B8FF09A2C130FB8CE653A953 /* Frameworks */ = {

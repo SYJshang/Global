@@ -1,1 +1,1 @@
-../../../../Hyphenate/ios_IM_Hyphenate_sdk_3.3.0/HyphenateFullSDK/Hyphenate.framework/Headers/EMOptions+PrivateDeploy.h
+../../../../Hyphenate/ios_IM_Hyphenate_sdk_3.3.1/HyphenateFullSDK/Hyphenate.framework/Headers/EMOptions+PrivateDeploy.h
