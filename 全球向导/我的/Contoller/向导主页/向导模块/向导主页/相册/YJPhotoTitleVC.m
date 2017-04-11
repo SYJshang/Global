@@ -29,7 +29,7 @@
 
     
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.navigationController.navigationBar.translucent = NO;
+//    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = BackGray;
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
@@ -56,7 +56,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.userNickTf = [[UITextField alloc]initWithFrame:CGRectMake(10, 10, screen_width - 20, 40)];
+    self.userNickTf = [[UITextField alloc]initWithFrame:CGRectMake(10, 74, screen_width - 20, 40)];
     [self.view addSubview:self.userNickTf];
     self.userNickTf.borderStyle = UITextBorderStyleRoundedRect;
     self.userNickTf.layer.masksToBounds = YES;

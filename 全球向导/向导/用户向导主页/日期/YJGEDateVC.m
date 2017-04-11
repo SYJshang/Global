@@ -17,11 +17,33 @@
 @property (nonatomic, strong) YJSelcetBtn *receved;
 @property (nonatomic, strong) YJSelcetBtn *noOrd;
 
+@property (nonatomic, strong) NSMutableArray *orderArr;
+@property (nonatomic, strong) NSMutableArray *guideArr;
+
 
 
 @end
 
 @implementation YJGEDateVC
+
+- (NSMutableArray *)orderArr{
+    
+    if (_orderArr == nil) {
+        _orderArr = [NSMutableArray array];
+    }
+    
+    return _orderArr;
+}
+
+- (NSMutableArray *)guideArr{
+    
+    if (_guideArr == nil) {
+        _guideArr = [NSMutableArray array];
+    }
+    
+    return _guideArr;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -34,29 +56,61 @@
 
     
     //加载日期布局
-    CHTCalendarView *calendarView = [[CHTCalendarView alloc] init];
-    calendarView.layer.masksToBounds = YES;
-    calendarView.layer.cornerRadius = 10;
-    calendarView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:calendarView];
-    calendarView.sd_layout.centerXEqualToView(self.view).centerYEqualToView(self.view).heightIs(screen_width).widthIs(screen_width);
-    self.calendar = calendarView;
-    //[self setupViews];
-    NSMutableArray *select = [NSMutableArray arrayWithObjects:@"2017-03-28",@"2017-03-17",@"2017-03-19",@"2017-04-13",@"2017-04-25",@"2017-04-05",@"2017-04-19",@"2017-04-17",@"2017-04-27",@"2017-05-06",@"2017-05-19",@"2017-05-02",@"2017-05-18",nil];
+    self.calendar = [[CHTCalendarView alloc] init];
+    self.calendar.layer.masksToBounds = YES;
+    self.calendar.layer.cornerRadius = 10;
+    self.calendar.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.calendar];
+    self.calendar.sd_layout.centerXEqualToView(self.view).centerYEqualToView(self.view).heightIs(screen_width).widthIs(screen_width);
+    self.calendar = self.calendar;
+    self.calendar.isPostDate = YES;
+    self.calendar.isSelDate = NO;
     
-    if (select.count != 0) {
-        calendarView.markedDays = select;
-        calendarView.markedDayFilledColor = [UIColor blueColor];
-    }else{
-        self.calendar.markedDays = nil;
-    }
-    
-    [calendarView reloadInterface];
+    [self getDate];
+    [self.calendar reloadInterface];
     
     
-
+    
     
     // Do any additional setup after loading the view.
+}
+
+- (void)getDate{
+    
+    NSMutableDictionary *parametr = [NSMutableDictionary dictionary];
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/mainGuide/findUsedDate/%@",BaseUrl,self.ID] parameters:parametr success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            
+            
+            XXLog(@"%@",dict);
+            
+            NSArray *orderArr = dict[@"data"][@"usedDateList"];
+            self.orderArr = [orderArr mutableCopy];
+            
+            if (self.orderArr != 0) {
+                self.calendar.markedDays = self.orderArr;
+            }
+
+            
+            
+            
+            [self.calendar reloadInterface];
+            
+        }else{
+            
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
+            
+        }
+        
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 - (void)btnClick:(UIButton *)btn{

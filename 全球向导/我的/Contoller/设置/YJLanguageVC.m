@@ -29,8 +29,8 @@ static NSString *appLanguage = @"appLanguage";
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     
-    
-    self.navigationController.navigationBar.translucent = NO;
+    self.automaticallyAdjustsScrollViewInsets = NO;
+//    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     
@@ -50,7 +50,7 @@ static NSString *appLanguage = @"appLanguage";
     
     self.view.backgroundColor = BackGray;
     
-    self.tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, screen_width, screen_height) style:UITableViewStylePlain];
     [self.view addSubview:self.tableView];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = BackGray;

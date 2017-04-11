@@ -27,7 +27,7 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.navigationController.navigationBar.translucent = NO;
+//    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
@@ -56,7 +56,7 @@
     
     finsh = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Submit_success"]];
     [self.view addSubview:finsh];
-    finsh.sd_layout.centerXEqualToView(self.view).topSpaceToView(self.view, 20).heightIs(100 * KWidth_Scale).widthIs(100 * KWidth_Scale);
+    finsh.sd_layout.centerXEqualToView(self.view).topSpaceToView(self.view, 80).heightIs(100 * KWidth_Scale).widthIs(100 * KWidth_Scale);
     
     desc = [[UILabel alloc]init];
     [self.view addSubview:desc];

@@ -20,7 +20,7 @@
 #import "YJProductModel.h"
 #import "YJRelateDayCell.h"
 #import "YJOrderFinshModel.h"
-#import "YJTableView.h"
+#import "YJNumModel.h"
 
 
 @interface YJOrderFormController ()<UITableViewDelegate,UITableViewDataSource,MyCustomCellDelegate>{
@@ -51,10 +51,22 @@
 @property (nonatomic, strong) NSString *allNums;
 @property (nonatomic, strong) NSString *allPIds;
 
+@property (nonatomic, strong) NSMutableArray *numModelArr;
+
 @end
 
 @implementation YJOrderFormController
 
+- (NSMutableArray *)numModelArr{
+    
+    if (_numModelArr == nil) {
+        
+        _numModelArr = [NSMutableArray array];
+    }
+    
+    return _numModelArr;
+    
+}
 
 
 - (NSMutableArray *)DateArr{
@@ -85,6 +97,9 @@
     //选择的天数
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults removeObjectForKey:saveSelectArr];
+    
+    [self.tableView reloadData];
+    
     //    NSMutableArray *select = [userDefaults objectForKey:saveSelectArr];
 }
 
@@ -96,7 +111,9 @@
     UIBarButtonItem * leftItem = [UIBarButtonItem itemWithTarget:self action:@selector(back) image:@"back" highImage:@"back"];
     self.navigationItem.leftBarButtonItem = leftItem;
     
-    [self.tableView reloadData];
+    [self getNetWork];
+
+    
     
     productIds = @"";//服务id
     numbers = @"";//服务id的数量
@@ -106,6 +123,9 @@
     serviceDates = @"";//服务日期
     serviceNumber = @"";//服务天数
     personNumber = @"1";
+    
+    self.allNums = @"";
+    self.allPIds = @"";
     
     
 }
@@ -143,7 +163,6 @@
     [self.tableView registerClass:[YJRelateDayCell class] forCellReuseIdentifier:@"seven"];
     
     
-    [self getNetWork];
     
     //监听键盘出现和消失
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -172,7 +191,6 @@
     [WBHttpTool GET:[NSString stringWithFormat:@"%@/mainGuide/toBuy/%@",BaseUrl,self.guideID] parameters:nil success:^(id responseObject) {
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-        XXLog(@"%@",dict);
         if ([dict[@"code"] isEqualToString:@"1"]) {
             
             NSDictionary *data = dict[@"data"];
@@ -188,7 +206,6 @@
             SGAlertView *alert = [SGAlertView alertViewWithTitle:@"未登录" contentTitle:@"是否立即登录" alertViewBottomViewType:SGAlertViewBottomViewTypeTwo didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
                 
                 if (index == 1) {
-                    XXLog(@"login");
                     [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
                 }
                 
@@ -364,7 +381,6 @@
                 Scell.people ++;
                 Scell.numLab.text = [NSString stringWithFormat:@"%d",Scell.people];
                 personNumber = [NSString stringWithFormat:@"%d",Scell.people];
-                XXLog(@"%@",personNumber);
                 
             };
             
@@ -405,7 +421,6 @@
             productIds = [NSString stringWithFormat:@"%@%@,",productIds,moddel.ID];
         }
         
-        XXLog(@"productIds >>>>>>>>>>>>%@",productIds);
         
         
         if (moddel.relateDayNumber == 1) {
@@ -450,7 +465,6 @@
                 
             }
             
-            XXLog(@"numbers >>>>>>>>>>%@",numbers);
             
             return cell;
         }
@@ -536,7 +550,7 @@
 -(void)btnClick:(UITableViewCell *)cell andFlag:(int)flag
 {
     NSIndexPath *index = [self.tableView indexPathForCell:cell];
-    XXLog(@"%@",index);
+//    XXLog(@"%@",index);
     
     YJRelateDayCell *cells = (YJRelateDayCell *)cell;
     
@@ -562,15 +576,68 @@
             break;
     }
     
-  
-//         [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:index,nil] withRowAnimation:UITableViewRowAnimationNone];
-    
     YJProductModel *model = self.productArr[index.row];
+    YJNumModel *numModel = [[YJNumModel alloc]init];
+    
+    
+    if (self.numModelArr.count > 0) {
+        
+        
+        [self.numModelArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            YJNumModel *num = (YJNumModel *)obj;
+            NSString *proID = num.ID;
+            if ([proID isEqualToString:model.ID]) {
+                
+                [self.numModelArr removeObject:num];
+                
+            }
+
+        }];
+        
+//        for (YJNumModel *num in self.numModelArr) {
+//            
+//            NSString *proID = num.ID;
+//            if ([proID isEqualToString:model.ID]) {
+//                
+//            [self.numModelArr removeObject:num];
+//                
+//            }
+// 
+//        }
+        
+        numModel.ID = model.ID;
+        numModel.allNum = cells.people;
+        [self.numModelArr addObject:numModel];
+
+        
+        
+    }else{
+       
+        numModel.ID = model.ID;
+        numModel.allNum = cells.people;
+        [self.numModelArr addObject:numModel];
+    }
+    
+    numModel = self.numModelArr.lastObject;
+    XXLog(@"%d",numModel.allNum);
+    
+    
+//    NSString *peopleNum = [NSString stringWithFormat:@"%d",cells.people];
+//    self.allNums = [NSString stringWithFormat:@"%@%@,",self.allNums,peopleNum];
+//    self.allPIds = [NSString stringWithFormat:@"%@%@,",self.allPIds,model.ID];
+//    XXLog(@"%@",self.allNums);
+//    XXLog(@"%@",self.allPIds);
+
+   
     //计算总价
     //    [self totalPrice];
-    [self totalPrice:model];
     //刷新表格
     [self.tableView reloadData];
+    
+    [self totalPrice:model];
+
+
     
 }
 
@@ -579,10 +646,10 @@
     
     //每次算完要重置为0，因为每次的都是全部循环算一遍
     _allPrice = 0;
-    productIds = @"";
+//    productIds = @"";
+//    numbers = @"";
     self.priceAll.text = [NSString stringWithFormat:@"%@ ￥%ld",YJLocalizedString(@"总计"),_allPrice];
-    numbers = @"";
-    
+
     
     //遍历整个数据源，然后判断如果是选中的商品，就计算价格（单价 * 商品数量）
     
@@ -598,7 +665,7 @@
             NSMutableArray *select = [userDefaults objectForKey:saveSelectArr];
             
             //            _allPrice = _allPrice + [model.price integerValue] * select.count;
-            XXLog(@"%ld",_allPrice);
+//            XXLog(@"%ld",_allPrice);
             //            numbers = [NSString stringWithFormat:@"%@%ld,",numbers,select.count];
             
         }else{
@@ -608,8 +675,8 @@
             
         }
         
-        XXLog(@"%ld",_allPrice);
-        XXLog(@"number >>>>%@",numbers);
+//        XXLog(@"%ld",_allPrice);
+//        XXLog(@"number >>>>%@",numbers);
         
         //给总价文本赋值
         self.priceAll.text = [NSString stringWithFormat:@"%@ ￥%ld",YJLocalizedString(@"总计"),_allPrice];
@@ -622,13 +689,27 @@
 
 - (void)postData{
     
+    //遍历数组，拼接字符串
+    for (YJNumModel *model in self.numModelArr) {
+        
+        NSString *allNum = [NSString stringWithFormat:@"%d",model.allNum];
+        NSString *allPID = model.ID;
+        
+        self.allNums = [NSString stringWithFormat:@"%@%@,",self.allNums,allNum];
+        self.allPIds = [NSString stringWithFormat:@"%@%@,",self.allPIds,allPID];
+        
+        XXLog(@"%@",self.allNums);
+        XXLog(@"%@",self.allPIds);
+        
+    }
+    
     
     NSMutableDictionary *parmter = [NSMutableDictionary dictionary];
     [parmter setObject:self.guideID forKey:@"guideId"];
     
-    self.allPIds = [self string:productIds];
-    self.allNums = [self string:numbers];
-    
+//    self.allPIds = [self string:productIds];
+//    self.allNums = [self string:numbers];
+//    
     [parmter setObject:self.allPIds forKey:@"productIds"];
     [parmter setObject:self.allNums forKey:@"numbers"];
     

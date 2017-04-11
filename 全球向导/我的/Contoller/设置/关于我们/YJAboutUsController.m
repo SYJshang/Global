@@ -23,7 +23,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     
@@ -32,7 +31,7 @@
     self.navigationItem.titleView= [UILabel titleWithColor:[UIColor blackColor] title:@"关于我们" font:19.0];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.webView = [[UIWebView alloc] initWithFrame:self.view.frame];
+    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 64, screen_width, screen_height)];
     self.webView.delegate = self;
 //    NSURL *htmlURL = [[NSBundle mainBundle] URLForResource:@"test.html" withExtension:nil];
         NSURL *htmlURL = [NSURL URLWithString:@"http://192.168.1.128/%E7%A7%BB%E5%8A%A8%E7%AB%AFwechat%E9%A1%B5%E9%9D%A2/wechat/index.html"];
@@ -52,7 +51,7 @@
 
     #pragma mark - sss
     
-    self.opaqueView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
+    self.opaqueView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, screen_width, screen_height)];
     self.activityIndicatorView = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
     [self.activityIndicatorView setCenter:self.opaqueView.center];
     [self.activityIndicatorView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];

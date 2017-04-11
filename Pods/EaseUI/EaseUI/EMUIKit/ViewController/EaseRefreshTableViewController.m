@@ -76,7 +76,7 @@
             //            header.updatedTimeHidden = YES;
         }
         else{
-            [self.tableView setMj_header:nil];
+            //            [self.tableView removeHeader];
         }
     }
 }
@@ -93,7 +93,7 @@
             self.tableView.mj_footer.accessibilityIdentifier = @"refresh_footer";
         }
         else{
-            [self.tableView setMj_footer:nil];
+            //            [self.tableView removeFooter];
         }
     }
 }

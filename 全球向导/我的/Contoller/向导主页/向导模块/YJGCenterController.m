@@ -34,7 +34,7 @@ void *CustomHeaderInsetObserver = &CustomHeaderInsetObserver;
     [super viewWillAppear:animated];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    self.navigationController.navigationBar.translucent = YES;
+//    self.navigationController.navigationBar.translucent = YES;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
@@ -42,8 +42,8 @@ void *CustomHeaderInsetObserver = &CustomHeaderInsetObserver;
     [self.navigationController.navigationBar setBackgroundImage:[self createImageWithColor:[UIColor clearColor]] forBarMetrics:UIBarMetricsDefault];
     
     [self.navigationController.navigationBar setShadowImage:[self createImageWithColor:[UIColor clearColor]]];
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    [self.navigationController.navigationBar setTranslucent:YES];
+//    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+//    [self.navigationController.navigationBar setTranslucent:NO];
     
     // Do any additional setup after loading the view.
     
@@ -54,9 +54,19 @@ void *CustomHeaderInsetObserver = &CustomHeaderInsetObserver;
 - (void)viewWillDisappear:(BOOL)animated{
     
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBar.translucent = NO;
+//    self.navigationController.navigationBar.translucent = NO;
     
     [self removeObserver:self forKeyPath:@"segmentTopInset"];
+    
+//
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    
+    [self.navigationController.navigationBar setShadowImage:nil];
+
+    [self.navigationController.navigationBar setTranslucent:YES];
 
 
     

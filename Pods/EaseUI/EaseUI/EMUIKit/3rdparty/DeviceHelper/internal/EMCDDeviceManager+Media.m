@@ -204,7 +204,6 @@ typedef NS_ENUM(NSInteger, EMAudioSession){
 // Cancel recording
 -(void)cancelCurrentRecording{
     [EMAudioRecorderUtil cancelCurrentRecording];
-    [self setupAudioSessionCategory:EM_DEFAULT isActive:NO];
 }
 
 -(BOOL)isRecording{

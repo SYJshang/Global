@@ -87,6 +87,8 @@
 		1A1BA4CC1E03E6F0003BCB75 /* YJSetUserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1BA4CB1E03E6F0003BCB75 /* YJSetUserController.m */; };
 		1A1BA4CF1E03E84C003BCB75 /* YJEditPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1BA4CE1E03E84C003BCB75 /* YJEditPhotoCell.m */; };
 		1A1CBAC31E7AA57D00A3BBED /* YJUserOrderDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1CBAC21E7AA57D00A3BBED /* YJUserOrderDetailModel.m */; };
+		1A21D06B1E9C702F009692DE /* YJEditUserShareVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A21D06A1E9C702F009692DE /* YJEditUserShareVC.m */; };
+		1A21D06E1E9C7C02009692DE /* YJEditGuideShareVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A21D06D1E9C7C02009692DE /* YJEditGuideShareVC.m */; };
 		1A25B74A1E83B90B000B49AF /* YJMessageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A25B7491E83B90B000B49AF /* YJMessageVC.m */; };
 		1A25B74D1E83BACD000B49AF /* YJChatVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A25B74C1E83BACD000B49AF /* YJChatVC.m */; };
 		1A2612F91DCAE236002B95DC /* YJNewFindController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2612F81DCAE236002B95DC /* YJNewFindController.m */; };
@@ -238,6 +240,7 @@
 		1AC036301E77904A005FCB65 /* YJPayBindingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC0362F1E77904A005FCB65 /* YJPayBindingVC.m */; };
 		1AC036341E77DD1D005FCB65 /* YJMinePropertyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC036331E77DD1D005FCB65 /* YJMinePropertyVC.m */; };
 		1AC148DC1E8E34AC00C7805E /* YJMessageListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC148DB1E8E34AC00C7805E /* YJMessageListVC.m */; };
+		1AC6F6DF1E9B58CB00A622A9 /* YJNumModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AC6F6DE1E9B58CB00A622A9 /* YJNumModel.m */; };
 		1ACA58671DC32E85003D640A /* YJLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ACA58661DC32E85003D640A /* YJLoginController.m */; };
 		1ACA586A1DC32EBC003D640A /* YJLoginFirstController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ACA58691DC32EBC003D640A /* YJLoginFirstController.m */; };
 		1ACA586D1DC7240F003D640A /* YJRegsiterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ACA586C1DC7240F003D640A /* YJRegsiterController.m */; };
@@ -534,6 +537,10 @@
 		1A1BA4CE1E03E84C003BCB75 /* YJEditPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJEditPhotoCell.m; sourceTree = "<group>"; };
 		1A1CBAC11E7AA57D00A3BBED /* YJUserOrderDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJUserOrderDetailModel.h; sourceTree = "<group>"; };
 		1A1CBAC21E7AA57D00A3BBED /* YJUserOrderDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJUserOrderDetailModel.m; sourceTree = "<group>"; };
+		1A21D0691E9C702F009692DE /* YJEditUserShareVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJEditUserShareVC.h; sourceTree = "<group>"; };
+		1A21D06A1E9C702F009692DE /* YJEditUserShareVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJEditUserShareVC.m; sourceTree = "<group>"; };
+		1A21D06C1E9C7C02009692DE /* YJEditGuideShareVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJEditGuideShareVC.h; sourceTree = "<group>"; };
+		1A21D06D1E9C7C02009692DE /* YJEditGuideShareVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJEditGuideShareVC.m; sourceTree = "<group>"; };
 		1A25B7481E83B90B000B49AF /* YJMessageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJMessageVC.h; sourceTree = "<group>"; };
 		1A25B7491E83B90B000B49AF /* YJMessageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJMessageVC.m; sourceTree = "<group>"; };
 		1A25B74B1E83BACD000B49AF /* YJChatVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJChatVC.h; sourceTree = "<group>"; };
@@ -832,6 +839,8 @@
 		1AC036331E77DD1D005FCB65 /* YJMinePropertyVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJMinePropertyVC.m; sourceTree = "<group>"; };
 		1AC148DA1E8E34AC00C7805E /* YJMessageListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJMessageListVC.h; sourceTree = "<group>"; };
 		1AC148DB1E8E34AC00C7805E /* YJMessageListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJMessageListVC.m; sourceTree = "<group>"; };
+		1AC6F6DD1E9B58CB00A622A9 /* YJNumModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJNumModel.h; sourceTree = "<group>"; };
+		1AC6F6DE1E9B58CB00A622A9 /* YJNumModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJNumModel.m; sourceTree = "<group>"; };
 		1ACA58651DC32E85003D640A /* YJLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJLoginController.h; sourceTree = "<group>"; };
 		1ACA58661DC32E85003D640A /* YJLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJLoginController.m; sourceTree = "<group>"; };
 		1ACA58681DC32EBC003D640A /* YJLoginFirstController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJLoginFirstController.h; sourceTree = "<group>"; };
@@ -1284,6 +1293,8 @@
 			children = (
 				1A12C17A1E14AB7F00213F95 /* YJMineShareVC.h */,
 				1A12C17B1E14AB7F00213F95 /* YJMineShareVC.m */,
+				1A21D0691E9C702F009692DE /* YJEditUserShareVC.h */,
+				1A21D06A1E9C702F009692DE /* YJEditUserShareVC.m */,
 				1A8CE87F1E14F627009931CA /* YJDemandDetailVC.h */,
 				1A8CE8801E14F627009931CA /* YJDemandDetailVC.m */,
 			);
@@ -2112,6 +2123,8 @@
 				1A83B1D71E56CFE8008C2ECC /* YJOrderFinshModel.m */,
 				1A83B1D91E56D1DF008C2ECC /* YJSerModel.h */,
 				1A83B1DA1E56D1DF008C2ECC /* YJSerModel.m */,
+				1AC6F6DD1E9B58CB00A622A9 /* YJNumModel.h */,
+				1AC6F6DE1E9B58CB00A622A9 /* YJNumModel.m */,
 			);
 			path = Modles;
 			sourceTree = "<group>";
@@ -2424,6 +2437,8 @@
 			children = (
 				1AF3AB721E6567DD00F5E568 /* YJMyFindVC.h */,
 				1AF3AB731E6567DD00F5E568 /* YJMyFindVC.m */,
+				1A21D06C1E9C7C02009692DE /* YJEditGuideShareVC.h */,
+				1A21D06D1E9C7C02009692DE /* YJEditGuideShareVC.m */,
 			);
 			path = "发现";
 			sourceTree = "<group>";
@@ -3003,6 +3018,7 @@
 				1AED50461E856E19006A1C98 /* YJGEFindVC.m in Sources */,
 				1AF3AB931E6567DD00F5E568 /* YJReceiveOrderController.m in Sources */,
 				1A03A6C61E07C637007EB922 /* YJShareCell.m in Sources */,
+				1A21D06E1E9C7C02009692DE /* YJEditGuideShareVC.m in Sources */,
 				1AED50451E856E19006A1C98 /* YJGEWroldMineVC.m in Sources */,
 				1A06BEE81DFFE3610032FE99 /* ARSegmentPageHeader.m in Sources */,
 				1AF3AB5B1E655F4B00F5E568 /* TZImageManager.m in Sources */,
@@ -3012,6 +3028,7 @@
 				1A0DF3231DBFAA2300E2EE9F /* ZWCollectionViewFlowLayout.m in Sources */,
 				1A7887101E1DE084004F3271 /* SGActionSheet.m in Sources */,
 				1A5ED95D1DC9F013002FAF0A /* DNPageView.m in Sources */,
+				1A21D06B1E9C702F009692DE /* YJEditUserShareVC.m in Sources */,
 				1A2783361E2CB9AC0044FB41 /* YJProductModel.m in Sources */,
 				1AFCC7881E237B4B00450852 /* YJGuideModel.m in Sources */,
 				1A0383481E6EBDFF00A54525 /* YJServerStateModle.m in Sources */,
@@ -3182,6 +3199,7 @@
 				1A06BEC81DFE7CE20032FE99 /* YJOrderBgCell.m in Sources */,
 				1A95F28A1E00DA2E00EA8B82 /* CustomHeader.m in Sources */,
 				1ACA586D1DC7240F003D640A /* YJRegsiterController.m in Sources */,
+				1AC6F6DF1E9B58CB00A622A9 /* YJNumModel.m in Sources */,
 				1A03A7461E092B72007EB922 /* Compiler.m in Sources */,
 				1AFCC8251E2632C300450852 /* YJGuideTypeModel.m in Sources */,
 				1ACA586A1DC32EBC003D640A /* YJLoginFirstController.m in Sources */,

@@ -32,11 +32,14 @@
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.navigationController.navigationBar.translucent = NO;
+//    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"发布" font:19.0];
+    
+    // 禁用 iOS7 返回手势
+
 }
 
 - (void)back{
@@ -59,10 +62,12 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    
+    id traget = self.navigationController.interactivePopGestureRecognizer.delegate;
+    UIPanGestureRecognizer * pan = [[UIPanGestureRecognizer alloc]initWithTarget:traget action:nil];
+    [self.view addGestureRecognizer:pan];
     
 
-    webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height - 0)];
+    webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 64, screen_width, screen_height - 0)];
     [webView setUserInteractionEnabled:YES];//是否支持交互
     //[webView setDelegate:self];
     webView.delegate = self;

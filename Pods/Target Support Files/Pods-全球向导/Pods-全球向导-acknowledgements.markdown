@@ -83,7 +83,7 @@ THE SOFTWARE.
 
 ## Hyphenate
 
-Hyphenate Inc. 2017
+Hyphenate Inc. 2016
 
 ## JCore
 

@@ -44,7 +44,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = BackGray;
+//    self.view.backgroundColor = BackGray;
 
     
     self.currenPage = 1;
@@ -65,7 +65,6 @@
     //加载网络数据
     [self getNetWork];
 
-    // Do any additional setup after loading the view.
 }
 
 //设置网络状态

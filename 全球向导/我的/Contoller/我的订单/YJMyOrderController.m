@@ -29,7 +29,7 @@
     self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
 
-    self.automaticallyAdjustsScrollViewInsets = YES;
+    self.automaticallyAdjustsScrollViewInsets = NO;
 //    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
@@ -56,7 +56,7 @@
     
     self.titles = @[YJLocalizedString(@"全部订单"), YJLocalizedString(@"待付款"),YJLocalizedString(@"待服务"),YJLocalizedString(@"退款")];
     // , @"NBA", @"新闻", @"娱乐", @"音乐", @"网络电影"
-    self.topTitleView = [SGTopTitleView topTitleViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+    self.topTitleView = [SGTopTitleView topTitleViewWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 44)];
     self.topTitleView.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1.0];
     _topTitleView.staticTitleArr = [NSArray arrayWithArray:_titles];
     _topTitleView.isHiddenIndicator = NO;

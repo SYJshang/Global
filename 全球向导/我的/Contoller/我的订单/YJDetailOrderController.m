@@ -50,7 +50,7 @@
 //    btn.frame = CGRectMake(0, 563, screen_width, 40);
     
     
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 44, screen_width, screen_height - 148) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 108, screen_width, screen_height - 148) style:UITableViewStylePlain];
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -72,13 +72,13 @@
     
     UIView *view = [[UIView alloc]init];
     [self.view addSubview:view];
-    view.frame = CGRectMake(0, screen_height - 104, screen_width, 1);
+    view.frame = CGRectMake(0, screen_height - 44, screen_width, 1);
     view.backgroundColor = BackGray;
     
     
     
     
-    YJButton *guide_home = [[YJButton alloc]initWithFrame:CGRectMake(0, screen_height - 103, 80 * KWidth_Scale, 39)];
+    YJButton *guide_home = [[YJButton alloc]initWithFrame:CGRectMake(0, screen_height - 43, 80 * KWidth_Scale, 43)];
     [self.view addSubview:guide_home];
     [guide_home setBackgroundColor:[UIColor whiteColor]];
     [guide_home setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
@@ -86,7 +86,7 @@
     [guide_home setImage:[UIImage imageNamed:@"guide_home"] forState:UIControlStateNormal];
     
     
-    YJButton *contact_guide = [[YJButton alloc]initWithFrame:CGRectMake(80 * KWidth_Scale, screen_height - 103, 80 * KWidth_Scale, 39)];
+    YJButton *contact_guide = [[YJButton alloc]initWithFrame:CGRectMake(80 * KWidth_Scale, screen_height - 43, 80 * KWidth_Scale, 43)];
     [self.view addSubview:contact_guide];
     [contact_guide setBackgroundColor:[UIColor whiteColor]];
     [contact_guide setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
@@ -95,7 +95,7 @@
     
     UIButton *buy = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.view addSubview:buy];
-    buy.frame = CGRectMake(160 * KWidth_Scale, screen_height - 103, screen_width - (160 * KWidth_Scale), 39);
+    buy.frame = CGRectMake(160 * KWidth_Scale, screen_height - 43, screen_width - (160 * KWidth_Scale), 43);
     buy.backgroundColor = TextColor;
     [buy setTitle:YJLocalizedString(@"付款") forState:UIControlStateNormal];
     [buy setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

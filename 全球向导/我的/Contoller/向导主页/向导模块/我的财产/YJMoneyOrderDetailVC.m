@@ -33,7 +33,7 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.navigationController.navigationBar.translucent = NO;
+//    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
@@ -94,7 +94,7 @@
     UIView *view = [[UIView alloc]init];
     view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:view];
-    view.sd_layout.leftSpaceToView(self.view, 0).rightSpaceToView(self.view,0).topSpaceToView(self.view, 20).heightIs(60);
+    view.sd_layout.leftSpaceToView(self.view, 0).rightSpaceToView(self.view,0).topSpaceToView(self.view, 84).heightIs(60);
     
     name = [[UILabel alloc]init];
     [view addSubview:name];

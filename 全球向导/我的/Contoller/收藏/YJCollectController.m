@@ -29,7 +29,7 @@
     [self.navigationController setNavigationBarHidden:NO animated:NO];
 
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.navigationController.navigationBar.translucent = NO;
+//    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
@@ -55,7 +55,7 @@
     
     self.titles = @[YJLocalizedString(@"向导"), YJLocalizedString(@"新发现"),YJLocalizedString(@"分享")];
 
-    self.topTitleView = [SGTopTitleView topTitleViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+    self.topTitleView = [SGTopTitleView topTitleViewWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 44)];
     self.topTitleView.backgroundColor = BackGray;
     _topTitleView.staticTitleArr = [NSArray arrayWithArray:_titles];
     _topTitleView.isHiddenIndicator = NO;

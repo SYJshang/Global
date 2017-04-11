@@ -27,10 +27,10 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+    self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    self.navigationController.navigationBar.translucent = NO;
+//    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
@@ -48,7 +48,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor whiteColor];
     
     
     
@@ -58,7 +57,7 @@
     
     self.titles = @[YJLocalizedString(@"全部订单"), YJLocalizedString(@"待付款"),YJLocalizedString(@"待接单"),YJLocalizedString(@"待服务"),YJLocalizedString(@"退款")];
     // , @"NBA", @"新闻", @"娱乐", @"音乐", @"网络电影"
-    self.topTitleView = [SGTopTitleView topTitleViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+    self.topTitleView = [SGTopTitleView topTitleViewWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 44)];
     self.topTitleView.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1.0];
     self.topTitleView.titleAndIndicatorColor = TextColor;
     _topTitleView.staticTitleArr = [NSArray arrayWithArray:_titles];

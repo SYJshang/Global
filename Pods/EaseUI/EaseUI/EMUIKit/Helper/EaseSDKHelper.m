@@ -214,7 +214,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
                                  messageType:(EMChatType)messageType
                                   messageExt:(NSDictionary *)messageExt
 {
-    EMImageMessageBody *body = [[EMImageMessageBody alloc] initWithData:imageData displayName:@"image"];
+    EMImageMessageBody *body = [[EMImageMessageBody alloc] initWithData:imageData displayName:@"image.png"];
     NSString *from = [[EMClient sharedClient] currentUsername];
     EMMessage *message = [[EMMessage alloc] initWithConversationID:to from:from to:to body:body ext:messageExt];
     message.chatType = messageType;

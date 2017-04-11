@@ -9,6 +9,7 @@
 #import "YJMyFindVC.h"
 #import "YJSecondCell.h"
 #import "YJPageModel.h"
+#import "YJEditGuideShareVC.h"
 
 @interface YJMyFindVC ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -271,7 +272,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-//    kTipAlert(@"<%ld> selected...", indexPath.row);
+    YJNearbyModel *model = self.totalCout[indexPath.row];
+    YJEditGuideShareVC *vc = [[YJEditGuideShareVC alloc]init];
+    vc.ID = model.ID;
+    [self.navigationController pushViewController:vc animated:YES];
+
 }
 
 

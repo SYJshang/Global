@@ -72,6 +72,8 @@
     calendarView.layer.cornerRadius = 10;
     calendarView.frame = CGRectMake(0, 100, screen_width, screen_width);
     [self.view addSubview:calendarView];
+    calendarView.isSelDate = YES;
+    calendarView.isPostDate = NO;
     calendarView.sd_layout.centerXEqualToView(self.view).centerYEqualToView(self.view).heightIs(screen_width + 40).widthIs(screen_width - 4);
     self.calendar = calendarView;
     //[self setupViews];

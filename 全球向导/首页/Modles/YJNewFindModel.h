@@ -26,6 +26,9 @@
 @property (nonatomic, strong) NSString *coverPicUrl;
 @property (nonatomic, strong) NSString *colNumber;
 @property (nonatomic, strong) NSString *ID;
+@property (nonatomic, strong) NSString *guideId;
+@property (nonatomic, strong) NSString *userId;
+
 
 @property (nonatomic, strong) NSDictionary *guide;
 

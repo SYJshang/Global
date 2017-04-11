@@ -40,6 +40,9 @@
         
         if (self.dataArray.count == 0) {
             [self noDatas];
+        }else{
+            self.tableView.hidden = NO;
+            self.noNetWork.hidden = YES;
         }
         XXLog(@"%@",self.dataArray);
         [self removeEmptyConversationsFromDB];

@@ -30,7 +30,7 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.navigationController.navigationBar.translucent = NO;
+//    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
@@ -75,7 +75,7 @@
    
     propertyImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"property"]];
     [self.view addSubview:propertyImg];
-    propertyImg.sd_layout.leftSpaceToView(self.view, 70).rightSpaceToView(self.view, 70).topSpaceToView(self.view, 20).heightIs(160);
+    propertyImg.sd_layout.leftSpaceToView(self.view, 70).rightSpaceToView(self.view, 70).topSpaceToView(self.view, 84).heightIs(160);
     
     money = [[UILabel alloc]init];
     [self.view addSubview:money];

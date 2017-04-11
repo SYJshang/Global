@@ -22,10 +22,10 @@
 {
     [super awakeFromNib];
     
-    self.headImageView.layer.masksToBounds = YES;
-    self.headImageView.layer.cornerRadius = self.headImageView.width / 2;
-    self.headImageView.layer.borderColor = BackGray.CGColor;
-    self.headImageView.layer.borderWidth = 1.0;
+//    self.headImageView.layer.masksToBounds = YES;
+//    self.headImageView.layer.cornerRadius = self.headImageView.width / 2;
+//    self.headImageView.layer.borderColor = BackGray.CGColor;
+//    self.headImageView.layer.borderWidth = 1.0;
     
     self.nameLab.textColor = TextColor;
     

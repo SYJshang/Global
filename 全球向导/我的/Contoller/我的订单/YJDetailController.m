@@ -32,6 +32,8 @@
 
 - (void)setLaoutView{
     
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:YJLocalizedString(@"订单详情") font:19.0];
@@ -53,7 +55,7 @@
     
     self.titles = @[YJLocalizedString(@"订单状态"), YJLocalizedString(@"订单详情")];
     // , @"NBA", @"新闻", @"娱乐", @"音乐", @"网络电影"
-    self.topTitleView = [SGTopTitleView topTitleViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+    self.topTitleView = [SGTopTitleView topTitleViewWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 44)];
     self.topTitleView.backgroundColor = BackGray;
     _topTitleView.staticTitleArr = [NSArray arrayWithArray:_titles];
     _topTitleView.isHiddenIndicator = NO;

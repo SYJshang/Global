@@ -12,7 +12,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import <MWPhotoBrowser/MWPhotoBrowser.h>
+#import "MWPhotoBrowser.h"
 #import "EaseMessageModel.h"
 
 typedef void (^FinishBlock)(BOOL success);

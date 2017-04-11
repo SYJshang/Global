@@ -33,7 +33,7 @@
    
       NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/userInfo/myOrder/viewOrderStatusPage/%@",BaseUrl,self.orderID]];
     
-    webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 40, screen_width, screen_height)];
+    webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 108, screen_width, screen_height - 64)];
     [webView setUserInteractionEnabled:YES];//是否支持交互
     //[webView setDelegate:self];
     webView.delegate = self;

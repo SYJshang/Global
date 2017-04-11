@@ -32,7 +32,7 @@
     self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    self.navigationController.navigationBar.translucent = NO;
+//    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
@@ -58,7 +58,7 @@
     
     
     self.titles = @[YJLocalizedString(@"待评价"), YJLocalizedString(@"已评价")];
-    self.topTitleView = [SGTopTitleView topTitleViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+    self.topTitleView = [SGTopTitleView topTitleViewWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 44)];
     self.topTitleView.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1.0];
     self.topTitleView.titleAndIndicatorColor = TextColor;
     _topTitleView.staticTitleArr = [NSArray arrayWithArray:_titles];

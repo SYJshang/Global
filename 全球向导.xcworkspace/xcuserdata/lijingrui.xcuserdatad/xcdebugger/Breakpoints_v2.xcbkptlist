@@ -100,7 +100,7 @@
                   moduleName = "&#x5168;&#x7403;&#x5411;&#x5bfc;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/lijingrui/Desktop/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC1/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC/Main/YJTabBarController.m"
-                  timestampString = "513254740.513865"
+                  timestampString = "513587152.866344"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "409"
@@ -115,7 +115,7 @@
                   moduleName = "&#x5168;&#x7403;&#x5411;&#x5bfc;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/lijingrui/Desktop/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC1/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC/Main/YJTabBarController.m"
-                  timestampString = "513254740.516148"
+                  timestampString = "513587152.86808"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "409"
@@ -179,45 +179,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/&#x5411;&#x5bfc;/Contoller/&#x8ba2;&#x5355;&#x8be6;&#x60c5;/YJOrderFormController.m"
-            timestampString = "513245971.194694"
+            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/&#x65b0;&#x53d1;&#x73b0;/Contoller/YJGuideRecommendController.m"
+            timestampString = "513585891.006331"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "648"
-            endingLineNumber = "648"
-            landmarkName = "-postData"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/&#x5411;&#x5bfc;/Contoller/&#x8ba2;&#x5355;&#x8be6;&#x60c5;/YJOrderFormController.m"
-            timestampString = "513246182.414911"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "708"
-            endingLineNumber = "708"
-            landmarkName = "-string:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/&#x5411;&#x5bfc;/Contoller/&#x8ba2;&#x5355;&#x8be6;&#x60c5;/YJOrderFormController.m"
-            timestampString = "513246192.344772"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "712"
-            endingLineNumber = "712"
-            landmarkName = "-string:"
+            startingLineNumber = "245"
+            endingLineNumber = "245"
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

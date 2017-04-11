@@ -434,10 +434,9 @@ static const CGFloat timeInterval = 8 * 60 * 60;
 
 - (void)clickDay:(NSInteger)day {
 
-    if ([self.selectedDays isKindOfClass:[NSMutableArray class]]) {
-        XXLog(@"%@",self.selectedDays);
+    if (!self.isSelDate) {
+        return;
     }
-
     
     
     NSString *dayText = [NSString stringWithFormat:@"%ld-%02ld-%02ld", self.displayYear, self.displayMonth, day];
@@ -477,13 +476,8 @@ static const CGFloat timeInterval = 8 * 60 * 60;
             break;
             //currentDayText比dayText小
         case NSOrderedDescending:
-            
             if (self.isPostDate) {
-                
-                if ([self.selectedDays isKindOfClass:[NSMutableArray class]]) {
-                    XXLog(@"%@",self.selectedDays);
-                }
-                
+
                 if ([self.selectedDays containsObject:dayText]) {
                     [self.selectedDays removeObject:dayText];
                     [self disDate:dayText];
@@ -495,12 +489,8 @@ static const CGFloat timeInterval = 8 * 60 * 60;
                     [self postDate:dayText];
                 }
                 break;
-
-            }else{
                 
-                if ([self.selectedDays isKindOfClass:[NSMutableArray class]]) {
-                    XXLog(@"%@",self.selectedDays);
-                }
+            }else{
                 
                 if ([self.selectedDays containsObject:dayText]) {
                     [self.selectedDays removeObject:dayText];
@@ -510,10 +500,9 @@ static const CGFloat timeInterval = 8 * 60 * 60;
                     }
                     [self.selectedDays addObject:dayText];
                 }
- 
+                
             }
-            
-                break;
+                   break;
             //currentDayText比dayText相等
         case NSOrderedSame:
         {
@@ -530,6 +519,7 @@ static const CGFloat timeInterval = 8 * 60 * 60;
             break;
     }
     
+
         [self reloadInterface];
     
     
@@ -590,7 +580,7 @@ static const CGFloat timeInterval = 8 * 60 * 60;
             hud.color = [UIColor blackColor];
             hud.labelText = NSLocalizedString(@"上传成功", @"HUD message title");
             [hud hide:YES afterDelay:2.0];
-
+            
         }
         
     } failure:^(NSError *error) {

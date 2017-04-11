@@ -87,13 +87,14 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
-//    self.navigationController.navigationBar.translucent = NO;
 //    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     
     [self getUserInfo];
     
     //设置导航控制器
     [self setNavitaion];
+    
+    [self getNetWork];
 
     NSString *str = [YJBNetWorkNotifionTool stringFormStutas];
     XXLog(@"%@",str);
@@ -103,22 +104,7 @@
         [self NetWorks];
     }
     
-    __weak __typeof(self) weakSelf = self;
-
-    //添加刷新
-    weakSelf.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        [self getNetWork];
-    }];
     
-    //    weakSelf.tableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:weakSelf refreshingAction:@selector(getNetWork)];
-    //自动更改透明度
-    weakSelf.tableView.mj_header.automaticallyChangeAlpha = YES;
-    [weakSelf.tableView.mj_header beginRefreshing];
-    
-    weakSelf.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        [self getMoreData];
-    }];
-
 }
 
 //设置网络状态
@@ -146,8 +132,27 @@
     //设置tableView
     [self setTable];
     
-    
     self.cityID = [[NSUserDefaults standardUserDefaults] objectForKey:@"city"];
+
+    
+    __weak __typeof(self) weakSelf = self;
+    
+    //添加刷新
+    weakSelf.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self getNetWork];
+    }];
+    
+    //    weakSelf.tableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:weakSelf refreshingAction:@selector(getNetWork)];
+    //自动更改透明度
+    weakSelf.tableView.mj_header.automaticallyChangeAlpha = YES;
+    [weakSelf.tableView.mj_header beginRefreshing];
+    
+    weakSelf.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        [self getMoreData];
+    }];
+
+    
+    
     
 }
 
@@ -156,7 +161,6 @@
     self.view.backgroundColor = BackGray;
     self.automaticallyAdjustsScrollViewInsets = YES;
     
-    //    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = TextColor;
     
@@ -286,8 +290,8 @@
     [WBHttpTool GET:[NSString stringWithFormat:@"%@/mainApp/list",BaseUrl] parameters:parameter success:^(id responseObject) {
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-        XXLog(@"dict >>>>>%@",dict);
         
+        XXLog(@"%@",dict);
         if ([dict[@"code"] isEqualToString:@"1"]) {
         
         [self.noNetWork removeFromSuperview];
@@ -296,11 +300,10 @@
         self.userModel = [YJUserModel mj_objectWithKeyValues:dict[@"data"]];
         self.guideType = self.userModel.guideTypeMap;
 //
-        XXLog(@"%@",self.userModel.guideTypeMap);
-            [self.tableView reloadData];
+            XXLog(@"刷新了tableview");
             //获取完成数据之后结束刷新
             [self.tableView.mj_header endRefreshing];
-            [self.tableView.mj_footer endRefreshing];
+            [self.tableView reloadData];
 
         }else{
             

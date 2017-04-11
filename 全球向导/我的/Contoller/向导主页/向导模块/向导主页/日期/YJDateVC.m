@@ -18,7 +18,8 @@
 @property (nonatomic, strong) YJSelcetBtn *receved;
 @property (nonatomic, strong) YJSelcetBtn *noOrd;
 
-
+@property (nonatomic, strong) NSMutableArray *orderArr;
+@property (nonatomic, strong) NSMutableArray *guideArr;
 
 
 
@@ -44,6 +45,7 @@
     return _guideArr;
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -58,6 +60,7 @@
 
     
     //加载日期布局
+    //加载日期布局
     self.calendar = [[CHTCalendarView alloc] init];
     self.calendar.layer.masksToBounds = YES;
     self.calendar.layer.cornerRadius = 10;
@@ -66,17 +69,12 @@
     self.calendar.sd_layout.centerXEqualToView(self.tableView).centerYEqualToView(self.tableView).heightIs(screen_width).widthIs(screen_width);
     self.calendar = self.calendar;
     self.calendar.isPostDate = YES;
-    
-//    self.calendar.markedDays = [NSMutableArray arrayWithObjects:@"2017-04-20",@"2017-04-21",@"2017-04-22",@"2017-04-23",@"2017-04-24" ,nil];
-//    self.calendar.selectedDays = [NSMutableArray arrayWithObjects:@"2017-04-25",@"2017-04-26",@"2017-04-27",@"2017-04-28",@"2017-04-29" ,nil];
-;
-    
-    
-    //[self setupViews];
+    self.calendar.isSelDate = YES;
     
     [self getDate];
-    
     [self.calendar reloadInterface];
+    
+    
 
     
     // Do any additional setup after loading the view.
@@ -89,7 +87,7 @@
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         if ([dict[@"code"] isEqualToString:@"1"]) {
-         
+            
             
             XXLog(@"%@",dict);
             
@@ -109,14 +107,21 @@
             
             
             [self.calendar reloadInterface];
-
+            
+        }else{
+            
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
+            
         }
         
     } failure:^(NSError *error) {
         
     }];
 }
-
 
 
 - (void)btnClick:(UIButton *)btn{

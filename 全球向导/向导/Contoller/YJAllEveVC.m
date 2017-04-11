@@ -24,7 +24,6 @@
     self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
@@ -43,7 +42,7 @@
     
     self.title = @"更多评论";
     // Do any additional setup after loading the view.
-    webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height - 64)];
+    webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 64, screen_width, screen_height - 64)];
     [webView setUserInteractionEnabled:YES];//是否支持交互
     //[webView setDelegate:self];
     webView.delegate = self;

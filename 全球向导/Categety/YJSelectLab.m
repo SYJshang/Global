@@ -21,6 +21,7 @@
         [self addTapAction];
         self.isCLick = NO;
         self.textAlignment = NSTextAlignmentCenter;
+        self.font = [UIFont systemFontOfSize:AdaptedWidth(13)];
     }
     return self;
 }
