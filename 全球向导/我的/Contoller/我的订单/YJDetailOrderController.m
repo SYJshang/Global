@@ -11,6 +11,9 @@
 #import "YJConfirmCell.h"
 #import "YJUserOrderDetailModel.h"
 #import "YJSerModel.h"
+#import "YJChatVC.h"
+#import "YJUserGuideCenterVC.h"
+#import "YJConfirmController.h"
 
 
 @interface YJDetailOrderController ()<UITableViewDelegate,UITableViewDataSource>
@@ -34,21 +37,14 @@
     
     [super viewWillAppear:animated];
     
- 
-    [self setBtn];
+    [self getNetWork];
+
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor redColor];
-    
-//    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [self.view addSubview:btn];
-//    [btn setTitle:@"ceshi" forState:UIControlStateNormal];
-//    [btn setBackgroundColor:[UIColor grayColor]];
-//    btn.frame = CGRectMake(0, 563, screen_width, 40);
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 108, screen_width, screen_height - 148) style:UITableViewStylePlain];
     [self.view addSubview:self.tableView];
@@ -59,12 +55,11 @@
     [self.tableView registerClass:[YJDescOrderCell class] forCellReuseIdentifier:@"cell"];
     [self.tableView registerClass:[YJConfirmCell class] forCellReuseIdentifier:@"cell1"];
     
-    self.titleArr = @[@"订单号",@"购买时间",@"人数",@"开始时间",@"结束时间",@"服务天数",@"联系电话",@"微信",@"其他备注",@"支付方式",@"支付金额"];
+    self.titleArr = @[@"订单号",@"购买时间",@"人数",@"开始时间",@"结束时间",@"服务天数",@"支付方式",@"支付金额",@"订单状态",@"微信",@"其他备注",@"联系电话"];
     self.payMethodMap = [NSDictionary dictionary];
 
 //    self.descArr = @[@"1天",@"6人",@"1234567890",@"￥100 * 3",@"无",@"￥3000"];
     
-    [self getNetWork];
     // Do any additional setup after loading the view.
 }
 
@@ -75,7 +70,8 @@
     view.frame = CGRectMake(0, screen_height - 44, screen_width, 1);
     view.backgroundColor = BackGray;
     
-    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *dcit = [defaults objectForKey:@"orderStatus"];
     
     
     YJButton *guide_home = [[YJButton alloc]initWithFrame:CGRectMake(0, screen_height - 43, 80 * KWidth_Scale, 43)];
@@ -84,6 +80,8 @@
     [guide_home setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [guide_home setTitle:YJLocalizedString(@"向导主页") forState:UIControlStateNormal];
     [guide_home setImage:[UIImage imageNamed:@"guide_home"] forState:UIControlStateNormal];
+    [guide_home addTarget:self action:@selector(guideHome) forControlEvents:UIControlEventTouchUpInside];
+
     
     
     YJButton *contact_guide = [[YJButton alloc]initWithFrame:CGRectMake(80 * KWidth_Scale, screen_height - 43, 80 * KWidth_Scale, 43)];
@@ -92,15 +90,85 @@
     [contact_guide setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [contact_guide setTitle:YJLocalizedString(@"联系向导") forState:UIControlStateNormal];
     [contact_guide setImage:[UIImage imageNamed:@"contact_guide"] forState:UIControlStateNormal];
+    [contact_guide addTarget:self action:@selector(contactGuide) forControlEvents:UIControlEventTouchUpInside];
+
+    
     
     UIButton *buy = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.view addSubview:buy];
     buy.frame = CGRectMake(160 * KWidth_Scale, screen_height - 43, screen_width - (160 * KWidth_Scale), 43);
     buy.backgroundColor = TextColor;
-    [buy setTitle:YJLocalizedString(@"付款") forState:UIControlStateNormal];
+    
+    if (self.userlModel.status == 1) {
+        [buy setTitle:YJLocalizedString(@"付款") forState:UIControlStateNormal];
+   
+    }else{
+        
+        NSString *state = [NSString stringWithFormat:@"%ld",self.userlModel.status];
+        
+        [buy setTitle:dcit[state] forState:UIControlStateNormal];
+
+    }
+    
+    buy.tag = self.userlModel.status;
     [buy setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [buy addTarget:self action:@selector(stateOrder:) forControlEvents:UIControlEventTouchUpInside];
+
+}
+
+
+
+
+
+
+
+- (void)stateOrder:(UIButton *)btn{
+    if (btn.tag == 1) {
+        YJConfirmController *vc = [[YJConfirmController alloc]init];
+        vc.orderID = self.userlModel.ID;
+        [self.navigationController pushViewController:vc animated:YES];
+ 
+    }else{
+        
+        NSString *orderSta;
+        
+        if ([self.userlModel.successTypeName isKindOfClass:[NSNull class]] || [self.userlModel.successTypeName isEqualToString:@""] || self.userlModel.successTypeName == nil) {
+            orderSta = self.userlModel.closeTypeName;
+            
+        }else{
+            
+            orderSta = self.userlModel.successTypeName;
+            
+        }
+        
+       SGAlertView *alert = [[SGAlertView alloc]initWithTitle:@"订单状态" contentTitle:orderSta alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+           
+       }];
+        alert.sure_btnTitle = @"好的";
+        alert.sure_btnTitleColor = TextColor;
+        [alert show];
+        
+    }
     
 }
+
+- (void)guideHome{
+    
+    YJUserGuideCenterVC *vc = [[YJUserGuideCenterVC alloc]init];
+    vc.ID = self.userlModel.ID;
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+
+- (void)contactGuide{
+    
+    YJChatVC *vc = [[YJChatVC alloc]initWithConversationChatter:self.userlModel.guideUserId conversationType:EMConversationTypeChat];
+    vc.title = self.userlModel.realName;
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+
+
 
 - (void)getNetWork{
    
@@ -119,9 +187,19 @@
             self.serverList = [YJSerModel mj_objectArrayWithKeyValuesArray:dict[@"data"][@"orderDetailList"]];
             self.payMethodMap = dict[@"data"][@"payMethodMap"];
             
+            [self setBtn];
+
             [self.tableView reloadData];
             
             
+            
+        }else{
+            
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
             
         }
         
@@ -198,25 +276,43 @@
                     break;
                 case 5:
                     cell.desc.text = [NSString stringWithFormat:@"%ld天",self.userlModel.serviceNumber];
-//                    cell.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"我的_进入箭头"]];
                     break;
                 case 6:
-                    cell.desc.text = self.userlModel.phone;
-                    break;
-                case 7:
-                    cell.desc.text = self.userlModel.wechat;
-                    break;
-                case 8:
-                    cell.desc.text = self.userlModel.remark;
-                    break;
-                case 9:
                     cell.desc.text = self.userlModel.payMethodName;
                     break;
-                case 10:
+                case 7:
                     cell.desc.text = [NSString stringWithFormat:@"￥%ld",(long)self.userlModel.totalMoney];
                     break;
+                case 8:
+                    
+                    
+                    if ([self.userlModel.successTypeName isKindOfClass:[NSNull class]] || [self.userlModel.successTypeName isEqualToString:@""] || self.userlModel.successTypeName == nil) {
+                        cell.desc.text = self.userlModel.closeTypeName;
+
+                    }else{
+                        
+                        cell.desc.text = self.userlModel.successTypeName;
+ 
+                    }
+                    break;
+                case 9:
+                    cell.desc.text = self.userlModel.phone;
+                    break;
+                case 10:
+                    cell.desc.text = self.userlModel.wechat;
+                    break;
+                case 11:
+                    cell.desc.text = self.userlModel.remark;
+                    break;
+
                 default:
                     break;
+            }
+            
+            if ([cell.desc.text isKindOfClass:[NSNull class]] || [cell.desc.text isEqualToString:@""] || cell.desc.text == nil) {
+                
+                cell.desc.text = @"无";
+                
             }
 
             

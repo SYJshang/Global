@@ -275,7 +275,12 @@
 #pragma mark - table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.navigationController pushViewController:[YJDetailController new] animated:YES];
+    
+    YJOrderListModel *model = self.totalCout[indexPath.row];
+    YJDetailController *vc = [[YJDetailController alloc]init];
+    vc.orderID = model.ID;
+    [self.navigationController pushViewController:vc animated:YES];
+
 }
 
 #pragma mark - Custom Deletae

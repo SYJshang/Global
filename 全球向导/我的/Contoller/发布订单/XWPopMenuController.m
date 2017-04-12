@@ -285,7 +285,6 @@
 //                _closeImgView.transform = CGAffineTransformRotate(_closeImgView.transform, -M_PI_2*1.5);
 //        }];
         YJSendOrderController *publishTextVC = [[YJSendOrderController alloc] init];
-//        [self presentViewController:publishTextVC animated:YES completion:nil];
         [self.navigationController pushViewController:publishTextVC animated:YES];
 
     }else if(btn.tag == 1001){

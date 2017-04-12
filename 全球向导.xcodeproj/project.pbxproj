@@ -89,6 +89,7 @@
 		1A1CBAC31E7AA57D00A3BBED /* YJUserOrderDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1CBAC21E7AA57D00A3BBED /* YJUserOrderDetailModel.m */; };
 		1A21D06B1E9C702F009692DE /* YJEditUserShareVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A21D06A1E9C702F009692DE /* YJEditUserShareVC.m */; };
 		1A21D06E1E9C7C02009692DE /* YJEditGuideShareVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A21D06D1E9C7C02009692DE /* YJEditGuideShareVC.m */; };
+		1A21D0711E9E379F009692DE /* YJfundDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A21D0701E9E379F009692DE /* YJfundDetailVC.m */; };
 		1A25B74A1E83B90B000B49AF /* YJMessageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A25B7491E83B90B000B49AF /* YJMessageVC.m */; };
 		1A25B74D1E83BACD000B49AF /* YJChatVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A25B74C1E83BACD000B49AF /* YJChatVC.m */; };
 		1A2612F91DCAE236002B95DC /* YJNewFindController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2612F81DCAE236002B95DC /* YJNewFindController.m */; };
@@ -541,6 +542,8 @@
 		1A21D06A1E9C702F009692DE /* YJEditUserShareVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJEditUserShareVC.m; sourceTree = "<group>"; };
 		1A21D06C1E9C7C02009692DE /* YJEditGuideShareVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJEditGuideShareVC.h; sourceTree = "<group>"; };
 		1A21D06D1E9C7C02009692DE /* YJEditGuideShareVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJEditGuideShareVC.m; sourceTree = "<group>"; };
+		1A21D06F1E9E379F009692DE /* YJfundDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJfundDetailVC.h; sourceTree = "<group>"; };
+		1A21D0701E9E379F009692DE /* YJfundDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJfundDetailVC.m; sourceTree = "<group>"; };
 		1A25B7481E83B90B000B49AF /* YJMessageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJMessageVC.h; sourceTree = "<group>"; };
 		1A25B7491E83B90B000B49AF /* YJMessageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJMessageVC.m; sourceTree = "<group>"; };
 		1A25B74B1E83BACD000B49AF /* YJChatVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJChatVC.h; sourceTree = "<group>"; };
@@ -2544,6 +2547,8 @@
 				1A443C0B1DF94AD500CC1AC2 /* YJDetailController.m */,
 				1A443C0D1DF9525D00CC1AC2 /* YJDetailOrderController.h */,
 				1A443C0E1DF9525D00CC1AC2 /* YJDetailOrderController.m */,
+				1A21D06F1E9E379F009692DE /* YJfundDetailVC.h */,
+				1A21D0701E9E379F009692DE /* YJfundDetailVC.m */,
 				1A6C74681DFA4ECF002A9481 /* YJOrderStateController.h */,
 				1A6C74691DFA4ECF002A9481 /* YJOrderStateController.m */,
 				1AF928911DF7F8D4004B666F /* LxGridViewFlowLayout.h */,
@@ -3022,6 +3027,7 @@
 				1AED50451E856E19006A1C98 /* YJGEWroldMineVC.m in Sources */,
 				1A06BEE81DFFE3610032FE99 /* ARSegmentPageHeader.m in Sources */,
 				1AF3AB5B1E655F4B00F5E568 /* TZImageManager.m in Sources */,
+				1A21D0711E9E379F009692DE /* YJfundDetailVC.m in Sources */,
 				1A26D11F1DB861E1006A6363 /* ViewController.m in Sources */,
 				1A78871E1E1DE084004F3271 /* SGPickerView.m in Sources */,
 				1A84BC201E7938AE006019CD /* YJMoneyDetailModel.m in Sources */,

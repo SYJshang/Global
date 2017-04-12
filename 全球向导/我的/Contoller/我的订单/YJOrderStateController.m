@@ -33,7 +33,7 @@
    
       NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/userInfo/myOrder/viewOrderStatusPage/%@",BaseUrl,self.orderID]];
     
-    webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 108, screen_width, screen_height - 64)];
+    webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 108, screen_width, screen_height - 108)];
     [webView setUserInteractionEnabled:YES];//是否支持交互
     //[webView setDelegate:self];
     webView.delegate = self;
@@ -45,7 +45,7 @@
     [webView loadRequest:request];
 
     
-    opaqueView = [[UIView alloc]initWithFrame:CGRectMake(0, 40, screen_width, screen_height)];
+    opaqueView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
     activityIndicatorView = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
     [activityIndicatorView setCenter:opaqueView.center];
     [activityIndicatorView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];

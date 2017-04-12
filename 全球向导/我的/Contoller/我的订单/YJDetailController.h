@@ -12,4 +12,6 @@
 
 @property (nonatomic, strong) NSString *orderID;
 
+@property (nonatomic, assign) BOOL isRefund;
+
 @end

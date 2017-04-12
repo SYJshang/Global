@@ -70,6 +70,7 @@
 @property (nonatomic , copy) NSString              * beginBuyTime;
 @property (nonatomic , copy) NSString              * buyTime;
 @property (nonatomic , assign) NSInteger              revokeStatus;
+@property (nonatomic, strong) NSString              *guideUserId;
 
 
 

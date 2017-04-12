@@ -65,7 +65,7 @@ void *CustomHeaderInsetObserver = &CustomHeaderInsetObserver;
     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     
     [self.navigationController.navigationBar setShadowImage:nil];
-
+ 
     [self.navigationController.navigationBar setTranslucent:YES];
 
 
@@ -138,7 +138,7 @@ void *CustomHeaderInsetObserver = &CustomHeaderInsetObserver;
             
 //            self.curStatus = data[@"curIdMap"];
 //            [self.tableView reloadData];
-//            
+            
             XXLog(@"%@",self.infoModel);
             XXLog(@"%@",data);
             
@@ -178,6 +178,7 @@ void *CustomHeaderInsetObserver = &CustomHeaderInsetObserver;
 
 -(void)dealloc
 {
+    
 }
 
 

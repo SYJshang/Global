@@ -100,12 +100,12 @@
                   moduleName = "&#x5168;&#x7403;&#x5411;&#x5bfc;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/lijingrui/Desktop/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC1/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC/Main/YJTabBarController.m"
-                  timestampString = "513587152.866344"
+                  timestampString = "513689071.930983"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "409"
                   endingLineNumber = "409"
-                  offsetFromSymbolStart = "460">
+                  offsetFromSymbolStart = "430">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -115,12 +115,12 @@
                   moduleName = "&#x5168;&#x7403;&#x5411;&#x5bfc;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/lijingrui/Desktop/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC1/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC/Main/YJTabBarController.m"
-                  timestampString = "513587152.86808"
+                  timestampString = "513689071.932955"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "409"
                   endingLineNumber = "409"
-                  offsetFromSymbolStart = "28">
+                  offsetFromSymbolStart = "19">
                </Location>
             </Locations>
          </BreakpointContent>

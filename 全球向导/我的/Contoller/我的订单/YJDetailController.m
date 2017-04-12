@@ -10,6 +10,7 @@
 #import "SGTopTitleView.h"
 #import "YJDetailOrderController.h"
 #import "YJOrderStateController.h"
+#import "YJfundDetailVC.h"
 
 
 @interface YJDetailController ()<SGTopTitleViewDelegate, UIScrollViewDelegate>
@@ -103,9 +104,16 @@
     oneVC.orderID = self.orderID;
     [self addChildViewController:oneVC];
     // 订单详情
-    YJDetailOrderController *twoVC = [[YJDetailOrderController alloc] init];
-    twoVC.ID = self.orderID;
-    [self addChildViewController:twoVC];
+    if (self.isRefund == YES) {
+        YJfundDetailVC *twoVC = [[YJfundDetailVC alloc] init];
+        twoVC.ID = self.orderID;
+        [self addChildViewController:twoVC];
+    }else{
+        YJDetailOrderController *twoVC = [[YJDetailOrderController alloc] init];
+        twoVC.ID = self.orderID;
+        [self addChildViewController:twoVC];
+    }
+   
 }
 
 // 显示控制器的view
