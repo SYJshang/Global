@@ -9,6 +9,7 @@
 #import "YJRefundDetailVC.h"
 #import "YJDescOrderCell.h"
 #import "YJGuideRefundModel.h"
+#import "YJChatVC.h"
 
 
 
@@ -47,7 +48,6 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:YJLocalizedString(@"订单详情") font:19.0];
     
-    //    [self setBtn];
 }
 
 - (void)back{
@@ -61,43 +61,51 @@
     
     //拒绝接单
     UIButton *reduse = [UIButton buttonWithType:UIButtonTypeCustom];
-    [reduse setTitle:@"拒绝接单" forState:UIControlStateNormal];
+    [reduse setTitle:@"联系用户" forState:UIControlStateNormal];
     [reduse setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [self.view addSubview:reduse];
     [reduse addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     reduse.tag = 1;
     reduse.layer.borderColor = BackGray.CGColor;
     reduse.layer.borderWidth = 0.5;
-    reduse.sd_layout.leftEqualToView(self.view).bottomSpaceToView(self.view,0).heightIs(44).widthIs(screen_width / 4);
-    
-    //联系客户
-    UIButton *lianxi = [UIButton buttonWithType:UIButtonTypeCustom];
-    [lianxi setTitle:@"联系客户" forState:UIControlStateNormal];
-    [lianxi setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [self.view addSubview:lianxi];
-    [lianxi addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-    lianxi.tag = 2;
-    lianxi.layer.borderColor = BackGray.CGColor;
-    lianxi.layer.borderWidth = 0.5;
-    lianxi.sd_layout.leftSpaceToView(reduse,0).bottomSpaceToView(self.view,0).heightIs(44).widthIs(screen_width / 4);
-    
+    reduse.sd_layout.leftEqualToView(self.view).bottomSpaceToView(self.view,0).heightIs(44).widthIs(screen_width / 2);
     //联系客户
     UIButton *jiedan = [UIButton buttonWithType:UIButtonTypeCustom];
-    [jiedan setTitle:@"接单" forState:UIControlStateNormal];
+    [jiedan setTitle:@"订单详情" forState:UIControlStateNormal];
     [jiedan setBackgroundColor:TextColor];
     [jiedan setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:jiedan];
     [jiedan addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-    jiedan.tag = 3;
+    jiedan.tag = 2;
     jiedan.layer.borderColor = BackGray.CGColor;
     jiedan.layer.borderWidth = 0.5;
-    jiedan.sd_layout.leftSpaceToView(lianxi,0).bottomSpaceToView(self.view,0).heightIs(44).rightSpaceToView(self.view,0);
+    jiedan.sd_layout.leftSpaceToView(reduse,0).bottomSpaceToView(self.view,0).heightIs(44).rightSpaceToView(self.view,0);
+
+    
     
 }
 
 - (void)btnClick:(UIButton *)btn{
     
-    XXLog(@"点击了第%ld个按钮",(long)btn.tag);
+    if (btn.tag == 1) {
+        
+        YJChatVC *vc = [[YJChatVC alloc]initWithConversationChatter:self.detailModel.buyerId conversationType:EMConversationTypeChat];
+        vc.title = self.detailModel.nickName;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else{
+        
+        
+        NSString *text;
+        
+        text = self.detailModel.typeName;
+        
+        SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:text alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+        }];
+        alert.sure_btnTitleColor = TextColor;
+        [alert show];
+        
+    }
 }
 
 - (void)viewDidLoad {
@@ -114,7 +122,7 @@
     
     [self.tableView registerClass:[YJDescOrderCell class] forCellReuseIdentifier:@"cell"];
     
-    self.titleArr = @[@"订单号",@"退款单号",@"预订人名称",@"退款类型",@"退款状态",@"申请时间",@"退款时间",@"交易金额",@"退款金额"];
+    self.titleArr = @[@"订单号",@"退款单号",@"预订人名称",@"退款方式",@"退款原因",@"退款状态",@"申请时间",@"退款时间",@"交易金额",@"退款金额"];
     self.payMethodMap = [NSDictionary dictionary];
     
     
@@ -122,6 +130,8 @@
     
     // Do any additional setup after loading the view.
 }
+
+
 
 
 - (void)getNetWorkData{
@@ -132,9 +142,13 @@
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         
+        XXLog(@"%@",dict);
+        
         if ([dict[@"code"] isEqualToString:@"1"]) {
             
             self.detailModel = [YJGuideRefundModel mj_objectWithKeyValues:dict[@"data"]];
+            
+            [self setBtn];
             [self.tableView reloadData];
             
             
@@ -179,8 +193,8 @@
     
     YJDescOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
             
-//        @[@"订单号",@"退款单号",@"预订人名称",@"退款类型",@"退款状态",@"申请时间",@"退款时间",@"交易金额",@"退款金额",@"退款方式"]
-        
+//    self.titleArr = @[,@"退款原因",@"退款状态",@"申请时间",@"退款时间",@"交易金额",@"退款金额"];
+    
         cell.name.text = self.titleArr[indexPath.row];
         switch (indexPath.row) {
             case 0:
@@ -196,25 +210,33 @@
                 cell.desc.text = self.detailModel.payMethodName;
                 break;
             case 4:
-                cell.desc.text = self.detailModel.statusName;
+                cell.desc.text = self.detailModel.refundReason;
                 break;
             case 5:
-                cell.desc.text = self.detailModel.applyTime;
+                cell.desc.text = self.detailModel.statusName;
                 break;
             case 6:
-                cell.desc.text = self.detailModel.refundTime;
+                cell.desc.text = self.detailModel.applyTime;
                 break;
             case 7:
-                cell.desc.text = [NSString stringWithFormat:@"￥%ld",self.detailModel.tradeMoney];
+                cell.desc.text = self.detailModel.refundTime;
                 break;
             case 8:
-                cell.desc.text = [NSString stringWithFormat:@"￥%ld",self.detailModel.refundMoney];
+                cell.desc.text = [NSString stringWithFormat:@"￥%ld",self.detailModel.tradeMoney];
+                break;
+            case 9:
+                 cell.desc.text = [NSString stringWithFormat:@"￥%ld",self.detailModel.refundMoney];
+                cell.desc.textColor = TextColor;
                 break;
 
             default:
                 break;
         }
+    
+    if ([cell.desc.text isKindOfClass:[NSNull class]] || [cell.desc.text isEqualToString:@""] || cell.desc.text == nil) {
         
+        cell.desc.text = @"无";
+    }
 
     
     return cell;

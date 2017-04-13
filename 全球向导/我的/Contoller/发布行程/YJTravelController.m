@@ -160,6 +160,10 @@
     
     
 }
+
+//<NSHTTPCookie version:0 name:"token" value:"22-0f3d8396-3373-4c60-be7f-3f0c0e95ed64" expiresDate:2017-05-13 02:09:09 +0000 created:2017-04-13 02:09:14 +0000 sessionOnly:FALSE domain:"www.globaleguide.com" partition:"none" path:"/" isSecure:FALSE>
+
+
 // 在收到响应后，决定是否跳转
 //- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{
 //    
@@ -201,12 +205,13 @@
     
     decisionHandler(WKNavigationActionPolicyAllow);
     
-    if ([requestString containsString:@"http://www.globaleguide.com"]){
+    if ([requestString isEqualToString:@"http://www.globaleguide.com/"]){
         
         [self.navigationController setNavigationBarHidden:NO animated:NO];
         [self.navigationController popToRootViewControllerAnimated:YES];
         
-    }else if ([requestString containsString:@"http://globaleguide.com:8082/user/login"]){
+        
+    }else if ([requestString isEqualToString:@"http://www.globaleguide.com:8082/user/login"]){
         
         XXLog(@"退出登录");
         

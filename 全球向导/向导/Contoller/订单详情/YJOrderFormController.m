@@ -263,7 +263,7 @@
 - (void)click:(UIButton *)sender{
     
     [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder)to:nil from:nil forEvent:nil];
-    //    [self.tableView reloadData];
+    [self.tableView reloadData];
     [self postData];
     
     NSLog(@"提交订单");
@@ -712,19 +712,7 @@
 //    
     [parmter setObject:self.allPIds forKey:@"productIds"];
     [parmter setObject:self.allNums forKey:@"numbers"];
-    
-    
-    if (phone.length == 11) {
-        [parmter setObject:phone forKey:@"phone"];
-    }else{
-        SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"手机号格式有误" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
-            
-            return;
-            
-        }];
-        alert.sure_btnTitleColor = TextColor;
-        [alert show];
-    }
+    [parmter setObject:phone forKey:@"phone"];
     [parmter setObject:wechat forKey:@"wechat"];
     [parmter setObject:remark forKey:@"remark"];
     
@@ -760,6 +748,8 @@
         }else{
             
             SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+                [self.navigationController popViewControllerAnimated:YES];
             }];
             alert.sure_btnTitleColor = TextColor;
             [alert show];

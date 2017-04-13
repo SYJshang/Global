@@ -49,7 +49,7 @@
 @property (nonatomic , copy) NSString              * endLimitTime;
 @property (nonatomic , copy) NSString              * totalMoney;
 @property (nonatomic , assign) NSInteger              recId;
-@property (nonatomic , assign) NSInteger              buyerId;
+@property (nonatomic , strong) NSString            *  buyerId;
 @property (nonatomic , copy) NSString              * buyerArt;
 @property (nonatomic , copy) NSString              * beginLimitTime;
 @property (nonatomic , copy) NSString              * waitRevokeTime;
@@ -66,6 +66,10 @@
 @property (nonatomic , copy) NSString              * beginBuyTime;
 @property (nonatomic , copy) NSString              * buyTime;
 @property (nonatomic , assign) NSInteger              revokeStatus;
+@property (nonatomic, strong) NSString             *payMethodName;
+@property (nonatomic, strong) NSString             *successTypeName;
+@property (nonatomic, strong) NSString             *closeTypeName;
+@property (nonatomic, strong) NSString             *statusName;
 
 
 

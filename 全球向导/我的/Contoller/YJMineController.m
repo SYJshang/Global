@@ -369,13 +369,6 @@
     
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-//    if (section == 0) {
-//        return 0;
-//    }else{
-//        return 0;
-//    }
-//}
 
 -(CGFloat)tableView:(UITableView*)tableView heightForHeaderInSection:(NSInteger)section
     {
@@ -492,11 +485,26 @@
     }
     
     
-   
-
-    
-    
-    
+    if (indexPath.section == 3) {
+        
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 10) {
+            NSString *phone = [NSString stringWithFormat:@"tel://0574-87844680"];
+            NSURL *url = [NSURL URLWithString:phone];
+            [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success) {
+                
+                if (!success) {
+                    SGAlertView *alert = [[SGAlertView alloc]initWithTitle:@"提示" contentTitle:@"拨号失败" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                        
+                    }];
+                    alert.sure_btnTitleColor = TextColor;
+                    [alert show];
+                }
+                
+            }];
+        }else{
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://0574-87844680"]];
+        }
+    }
 }
 
 - (void)btnDidClickPlusButton:(NSInteger)ViewTag{

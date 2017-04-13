@@ -61,6 +61,34 @@
     return _orderList;
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        [self getNetWorkData];
+    }];
+    
+    self.tableView.mj_header.automaticallyChangeAlpha = YES;
+    [self.tableView.mj_header beginRefreshing];
+    
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        
+        
+        if (self.pageModel.totalCount <= self.totalCout.count ) {
+            
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            
+        }else{
+            [self getMoreData];
+        }
+        
+        
+    }];
+    
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -102,28 +130,7 @@
     }
     
     
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        
-        [self getNetWorkData];
-    }];
-    
-    self.tableView.mj_header.automaticallyChangeAlpha = YES;
-    [self.tableView.mj_header beginRefreshing];
-    
-    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        
-        
-        if (self.pageModel.totalCount <= self.totalCout.count ) {
-            
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            
-        }else{
-            [self getMoreData];
-        }
-        
-        
-    }];
-    
+      
     // Do any additional setup after loading the view.
 }
 

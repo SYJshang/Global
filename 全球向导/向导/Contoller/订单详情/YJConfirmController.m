@@ -267,30 +267,12 @@
         
         if ([dict[@"code"] isEqualToString:@"1"]) {
            
-            
-            // NOTE: 调用支付结果开始支付
-//            [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
-//                NSLog(@"reslut = %@",resultDic);
-//            }];
-//            
-//            NSString *appScheme = @"alisdkdemo";
-//            NSString *order = dict[@"data"][@"payParam"];
-//            
-//            [[AlipaySDK defaultService] payOrder:order fromScheme:appScheme callback:^(NSDictionary *resultDic) {
-//                
-//                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-//                hud.mode = MBProgressHUDModeText;
-//                hud.labelColor = [UIColor whiteColor];
-//                hud.color = [UIColor blackColor];
-//                hud.labelText = NSLocalizedString(@"支付成功！", @"HUD message title");
-//                [hud hide:YES afterDelay:2.0];
-//
-//                
-//                NSLog(@"reslut = %@",resultDic);
-//
-//
-//            }];
-
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.labelColor = [UIColor whiteColor];
+            hud.color = [UIColor blackColor];
+            hud.labelText = NSLocalizedString(@"支付成功！", @"HUD message title");
+            [hud hide:YES afterDelay:2.0];
 
         }else{
             

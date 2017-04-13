@@ -19,6 +19,7 @@
 #import <UMSocialCore/UMSocialCore.h>
 #import <UserNotifications/UserNotifications.h>
 #import "KeychainIDFA.h"
+#import "YJReveingDetailVC.h"
 
 //#import "WSMovieController.h"
 
@@ -404,13 +405,8 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
 //        [self showNotificationWithMessage:message];
     }
 #endif
-    //aMessages是一个对象,包含了发过来的所有信息,怎么提取想要的信息我会在后面贴出来.
 }
 
-//- (void)playSoundAndVibration{
-//    
-//    
-//}
 
 
 
@@ -551,11 +547,32 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
 // iOS 10 Support
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler {
     // Required
-    NSDictionary * userInfo = notification.request.content.userInfo;
+    
+    NSDictionary *userInfo = notification.request.content.userInfo;
+    UNNotificationRequest *request = notification.request; // 收到推送的请求
+//    UNNotificationContent *content = request.content; // 收到推送的消息内容
+    
     if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        
+        if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+            //程序运行时收到通知，先弹出消息框
+            NSLog(@"程序在前台");
+            [self popAlert:userInfo];
+            
+        }
+        
+        else{
+            //跳转到指定页面
+            [self pushToViewControllerWhenClickPushMessageWith:userInfo];
+            //这里也可以发送个通知,跳转到指定页面
+            // [self readNotificationVcWithUserInfo:userInfo];
+            
+        }
+
+        
         [JPUSHService handleRemoteNotification:userInfo];
     }
-    completionHandler(UNNotificationPresentationOptionAlert); // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以选择设置
+    completionHandler(UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionSound|UNNotificationPresentationOptionAlert);// 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以选择设置
 }
 
 // iOS 10 Support
@@ -565,35 +582,124 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
     if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         [JPUSHService handleRemoteNotification:userInfo];
     }
+    
+    
+    [[NSUserDefaults standardUserDefaults] setObject:@"Inactive" forKey:@"applicationState"];
+    
+    if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        [JPUSHService handleRemoteNotification:userInfo];
+        
+        
+        if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+            //程序运行时收到通知，先弹出消息框
+            [self popAlert:userInfo];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ApplicationState" object:@"0"];
+            
+        }
+        
+        else{
+            
+            [self pushToViewControllerWhenClickPushMessageWith:userInfo];
+            //这里也可以发送个通知,跳转到指定页面
+            // [self readNotificationVcWithUserInfo:userInfo];
+        }
+        
+    }
     completionHandler();  // 系统要求执行这个方法
+    
 }
 
 //2. 如果App状态为正在前台或者点击通知栏的通知消息，苹果的回调函数将被调用
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    // 取得 APNs 标准信息内容
-    NSDictionary *aps = [userInfo valueForKey:@"aps"];
-    NSString *content = [aps valueForKey:@"alert"]; //推送显示的内容
-    NSInteger badge = [[aps valueForKey:@"badge"] integerValue]; //badge数量
-    NSString *sound = [aps valueForKey:@"sound"]; //播放的声音
-    // 取得Extras字段内容
-    NSString *customizeField1 = [userInfo valueForKey:@"customizeExtras"]; //服务端中Extras字段，key是自己定义的
-    NSLog(@"content =[%@], badge=[%ld], sound=[%@], customize field  =[%@]",content,(long)badge,sound,customizeField1);
-    //判断程序是否在前台运行
-    if (application.applicationState ==UIApplicationStateActive) {
-        //如果应用在前台，在这里执行
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"极光推送"message:content delegate:nil cancelButtonTitle:@"ok"otherButtonTitles:nil,nil];
-        [alertView show];
+    
+//    completionHandler(UIBackgroundFetchResultNewData);
+//    
+//    // 取得 APNs 标准信息内容
+//    NSDictionary *aps = [userInfo valueForKey:@"aps"];
+//    NSString *content = [aps valueForKey:@"alert"]; //推送显示的内容
+//    NSInteger badge = [[aps valueForKey:@"badge"] integerValue]; //badge数量
+//    NSString *sound = [aps valueForKey:@"sound"]; //播放的声音
+//    // 取得Extras字段内容
+//    NSString *customizeField1 = [userInfo valueForKey:@"customizeExtras"]; //服务端中Extras字段，key是自己定义的
+//    NSLog(@"content =[%@], badge=[%ld], sound=[%@], customize field  =[%@]",content,(long)badge,sound,customizeField1);
+   
+    completionHandler(UIBackgroundFetchResultNewData);
+    
+    if (application.applicationState == UIApplicationStateActive) {
+        //程序运行时收到通知，先弹出消息框
+        NSLog(@"程序在前台");
+        [self popAlert:userInfo];
+        
+        
     }
     
-    // iOS 7 Support Required,处理收到的APNS信息
-    //如果应用在后台，在这里执行
+    else{
+        //程序已经关闭或者在后台运行
+        [self pushToViewControllerWhenClickPushMessageWith:userInfo];
+        //这里也可以发送个通知,跳转到指定页面
+        // [self readNotificationVcWithUserInfo:userInfo];
+        
+    }
+    
+    
     [JPUSHService handleRemoteNotification:userInfo];
+    
     completionHandler(UIBackgroundFetchResultNewData);
     
     [JPUSHService setBadge:0];//清空JPush服务器中存储的badge值
     [application setApplicationIconBadgeNumber:0];//小红点清0操作
 }
 
+
+#pragma mark -- 程序运行时收到通知
+-(void)popAlert:(NSDictionary *)pushMessageDic{
+    
+    UIAlertController *alertController =
+    [UIAlertController alertControllerWithTitle:@"提示" message:[[pushMessageDic objectForKey:@"aps"]objectForKey:@"alert"]
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *confirmAction =
+    [UIAlertAction actionWithTitle:@"查看" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        [self pushToViewControllerWhenClickPushMessageWith:pushMessageDic];
+    }];
+    
+    UIAlertAction *cancelAction =
+    [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    
+    [alertController addAction:confirmAction];
+    [alertController addAction:cancelAction];
+    [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+    
+    
+}
+
+-(void)pushToViewControllerWhenClickPushMessageWith:(NSDictionary*)msgDic{
+    
+    
+    NSUserDefaults *pushJudge = [NSUserDefaults standardUserDefaults];
+    
+    if ([[msgDic objectForKey:@"type"] integerValue]==1){
+        //详情，这是从跳转到第一个tabbarItem跳转过去的，所以我们可以先让tabController.selectedIndex =0;然后找到VC的nav。
+        
+        self.tabBarVC.selectedIndex =0;
+        YJReveingDetailVC  *VC = [[YJReveingDetailVC alloc]init];
+        VC.orderId = msgDic[@"orderId"];
+        [VC setHidesBottomBarWhenPushed:YES];
+        //因为我用了三方全屏侧滑手势，所以要找的是第一个tabbarController中的viewController的JTNavigationController ，接着再找JTNavigationController 里面的jt_viewControllers.lastObject，这样就可以找到FirstViewController了，然后跳转的时候就和正常的跳转一样了
+        YJNavigationController *nav=(YJNavigationController *)self.tabBarVC.viewControllers[0];
+        UIViewController *vc= (UIViewController*)nav.viewControllers.firstObject;
+        
+        [vc.navigationController pushViewController:VC animated:NO];
+        
+    }else {
+        
+    }
+
+}
 
 
 @end
