@@ -20,7 +20,7 @@
         self.contentView.layer.borderColor =  [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0].CGColor;
         self.contentView.layer.borderWidth = 2;
         
-        self.imgV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"find_guide"]];
+        self.imgV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"horse"]];
         [self.contentView addSubview:self.imgV];
         self.imgV.contentMode = UIViewContentModeScaleAspectFill;
         self.imgV.sd_layout.leftSpaceToView(self.contentView,0).rightSpaceToView(self.contentView,0).topSpaceToView(self.contentView,0).bottomSpaceToView(self.contentView,40);
@@ -61,7 +61,7 @@
 - (void)setGuideModel:(YJGuideModel *)guideModel{
     
     _guideModel = guideModel;
-    [self.imgV sd_setImageWithURL:[NSURL URLWithString:guideModel.coverPhotoUrl] placeholderImage:[UIImage imageNamed:@"find_guide"]];
+    [self.imgV sd_setImageWithURL:[NSURL URLWithString:guideModel.coverPhotoUrl] placeholderImage:[UIImage imageNamed:@"horse"]];
     [self.icon sd_setImageWithURL:[NSURL URLWithString:guideModel.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
     self.name.text = [NSString stringWithFormat:@"by %@",guideModel.realName];
     NSString *type;

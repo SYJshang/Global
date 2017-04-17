@@ -37,7 +37,7 @@
 //                            @"如果代码在使用过程中出现问题",
 //                            @"您可以发邮件到gsdios@126.com"
 //                            ];
-        self.cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(10, 10, Width - 20, 170 * KHeight_Scale) delegate:self placeholderImage:[UIImage imageNamed:@"backImg"]];
+        self.cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(10, 10, Width - 20, 170 * KHeight_Scale) delegate:self placeholderImage:[UIImage imageNamed:@"big_horse"]];
         self.cycleScrollView.layer.masksToBounds = YES;
         self.cycleScrollView.layer.borderColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0].CGColor;
         self.cycleScrollView.layer.borderWidth = 2;

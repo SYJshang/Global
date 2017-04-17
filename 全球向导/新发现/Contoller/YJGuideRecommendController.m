@@ -75,6 +75,7 @@
     [self.noNetWork removeFromSuperview];
     
     self.noNetWork = [[NoNetwork alloc]init];
+    self.noNetWork.backgroundColor = BackGray;
     self.noNetWork.titleLabel.text = @"数据请求失败\n请设置网络之后重试";
     __weak typeof(self) weakSelf = self;
     self.noNetWork.btnBlock = ^{

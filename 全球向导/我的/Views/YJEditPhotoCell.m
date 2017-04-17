@@ -24,7 +24,7 @@
         [self.contentView addSubview:self.img];
         self.img.sd_layout.rightSpaceToView(self.contentView,15).centerYEqualToView(self.contentView).heightIs(16).widthIs(8);
         
-        self.icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bg2"]];
+        self.icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"head"]];
         [self.contentView addSubview:self.icon];
         self.icon.sd_layout.rightSpaceToView(self.img,5).centerYEqualToView(self.img).heightIs(50 * KHeight_Scale).widthIs(50 * KHeight_Scale);
         self.icon.layer.masksToBounds = YES;

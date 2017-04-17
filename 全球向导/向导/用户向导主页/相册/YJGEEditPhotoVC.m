@@ -204,7 +204,7 @@ static CGFloat navH = 64;
             }
             
             YJPhotoLsitModel *model = self.photoLsitArr.firstObject;
-            [self.headerView sd_setImageWithURL:[NSURL URLWithString:model.url] placeholderImage:[UIImage imageNamed:@"bg2"]];
+            [self.headerView sd_setImageWithURL:[NSURL URLWithString:model.url] placeholderImage:[UIImage imageNamed:@"big_horse"]];
             [self.headerView setImageToBlur:self.headerView.image
                                  blurRadius:5
                             completionBlock:^(){
@@ -319,7 +319,7 @@ static CGFloat navH = 64;
     self.headerView = [[UIImageView alloc]init];
     self.headerView.frame = CGRectMake(0, - 205, screen_width, 195);
     
-    [self.headerView sd_setImageWithURL:[NSURL URLWithString:self.corPic] placeholderImage:[UIImage imageNamed:@"bg2"]];
+    [self.headerView sd_setImageWithURL:[NSURL URLWithString:self.corPic] placeholderImage:[UIImage imageNamed:@"big_horse"]];
     [self.headerView setImageToBlur:self.headerView.image
                          blurRadius:5
                     completionBlock:^(){
@@ -353,7 +353,7 @@ static CGFloat navH = 64;
     cell.videoImageView.hidden = YES;
     YJPhotoLsitModel *model = self.photoLsitArr[indexPath.row];
     cell.gifLable.hidden = YES;
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.url] placeholderImage:[UIImage imageNamed:@"bg2"]];
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.url] placeholderImage:[UIImage imageNamed:@"big_horse"]];
 //            cell.asset = _selectedAssets[indexPath.row];
     cell.deleteBtn.hidden = YES;
     return cell;

@@ -19,13 +19,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/Main/YJTabBarController.m"
-            timestampString = "513161972.235167"
+            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/Other/AppDelegate.m"
+            timestampString = "513848357.578046"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "437"
-            endingLineNumber = "437"
-            landmarkName = "-didReceiveUserNotification:"
+            startingLineNumber = "647"
+            endingLineNumber = "647"
+            landmarkName = "-application:didReceiveRemoteNotification:fetchCompletionHandler:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -36,12 +36,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/Main/YJTabBarController.m"
-            timestampString = "513161972.235167"
+            timestampString = "514023972.872271"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "412"
-            endingLineNumber = "412"
-            landmarkName = "-didReceiveUserNotification:"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
+            landmarkName = "-_getCurrentChatView"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -51,13 +51,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/Main/YJTabBarController.m"
-            timestampString = "513161972.235167"
+            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/Other/AppDelegate.m"
+            timestampString = "513846591.540235"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "404"
-            endingLineNumber = "404"
-            landmarkName = "-didReceiveUserNotification:"
+            startingLineNumber = "445"
+            endingLineNumber = "445"
+            landmarkName = "-userNotificationCenter:willPresentNotification:withCompletionHandler:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -67,61 +67,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/Main/YJTabBarController.m"
-            timestampString = "513161972.235167"
+            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/Other/AppDelegate.m"
+            timestampString = "513846591.540235"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "409"
-            endingLineNumber = "409"
-            landmarkName = "-didReceiveUserNotification:"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[YJTabBarController didReceiveUserNotification:]"
-                  moduleName = "&#x5168;&#x7403;&#x5411;&#x5bfc;"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lijingrui/Desktop/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC1/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC/Main/YJTabBarController.m"
-                  timestampString = "513773579.043996"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "409"
-                  endingLineNumber = "409"
-                  offsetFromSymbolStart = "460">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__49-[YJTabBarController didReceiveUserNotification:]_block_invoke"
-                  moduleName = "&#x5168;&#x7403;&#x5411;&#x5bfc;"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/lijingrui/Desktop/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC1/%E5%85%A8%E7%90%83%E5%90%91%E5%AF%BC/Main/YJTabBarController.m"
-                  timestampString = "513773579.045731"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "409"
-                  endingLineNumber = "409"
-                  offsetFromSymbolStart = "28">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/Main/YJTabBarController.m"
-            timestampString = "513161972.235167"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "400"
-            endingLineNumber = "400"
-            landmarkName = "-didReceiveUserNotification:"
+            startingLineNumber = "451"
+            endingLineNumber = "451"
+            landmarkName = "-userNotificationCenter:didReceiveNotificationResponse:withCompletionHandler:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -131,13 +83,45 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/Main/YJTabBarController.m"
-            timestampString = "513161972.235167"
+            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/Other/AppDelegate.m"
+            timestampString = "513846591.540235"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "386"
+            endingLineNumber = "386"
+            landmarkName = "-application:didReceiveLocalNotification:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/Other/AppDelegate.m"
+            timestampString = "513846591.540235"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "378"
             endingLineNumber = "378"
-            landmarkName = "-didReceiveLocalNotification:"
+            landmarkName = "-application:didReceiveRemoteNotification:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/Other/AppDelegate.m"
+            timestampString = "513846591.540235"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "397"
+            endingLineNumber = "397"
+            landmarkName = "-easemobApplication:didReceiveRemoteNotification:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -148,60 +132,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/Main/YJTabBarController.m"
-            timestampString = "513161972.235167"
+            timestampString = "514023972.872271"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "392"
-            endingLineNumber = "392"
-            landmarkName = "-didReceiveLocalNotification:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/&#x65b0;&#x53d1;&#x73b0;/Contoller/YJGuideRecommendController.m"
-            timestampString = "513585891.006331"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "245"
-            endingLineNumber = "245"
-            landmarkName = "-tableView:didSelectRowAtIndexPath:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/Other/AppDelegate.m"
-            timestampString = "513772170.824219"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "556"
-            endingLineNumber = "556"
-            landmarkName = "-jpushNotificationCenter:willPresentNotification:withCompletionHandler:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "&#x5168;&#x7403;&#x5411;&#x5bfc;/Other/AppDelegate.m"
-            timestampString = "513772170.824219"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "374"
-            endingLineNumber = "374"
-            landmarkName = "-application:didReceiveRemoteNotification:"
+            startingLineNumber = "316"
+            endingLineNumber = "316"
+            landmarkName = "-jumpToChatList"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

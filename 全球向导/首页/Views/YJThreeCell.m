@@ -72,7 +72,7 @@
 - (void)setGuideModel:(YJGuideModel *)guideModel{
     
     _guideModel = guideModel;
-    [self.imageV sd_setImageWithURL:[NSURL URLWithString:guideModel.coverPhotoUrl] placeholderImage:[UIImage imageNamed:@"123"]];
+    [self.imageV sd_setImageWithURL:[NSURL URLWithString:guideModel.coverPhotoUrl] placeholderImage:[UIImage imageNamed:@"big_horse"]];
     [self.icon sd_setImageWithURL:[NSURL URLWithString:guideModel.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
     self.name.text = [NSString stringWithFormat:@"by %@",guideModel.realName];
     NSString *type = [self.guideType objectForKey:guideModel.type];

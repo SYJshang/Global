@@ -47,6 +47,8 @@
 @property (nonatomic, strong) NSString *email; //邮箱
 @property (nonatomic, assign) int status;
 @property (nonatomic, strong) NSString *imPwd;
+@property (nonatomic, strong) NSString *userNo;
+@property (nonatomic, strong) NSString *lastSignDate;
 
 
 @end

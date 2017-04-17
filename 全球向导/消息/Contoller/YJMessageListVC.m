@@ -29,7 +29,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    self.tabBarItem.badgeValue = nil;
+    
     [self refresh];
+    
     
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     NSString *code = [userDefault objectForKey:@"code"];
@@ -289,7 +293,7 @@
 //            latestMessageTitle = [NSString stringWithFormat:@"%@: %@", from, latestMessageTitle];
         }
         
-        NSDictionary *ext = conversationModel.conversation.ext;
+//        NSDictionary *ext = conversationModel.conversation.ext;
 //        if (ext && [ext[kHaveUnreadAtMessage] intValue] == kAtAllMessage) {
 //            latestMessageTitle = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"group.atAll", nil), latestMessageTitle];
 //            attributedStr = [[NSMutableAttributedString alloc] initWithString:latestMessageTitle];

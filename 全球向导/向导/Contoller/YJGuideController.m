@@ -484,7 +484,7 @@
 {
     if (kind == UICollectionElementKindSectionHeader) {
         YJCollectionReusableView * headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"header" forIndexPath:indexPath];
-        headerView.imgV.image = [UIImage imageNamed:@"bg2"];
+        headerView.imgV.image = [UIImage imageNamed:@"big_horse"];
     return headerView;
     }
     UICollectionReusableView *head = [[UICollectionReusableView alloc]init];

@@ -13,7 +13,6 @@
 #import "YJFourCell.h"
 #import "FTPopOverMenu.h"
 #import "YJAreaMianVC.h"
-#import "NSObject+YJJsonOrModel.h"
 #import "YJUserModel.h"
 #import "YJLunBoModel.h"
 #import "YJGuideModel.h"
@@ -43,7 +42,6 @@
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,LunboDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
-//@property (nonatomic, strong) CLSeachBar *seacher;
 @property (nonatomic, strong) YJUserModel *userModel;
 @property (nonatomic, strong) NSDictionary *guideType;
 @property (nonatomic, strong) NoNetwork *noNetWork;
@@ -70,8 +68,7 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    //一句代码实现检测更新,很简单哦 （需要在viewDidAppear完成时，再调用改方法。不然在网速飞快的时候，会出现一个bug，就是当前控制器viewDidLoad调用的话，可能当前视图还没加载完毕就需要推出UIAlertAction）
-//    [self hsUpdateApp];
+
 }
 
 
@@ -142,7 +139,7 @@
         [self getNetWork];
     }];
     
-    //    weakSelf.tableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:weakSelf refreshingAction:@selector(getNetWork)];
+
     //自动更改透明度
     weakSelf.tableView.mj_header.automaticallyChangeAlpha = YES;
     [weakSelf.tableView.mj_header beginRefreshing];
@@ -193,15 +190,12 @@
     
 }
 
-
-
 - (void)setTable{
     
     //穿创建tableView
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Width, Height) style:UITableViewStylePlain];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //tableView的代理
-    
     __weak __typeof(self) weakSelf = self;
     _tableView.delegate = weakSelf;
     _tableView.dataSource = weakSelf;
@@ -210,7 +204,6 @@
     
     
     //tableView的背景
-//    _tableView.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
     self.tableView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_tableView];
     

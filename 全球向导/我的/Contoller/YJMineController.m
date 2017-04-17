@@ -82,7 +82,7 @@
             XXLog(@"%@",self.userModel);
             if (self.userModel.headUrl) {
                 [self.icon sd_setImageWithURL:[NSURL URLWithString:self.userModel.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
-                [self.topImageView sd_setImageWithURL:[NSURL URLWithString:self.userModel.headUrl] placeholderImage:[UIImage imageNamed:@"bg2"]];
+                [self.topImageView sd_setImageWithURL:[NSURL URLWithString:self.userModel.headUrl] placeholderImage:[UIImage imageNamed:@"big_horse"]];
             }
             
             [self setBtnStatus];
@@ -229,7 +229,7 @@
 - (void)setImage{
     
     self.topImageView = [[UIImageView alloc] initWithFrame:(CGRectMake(0, -200, screen_width, 200))];
-    _topImageView.image = [UIImage imageNamed:@"bg2"];
+    _topImageView.image = [UIImage imageNamed:@"big_horse"];
     [self.topImageView setImageToBlur:self.topImageView.image
                            blurRadius:5
                       completionBlock:^(){
@@ -555,6 +555,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 
 /*
 #pragma mark - Navigation

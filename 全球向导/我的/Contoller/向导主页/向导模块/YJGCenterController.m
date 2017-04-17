@@ -132,7 +132,7 @@ void *CustomHeaderInsetObserver = &CustomHeaderInsetObserver;
             
             self.infoModel = [YJGuideInformationModel mj_objectWithKeyValues:data[@"guide"]];
             
-            [self.header.imageView sd_setImageWithURL:[NSURL URLWithString:self.infoModel.coverPhotoUrl] placeholderImage:[UIImage imageNamed:@"bg2"]];
+            [self.header.imageView sd_setImageWithURL:[NSURL URLWithString:self.infoModel.coverPhotoUrl] placeholderImage:[UIImage imageNamed:@"big_horse"]];
             [self.header.headImageView sd_setImageWithURL:[NSURL URLWithString:self.infoModel.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
             self.header.nameLab.text = self.infoModel.realName;
             

@@ -342,7 +342,7 @@
 - (void)setImage{
     
     self.bigImg = [[UIImageView alloc] initWithFrame:(CGRectMake(0, -200, screen_width, 200))];
-    self.bigImg.image = [UIImage imageNamed:@"bg2"];
+    self.bigImg.image = [UIImage imageNamed:@"big_horse"];
     self.bigImg.contentMode = UIViewContentModeScaleAspectFill;
     self.bigImg.clipsToBounds = YES;
     self.bigImg.userInteractionEnabled = YES;
@@ -534,7 +534,7 @@
             NSDictionary *data = dict[@"data"];
             self.guideModel = [YJGuideModel mj_objectWithKeyValues:data[@"guide"]];
             
-            [self.bigImg sd_setImageWithURL:[NSURL URLWithString:self.guideModel.coverPhotoUrl] placeholderImage:[UIImage imageNamed:@"bg2"]];
+            [self.bigImg sd_setImageWithURL:[NSURL URLWithString:self.guideModel.coverPhotoUrl] placeholderImage:[UIImage imageNamed:@"big_horse"]];
             self.name.text = self.guideModel.realName;
             self.GuideType.text = self.guideModel.guideDesc;
             [self.topView sd_setImageWithURL:[NSURL URLWithString:self.guideModel.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];

@@ -14,7 +14,7 @@
     
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
       
-        UIImage *abc = [UIImage imageNamed:@"bg2"];
+        UIImage *abc = [UIImage imageNamed:@"big_horse"];
         self.imageV = [[UIImageView alloc]initWithImage:abc];
         [self.contentView addSubview:self.imageV];
         self.imageV.sd_layout.leftSpaceToView(self.contentView,5).rightSpaceToView(self.contentView,5).topSpaceToView(self.contentView,5).bottomSpaceToView(self.contentView,5);
@@ -51,7 +51,7 @@
 - (void)setModel:(YJNearbyModel *)model{
     
     _model = model;
-    [self.imageV sd_setImageWithURL:[NSURL URLWithString:model.coverPicUrl] placeholderImage:[UIImage imageNamed:@"bg2"]];
+    [self.imageV sd_setImageWithURL:[NSURL URLWithString:model.coverPicUrl] placeholderImage:[UIImage imageNamed:@"big_horse"]];
     self.title.text = model.bigTitle;
     self.descTitle.text = model.smallTitle;
     

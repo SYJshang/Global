@@ -89,7 +89,7 @@
     _guideModel = guideModel;
     self.title.text = guideModel.bigTitle;
     self.descTitle.text = guideModel.smallTitle;
-    [self.imageV sd_setImageWithURL:[NSURL URLWithString:guideModel.coverPicUrl] placeholderImage:[UIImage imageNamed:@"123"]];
+    [self.imageV sd_setImageWithURL:[NSURL URLWithString:guideModel.coverPicUrl] placeholderImage:[UIImage imageNamed:@"big_horse"]];
     [self.icon sd_setImageWithURL:[NSURL URLWithString:guideModel.guide[@"headUrl"]] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
     self.num.text = [NSString stringWithFormat:@"收藏数: %@",guideModel.colNumber];
     self.name.text = [NSString stringWithFormat:@"by %@",guideModel.guide[@"realName"]];

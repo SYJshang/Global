@@ -35,9 +35,9 @@
 
 - (void)jumpToChatList;
 
-- (void)didReceiveLocalNotification:(UILocalNotification *)notification;
-
-- (void)didReceiveUserNotification:(UNNotification *)notification;
+//- (void)didReceiveLocalNotification:(UILocalNotification *)notification;
+//
+//- (void)didReceiveUserNotification:(UNNotification *)notification;
 
 
 @end

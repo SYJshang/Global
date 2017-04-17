@@ -13,7 +13,7 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        self.icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bg2"]];
+        self.icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"big_horse"]];
         [self.contentView addSubview:self.icon];
         self.icon.sd_layout.leftSpaceToView(self.contentView,10).rightSpaceToView(self.contentView,10).topSpaceToView(self.contentView,5).bottomSpaceToView(self.contentView,5);
         self.icon.layer.masksToBounds = YES;

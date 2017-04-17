@@ -28,7 +28,7 @@ static NSString *appLanguage = @"appLanguage";
 #define USHARE_DEMO_APPKEY @"58cfb59fc8957663c8001a9e"
 
 
-@interface AppDelegate ()<EMChatManagerDelegate,JPUSHRegisterDelegate>
+@interface AppDelegate ()<EMChatManagerDelegate,JPUSHRegisterDelegate,UNUserNotificationCenterDelegate>
 
 @property (nonatomic, strong)CLLocationManager *location;
 
@@ -39,6 +39,8 @@ static NSString *appLanguage = @"appLanguage";
 @end
 
 @implementation AppDelegate
+
+
 
 - (void)didReceiveMessages:(NSArray *)aMessages
 {
@@ -122,6 +124,12 @@ static NSString *appLanguage = @"appLanguage";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    
+    if (NSClassFromString(@"UNUserNotificationCenter")) {
+        [UNUserNotificationCenter currentNotificationCenter].delegate = self;
+    }
+    
+    
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firsts"]){
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firsts"];
         
@@ -178,9 +186,9 @@ static NSString *appLanguage = @"appLanguage";
     NSString *apnsCertName = nil;
 
 #if DEBUG
-    apnsCertName = @"globaleguide_Dev";
+    apnsCertName = @"Dev_Push";
 #else
-    apnsCertName = @"globaleguide_Nor";
+    apnsCertName = @"Nor_Push";
 #endif
 
     //AppKey:注册的AppKey，详细见下面注释。
@@ -192,17 +200,17 @@ static NSString *appLanguage = @"appLanguage";
     application.applicationIconBadgeNumber = 0;
     
     //iOS8以上 注册APNS
-//    if (NSClassFromString(@"UNUserNotificationCenter")) {
-//        [[UNUserNotificationCenter currentNotificationCenter] requestAuthorizationWithOptions:UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert completionHandler:^(BOOL granted, NSError *error) {
-//            if (granted) {
-//#if !TARGET_IPHONE_SIMULATOR
-//                [application registerForRemoteNotifications];
-//#endif
-//            }
-//        }];
-//        
-//        
-//    }
+    if (NSClassFromString(@"UNUserNotificationCenter")) {
+        [[UNUserNotificationCenter currentNotificationCenter] requestAuthorizationWithOptions:UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert completionHandler:^(BOOL granted, NSError *error) {
+            if (granted) {
+#if !TARGET_IPHONE_SIMULATOR
+                [application registerForRemoteNotifications];
+#endif
+            }
+        }];
+        
+        
+    }
     
     if([application respondsToSelector:@selector(registerUserNotificationSettings:)])
     {
@@ -346,7 +354,6 @@ static NSString *appLanguage = @"appLanguage";
     NSString *deviceId = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceID"];
     [JPUSHService setTags:nil alias:deviceId fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
         
-        NSLog(@"rescode: %d, \ntags: %@, \nalias: %@\n", iResCode, iTags , iAlias);
 
     }];
     
@@ -376,9 +383,7 @@ static NSString *appLanguage = @"appLanguage";
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    if (self.tabBarVC) {
-        [self.tabBarVC didReceiveLocalNotification:notification];
-    }
+    
     
     
 }
@@ -402,7 +407,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
     
     BOOL isAppActivity = [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive;
     if (!isAppActivity) {
-//        [self showNotificationWithMessage:message];
+        
     }
 #endif
 }
@@ -411,8 +416,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+  
 }
 
 
@@ -434,6 +438,20 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
     
 }
 
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler{
+    
+    NSDictionary *userInfo = notification.request.content.userInfo;
+    [self easemobApplication:[UIApplication sharedApplication] didReceiveRemoteNotification:userInfo];
+
+    
+}
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler{
+    
+    completionHandler();
+    
+    
+}
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -549,7 +567,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
     // Required
     
     NSDictionary *userInfo = notification.request.content.userInfo;
-    UNNotificationRequest *request = notification.request; // 收到推送的请求
+//    UNNotificationRequest *request = notification.request; // 收到推送的请求
 //    UNNotificationContent *content = request.content; // 收到推送的消息内容
     
     if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
@@ -628,8 +646,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
     
     if (application.applicationState == UIApplicationStateActive) {
         //程序运行时收到通知，先弹出消息框
-        NSLog(@"程序在前台");
-        [self popAlert:userInfo];
+//        [self popAlert:userInfo];
         
         
     }
@@ -680,7 +697,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
 -(void)pushToViewControllerWhenClickPushMessageWith:(NSDictionary*)msgDic{
     
     
-    NSUserDefaults *pushJudge = [NSUserDefaults standardUserDefaults];
+//    NSUserDefaults *pushJudge = [NSUserDefaults standardUserDefaults];
     
     if ([[msgDic objectForKey:@"type"] integerValue]==1){
         //详情，这是从跳转到第一个tabbarItem跳转过去的，所以我们可以先让tabController.selectedIndex =0;然后找到VC的nav。
@@ -689,7 +706,6 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
         YJReveingDetailVC  *VC = [[YJReveingDetailVC alloc]init];
         VC.orderId = msgDic[@"orderId"];
         [VC setHidesBottomBarWhenPushed:YES];
-        //因为我用了三方全屏侧滑手势，所以要找的是第一个tabbarController中的viewController的JTNavigationController ，接着再找JTNavigationController 里面的jt_viewControllers.lastObject，这样就可以找到FirstViewController了，然后跳转的时候就和正常的跳转一样了
         YJNavigationController *nav=(YJNavigationController *)self.tabBarVC.viewControllers[0];
         UIViewController *vc= (UIViewController*)nav.viewControllers.firstObject;
         
