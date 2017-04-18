@@ -74,7 +74,6 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     NSString * requestString = request.URL.absoluteString;
-    NSLog(@"请求的地址：%@",requestString);
     if ([requestString isEqualToString:@"http://www.globaleguide.com/"]){
         
         [self.navigationController setNavigationBarHidden:NO animated:NO];

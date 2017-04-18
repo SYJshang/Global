@@ -209,7 +209,6 @@
     //    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
     //    [cell setBackgroundColor:[UIColor greenColor]];
     
-    NSLog(@"点击了%ld个",indexPath.row);
     
         YJPhotoModel *model = self.albumLists[indexPath.row];
 
@@ -224,7 +223,6 @@
 //取消选择了某个cell
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"取消了%ld个",indexPath.row);
     
 }
 

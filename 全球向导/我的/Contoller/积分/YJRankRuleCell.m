@@ -30,7 +30,7 @@
         name.sd_layout.leftSpaceToView(view, 0).widthIs(80).heightIs(30).topSpaceToView(view, 0);
         name.layer.masksToBounds = YES;
         name.layer.cornerRadius = 1;
-        name.layer.borderColor = BackGray.CGColor;
+        name.layer.borderColor = BackGroundColor.CGColor;
         name.layer.borderWidth = 0.5;
         
         UILabel *noRank = [[UILabel alloc]init];
@@ -42,52 +42,52 @@
         noRank.sd_layout.leftSpaceToView(view, 0).widthIs(80).heightIs(30).topSpaceToView(name, 0);
         noRank.layer.masksToBounds = YES;
         noRank.layer.cornerRadius = 1;
-        noRank.layer.borderColor = BackGray.CGColor;
+        noRank.layer.borderColor = BackGroundColor.CGColor;
         noRank.layer.borderWidth = 0.5;
         
         UIImageView *oneImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"first_star"]];
-//        oneImg.contentMode = UIViewContentModeScaleAspectFit;
+        oneImg.contentMode = UIViewContentModeScaleAspectFit;
         [view addSubview:oneImg];
         oneImg.sd_layout.leftSpaceToView(view, 0).widthIs(80).heightIs(30).topSpaceToView(noRank, 0);
         oneImg.layer.masksToBounds = YES;
         oneImg.layer.cornerRadius = 1;
-        oneImg.layer.borderColor = BackGray.CGColor;
+        oneImg.layer.borderColor = BackGroundColor.CGColor;
         oneImg.layer.borderWidth = 0.5;
         
         UIImageView *twoImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"second_star"]];
-//        twoImg.contentMode = UIViewContentModeScaleAspectFit;
+        twoImg.contentMode = UIViewContentModeScaleAspectFit;
         [view addSubview:twoImg];
         twoImg.sd_layout.leftSpaceToView(view, 0).widthIs(80).heightIs(30).topSpaceToView(oneImg, 0);
         twoImg.layer.masksToBounds = YES;
         twoImg.layer.cornerRadius = 1;
-        twoImg.layer.borderColor = BackGray.CGColor;
+        twoImg.layer.borderColor = BackGroundColor.CGColor;
         twoImg.layer.borderWidth = 0.5;
         
         UIImageView *threeImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"third_star"]];
-//        threeImg.contentMode = UIViewContentModeScaleAspectFit;
+        threeImg.contentMode = UIViewContentModeScaleAspectFit;
         [view addSubview:threeImg];
         threeImg.sd_layout.leftSpaceToView(view, 0).widthIs(80).heightIs(30).topSpaceToView(twoImg, 0);
         threeImg.layer.masksToBounds = YES;
         threeImg.layer.cornerRadius = 1;
-        threeImg.layer.borderColor = BackGray.CGColor;
+        threeImg.layer.borderColor = BackGroundColor.CGColor;
         threeImg.layer.borderWidth = 0.5;
         
         UIImageView *fourImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"fourth_star"]];
-//        fourImg.contentMode = UIViewContentModeScaleAspectFit;
+        fourImg.contentMode = UIViewContentModeScaleAspectFit;
         [view addSubview:fourImg];
         fourImg.sd_layout.leftSpaceToView(view, 0).widthIs(80).heightIs(30).topSpaceToView(threeImg, 0);
         fourImg.layer.masksToBounds = YES;
         fourImg.layer.cornerRadius = 1;
-        fourImg.layer.borderColor = BackGray.CGColor;
+        fourImg.layer.borderColor = BackGroundColor.CGColor;
         fourImg.layer.borderWidth = 0.5;
         
         UIImageView *fiveImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"fifth_star"]];
-//        fiveImg.contentMode = UIViewContentModeScaleAspectFit;
+        fiveImg.contentMode = UIViewContentModeScaleAspectFit;
         [view addSubview:fiveImg];
         fiveImg.sd_layout.leftSpaceToView(view, 0).widthIs(80).heightIs(30).topSpaceToView(fourImg, 0);
         fiveImg.layer.masksToBounds = YES;
         fiveImg.layer.cornerRadius = 1;
-        fiveImg.layer.borderColor = BackGray.CGColor;
+        fiveImg.layer.borderColor = BackGroundColor.CGColor;
         fiveImg.layer.borderWidth = 0.5;
         
 
@@ -101,7 +101,7 @@
         desc.sd_layout.leftSpaceToView(name, 0).widthIs(60).heightIs(30).topSpaceToView(view, 0);
         desc.layer.masksToBounds = YES;
         desc.layer.cornerRadius = 1;
-        desc.layer.borderColor = BackGray.CGColor;
+        desc.layer.borderColor = BackGroundColor.CGColor;
         desc.layer.borderWidth = 0.5;
         
         UILabel *noDesc = [[UILabel alloc]init];
@@ -113,7 +113,7 @@
         noDesc.sd_layout.leftSpaceToView(name, 0).widthIs(60).heightIs(30).topSpaceToView(desc, 0);
         noDesc.layer.masksToBounds = YES;
         noDesc.layer.cornerRadius = 1;
-        noDesc.layer.borderColor = BackGray.CGColor;
+        noDesc.layer.borderColor = BackGroundColor.CGColor;
         noDesc.layer.borderWidth = 0.5;
         
         UILabel *oneDesc = [[UILabel alloc]init];
@@ -125,7 +125,7 @@
         oneDesc.sd_layout.leftSpaceToView(name, 0).widthIs(60).heightIs(30).topSpaceToView(noDesc, 0);
         oneDesc.layer.masksToBounds = YES;
         oneDesc.layer.cornerRadius = 1;
-        oneDesc.layer.borderColor = BackGray.CGColor;
+        oneDesc.layer.borderColor = BackGroundColor.CGColor;
         oneDesc.layer.borderWidth = 0.5;
 
         UILabel *twoDesc = [[UILabel alloc]init];
@@ -137,7 +137,7 @@
         twoDesc.sd_layout.leftSpaceToView(name, 0).widthIs(60).heightIs(30).topSpaceToView(oneDesc, 0);
         twoDesc.layer.masksToBounds = YES;
         twoDesc.layer.cornerRadius = 1;
-        twoDesc.layer.borderColor = BackGray.CGColor;
+        twoDesc.layer.borderColor = BackGroundColor.CGColor;
         twoDesc.layer.borderWidth = 0.5;
         
         UILabel *threeDesc = [[UILabel alloc]init];
@@ -149,7 +149,7 @@
         threeDesc.sd_layout.leftSpaceToView(name, 0).widthIs(60).heightIs(30).topSpaceToView(twoDesc, 0);
         threeDesc.layer.masksToBounds = YES;
         threeDesc.layer.cornerRadius = 1;
-        threeDesc.layer.borderColor = BackGray.CGColor;
+        threeDesc.layer.borderColor = BackGroundColor.CGColor;
         threeDesc.layer.borderWidth = 0.5;
         
         UILabel *fourDesc = [[UILabel alloc]init];
@@ -161,7 +161,7 @@
         fourDesc.sd_layout.leftSpaceToView(name, 0).widthIs(60).heightIs(30).topSpaceToView(threeDesc, 0);
         fourDesc.layer.masksToBounds = YES;
         fourDesc.layer.cornerRadius = 1;
-        fourDesc.layer.borderColor = BackGray.CGColor;
+        fourDesc.layer.borderColor = BackGroundColor.CGColor;
         fourDesc.layer.borderWidth = 0.5;
         
         UILabel *fiveDesc = [[UILabel alloc]init];
@@ -173,7 +173,7 @@
         fiveDesc.sd_layout.leftSpaceToView(name, 0).widthIs(60).heightIs(30).topSpaceToView(fourDesc, 0);
         fiveDesc.layer.masksToBounds = YES;
         fiveDesc.layer.cornerRadius = 1;
-        fiveDesc.layer.borderColor = BackGray.CGColor;
+        fiveDesc.layer.borderColor = BackGroundColor.CGColor;
         fiveDesc.layer.borderWidth = 0.5;
         
         //成长值
@@ -186,7 +186,7 @@
         cheng.sd_layout.leftSpaceToView(desc, 0).widthIs(screen_width - 160).heightIs(30).topSpaceToView(view, 0);
         cheng.layer.masksToBounds = YES;
         cheng.layer.cornerRadius = 1;
-        cheng.layer.borderColor = BackGray.CGColor;
+        cheng.layer.borderColor = BackGroundColor.CGColor;
         cheng.layer.borderWidth = 0.5;
         
         UILabel *noCheng = [[UILabel alloc]init];
@@ -198,7 +198,7 @@
         noCheng.sd_layout.leftSpaceToView(desc, 0).widthIs(screen_width - 160).heightIs(30).topSpaceToView(cheng, 0);
         noCheng.layer.masksToBounds = YES;
         noCheng.layer.cornerRadius = 1;
-        noCheng.layer.borderColor = BackGray.CGColor;
+        noCheng.layer.borderColor = BackGroundColor.CGColor;
         noCheng.layer.borderWidth = 0.5;
        
         UILabel *oneCheng = [[UILabel alloc]init];
@@ -210,7 +210,7 @@
         oneCheng.sd_layout.leftSpaceToView(desc, 0).widthIs(screen_width - 160).heightIs(30).topSpaceToView(noCheng, 0);
         oneCheng.layer.masksToBounds = YES;
         oneCheng.layer.cornerRadius = 1;
-        oneCheng.layer.borderColor = BackGray.CGColor;
+        oneCheng.layer.borderColor = BackGroundColor.CGColor;
         oneCheng.layer.borderWidth = 0.5;
         
         UILabel *twoCheng = [[UILabel alloc]init];
@@ -222,7 +222,7 @@
         twoCheng.sd_layout.leftSpaceToView(desc, 0).widthIs(screen_width - 160).heightIs(30).topSpaceToView(oneCheng, 0);
         twoCheng.layer.masksToBounds = YES;
         twoCheng.layer.cornerRadius = 1;
-        twoCheng.layer.borderColor = BackGray.CGColor;
+        twoCheng.layer.borderColor = BackGroundColor.CGColor;
         twoCheng.layer.borderWidth = 0.5;
         
         
@@ -235,7 +235,7 @@
         threeCheng.sd_layout.leftSpaceToView(desc, 0).widthIs(screen_width - 160).heightIs(30).topSpaceToView(twoCheng, 0);
         threeCheng.layer.masksToBounds = YES;
         threeCheng.layer.cornerRadius = 1;
-        threeCheng.layer.borderColor = BackGray.CGColor;
+        threeCheng.layer.borderColor = BackGroundColor.CGColor;
         threeCheng.layer.borderWidth = 0.5;
         
         UILabel *fourCheng = [[UILabel alloc]init];
@@ -247,7 +247,7 @@
         fourCheng.sd_layout.leftSpaceToView(desc, 0).widthIs(screen_width - 160).heightIs(30).topSpaceToView(threeCheng, 0);
         fourCheng.layer.masksToBounds = YES;
         fourCheng.layer.cornerRadius = 1;
-        fourCheng.layer.borderColor = BackGray.CGColor;
+        fourCheng.layer.borderColor = BackGroundColor.CGColor;
         fourCheng.layer.borderWidth = 0.5;
         
         UILabel *fiveCheng = [[UILabel alloc]init];
@@ -259,7 +259,7 @@
         fiveCheng.sd_layout.leftSpaceToView(desc, 0).widthIs(screen_width - 160).heightIs(30).topSpaceToView(fourCheng, 0);
         fiveCheng.layer.masksToBounds = YES;
         fiveCheng.layer.cornerRadius = 1;
-        fiveCheng.layer.borderColor = BackGray.CGColor;
+        fiveCheng.layer.borderColor = BackGroundColor.CGColor;
         fiveCheng.layer.borderWidth = 0.5;
         
     }

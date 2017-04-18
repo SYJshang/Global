@@ -15,6 +15,9 @@
     
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
+        self.backgroundColor = BackGray;
+
+        
         [self initView];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
@@ -26,13 +29,13 @@
 
 - (void)initView{
     
-    self.icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"HeaderIcon"]];
+    self.icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"head"]];
     [self.contentView addSubview:self.icon];
     self.icon.sd_layout.leftSpaceToView(self.contentView,10).topSpaceToView(self.contentView,10).widthIs(50).heightIs(50);
     self.icon.layer.masksToBounds = YES;
     self.icon.layer.cornerRadius = self.icon.width /2 ;
     self.icon.layer.borderWidth = 0.5;
-    self.icon.layer.borderColor = BackGray.CGColor;
+    self.icon.layer.borderColor = BackGroundColor.CGColor;
     
     self.nameLab = [[UILabel alloc]init];
     [self.contentView addSubview:self.nameLab];
@@ -59,7 +62,7 @@
     
     UIView *line = [[UIView alloc]init];
     [self.contentView addSubview:line];
-    line.backgroundColor = BackGray;
+    line.backgroundColor = BackGroundColor;
     line.sd_layout.leftSpaceToView(self.contentView,10).rightSpaceToView(self.contentView,10).bottomSpaceToView(self.contentView,0.5).heightIs(0.5);
     
 }
@@ -95,7 +98,7 @@
 - (void)setModel:(YJEvaModel *)model{
     
     _model = model;
-    [self.icon sd_setImageWithURL:[NSURL URLWithString:model.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+    [self.icon sd_setImageWithURL:[NSURL URLWithString:model.headUrl] placeholderImage:[UIImage imageNamed:@"head"]];
     self.nameLab.text = model.nickName;
     self.timeLab.text = model.addTime;
     self.textLab.text = model.eva;

@@ -192,7 +192,7 @@
         btn.layer.masksToBounds = YES;
         btn.layer.cornerRadius = 10;
         btn.layer.borderWidth = 1.0;
-        btn.layer.borderColor = BackGray.CGColor;
+        btn.layer.borderColor = BackGroundColor.CGColor;
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.backgroundColor = BackGray;
@@ -254,7 +254,6 @@
         }]];
         
         [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-            NSLog(@"点击了取消按钮");
         }]];
         
         [self presentViewController:alert animated:YES completion:nil];
@@ -277,7 +276,6 @@
         }]];
         
         [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-            NSLog(@"点击了取消按钮");
         }]];
         
         [self presentViewController:alert animated:YES completion:nil];
@@ -298,7 +296,6 @@
 
 - (void)sendOder{
     
-    NSLog(@"发布");
 }
 
 

@@ -97,7 +97,7 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"reuseIdentifier"];
         UIView *line = [[UIView alloc]initWithFrame:CGRectMake(10, 49, screen_width - 20, 0.5)];
         [cell.contentView addSubview:line];
-        line.backgroundColor = BackGray;
+        line.backgroundColor = BackGroundColor;
         
         switch (indexPath.section) {
             case 0:
@@ -187,6 +187,13 @@
     }else if (indexPath.section == 3) {
         
         XXLog(@"点击了%ld",(long)indexPath.row);
+        
+        SGAlertView *alert = [SGAlertView alertViewWithTitle:@"退订政策" contentTitle:@"详情拨打客服电话咨询" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            
+        }];
+        alert.sure_btnTitleColor = TextColor;
+        [alert show];
+        
         
     }else{
         XXLog(@"点击了%ld",(long)indexPath.row);

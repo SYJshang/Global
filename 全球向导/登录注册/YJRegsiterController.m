@@ -102,7 +102,7 @@
     [self.loginBtn setTitle:@"登录" forState:UIControlStateNormal];
     self.loginBtn.titleLabel.font = [UIFont systemFontOfSize:17.0];
     [self.loginBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    self.loginBtn.backgroundColor =  BackGray;
+    self.loginBtn.backgroundColor =  BackGroundColor;
     [self.loginBtn setTitleColor:TextColor forState:UIControlStateSelected];
     [self.loginBtn setSelected:NO];
     self.loginBtn.tag = 1;
@@ -115,7 +115,7 @@
     [self.registerBtn setTitle:@"注册" forState:UIControlStateNormal];
     self.registerBtn.titleLabel.font = [UIFont systemFontOfSize:17.0];
     [self.registerBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    self.registerBtn.backgroundColor = BackGray;
+    self.registerBtn.backgroundColor = BackGroundColor;
     [self.registerBtn setTitleColor:TextColor forState:UIControlStateSelected];
     [self.registerBtn setSelected:YES];
     self.registerBtn.tag = 2;
@@ -167,7 +167,6 @@
 #pragma explain - use animateWhenKeyboardAppearAutomaticAnimBlock, animateWhenKeyboardAppearBlock must be nil.
     /*
      [_keyboardUtil setAnimateWhenKeyboardAppearBlock:^(int appearPostIndex, CGRect keyboardRect, CGFloat keyboardHeight, CGFloat keyboardHeightIncrement) {
-     NSLog(@"\n\n键盘弹出来第 %d 次了~  高度比上一次增加了%0.f  当前高度是:%0.f"  , appearPostIndex, keyboardHeightIncrement, keyboardHeight);
      //do something
      }];
      */
@@ -176,14 +175,12 @@
 #pragma explain - if not configure this Block, automatically itself.
     /*
      [_keyboardUtil setAnimateWhenKeyboardDisappearBlock:^(CGFloat keyboardHeight) {
-     NSLog(@"\n\n键盘在收起来~  上次高度为:+%f", keyboardHeight);
      //do something
      }];
      */
     
 #pragma explain - 获取键盘信息
     [_keyboardUtil setPrintKeyboardInfoBlock:^(ZYKeyboardUtil *keyboardUtil, KeyboardInfo *keyboardInfo) {
-        NSLog(@"\n\n拿到键盘信息 和 ZYKeyboardUtil对象");
     }];
 }
 
@@ -224,7 +221,7 @@
     self.dis.sd_layout.leftSpaceToView(self.nameTf,2).rightSpaceToView(self.view,20).heightIs(18.0 * KWidth_Scale).centerYEqualToView(self.nameTf);
     
     UIView *line = [[UIView alloc]init];
-    line.backgroundColor = BackGray;
+    line.backgroundColor = BackGroundColor;
     [self.view addSubview:line];
     line.sd_layout.leftSpaceToView(self.view,20).topSpaceToView(self.nameTf,5).heightIs(1).rightSpaceToView(self.view,20);
     
@@ -271,7 +268,7 @@
     [self.icon addGestureRecognizer:tap];
     
     UIView *line1 = [[UIView alloc]init];
-    line1.backgroundColor = BackGray;
+    line1.backgroundColor = BackGroundColor;
     [self.view addSubview:line1];
     line1.sd_layout.leftSpaceToView(self.view,20).topSpaceToView(self.iconCode,5).heightIs(1).rightSpaceToView(self.view,20);
     
@@ -310,7 +307,7 @@
 
     
     UIView *line3 = [[UIView alloc]init];
-    line3.backgroundColor = BackGray;
+    line3.backgroundColor = BackGroundColor;
     [self.view addSubview:line3];
     line3.sd_layout.leftSpaceToView(self.view,20).topSpaceToView(self.numCode,5).heightIs(1).rightSpaceToView(self.view,20);
 
@@ -337,7 +334,7 @@
     
     
     UIView *line2 = [[UIView alloc]init];
-    line2.backgroundColor = BackGray;
+    line2.backgroundColor = BackGroundColor;
     [self.view addSubview:line2];
     line2.sd_layout.leftSpaceToView(self.view,20).topSpaceToView(self.passwordTf,5).heightIs(1).rightSpaceToView(self.view,20);
     
@@ -347,14 +344,14 @@
     [self.loginOrRegist setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.loginOrRegist setTitle:@"注册" forState:UIControlStateNormal];
     [self.view addSubview:self.loginOrRegist];
-    self.loginOrRegist.backgroundColor = [UIColor grayColor];
+    self.loginOrRegist.backgroundColor = [UIColor colorWithRed:189.0 / 255.0 green:189.0 / 255.0 blue:189.0 / 255.0 alpha:1.0];
     self.loginOrRegist.enabled = NO;
     self.loginOrRegist.titleLabel.font = [UIFont systemFontOfSize:18.0];
     self.loginOrRegist.sd_layout.centerXEqualToView(self.view).topSpaceToView(line2,60.0 *KHeight_Scale).heightIs(40.0 * KHeight_Scale).widthIs(240.0 * KWidth_Scale);
     [self.loginOrRegist addTarget:self action:@selector(registerClick) forControlEvents:UIControlEventTouchUpInside];
     self.loginOrRegist.layer.masksToBounds = YES;
     self.loginOrRegist.layer.cornerRadius = 17.0;
-    self.loginOrRegist.layer.borderColor = TextColor.CGColor;
+    self.loginOrRegist.layer.borderColor = [UIColor whiteColor].CGColor;
     self.loginOrRegist.layer.borderWidth = 1;
     
     
@@ -366,8 +363,8 @@
     self.user.sd_layout.centerXEqualToView(self.view).bottomSpaceToView(self.view,20).heightIs(15 * KHeight_Scale).widthIs(180.0);
     
     UIButton *accept = [UIButton buttonWithType:UIButtonTypeCustom];
-    [accept setImage:[UIImage imageNamed:@"bb2"] forState:UIControlStateNormal];
-    [accept setImage:[UIImage imageNamed:@"bb1"] forState:UIControlStateSelected];
+    [accept setImage:[UIImage imageNamed:@"square2"] forState:UIControlStateNormal];
+    [accept setImage:[UIImage imageNamed:@"square"] forState:UIControlStateSelected];
     [self.view addSubview:accept];
     accept.selected = NO;
     [accept addTarget:self action:@selector(accept:) forControlEvents:UIControlEventTouchUpInside];
@@ -378,8 +375,12 @@
 - (void)accept:(UIButton *)btn{
     
     if (btn.selected == YES) {
-        self.loginOrRegist.backgroundColor = [UIColor grayColor];
+        self.loginOrRegist.backgroundColor = [UIColor colorWithRed:189.0 / 255.0 green:189.0 / 255.0 blue:189.0 / 255.0 alpha:1.0];
         self.loginOrRegist.enabled = NO;
+        self.loginOrRegist.layer.masksToBounds = YES;
+        self.loginOrRegist.layer.cornerRadius = 17.0;
+        self.loginOrRegist.layer.borderColor = [UIColor whiteColor].CGColor;
+        self.loginOrRegist.layer.borderWidth = 1;
         btn.selected = NO;
     }else{
         self.loginOrRegist.backgroundColor = [UIColor whiteColor];
@@ -411,7 +412,6 @@
             
             
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-            NSLog(@".....%@",dict);
             NSString *code = dict[@"code"];
             if ([code isEqualToString:@"1"]) {
                 
@@ -419,9 +419,7 @@
                 
                 SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"恭喜您，注册成功!\n是否立即登录" alertViewBottomViewType:(SGAlertViewBottomViewTypeTwo) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
                     if (index == 0) {
-                        NSLog(@"您点击的是取消按钮");
                     } else {
-                        NSLog(@"您点击的是确定按钮");
                         YJLoginFirstController *vc = [[YJLoginFirstController alloc]init];
                         [self presentViewController:vc animated:NO completion:^{
                             vc.nameTf.text = self.nameTf.text;
@@ -439,7 +437,6 @@
                 
                 SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:dict[@"msg"] alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
                     if (index == 1) {
-                        NSLog(@"按钮被点击了");
                     }
                 }];
                 alertV.sure_btnTitleColor = TextColor;
@@ -481,7 +478,6 @@
         
         SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"输入格式有错,请重新输入" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
             if (index == 1) {
-                NSLog(@"按钮被点击了");
             }
         }];
         alertV.sure_btnTitleColor = TextColor;
@@ -587,7 +583,6 @@
 
                     SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"发送验证码成功,请注意查收" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
                         if (index == 1) {
-                            NSLog(@"按钮被点击了");
                         }
                     }];
                     alertV.sure_btnTitleColor = TextColor;
@@ -601,7 +596,6 @@
                     
                     SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:dict[@"msg"] alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
                         if (index == 1) {
-                            NSLog(@"按钮被点击了");
                         }
                     }];
                     alertV.sure_btnTitleColor = TextColor;
@@ -642,7 +636,6 @@
         
         SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"手机号或验证码有误,请重新发送" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
             if (index == 1) {
-                NSLog(@"按钮被点击了");
             }
         }];
         alertV.sure_btnTitleColor = TextColor;
@@ -657,7 +650,6 @@
     __weak __typeof(self) weakSelf = self;
     
     [_countDownForBtn countDownWithStratDate:strtDate finishDate:finishDate completeBlock:^(NSInteger day, NSInteger hour, NSInteger minute, NSInteger second) {
-//        NSLog(@"second = %li",second);
         NSInteger totoalSecond = day*24*60*60 + hour*60*60 + minute*60 + second;
         if (totoalSecond==0) {
             weakSelf.numBtn.enabled = YES;

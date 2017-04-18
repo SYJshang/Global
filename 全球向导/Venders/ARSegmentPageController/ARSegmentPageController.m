@@ -346,7 +346,6 @@ const void *_ARSEGMENTPAGE_CURRNTPAGE_SCROLLVIEWINSET =
       [scrollView removeObserver:self
                       forKeyPath:NSStringFromSelector(@selector(contentInset))];
     } @catch (NSException *exception) {
-      NSLog(@"exception is %@", exception);
     } @finally {
     }
   }

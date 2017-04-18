@@ -122,7 +122,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
         YJPayFormCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-        cell.icon.image = [UIImage imageNamed:@"支付宝A"];
+        cell.icon.image = [UIImage imageNamed:@"pay-treasure"];
         cell.payName.text = YJLocalizedString(@"支付宝");
         if (self.isReal == YES) {
             cell.isReal.text = @"已绑定";

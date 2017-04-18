@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YJRankDetailModel.h"
+
 
 @interface YJIntrgralDetailCell : UITableViewCell
 
@@ -15,5 +17,10 @@
 @property (nonatomic, strong) UILabel *orderNo;
 
 @property (nonatomic, strong) UILabel *timeLab;
+
+@property (nonatomic, strong) YJRankDetailModel *model;
+
+@property (nonatomic, assign) NSInteger isIntegral;
+
 
 @end

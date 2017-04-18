@@ -26,7 +26,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     
-    self.imgV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bg1"]];
+    self.imgV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bg3"]];
     [self.view addSubview:self.imgV];
     self.imgV.userInteractionEnabled = YES;
     self.imgV.alpha = 0.7;

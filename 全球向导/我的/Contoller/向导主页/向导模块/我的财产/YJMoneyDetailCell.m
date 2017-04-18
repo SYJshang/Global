@@ -43,7 +43,7 @@
         UIView *line = [[UIView alloc]init];
         [self.contentView addSubview:line];
         line.sd_layout.leftEqualToView(self.contentView).rightEqualToView(self.contentView).topSpaceToView(self.money, 0).heightIs(1.0);
-        line.backgroundColor = BackGray;
+        line.backgroundColor = BackGroundColor;
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         

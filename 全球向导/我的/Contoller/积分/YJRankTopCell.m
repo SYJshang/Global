@@ -35,10 +35,18 @@
         [self.contentView addSubview:self.icon];
         self.icon.sd_layout.centerYEqualToView(line).centerXEqualToView(line).widthIs(80).heightIs(80);
         
+        self.icon.layer.masksToBounds = YES;
+        self.icon.layer.cornerRadius = 40;
+        self.icon.layer.borderColor = BackGroundColor.CGColor;
+        self.icon.layer.borderWidth = 0.5;
+        
+        
         self.rankIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"one_star"]];
         self.rankIcon.contentMode = UIViewContentModeScaleAspectFit;
         [self.contentView addSubview:self.rankIcon];
         self.rankIcon.sd_layout.topSpaceToView(self.icon, -20).centerXEqualToView(line).widthRatioToView(self.icon, 1).heightIs(20);
+        
+        
         
         self.nameNoLab = [[UILabel alloc]init];
         [self.contentView addSubview:self.nameNoLab];
@@ -67,6 +75,61 @@
     }
     
     return self;
+    
+}
+
+
+- (void)setModel:(YJRankModel *)model{
+    
+    _model = model;
+    [self.icon sd_setImageWithURL:[NSURL URLWithString:model.headUrl] placeholderImage:[UIImage imageNamed:@"head"]];
+    self.nameNoLab.text = model.realName;
+    
+    if (model.grade == 1) {
+        
+        self.beforeRank.image = [UIImage imageNamed:@"level_internship"];
+        self.lastRank.image = [UIImage imageNamed:@"level_one"];
+    }else if (model.grade == 2){
+        
+        self.beforeRank.image = [UIImage imageNamed:@"level_one"];
+        self.lastRank.image = [UIImage imageNamed:@"level_two"];
+    }else if (model.grade == 3){
+        
+        self.beforeRank.image = [UIImage imageNamed:@"level_two"];
+        self.lastRank.image = [UIImage imageNamed:@"level_three"];
+    }else if (model.grade == 4){
+        
+        self.beforeRank.image = [UIImage imageNamed:@"level_three"];
+        self.lastRank.image = [UIImage imageNamed:@"level_five"];
+    }else if (model.grade == 5){
+        
+        self.beforeRank.image = [UIImage imageNamed:@"level_four"];
+        self.lastRank.image = [UIImage imageNamed:@"level_five"];
+    }else if (model.grade == 6){
+        
+        self.beforeRank.image = [UIImage imageNamed:@"level_five"];
+        self.lastRank.hidden = YES;
+    }
+    
+    
+    NSString *tol = [NSString stringWithFormat:@"当前积分成长值:%@",model.totalUseGv];
+    NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithString:tol];
+    
+    [AttributedStr addAttribute:NSFontAttributeName
+     
+                          value:[UIFont boldSystemFontOfSize:AdaptedWidth(16.0)]
+     
+                          range:NSMakeRange(8, model.totalUseGv.length)];
+    
+    [AttributedStr addAttribute:NSForegroundColorAttributeName
+     
+                          value:[UIColor purpleColor]
+     
+                          range:NSMakeRange(8, model.totalUseGv.length)];
+    
+
+    self.integralLab.attributedText = AttributedStr;
+    
     
 }
 

@@ -27,6 +27,7 @@
 #import "YJShareDetailVC.h"
 #import "YJGuideDetailVC.h"
 #import "YJUsreInfoModel.h"
+#import "YJTravelController.h"
 
 
 
@@ -52,6 +53,8 @@
 @property (nonatomic, strong) UIButton *areaBtn; //地区按钮
 
 @property (nonatomic, strong) NSString *cityID;
+
+@property (nonatomic, strong) NSString *guideStatus;
 
 @end
 
@@ -181,7 +184,7 @@
     self.navigationItem.leftBarButtonItem = leftItem;
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setImage:[UIImage imageNamed:@"addhao"] forState:UIControlStateNormal];
+    [btn setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
     btn.frame = CGRectMake(0, 10, 22, 22);
     [btn addTarget:self action:@selector(onNavButtonTapped:event:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
@@ -231,6 +234,7 @@
         if ([dict[@"code"] isEqualToString:@"1"]) {
             
             NSDictionary *da = dict[@"data"];
+            self.guideStatus = [NSString stringWithFormat:@"%@",dict[@"guideStatus"]];
             
             NSDictionary *usrInfo = da[@"userInfo"];
             NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"userInfo.plist"];
@@ -246,11 +250,9 @@
                                                   password:userModel.imPwd
                                                 completion:^(NSString *aUsername, EMError *aError) {
                                                     if (!aError) {
-                                                        NSLog(@"登陆成功");
                                                         [[EMClient sharedClient].options setIsAutoLogin:YES];
                                                         
                                                     } else {
-                                                        NSLog(@"登陆失败");
                                                     }
                                                 }];
                 
@@ -375,9 +377,7 @@
                               withMenu:@[@"MenuOne",@"MenuTwo",@"MenuThree",@"MenuFour"]
                         imageNameArray:@[@"Pokemon_Go_01",@"Pokemon_Go_02",@"Pokemon_Go_03",@"Pokemon_Go_04"]
                              doneBlock:^(NSInteger selectedIndex) {
-                                 NSLog(@"done");
                              } dismissBlock:^{
-                                 NSLog(@"cancel");
                              }];
     
     
@@ -391,20 +391,49 @@
             
             if (selectedIndex == 0) {
                 
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"警告" message:@"你的操作时非法的，您要继续吗" preferredStyle:UIAlertControllerStyleAlert];
-                               
-                               // 添加按钮
-            __weak typeof(alert) weakAlert = alert;
-        [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-                                   NSLog(@"点击了确定按钮--%@-%@",
-                [weakAlert.textFields.firstObject text],
-                [weakAlert.textFields.lastObject text]);
-                               }]];
-        [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                                   NSLog(@"点击了取消按钮");
-                               }]];
-                               
-        [self presentViewController:alert animated:YES completion:nil];                           }
+                    SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"功能开发中" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                    }];
+                    alertV.sure_btnTitleColor = TextColor;
+                    [alertV show];
+                    
+                
+
+            
+            
+            }else if (selectedIndex == 1){
+                
+              NSString *code =  [[NSUserDefaults standardUserDefaults] objectForKey:@"code"];
+                if ([code isEqualToString:@"1"]) {
+                    YJTravelController *vc = [[YJTravelController alloc]init];
+                    vc.state = @"1";
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else{
+                    SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"未登录" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                    }];
+                    alertV.sure_btnTitleColor = TextColor;
+                    [alertV show];
+                    
+                }
+
+                
+                
+            }else if (selectedIndex == 2){
+                
+                NSString *code =  [[NSUserDefaults standardUserDefaults] objectForKey:@"code"];
+                if ([code isEqualToString:@"1"] && [self.guideStatus isEqualToString:@"2"]) {
+                    YJTravelController *vc = [[YJTravelController alloc]init];
+                    vc.state = @"2";
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else{
+                    SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"未登录" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                    }];
+                    alertV.sure_btnTitleColor = TextColor;
+                    [alertV show];
+                    
+                }
+
+
+            }
                            
                        } dismissBlock:^{
                            
@@ -497,7 +526,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
         UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screen_width, 30)];
-        titleView.backgroundColor = [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
+        titleView.backgroundColor = [UIColor whiteColor];
         UILabel *title = [[UILabel alloc]initWithFrame:CGRectMake(screen_width / 2 - 40, 5, 80, 20)];
     
         if (section == 1) {
@@ -514,16 +543,16 @@
         [titleView addSubview:title];
         
         
-        UIImageView *leftLine = [[UIImageView alloc]initWithFrame:CGRectMake(screen_width / 2 - 105, 12.5, 65, 5)];
-        leftLine.image = [UIImage imageNamed:@"lineLeft"];
+        UIImageView *leftLine = [[UIImageView alloc]initWithFrame:CGRectMake(screen_width / 2 - 105, 14.5, 40, 0.5)];
+        leftLine.image = [UIImage imageNamed:@"line"];
         [titleView addSubview:leftLine];
         
-        UIImageView *rightLine = [[UIImageView alloc]initWithFrame:CGRectMake(screen_width / 2 + 40, 12.5, 65, 5)];
-        rightLine.image = [UIImage imageNamed:@"lineRight"];
+        UIImageView *rightLine = [[UIImageView alloc]initWithFrame:CGRectMake(screen_width / 2 + 40, 14.5, 40, 0.5)];
+        rightLine.image = [UIImage imageNamed:@"line"];
         [titleView addSubview:rightLine];
         
     
-        YJDIYButton *btn = [YJDIYButton buttonWithFrame:CGRectMake(screen_width - 50, 5, 40, 20) title:@"More" imageName:@"arrow-right" Block:^{
+        YJDIYButton *btn = [YJDIYButton buttonWithFrame:CGRectMake(screen_width - 50, 5, 40, 20) title:@"MORE" imageName:@"arrow-right" Block:^{
             
             XXLog(@"section >>>> %ld",section);
             
@@ -531,12 +560,10 @@
                 
                  [self.navigationController pushViewController:[YJMoreGuideVC new] animated:YES];
                
-//            [self.navigationController pushViewController:[YJGuideController new] animated:YES];
-//#import "YJGuideRecommendController.h"
-//#import "YJVisitorRCController.h"
+
                 
             }else if (section == 2){
-//                [self.navigationController pushViewController:[YJMoreGuideVC new] animated:YES];
+
                 
             }else{
                 
@@ -554,6 +581,10 @@
         [btn setImageEdgeInsets:UIEdgeInsetsMake(0,33, 0, 0)];
         [btn setTitleEdgeInsets:UIEdgeInsetsMake(0, -17, 0, 10)];
         [titleView addSubview:btn];
+    
+        if (section == 2) {
+            btn.hidden = YES;
+    }
         
         
         return titleView;

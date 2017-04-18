@@ -23,15 +23,12 @@
 @interface YJAllOrderController ()<UITableViewDelegate,UITableViewDataSource,YJBtnClickEvE>
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *orderList; //订单列表
 @property (nonatomic, strong) YJPageModel *pageModel;  //页数列表
 
 @property (nonatomic, strong) NoNetwork *noNetWork;
 
 @property (nonatomic, assign) int cureenPage;
-
-@property (nonatomic, assign) NSInteger count;
-
+@property (nonatomic, strong) NSMutableArray *orderList; //订单列表
 @property (nonatomic, strong) NSMutableArray *totalCout; //总数
 
 
@@ -98,7 +95,7 @@
     
     
     self.cureenPage = 1;
-    self.count = 0;
+//    self.count = 0;
 
     
     NSString *str = [YJBNetWorkNotifionTool stringFormStutas];
@@ -202,7 +199,7 @@
         
     } failure:^(NSError *error) {
         
-       [self getNetWork];
+//       [self getNetWork];
         
     }];
     
@@ -254,7 +251,7 @@
         
     } failure:^(NSError *error) {
         
-        [self getNetWork];
+//        [self getNetWork];
         
     }];
     

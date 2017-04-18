@@ -26,18 +26,18 @@
     
     //竖线
     self.verticalLabel1 = [[UILabel alloc] init];
-    self.verticalLabel1.backgroundColor = BackGray;
+    self.verticalLabel1.backgroundColor = BackGroundColor;
     [self.contentView addSubview:self.verticalLabel1];
     
     //竖线
     self.verticalLabel2 = [[UILabel alloc] init];
-    self.verticalLabel2.backgroundColor = BackGray;
+    self.verticalLabel2.backgroundColor = BackGroundColor;
     [self.contentView addSubview:self.verticalLabel2];
     
     //圆圈⭕️
     self.circleView = [UIButton buttonWithType:UIButtonTypeCustom];
     self.circleView.backgroundColor = [UIColor whiteColor];
-    self.circleView.layer.borderColor = BackGray.CGColor;
+    self.circleView.layer.borderColor = BackGroundColor.CGColor;
     self.circleView.layer.cornerRadius = 8;
     self.circleView.layer.borderWidth = 2;
     [self.contentView addSubview:self.circleView];

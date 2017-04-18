@@ -170,6 +170,5 @@ static EMAudioRecorderUtil *audioRecorderUtil = nil;
 
 - (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder
                                    error:(NSError *)error{
-    NSLog(@"audioRecorderEncodeErrorDidOccur");
 }
 @end

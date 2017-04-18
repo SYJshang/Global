@@ -81,7 +81,7 @@
             self.userModel = [YJUsreInfoModel mj_objectWithKeyValues:usrInfo];
             XXLog(@"%@",self.userModel);
             if (self.userModel.headUrl) {
-                [self.icon sd_setImageWithURL:[NSURL URLWithString:self.userModel.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+                [self.icon sd_setImageWithURL:[NSURL URLWithString:self.userModel.headUrl] placeholderImage:[UIImage imageNamed:@"head"]];
                 [self.topImageView sd_setImageWithURL:[NSURL URLWithString:self.userModel.headUrl] placeholderImage:[UIImage imageNamed:@"big_horse"]];
             }
             
@@ -95,11 +95,9 @@
                                                   password:self.userModel.imPwd
                                                 completion:^(NSString *aUsername, EMError *aError) {
                                                     if (!aError) {
-                                                        NSLog(@"登陆成功");
                                                         [[EMClient sharedClient].options setIsAutoLogin:YES];
 
                                                     } else {
-                                                        NSLog(@"登陆失败");
                                                     }
                                                 }];
 
@@ -247,12 +245,12 @@
 
     
     self.icon = [[UIImageView alloc]init];
-    [self.icon sd_setImageWithURL:[NSURL URLWithString:self.userModel.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+    [self.icon sd_setImageWithURL:[NSURL URLWithString:self.userModel.headUrl] placeholderImage:[UIImage imageNamed:@"head"]];
     [self.topImageView addSubview:self.icon];
     self.icon.sd_layout.centerXEqualToView(self.topImageView).centerYEqualToView(self.topImageView).heightIs(90 * KWidth_Scale).widthIs(90 * KWidth_Scale);
     self.icon.layer.masksToBounds = YES;
     self.icon.layer.cornerRadius = self.icon.width / 2;
-    self.icon.layer.borderColor = BackGray.CGColor;
+    self.icon.layer.borderColor = BackGroundColor.CGColor;
     self.icon.layer.borderWidth = 1.0;
     self.icon.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapGest = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapClick)];

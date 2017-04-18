@@ -57,7 +57,7 @@
     self.titles = @[YJLocalizedString(@"订单状态"), YJLocalizedString(@"订单详情")];
     // , @"NBA", @"新闻", @"娱乐", @"音乐", @"网络电影"
     self.topTitleView = [SGTopTitleView topTitleViewWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 44)];
-    self.topTitleView.backgroundColor = BackGray;
+    self.topTitleView.backgroundColor = BackGroundColor;
     _topTitleView.staticTitleArr = [NSArray arrayWithArray:_titles];
     _topTitleView.isHiddenIndicator = NO;
     _topTitleView.delegate_SG = self;

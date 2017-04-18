@@ -314,7 +314,7 @@
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     btn.layer.masksToBounds = YES;
     btn.layer.cornerRadius = 10;
-    btn.layer.borderColor = BackGray.CGColor;
+    btn.layer.borderColor = BackGroundColor.CGColor;
     btn.layer.borderWidth = 1.0;
     
     cell.backgroundColor = BackGray;

@@ -48,7 +48,7 @@
     
     [AttributedStr addAttributes:@{NSFontAttributeName:
                                        [UIFont systemFontOfSize:AdaptedWidth(12)],
-                                   NSForegroundColorAttributeName:BackGray}
+                                   NSForegroundColorAttributeName:BackGroundColor}
      
                            range:NSMakeRange(self.priceLab.text.length - 1, 1)];
     
@@ -57,7 +57,7 @@
     
     UIView *line = [[UIView alloc]init];
     [self.contentView addSubview:line];
-    line.backgroundColor = BackGray;
+    line.backgroundColor = BackGroundColor;
     line.sd_layout.leftSpaceToView(self.contentView,10).rightSpaceToView(self.contentView,10).bottomSpaceToView(self.contentView,0.5).heightIs(0.5);
 
     

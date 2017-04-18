@@ -15,7 +15,6 @@
 
 @interface YJTableCollectionCell ()<UICollectionViewDataSource, XRWaterfallLayoutDelegate,UICollectionViewDelegate>
 
-@property (nonatomic, strong) UICollectionView *collection;
 
 @end
 
@@ -87,13 +86,7 @@
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    
-    //    NSMutableArray *listCount = [NSMutableArray array];
-    //    for (int i = 0; i < self.guideList.count; i ++) {
-    //        YJGuideModel *model = self.guideList[i];
-    //        [listCount addObject:model];
-    //    }
-    
+
     return 9;
 }
 
@@ -107,17 +100,27 @@
         cell = [[YJImgBtnCell alloc]init];
     }
     
+    if (self.isSignIn == YES && indexPath.row == 1) {
+        cell.img.image = [UIImage imageNamed:@"sign"];
+        cell.name.text = @"已签到";
+        cell.layer.masksToBounds = YES;
+        cell.layer.cornerRadius = 5;
+        cell.layer.borderColor = BackGroundColor.CGColor;
+        cell.layer.borderWidth = .5;
+
+    }else{
+        cell.img.image = [UIImage imageNamed:imgArr[indexPath.row]];
+        cell.name.text = nameArr[indexPath.row];
+    }
+    
 //    cell.backgroundColor = [UIColor grayColor];
     
-    cell.img.image = [UIImage imageNamed:imgArr[indexPath.row]];
-    cell.name.text = nameArr[indexPath.row];
+    
     
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
     //通知代理
     if ([self.delegate respondsToSelector:@selector(index:)]) {
         [self.delegate index:indexPath.row];

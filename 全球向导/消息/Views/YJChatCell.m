@@ -18,12 +18,12 @@
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
         self.accessibilityIdentifier = @"table_cell";
-        self.icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"HeaderIcon"]];
+        self.icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"head"]];
         [self.contentView addSubview:self.icon];
         self.icon.sd_layout.centerYEqualToView(self.contentView).heightIs(65).widthIs(65).leftSpaceToView(self.contentView,10);
         self.icon.layer.masksToBounds = YES;
         self.icon.layer.cornerRadius = self.icon.width / 2;
-        self.icon.layer.borderColor = BackGray.CGColor;
+        self.icon.layer.borderColor = BackGroundColor.CGColor;
         self.icon.layer.borderWidth = 1.0;
         
         self.name = [[UILabel alloc]init];
@@ -62,7 +62,7 @@
         
         UIView *line = [[UIView alloc]init];
         [self.contentView addSubview:line];
-        line.backgroundColor = BackGray;
+        line.backgroundColor = BackGroundColor;
         line.sd_layout.leftSpaceToView(self.contentView, 5).rightSpaceToView(self.contentView, 5).bottomSpaceToView(self.contentView, 1).heightIs(1);
 
         self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -104,10 +104,10 @@
     }
     
     if (dic){
-            [self.icon sd_setImageWithURL:[NSURL URLWithString:dic[@"MyPicUrl"]] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+            [self.icon sd_setImageWithURL:[NSURL URLWithString:dic[@"MyPicUrl"]] placeholderImage:[UIImage imageNamed:@"head"]];
         } else {
             if (model.avatarImage) {
-                self.icon.image = [UIImage imageNamed:@"HeaderIcon"];
+                self.icon.image = [UIImage imageNamed:@"head"];
             }
         }
     

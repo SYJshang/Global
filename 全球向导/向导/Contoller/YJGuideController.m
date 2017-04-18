@@ -42,6 +42,8 @@
 @property (nonatomic, strong) NSMutableArray *guideList; //向导列表
 @property (nonatomic, strong) NoNetwork *noNetWork;
 
+@property (nonatomic, strong) UILabel *currGuideNum; //向导数量
+
 
 
 @end
@@ -57,14 +59,6 @@
     
     return _totalCout;
 }
-//
-//- (NSMutableArray *)priceTypeArr{
-//    
-//    if (_priceTypeArr == nil) {
-//        _priceTypeArr = [NSMutableArray array];
-//    }
-//    return _priceTypeArr;
-//}
 
 - (NSMutableArray *)guideList{
     
@@ -201,9 +195,17 @@
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, screen_width,screen_height) collectionViewLayout:waterfall];
     self.collectionView.contentInset = UIEdgeInsetsMake(150, 0, 0, 0);
     
-    self.cityImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"nearby"]];
+    self.cityImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bg1"]];
     self.cityImg.frame = CGRectMake(5,-150, screen_width - 10, 150);
     [self.collectionView addSubview:self.cityImg];
+    
+    self.currGuideNum = [[UILabel alloc]init];
+    [self.cityImg addSubview:self.currGuideNum];
+    self.currGuideNum.textColor = [UIColor whiteColor];
+    self.currGuideNum.font = [UIFont systemFontOfSize:AdaptedWidth(15)];
+    self.currGuideNum.textAlignment = NSTextAlignmentCenter;
+    self.currGuideNum.sd_layout.centerXEqualToView(self.cityImg).centerYEqualToView(self.cityImg).widthIs(200).heightIs(40);
+    
     
     
     self.collectionView.backgroundColor = [UIColor whiteColor];
@@ -264,6 +266,7 @@
 
             
             self.pageModel = [YJPageModel mj_objectWithKeyValues:data[@"queryGuide"][@"page"]];
+            self.currGuideNum.text = [NSString stringWithFormat:@"当前向导数量%ld",self.pageModel.totalCount];
             self.totalCout = [YJGuideModel mj_objectArrayWithKeyValuesArray:data[@"guideList"]];
             self.cityModel = [YJCityModel mj_objectWithKeyValues:data[@"city"]];
             
@@ -412,7 +415,6 @@
 
 - (void)location:(UIButton *)btn{
     
-    NSLog(@"点击筛选向导");
     
     YJScreeningVC *suaixuan = [[YJScreeningVC alloc]init];
     [self.navigationController pushViewController:suaixuan animated:YES];

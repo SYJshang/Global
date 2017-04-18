@@ -279,13 +279,16 @@
     //根据选中的不同按钮的tag判断进入相应的界面->
     
     if (btn.tag == 1000) {
+
+//        YJSendOrderController *publishTextVC = [[YJSendOrderController alloc] init];
+//        [self.navigationController pushViewController:publishTextVC animated:YES];
         
-//            self.timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(returnUpVC) userInfo:nil repeats:YES];
-//            [UIView animateWithDuration:0.2 animations:^{
-//                _closeImgView.transform = CGAffineTransformRotate(_closeImgView.transform, -M_PI_2*1.5);
-//        }];
-        YJSendOrderController *publishTextVC = [[YJSendOrderController alloc] init];
-        [self.navigationController pushViewController:publishTextVC animated:YES];
+        SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"功能开发中" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        alertV.sure_btnTitleColor = TextColor;
+        [alertV show];
 
     }else if(btn.tag == 1001){
         

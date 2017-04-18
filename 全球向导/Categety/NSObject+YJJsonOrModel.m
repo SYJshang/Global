@@ -19,7 +19,6 @@
         
         NSString *str;
         
-        NSLog(@"%@",[obj class]);
         if ([obj isKindOfClass:NSClassFromString(@"__NSCFString")] || [obj isKindOfClass:NSClassFromString(@"NSTaggedPointerString")] || [obj isKindOfClass:NSClassFromString(@"__NSCFConstantString")]) {
             str = [NSString stringWithFormat:@"@property (nonatomic, copy) NSString *%@;",key];
         }

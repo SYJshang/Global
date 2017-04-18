@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YJIntegraModel.h"
 
 @interface YJIntegralTopCell : UITableViewCell
 
@@ -30,5 +31,7 @@
  *  过期积分
  */
 @property (nonatomic, strong) UILabel *pastInteg;
+
+@property (nonatomic, strong) YJIntegraModel *model;
 
 @end

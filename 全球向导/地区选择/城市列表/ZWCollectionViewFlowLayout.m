@@ -62,7 +62,6 @@
     CGFloat width = (self.collectionView.frame.size.width-self.sectionInset.left-self.sectionInset.right-(self.colCount-1)*self.colMagrin)/self.colCount;
 //    计算高度
     CGFloat hight = [self.degelate ZWwaterFlow:self heightForWidth:width atIndexPath:indexPath];
-   // NSLog(@"-----%f",width);
 //    CGFloat hight =100+arc4random_uniform(100);
     CGFloat x = self.sectionInset.left + (width+ self.colMagrin)* [minCol intValue];
     CGFloat y =[self.maxYdic[minCol] floatValue]+self.rowMagrin;

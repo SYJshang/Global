@@ -197,7 +197,6 @@ static NSMutableArray *tasks;
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSLog(@"创建数组");
         tasks = [[NSMutableArray alloc] init];
     });
     return tasks;
@@ -249,9 +248,6 @@ static NSMutableArray *tasks;
             break;
     }
 
-    NSLog(@"******************** 请求参数 ***************************");
-    NSLog(@"请求头: %@\n请求方式: %@\n请求URL: %@\n请求param: %@\n\n",[self sharedAFManager].requestSerializer.HTTPRequestHeaders, requestType, URLString, parameters);
-    NSLog(@"********************************************************");
 
     BAURLSessionTask *sessionTask = nil;
 
@@ -315,7 +311,6 @@ static NSMutableArray *tasks;
             if (failureBlock)
             {
                 failureBlock(error);
-                NSLog(@"错误信息：%@",error);
             }
             [[weakSelf tasks] removeObject:sessionTask];
             
@@ -403,10 +398,6 @@ static NSMutableArray *tasks;
     /*! 检查地址中是否有中文 */
     NSString *URLString = [NSURL URLWithString:urlString] ? urlString : [self strUTF8Encoding:urlString];
     
-    NSLog(@"******************** 请求参数 ***************************");
-    NSLog(@"请求头: %@\n请求方式: %@\n请求URL: %@\n请求param: %@\n\n",[self sharedAFManager].requestSerializer.HTTPRequestHeaders, @"POST",URLString, parameters);
-    NSLog(@"******************************************************");
-
     
     BAURLSessionTask *sessionTask = nil;
     sessionTask = [[self sharedAFManager] POST:URLString parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
@@ -427,10 +418,8 @@ static NSMutableArray *tasks;
                                                    scale:1.0
                                              orientation:(UIImageOrientation)assetRep.orientation];
                 //                imageWithImage
-                NSLog(@"1111-----size : %@",NSStringFromCGSize(resizedImage.size));
                 
                 resizedImage = [weakSelf imageWithImage:resizedImage scaledToSize:resizedImage.size];
-                NSLog(@"2222-----size : %@",NSStringFromCGSize(resizedImage.size));
             }
             else
             {
@@ -457,7 +446,6 @@ static NSMutableArray *tasks;
         
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         
-        NSLog(@"上传进度--%lld,总进度---%lld",uploadProgress.completedUnitCount,uploadProgress.totalUnitCount);
         
         if (progress)
         {
@@ -466,7 +454,6 @@ static NSMutableArray *tasks;
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        NSLog(@"上传图片成功 = %@",responseObject);
         if (successBlock)
         {
             successBlock(responseObject);
@@ -545,13 +532,11 @@ static NSMutableArray *tasks;
                     [formData appendPartWithFileURL:filePathURL2 name:@"video" fileName:outfilePath mimeType:@"application/octet-stream" error:nil];
                     
                 } progress:^(NSProgress * _Nonnull uploadProgress) {
-                    NSLog(@"上传进度--%lld,总进度---%lld",uploadProgress.completedUnitCount,uploadProgress.totalUnitCount);
                     if (progress)
                     {
                         progress(uploadProgress.completedUnitCount, uploadProgress.totalUnitCount);
                     }
                 } success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable responseObject) {
-                    NSLog(@"上传视频成功 = %@",responseObject);
                     if (successBlock)
                     {
                         successBlock(responseObject);
@@ -596,16 +581,11 @@ static NSMutableArray *tasks;
 
     NSURLRequest *downloadRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     
-    NSLog(@"******************** 请求参数 ***************************");
-    NSLog(@"请求头: %@\n请求方式: %@\n请求URL: %@\n请求param: %@\n\n",[self sharedAFManager].requestSerializer.HTTPRequestHeaders, @"download",urlString, parameters);
-    NSLog(@"******************************************************");
-
     
     BAURLSessionTask *sessionTask = nil;
     
     sessionTask = [[self sharedAFManager] downloadTaskWithRequest:downloadRequest progress:^(NSProgress * _Nonnull downloadProgress) {
         
-        NSLog(@"下载进度：%.2lld%%",100 * downloadProgress.completedUnitCount/downloadProgress.totalUnitCount);
         /*! 回到主线程刷新UI */
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -621,7 +601,6 @@ static NSMutableArray *tasks;
         if (!savePath)
         {
             NSURL *downloadURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-            NSLog(@"默认路径--%@",downloadURL);
             return [downloadURL URLByAppendingPathComponent:[response suggestedFilename]];
         }
         else
@@ -633,7 +612,6 @@ static NSMutableArray *tasks;
         
         [[self tasks] removeObject:sessionTask];
         
-        NSLog(@"下载文件成功");
         if (error == nil)
         {
             if (successBlock)
@@ -677,22 +655,18 @@ static NSMutableArray *tasks;
         switch (status)
         {
             case AFNetworkReachabilityStatusUnknown:
-                NSLog(@"未知网络");
                 networkStatus ? networkStatus(BANetworkStatusUnknown) : nil;
                 BANetManagerShare.netWorkStatu = BANetworkStatusUnknown;
                 break;
             case AFNetworkReachabilityStatusNotReachable:
-                NSLog(@"没有网络");
                 networkStatus ? networkStatus(BANetworkStatusNotReachable) : nil;
                 BANetManagerShare.netWorkStatu = BANetworkStatusUnknown;
                 break;
             case AFNetworkReachabilityStatusReachableViaWWAN:
-                NSLog(@"手机自带网络");
                 networkStatus ? networkStatus(BANetworkStatusReachableViaWWAN) : nil;
                 BANetManagerShare.netWorkStatu = BANetworkStatusUnknown;
                 break;
             case AFNetworkReachabilityStatusReachableViaWiFi:
-                NSLog(@"wifi 网络");
                 networkStatus ? networkStatus(BANetworkStatusReachableViaWiFi) : nil;
                 BANetManagerShare.netWorkStatu = BANetworkStatusUnknown;
                 break;

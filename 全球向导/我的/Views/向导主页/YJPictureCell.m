@@ -18,7 +18,7 @@
         self.icon.sd_layout.leftSpaceToView(self.contentView,10).rightSpaceToView(self.contentView,10).topSpaceToView(self.contentView,5).bottomSpaceToView(self.contentView,5);
         self.icon.layer.masksToBounds = YES;
         self.icon.layer.cornerRadius = 5;
-        self.icon.layer.borderColor = BackGray.CGColor;
+        self.icon.layer.borderColor = BackGroundColor.CGColor;
         self.icon.layer.borderWidth = 1.0;
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;

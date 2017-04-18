@@ -112,7 +112,7 @@
     UIView *view = [[UIView alloc]init];
     [self.view addSubview:view];
     view.frame = CGRectMake(0, screen_height - 44, screen_width, 1);
-    view.backgroundColor = BackGray;
+    view.backgroundColor = BackGroundColor;
     
     
     
@@ -350,13 +350,13 @@
     
     
     self.topView = [[UIImageView alloc]init];
-//    [self.topView sd_setImageWithURL:[NSURL URLWithString:self.userModel.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
-    self.topView.image = [UIImage imageNamed:@"HeaderIcon"];
+//    [self.topView sd_setImageWithURL:[NSURL URLWithString:self.userModel.headUrl] placeholderImage:[UIImage imageNamed:@"head"]];
+    self.topView.image = [UIImage imageNamed:@"head"];
     [self.bigImg addSubview:self.topView];
     self.topView.sd_layout.centerXEqualToView(self.bigImg).centerYEqualToView(self.bigImg).heightIs(75 * KWidth_Scale).widthIs(75 * KWidth_Scale);
     self.topView.layer.masksToBounds = YES;
     self.topView.layer.cornerRadius = self.topView.width / 2;
-    self.topView.layer.borderColor = BackGray.CGColor;
+    self.topView.layer.borderColor = BackGroundColor.CGColor;
     self.topView.layer.borderWidth = 1.0;
     self.topView.userInteractionEnabled = YES;
     
@@ -381,7 +381,14 @@
     //分享
     self.shareBtn = [YJDIYButton buttonWithFrame:CGRectMake(0, 0, 0, 0) title:@"分享" imageName:@"share" Block:^{
         
-        [self showBottomCircleView];
+//        [self showBottomCircleView];
+        
+        SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"功能开发中" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+        }];
+        alertV.sure_btnTitleColor = TextColor;
+        [alertV show];
+        
+
         
     }];
     [self.shareBtn setImageEdgeInsets:UIEdgeInsetsMake(-5, 25, -5, 0)];
@@ -537,7 +544,7 @@
             [self.bigImg sd_setImageWithURL:[NSURL URLWithString:self.guideModel.coverPhotoUrl] placeholderImage:[UIImage imageNamed:@"big_horse"]];
             self.name.text = self.guideModel.realName;
             self.GuideType.text = self.guideModel.guideDesc;
-            [self.topView sd_setImageWithURL:[NSURL URLWithString:self.guideModel.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+            [self.topView sd_setImageWithURL:[NSURL URLWithString:self.guideModel.headUrl] placeholderImage:[UIImage imageNamed:@"head"]];
 
             
             self.serverListArr = [YJServerModel mj_objectArrayWithKeyValuesArray:data[@"productList"]];
@@ -583,7 +590,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView *view = [[UIView alloc]init];
-    view.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:1.0];
+    view.backgroundColor = BackGray;
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, screen_width - 20, 20)];
 //    label.backgroundColor = [UIColor colorWithWhite:0.95 alpha:0.9];
     label.textColor = [UIColor blackColor];
@@ -694,6 +701,8 @@
             btn.layer.borderColor = TextColor.CGColor;
             btn.layer.borderWidth = 1;
             
+            cell.backgroundColor = BackGray;
+
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }else{

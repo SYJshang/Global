@@ -133,7 +133,7 @@
 -(CAGradientLayer *)backgroundLayer{
     CAGradientLayer *gradientLayer = [CAGradientLayer layer];
     gradientLayer.frame = self.view.bounds;
-    gradientLayer.colors = @[(__bridge id)BackGray.CGColor,(__bridge id)[UIColor redColor].CGColor];
+    gradientLayer.colors = @[(__bridge id)BackGroundColor.CGColor,(__bridge id)[UIColor redColor].CGColor];
     gradientLayer.startPoint = CGPointMake(0.5, 0);
     gradientLayer.endPoint = CGPointMake(0.5, 1);
     gradientLayer.locations = @[@0.65,@1];

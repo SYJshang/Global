@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YJRankModel.h"
 
 
 @interface YJRankTopCell : UITableViewCell
@@ -48,6 +49,8 @@
  *  明细
  */
 @property (nonatomic, strong) UIButton *detailBtn;
+
+@property (nonatomic, strong) YJRankModel *model;
 
 
 

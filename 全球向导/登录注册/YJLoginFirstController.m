@@ -66,7 +66,7 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.imgV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"login_bg"]];
+    self.imgV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bg3"]];
     [self.view addSubview:self.imgV];
     self.imgV.userInteractionEnabled = YES;
     self.imgV.sd_layout.leftSpaceToView(self.view,0).rightSpaceToView(self.view,0).topSpaceToView(self.view,0).heightIs(200.0 * KWidth_Scale);
@@ -93,7 +93,7 @@
     self.loginBtn.titleLabel.font = [UIFont systemFontOfSize:17.0];
     [self.loginBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     
-    self.loginBtn.backgroundColor =  BackGray;
+    self.loginBtn.backgroundColor =  BackGroundColor;
     [self.loginBtn setTitleColor:TextColor forState:UIControlStateSelected];
     [self.loginBtn setSelected:YES];
     self.loginBtn.tag = 1;
@@ -105,7 +105,7 @@
     [self.registerBtn setTitle:@"注册" forState:UIControlStateNormal];
     self.registerBtn.titleLabel.font = [UIFont systemFontOfSize:17.0];
     [self.registerBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    self.registerBtn.backgroundColor = BackGray;
+    self.registerBtn.backgroundColor = BackGroundColor;
     [self.registerBtn setTitleColor:TextColor forState:UIControlStateSelected];
     [self.registerBtn setSelected:NO];
     self.registerBtn.tag = 2;
@@ -167,7 +167,6 @@
 #pragma explain - use animateWhenKeyboardAppearAutomaticAnimBlock, animateWhenKeyboardAppearBlock must be nil.
     /*
      [_keyboardUtil setAnimateWhenKeyboardAppearBlock:^(int appearPostIndex, CGRect keyboardRect, CGFloat keyboardHeight, CGFloat keyboardHeightIncrement) {
-     NSLog(@"\n\n键盘弹出来第 %d 次了~  高度比上一次增加了%0.f  当前高度是:%0.f"  , appearPostIndex, keyboardHeightIncrement, keyboardHeight);
      //do something
      }];
      */
@@ -176,14 +175,12 @@
 #pragma explain - if not configure this Block, automatically itself.
     /*
      [_keyboardUtil setAnimateWhenKeyboardDisappearBlock:^(CGFloat keyboardHeight) {
-     NSLog(@"\n\n键盘在收起来~  上次高度为:+%f", keyboardHeight);
      //do something
      }];
      */
     
 #pragma explain - 获取键盘信息
     [_keyboardUtil setPrintKeyboardInfoBlock:^(ZYKeyboardUtil *keyboardUtil, KeyboardInfo *keyboardInfo) {
-        NSLog(@"\n\n拿到键盘信息 和 ZYKeyboardUtil对象");
     }];
 }
 
@@ -224,7 +221,7 @@
     
     
     UIView *line = [[UIView alloc]init];
-    line.backgroundColor = BackGray;
+    line.backgroundColor = BackGroundColor;
     [self.view addSubview:line];
     line.sd_layout.leftSpaceToView(self.view,20).topSpaceToView(self.nameTf,5).heightIs(1).rightSpaceToView(self.view,20);
    
@@ -268,7 +265,7 @@
 
     
     UIView *line1 = [[UIView alloc]init];
-    line1.backgroundColor = BackGray;
+    line1.backgroundColor = BackGroundColor;
     [self.view addSubview:line1];
     line1.sd_layout.leftSpaceToView(self.view,20).topSpaceToView(self.iconCode,5).heightIs(1).rightSpaceToView(self.view,20);
     
@@ -296,7 +293,7 @@
 
     
     UIView *line2 = [[UIView alloc]init];
-    line2.backgroundColor = BackGray;
+    line2.backgroundColor = BackGroundColor;
     [self.view addSubview:line2];
     line2.sd_layout.leftSpaceToView(self.view,20).topSpaceToView(self.passwordTf,5).heightIs(1).rightSpaceToView(self.view,20);
     
@@ -483,7 +480,6 @@
 
 - (void)textFiledEdit:(UITextField *)textField{
     
-    NSLog(@"....");
     
     if ([textField.text  isEqual: @""] || textField.text == nil) {
         

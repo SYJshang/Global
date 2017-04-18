@@ -45,6 +45,10 @@
 
 @property (nonatomic, strong) YJUsreInfoModel *userModel;
 
+@property (nonatomic, strong) NSMutableDictionary *guideStateDict;
+
+@property (nonatomic, strong) NSString *isSigin;
+
 
 @end
 
@@ -80,7 +84,6 @@
         if ([dict[@"code"] isEqualToString:@"1"]) {
             
             NSDictionary *data = dict[@"data"];
-            self.guideStatus = data[@"guideStatus"];
             
             NSDictionary *usrInfo = data[@"userInfo"];
             NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"userInfo.plist"];
@@ -90,7 +93,7 @@
             XXLog(@"%@",self.guideStatus);
             self.userModel = [YJUsreInfoModel mj_objectWithKeyValues:usrInfo];
             if (self.userModel.headUrl) {
-                [self.icon sd_setImageWithURL:[NSURL URLWithString:self.userModel.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+                [self.icon sd_setImageWithURL:[NSURL URLWithString:self.userModel.headUrl] placeholderImage:[UIImage imageNamed:@"head"]];
                 [self.topImageView sd_setImageWithURL:[NSURL URLWithString:self.userModel.headUrl] placeholderImage:[UIImage imageNamed:@"big_horse"]];
             }
             
@@ -102,11 +105,9 @@
                                                   password:self.userModel.imPwd
                                                 completion:^(NSString *aUsername, EMError *aError) {
                                                     if (!aError) {
-                                                        NSLog(@"登陆成功");
                                                         [[EMClient sharedClient].options setIsAutoLogin:YES];
                                                         
                                                     } else {
-                                                        NSLog(@"登陆失败");
                                                     }
                                                 }];
                 
@@ -116,11 +117,20 @@
             self.NoLab.text = [NSString stringWithFormat:@"NO:%@",self.userModel.userNo];
             self.rankLab.text = dict[@"data"][@"gradeName"];
             
+            self.guideStatus = [NSString stringWithFormat:@"%@",data[@"guideStatus"]];
+            self.isSigin = [NSString stringWithFormat:@"%@",data[@"hasSign"]];
+
+            
             [self.tableView reloadData];
             
         }else{
             
             self.nickName.text = @"未登录";
+            SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:dict[@"msg"] alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            }];
+            alertV.sure_btnTitleColor = TextColor;
+            [alertV show];
+
         }
         
         
@@ -141,6 +151,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.guideStateDict = [NSMutableDictionary dictionary];
+    [self.guideStateDict setObject:@"申请成为全球向导" forKey:@"0"];
+    [self.guideStateDict setObject:@"向导申请中" forKey:@"1"];
+    [self.guideStateDict setObject:@"向导申请失败" forKey:@"3"];
+    [self.guideStateDict setObject:@"账号封号处理中" forKey:@"4"];
+
+
+    
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height) style:UITableViewStylePlain];
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self;
@@ -186,7 +205,7 @@
 - (void)setImage{
     
     self.topImageView = [[UIImageView alloc] initWithFrame:(CGRectMake(0, -200, screen_width, 200))];
-    _topImageView.image = [UIImage imageNamed:@"big_horse"];
+    _topImageView.image = [UIImage imageNamed:@"bg"];
     [self.topImageView setImageToBlur:self.topImageView.image
                            blurRadius:5
                       completionBlock:^(){
@@ -212,12 +231,12 @@
     
     
     self.icon = [[UIImageView alloc]init];
-    [self.icon sd_setImageWithURL:[NSURL URLWithString:self.userModel.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+    [self.icon sd_setImageWithURL:[NSURL URLWithString:self.userModel.headUrl] placeholderImage:[UIImage imageNamed:@"head"]];
     [self.topImageView addSubview:self.icon];
     self.icon.sd_layout.leftSpaceToView(self.topImageView,10).centerYEqualToView(self.topImageView).heightIs(80 * KWidth_Scale).widthIs(80 * KWidth_Scale);
     self.icon.layer.masksToBounds = YES;
     self.icon.layer.cornerRadius = self.icon.width / 2;
-    self.icon.layer.borderColor = BackGray.CGColor;
+    self.icon.layer.borderColor = BackGroundColor.CGColor;
     self.icon.layer.borderWidth = 1.0;
     self.icon.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapGest = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapClick)];
@@ -242,14 +261,11 @@
     self.NoLab.sd_layout.leftSpaceToView(self.icon,5).topSpaceToView(self.nickName,5).heightIs(20).widthIs(100);
     
     
-    UIImageView *view = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bg"]];
+    UIImageView *view = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"mine_bg"]];
     view.userInteractionEnabled = YES;
     [self.topImageView addSubview:view];
     view.sd_layout.rightSpaceToView(self.topImageView, -10).centerYEqualToView(self.topImageView).heightIs(40).widthIs(120);
-    view.layer.masksToBounds = YES;
-    view.layer.cornerRadius = 8;
-    view.layer.borderColor = TextColor.CGColor;
-    view.layer.borderWidth = 0.5;
+
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(goInIntegral)];
     [view addGestureRecognizer:tap];
@@ -345,18 +361,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-//    if (cell == nil) {
-//      
-//        cell.contentView.userInteractionEnabled = YES;
-//        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-//        
-//        cell.selectedBackgroundView = [[UIView alloc] init];
-//        UIView *view = [self createItemWithCount:9 rows:3 columns:3];
-//        [cell addSubview:view];
-//    }
+
     
     YJTableCollectionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    
+    if ([self.isSigin isEqualToString:@"1"]) {
+        cell.isSignIn = YES;
+        [cell.collection reloadData];
+    }else{
+        cell.isSignIn = NO;
+    }
+    
     cell.delegate = self;
     
     
@@ -387,7 +402,8 @@
 
                 }else{
                     
-                    SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:self.guideStatus alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                    SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:self.guideStateDict[self.guideStatus]
+ alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
                     }];
                     alertV.sure_btnTitleColor = TextColor;
                     [alertV show];
@@ -398,6 +414,7 @@
             case 1:
                 
                 //签到
+                [self signIn];
                 
                 break;
             case 2:
@@ -465,6 +482,41 @@
         [alertV show];
     }
     
+    
+}
+
+//签到
+- (void)signIn{
+    
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/userSign/sign",BaseUrl] parameters:nil success:^(id responseObject) {
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        XXLog(@"%@",data);
+        
+        if ([data[@"code"] isEqualToString:@"1"]) {
+            
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.labelColor = [UIColor whiteColor];
+            hud.color = [UIColor blackColor];
+            hud.labelText = NSLocalizedString(@"签到成功", @"HUD message title");
+            [hud hide:YES afterDelay:2.0];
+            
+            [self getUserInfo];
+            
+        }else{
+            
+            SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:data[@"msg"] alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            }];
+            alertV.sure_btnTitleColor = TextColor;
+            [alertV show];
+
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+    }];
     
 }
 

@@ -30,7 +30,7 @@
         self.phoneTF.sd_layout.leftSpaceToView(self.phoneNum,5).rightSpaceToView(self.contentView,10).topSpaceToView(self.contentView,10).bottomSpaceToView(self.contentView,10);
         
         UIView *line = [[UIView alloc]init];
-        line.backgroundColor = BackGray;
+        line.backgroundColor = BackGroundColor;
         [self.contentView addSubview:line];
         line.sd_layout.leftSpaceToView(self.contentView,10).rightSpaceToView(self.contentView,10).bottomSpaceToView(self.contentView,0).heightIs(0.5);
         

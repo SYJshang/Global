@@ -43,7 +43,6 @@ static NSString *PRIMARYKEY = @"id";
     
     // 执行打开数据库和创建表操作
     NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"bqldb.sqlite"];
-    NSLog(@"path:%@",filePath);
     if(![_fmdb open]) {
         [[self class] opDBWith:dbName];
     }
@@ -84,7 +83,6 @@ static NSString *PRIMARYKEY = @"id";
         id value = [model getAllValues][i];
         NSString *type = getDBKeyType(value);
         NSString *alertsql = [NSString stringWithFormat:@"ALTER TABLE t_%@ ADD COLUMN %@ %@",dbPath,newColmun[i],type];
-        if(![_fmdb executeUpdate:alertsql]) NSLog(@"error:%@",_fmdb.lastErrorMessage);
     }
 }
 
@@ -130,7 +128,6 @@ static NSString *PRIMARYKEY = @"id";
     // sql是最终拼接好的sql语句
     sql = [sql stringByAppendingString:[NSString stringWithFormat:@"%@ VALUES %@",keyParameter,keyNoSureParameter]];
     BOOL isSuccess = [_fmdb executeUpdate:sql withArgumentsInArray:valuesArray];
-    if(!isSuccess) NSLog(@"error:%@",_fmdb.lastErrorMessage);
     
     [_fmdb close];
     return isSuccess;
@@ -383,7 +380,6 @@ static NSString *PRIMARYKEY = @"id";
     // 处理不同表命名(name、name.sqlite)获取有效表名
     NSString *dbPath = [[self class] getValidDBName:dbName];
     BOOL isSuccess = [_fmdb executeUpdate:[NSString stringWithFormat:@"DELETE FROM t_%@",dbPath]];
-    if(!isSuccess) NSLog(@"error:%@",_fmdb.lastErrorMessage);
     
     [_fmdb close];
     return isSuccess;
@@ -398,7 +394,6 @@ static NSString *PRIMARYKEY = @"id";
     NSString *dbPath = [[self class] getValidDBName:dbName];
     NSString *deletesql = [NSString stringWithFormat:@"DELETE FROM t_%@ WHERE %@ = %@",dbPath,checkObjectNotNull(identifier)?identifier:PRIMARYKEY,identifierValue];
     BOOL isDelete = [_fmdb executeUpdate:deletesql];
-    if(!isDelete) NSLog(@"delete data error:%@",_fmdb.lastErrorMessage);
     
     [_fmdb close];
     return isDelete;
@@ -459,7 +454,6 @@ static NSString *PRIMARYKEY = @"id";
         [valuesArray addObject:values[i]];
     }
     BOOL isModifySuccess = [_fmdb executeUpdate:sql withArgumentsInArray:valuesArray];
-    if(!isModifySuccess) NSLog(@"modify error:%@",_fmdb.lastErrorMessage);
     
     [_fmdb close];
     return isModifySuccess;
@@ -491,7 +485,6 @@ static NSString *PRIMARYKEY = @"id";
         [valuesArray addObject:values[i]];
     }
     BOOL isModifySuccess = [_fmdb executeUpdate:sql withArgumentsInArray:valuesArray];
-    if(!isModifySuccess) NSLog(@"modify error:%@",_fmdb.lastErrorMessage);
     
     [_fmdb close];
     return isModifySuccess;
@@ -507,7 +500,6 @@ static NSString *PRIMARYKEY = @"id";
     NSString *sql = [NSString stringWithFormat:@"UPDATE t_%@ SET %@ = ? WHERE id = 1",dbPath,key];
     
     BOOL isModifySuccess = [_fmdb executeUpdate:sql withArgumentsInArray:@[value]];
-    if(!isModifySuccess) NSLog(@"modify error:%@",_fmdb.lastErrorMessage);
     
     [_fmdb close];
     return isModifySuccess;
@@ -523,7 +515,6 @@ static NSString *PRIMARYKEY = @"id";
     NSString *sql = [NSString stringWithFormat:@"UPDATE t_%@ SET %@ = ? WHERE %@ = %@",dbPath,key,checkObjectNotNull(identifier)?identifier:PRIMARYKEY,identifierValue];
     
     BOOL isModifySuccess = [_fmdb executeUpdate:sql withArgumentsInArray:@[value]];
-    if(!isModifySuccess) NSLog(@"modify error:%@",_fmdb.lastErrorMessage);
     
     [_fmdb close];
     return isModifySuccess;
@@ -548,7 +539,6 @@ static NSString *PRIMARYKEY = @"id";
         for (int i = 0; i < keys.count; i ++) {
             
             NSString *sql = [NSString stringWithFormat:@"UPDATE t_%@ SET %@ = '%@' WHERE %@ = %@",dbPath,keys[i],values[i],checkObjectNotNull(identifier)?identifier:PRIMARYKEY,identifierValue];
-            NSLog(@"sql:%@",sql);
             BOOL isSuccess = [db executeUpdate:sql];
             if(!isSuccess) {
                 
@@ -582,7 +572,6 @@ static NSString *PRIMARYKEY = @"id";
         for (int i = 0; i < [[keyValue allKeys] count]; i ++) {
             
             NSString *sql = [NSString stringWithFormat:@"UPDATE t_%@ SET %@ = '%@' WHERE %@ = %@",dbPath,[keyValue allKeys][i],[keyValue allValues][i],checkObjectNotNull(identifier)?identifier:PRIMARYKEY,identifierValue];
-            NSLog(@"sql:%@",sql);
             BOOL isSuccess = [db executeUpdate:sql];
             if(!isSuccess) {
                 

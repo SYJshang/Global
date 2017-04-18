@@ -62,7 +62,7 @@
     
     _guideModel = guideModel;
     [self.imgV sd_setImageWithURL:[NSURL URLWithString:guideModel.coverPhotoUrl] placeholderImage:[UIImage imageNamed:@"horse"]];
-    [self.icon sd_setImageWithURL:[NSURL URLWithString:guideModel.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+    [self.icon sd_setImageWithURL:[NSURL URLWithString:guideModel.headUrl] placeholderImage:[UIImage imageNamed:@"head"]];
     self.name.text = [NSString stringWithFormat:@"by %@",guideModel.realName];
     NSString *type;
 

@@ -25,7 +25,7 @@
         self.imageV.layer.borderColor =  [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0].CGColor;
         
         
-        self.icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"HeaderIcon"]];
+        self.icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"head"]];
         [self.contentView addSubview:self.icon];
         self.icon.sd_layout.leftSpaceToView(self.contentView,10).topSpaceToView(self.imageV,10 * KHeight_Scale).heightIs(40 * KWidth_Scale).widthIs(40 * KWidth_Scale);
         self.icon.layer.masksToBounds = YES;
@@ -73,7 +73,7 @@
     
     _guideModel = guideModel;
     [self.imageV sd_setImageWithURL:[NSURL URLWithString:guideModel.coverPhotoUrl] placeholderImage:[UIImage imageNamed:@"big_horse"]];
-    [self.icon sd_setImageWithURL:[NSURL URLWithString:guideModel.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+    [self.icon sd_setImageWithURL:[NSURL URLWithString:guideModel.headUrl] placeholderImage:[UIImage imageNamed:@"head"]];
     self.name.text = [NSString stringWithFormat:@"by %@",guideModel.realName];
     NSString *type = [self.guideType objectForKey:guideModel.type];
     if (self.state == 1) {

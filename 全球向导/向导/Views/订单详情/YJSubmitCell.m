@@ -24,7 +24,7 @@
         self.priceAll.sd_layout.leftSpaceToView(self.contentView,0).topSpaceToView(self.contentView,0).bottomSpaceToView(self.contentView,0).widthIs(screen_width / 2 - 10);
         self.priceAll.layer.masksToBounds = YES;
         self.priceAll.layer.cornerRadius = 2;
-        self.priceAll.layer.borderColor = BackGray.CGColor;
+        self.priceAll.layer.borderColor = BackGroundColor.CGColor;
         self.priceAll.layer.borderWidth = 1;
         
         
@@ -49,7 +49,6 @@
 
 - (void)click:(UIButton *)sender{
     
-    NSLog(@"提交订单");
 }
 
 - (void)awakeFromNib {

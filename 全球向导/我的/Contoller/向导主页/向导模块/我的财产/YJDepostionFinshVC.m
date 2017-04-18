@@ -90,7 +90,7 @@
     
     UIView *line = [[UIView alloc]init];
     [view addSubview:line];
-    line.backgroundColor = BackGray;
+    line.backgroundColor = BackGroundColor;
     line.sd_layout.leftSpaceToView(view, 10).rightSpaceToView(view, 10).topSpaceToView(aliAccount,0).heightIs(1.0);
     
     UILabel *name1 = [[UILabel alloc]init];
@@ -125,7 +125,7 @@
     depositBtn.titleLabel.font = [UIFont systemFontOfSize:AdaptedWidth(16)];
     depositBtn.layer.masksToBounds = YES;
     depositBtn.layer.cornerRadius = 5;
-    depositBtn.layer.borderColor = BackGray.CGColor;
+    depositBtn.layer.borderColor = BackGroundColor.CGColor;
     depositBtn.layer.borderWidth = 1.0;
     
 }

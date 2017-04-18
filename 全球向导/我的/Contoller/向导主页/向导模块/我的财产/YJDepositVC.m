@@ -138,7 +138,7 @@
 
     UIView *line = [[UIView alloc]init];
     [view1 addSubview:line];
-    line.backgroundColor = BackGray;
+    line.backgroundColor = BackGroundColor;
     line.sd_layout.leftSpaceToView(view1, 10).rightSpaceToView(view1, 10).topSpaceToView(money,5).heightIs(1.0);
     
     UILabel *jine = [[UILabel alloc]init];
@@ -174,7 +174,7 @@
     deposiBtn.titleLabel.font = [UIFont systemFontOfSize:AdaptedWidth(16)];
     deposiBtn.layer.masksToBounds = YES;
     deposiBtn.layer.cornerRadius = 5;
-    deposiBtn.layer.borderColor = BackGray.CGColor;
+    deposiBtn.layer.borderColor = BackGroundColor.CGColor;
     deposiBtn.layer.borderWidth = 1.0;
 
     

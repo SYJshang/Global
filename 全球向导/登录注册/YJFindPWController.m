@@ -122,7 +122,6 @@
 #pragma explain - use animateWhenKeyboardAppearAutomaticAnimBlock, animateWhenKeyboardAppearBlock must be nil.
     /*
      [_keyboardUtil setAnimateWhenKeyboardAppearBlock:^(int appearPostIndex, CGRect keyboardRect, CGFloat keyboardHeight, CGFloat keyboardHeightIncrement) {
-     NSLog(@"\n\n键盘弹出来第 %d 次了~  高度比上一次增加了%0.f  当前高度是:%0.f"  , appearPostIndex, keyboardHeightIncrement, keyboardHeight);
      //do something
      }];
      */
@@ -131,14 +130,12 @@
 #pragma explain - if not configure this Block, automatically itself.
     /*
      [_keyboardUtil setAnimateWhenKeyboardDisappearBlock:^(CGFloat keyboardHeight) {
-     NSLog(@"\n\n键盘在收起来~  上次高度为:+%f", keyboardHeight);
      //do something
      }];
      */
     
 #pragma explain - 获取键盘信息
     [_keyboardUtil setPrintKeyboardInfoBlock:^(ZYKeyboardUtil *keyboardUtil, KeyboardInfo *keyboardInfo) {
-        NSLog(@"\n\n拿到键盘信息 和 ZYKeyboardUtil对象");
     }];
 }
 
@@ -179,7 +176,7 @@
     self.dis.sd_layout.leftSpaceToView(self.nameTf,2).rightSpaceToView(self.view,20).heightIs(18.0 * KWidth_Scale).centerYEqualToView(self.nameTf);
     
     UIView *line = [[UIView alloc]init];
-    line.backgroundColor = BackGray;
+    line.backgroundColor = BackGroundColor;
     [self.view addSubview:line];
     line.sd_layout.leftSpaceToView(self.view,20).topSpaceToView(self.nameTf,5).heightIs(1).rightSpaceToView(self.view,20);
     
@@ -226,7 +223,7 @@
     [self.icon addGestureRecognizer:tap];
     
     UIView *line1 = [[UIView alloc]init];
-    line1.backgroundColor = BackGray;
+    line1.backgroundColor = BackGroundColor;
     [self.view addSubview:line1];
     line1.sd_layout.leftSpaceToView(self.view,20).topSpaceToView(self.iconCode,5).heightIs(1).rightSpaceToView(self.view,20);
     
@@ -265,7 +262,7 @@
     
     
     UIView *line3 = [[UIView alloc]init];
-    line3.backgroundColor = BackGray;
+    line3.backgroundColor = BackGroundColor;
     [self.view addSubview:line3];
     line3.sd_layout.leftSpaceToView(self.view,20).topSpaceToView(self.numCode,5).heightIs(1).rightSpaceToView(self.view,20);
     
@@ -292,7 +289,7 @@
     
     
     UIView *line2 = [[UIView alloc]init];
-    line2.backgroundColor = BackGray;
+    line2.backgroundColor = BackGroundColor;
     [self.view addSubview:line2];
     line2.sd_layout.leftSpaceToView(self.view,20).topSpaceToView(self.passwordTf,5).heightIs(1).rightSpaceToView(self.view,20);
     
@@ -353,7 +350,6 @@
             
             
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-            NSLog(@".....%@",dict);
             NSString *code = dict[@"code"];
             if ([code isEqualToString:@"1"]) {
                 
@@ -584,7 +580,6 @@
     __weak __typeof(self) weakSelf = self;
     
     [_countDownForBtn countDownWithStratDate:strtDate finishDate:finishDate completeBlock:^(NSInteger day, NSInteger hour, NSInteger minute, NSInteger second) {
-//        NSLog(@"second = %li",second);
         NSInteger totoalSecond =day*24*60*60+hour*60*60 + minute*60+second;
         if (totoalSecond==0) {
             weakSelf.numBtn.enabled = YES;
@@ -630,7 +625,6 @@
 -(void)dealloc{
     //    [_countDownForLabel destoryTimer];
     [_countDownForBtn destoryTimer];
-    NSLog(@"%s dealloc",object_getClassName(self));
 }
 
 

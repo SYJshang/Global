@@ -22,7 +22,7 @@
         self.textView.textColor = [UIColor colorWithRed:70.0 / 255.0 green:70.0 / 255.0 blue:70.0 / 255.0 alpha:1.0];
         self.textView.layer.masksToBounds = YES;
         self.textView.layer.cornerRadius = 5;
-        self.textView.layer.borderColor = BackGray.CGColor;
+        self.textView.layer.borderColor = BackGroundColor.CGColor;
         self.textView.layer.borderWidth = 0.5;
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;

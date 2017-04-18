@@ -92,10 +92,10 @@
 - (void)setModel:(YJNFindGuideModel *)model{
     
     _model = model;
-    [self.imageV sd_setImageWithURL:[NSURL URLWithString:model.coverPicUrl] placeholderImage:[UIImage imageNamed:@"bg"]];
+    [self.imageV sd_setImageWithURL:[NSURL URLWithString:model.coverPicUrl] placeholderImage:[UIImage imageNamed:@"big_house"]];
     self.title.text = model.bigTitle;
     self.descTitle.text = model.smallTitle;
-    [self.icon sd_setImageWithURL:[NSURL URLWithString:model.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+    [self.icon sd_setImageWithURL:[NSURL URLWithString:model.headUrl] placeholderImage:[UIImage imageNamed:@"head"]];
     self.name.text = [NSString stringWithFormat:@"by %@",model.realName];
     self.position.text = [NSString stringWithFormat:@"|%@|",model.guideDesc];
     
@@ -110,7 +110,7 @@
     
     [AttributedStr addAttribute:NSForegroundColorAttributeName
      
-                          value:[UIColor redColor]
+                          value:TextColor
      
                           range:NSMakeRange(5, model.price.length)];
     

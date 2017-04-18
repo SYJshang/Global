@@ -218,7 +218,7 @@
     if (indexPath.row == 0) {
         YJEditPhotoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
         cell.title.text = @"选择头像";
-        [cell.icon sd_setImageWithURL:[NSURL URLWithString:self.userModel.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+        [cell.icon sd_setImageWithURL:[NSURL URLWithString:self.userModel.headUrl] placeholderImage:[UIImage imageNamed:@"head"]];
         return cell;
     }
     
@@ -374,7 +374,6 @@
             [formData appendPartWithFileData:imageData name:@"upload" fileName:[NSString stringWithFormat:@"%@.png",@"test"] mimeType:@"image/png"];
         } progress:^(NSProgress * _Nonnull uploadProgress) {
             
-            NSLog(@"图片上传进度%f",uploadProgress.fractionCompleted);
             
         }success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
@@ -417,7 +416,6 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
             
-                NSLog(@"%@",error);
             
                 hud.mode = MBProgressHUDModeText;
                 hud.labelColor = [UIColor whiteColor];

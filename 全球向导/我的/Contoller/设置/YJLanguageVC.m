@@ -127,7 +127,7 @@ static NSString *appLanguage = @"appLanguage";
     
     UIView *line = [[UIView alloc]init];
     [cell.contentView addSubview:line];
-    line.backgroundColor = BackGray;
+    line.backgroundColor = BackGroundColor;
     line.sd_layout.leftSpaceToView(cell.contentView,5).rightSpaceToView(cell.contentView, 5).bottomSpaceToView(cell.contentView, 0).heightIs(1);
     
     cell.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:1.0];

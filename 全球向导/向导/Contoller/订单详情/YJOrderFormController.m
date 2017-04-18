@@ -234,7 +234,7 @@
     self.priceAll.sd_layout.leftSpaceToView(self.view,0).bottomSpaceToView(self.view,0).heightIs(40).widthIs(screen_width / 2 - 10);
     self.priceAll.layer.masksToBounds = YES;
     self.priceAll.layer.cornerRadius = 2;
-    self.priceAll.layer.borderColor = BackGray.CGColor;
+    self.priceAll.layer.borderColor = BackGroundColor.CGColor;
     self.priceAll.layer.borderWidth = 1;
     
     
@@ -266,7 +266,6 @@
     [self.tableView reloadData];
     [self postData];
     
-    NSLog(@"提交订单");
 }
 
 #pragma mark - table view dataSource
@@ -364,7 +363,7 @@
     
     if (indexPath.section == 0) {
         YJNameIconCell *cell = [tableView dequeueReusableCellWithIdentifier:@"first"];
-        [cell.icon sd_setImageWithURL:[NSURL URLWithString:self.guideModel.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+        [cell.icon sd_setImageWithURL:[NSURL URLWithString:self.guideModel.headUrl] placeholderImage:[UIImage imageNamed:@"head"]];
         cell.name.text = [NSString stringWithFormat:@"%@/%@",self.guideModel.realName,self.guideModel.guideDesc];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -680,7 +679,6 @@
         
         //给总价文本赋值
         self.priceAll.text = [NSString stringWithFormat:@"%@ ￥%ld",YJLocalizedString(@"总计"),_allPrice];
-        NSLog(@"%@",self.priceAll.text);
         
         
     }

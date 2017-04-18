@@ -333,8 +333,7 @@ int EM_DecodeAMRFileToWAVEFile(const char* pchAMRFileName, const char* pchWAVEFi
 //	NSArray *paths               = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 //	NSString *documentPath       = [paths objectAtIndex:0];
 //	NSString *docFilePath        = [documentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%s", pchWAVEFilename]];
-//	NSLog(@"documentPath=%@", documentPath);
-//	
+//
 //	fpwave = fopen([docFilePath cStringUsingEncoding:NSASCIIStringEncoding], "wb");
     fpwave = fopen(pchWAVEFilename,"wb");
     
@@ -365,7 +364,6 @@ int EM_DecodeAMRFileToWAVEFile(const char* pchAMRFileName, const char* pchWAVEFi
 		nFrameCount++;
 		fwrite(pcmFrame, sizeof(short), PCM_FRAME_SIZE, fpwave);
 	}
-	//NSLog(@"frame = %d", nFrameCount);
 	Decoder_Interface_exit(destate);
 	
 	fclose(fpwave);

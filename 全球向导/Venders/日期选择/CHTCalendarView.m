@@ -78,7 +78,6 @@
     NSDate *firstDay = nil;
     BOOL isOk = [[NSCalendar currentCalendar] rangeOfUnit:NSCalendarUnitMonth startDate:&firstDay interval:NULL forDate:self];
     if (!isOk) {
-        NSLog(@"获取失败");
     }
     return firstDay;
 }

@@ -155,6 +155,11 @@
 		1A5543EE1E78EA1400E8B112 /* KeychainHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5543EB1E78EA1400E8B112 /* KeychainHelper.m */; };
 		1A5543EF1E78EA1400E8B112 /* KeychainIDFA.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5543ED1E78EA1400E8B112 /* KeychainIDFA.m */; };
 		1A5B11261E5E8572009DA9F1 /* YJEvaWaitModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5B11251E5E8572009DA9F1 /* YJEvaWaitModel.m */; };
+		1A5DA4A21EA5C04200B6DAFA /* YJRankModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5DA4A11EA5C04200B6DAFA /* YJRankModel.m */; };
+		1A5DA4A51EA5EA4500B6DAFA /* YJRanKDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5DA4A41EA5EA4500B6DAFA /* YJRanKDetailVC.m */; };
+		1A5DA4A81EA5EE0400B6DAFA /* YJRankDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5DA4A71EA5EE0400B6DAFA /* YJRankDetailModel.m */; };
+		1A5DA4AB1EA5F46E00B6DAFA /* YJIntegraModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5DA4AA1EA5F46E00B6DAFA /* YJIntegraModel.m */; };
+		1A5DA4AE1EA5FB9100B6DAFA /* YJIntralDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5DA4AD1EA5FB9100B6DAFA /* YJIntralDetailVC.m */; };
 		1A5E4D291DF547E500136053 /* YJSetUpController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5E4D281DF547E500136053 /* YJSetUpController.m */; };
 		1A5E4D2C1DF548A800136053 /* UINavigationItem+XRZItemTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5E4D2B1DF548A800136053 /* UINavigationItem+XRZItemTitle.m */; };
 		1A5E4D311DF54A9F00136053 /* UIBarButtonItem+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5E4D2E1DF54A9F00136053 /* UIBarButtonItem+Extension.m */; };
@@ -690,6 +695,16 @@
 		1A5543ED1E78EA1400E8B112 /* KeychainIDFA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainIDFA.m; sourceTree = "<group>"; };
 		1A5B11241E5E8572009DA9F1 /* YJEvaWaitModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJEvaWaitModel.h; sourceTree = "<group>"; };
 		1A5B11251E5E8572009DA9F1 /* YJEvaWaitModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJEvaWaitModel.m; sourceTree = "<group>"; };
+		1A5DA4A01EA5C04200B6DAFA /* YJRankModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJRankModel.h; sourceTree = "<group>"; };
+		1A5DA4A11EA5C04200B6DAFA /* YJRankModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJRankModel.m; sourceTree = "<group>"; };
+		1A5DA4A31EA5EA4500B6DAFA /* YJRanKDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJRanKDetailVC.h; sourceTree = "<group>"; };
+		1A5DA4A41EA5EA4500B6DAFA /* YJRanKDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJRanKDetailVC.m; sourceTree = "<group>"; };
+		1A5DA4A61EA5EE0400B6DAFA /* YJRankDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJRankDetailModel.h; sourceTree = "<group>"; };
+		1A5DA4A71EA5EE0400B6DAFA /* YJRankDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJRankDetailModel.m; sourceTree = "<group>"; };
+		1A5DA4A91EA5F46E00B6DAFA /* YJIntegraModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJIntegraModel.h; sourceTree = "<group>"; };
+		1A5DA4AA1EA5F46E00B6DAFA /* YJIntegraModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJIntegraModel.m; sourceTree = "<group>"; };
+		1A5DA4AC1EA5FB9000B6DAFA /* YJIntralDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJIntralDetailVC.h; sourceTree = "<group>"; };
+		1A5DA4AD1EA5FB9100B6DAFA /* YJIntralDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJIntralDetailVC.m; sourceTree = "<group>"; };
 		1A5E4D271DF547E500136053 /* YJSetUpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJSetUpController.h; sourceTree = "<group>"; };
 		1A5E4D281DF547E500136053 /* YJSetUpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJSetUpController.m; sourceTree = "<group>"; };
 		1A5E4D2A1DF548A800136053 /* UINavigationItem+XRZItemTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationItem+XRZItemTitle.h"; sourceTree = "<group>"; };
@@ -1605,8 +1620,12 @@
 				1A54D91E1EA45379008993CD /* YJMineNewVC.m */,
 				1A54D91F1EA45379008993CD /* YJRankVC.h */,
 				1A54D9201EA45379008993CD /* YJRankVC.m */,
+				1A5DA4A31EA5EA4500B6DAFA /* YJRanKDetailVC.h */,
+				1A5DA4A41EA5EA4500B6DAFA /* YJRanKDetailVC.m */,
 				1A54D91B1EA45379008993CD /* YJIntegralVC.h */,
 				1A54D91C1EA45379008993CD /* YJIntegralVC.m */,
+				1A5DA4AC1EA5FB9000B6DAFA /* YJIntralDetailVC.h */,
+				1A5DA4AD1EA5FB9100B6DAFA /* YJIntralDetailVC.m */,
 				1A54D9171EA45379008993CD /* YJImgBtnCell.h */,
 				1A54D9181EA45379008993CD /* YJImgBtnCell.m */,
 				1A54D9211EA45379008993CD /* YJTableCollectionCell.h */,
@@ -1621,6 +1640,12 @@
 				1A54D9331EA4A127008993CD /* YJIntegralTopCell.m */,
 				1A54D9351EA4A14A008993CD /* YJIntrgralDetailCell.h */,
 				1A54D9361EA4A14A008993CD /* YJIntrgralDetailCell.m */,
+				1A5DA4A01EA5C04200B6DAFA /* YJRankModel.h */,
+				1A5DA4A11EA5C04200B6DAFA /* YJRankModel.m */,
+				1A5DA4A61EA5EE0400B6DAFA /* YJRankDetailModel.h */,
+				1A5DA4A71EA5EE0400B6DAFA /* YJRankDetailModel.m */,
+				1A5DA4A91EA5F46E00B6DAFA /* YJIntegraModel.h */,
+				1A5DA4AA1EA5F46E00B6DAFA /* YJIntegraModel.m */,
 			);
 			path = "积分";
 			sourceTree = "<group>";
@@ -2779,8 +2804,7 @@
 				TargetAttributes = {
 					1A26D0DB1DB8612B006A6363 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = NA4PKZ6VZL;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -2795,11 +2819,13 @@
 					};
 					1A26D0F41DB8612B006A6363 = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = NA4PKZ6VZL;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 1A26D0DB1DB8612B006A6363;
 					};
 					1A26D0FF1DB8612B006A6363 = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = NA4PKZ6VZL;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 1A26D0DB1DB8612B006A6363;
 					};
@@ -3077,6 +3103,7 @@
 				1A06BED41DFEA1400032FE99 /* YJServerStateCell.m in Sources */,
 				1A7887591E1E4EEF004F3271 /* HanyuPinyinOutputFormat.m in Sources */,
 				1A3DFAAD1DD0843E004F1A63 /* YJSubmitCell.m in Sources */,
+				1A5DA4A21EA5C04200B6DAFA /* YJRankModel.m in Sources */,
 				1A54D9341EA4A127008993CD /* YJIntegralTopCell.m in Sources */,
 				1A7FD9261DC1ED5800FCA46B /* YJFourCell.m in Sources */,
 				1AFC41621DF7A26900DEA96A /* YJMyOrderController.m in Sources */,
@@ -3172,6 +3199,7 @@
 				1A9423821E66C50100CEA243 /* UIButton+AFNetworking.m in Sources */,
 				1AF928AC1DF94130004B666F /* YJDrawbackCell.m in Sources */,
 				1A2F4A5F1E8A4C6900656B5F /* YJLanguageVC.m in Sources */,
+				1A5DA4A51EA5EA4500B6DAFA /* YJRanKDetailVC.m in Sources */,
 				1A03834B1E6FE67200A54525 /* YJGuideReceiveModel.m in Sources */,
 				1AED504D1E85722D006A1C98 /* YJUserGuideCenterVC.m in Sources */,
 				1A2C8B901DD571EB0017F068 /* XWPopMenuController.m in Sources */,
@@ -3214,6 +3242,7 @@
 				1A9423861E66C50100CEA243 /* UIWebView+AFNetworking.m in Sources */,
 				1A109DF51DB8AF9E00D7A74B /* SDCollectionViewCell.m in Sources */,
 				1A26135B1DCC1CBC002B95DC /* YJGuideRecommendCell.m in Sources */,
+				1A5DA4A81EA5EE0400B6DAFA /* YJRankDetailModel.m in Sources */,
 				1AF9289D1DF8F18C004B666F /* YJAllOrderCell.m in Sources */,
 				1AFCC7851E23796300450852 /* YJLunBoModel.m in Sources */,
 				1A1CBAC31E7AA57D00A3BBED /* YJUserOrderDetailModel.m in Sources */,
@@ -3306,8 +3335,10 @@
 				1A95F2911E013EC800EA8B82 /* YJTextCell.m in Sources */,
 				1A5259431E5D850F00067F21 /* YJBuyListModel.m in Sources */,
 				1AA4C06C1E52CE9D00B7DD9F /* YJGuideRecVC.m in Sources */,
+				1A5DA4AE1EA5FB9100B6DAFA /* YJIntralDetailVC.m in Sources */,
 				1A62B3BD1DD322E3006E0D97 /* YJDataController.m in Sources */,
 				1A03835A1E72460C00A54525 /* YJGuideRefundModel.m in Sources */,
+				1A5DA4AB1EA5F46E00B6DAFA /* YJIntegraModel.m in Sources */,
 				1A9423811E66C50100CEA243 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				1A6C747E1DFAA405002A9481 /* YJGOrderCell.m in Sources */,
 				1AFCC7D01E24E33400450852 /* YJBNetWorkNotifionTool.m in Sources */,
@@ -3420,9 +3451,11 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: jingrui Li (657RP28XM2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: jingrui Li (657RP28XM2)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = NA4PKZ6VZL;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -3442,6 +3475,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "1f7906f5-affb-4a55-bf2d-b7202e35678b";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -3468,9 +3502,11 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ningbo rootstocks network technology co., LTD (NA4PKZ6VZL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Ningbo rootstocks network technology co., LTD (NA4PKZ6VZL)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = NA4PKZ6VZL;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -3483,6 +3519,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "a5ce663a-27dd-476d-8aef-34a33361a812";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -3495,8 +3532,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "全球向导/全球向导.entitlements";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = NA4PKZ6VZL;
+				CODE_SIGN_IDENTITY = "iPhone Developer: jingrui Li (657RP28XM2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: jingrui Li (657RP28XM2)";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3522,8 +3560,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "全球向导/全球向导.entitlements";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = NA4PKZ6VZL;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ningbo rootstocks network technology co., LTD (NA4PKZ6VZL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Ningbo rootstocks network technology co., LTD (NA4PKZ6VZL)";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

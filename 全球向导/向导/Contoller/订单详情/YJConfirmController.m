@@ -152,7 +152,7 @@
         
         if (indexPath.row == 0) {
             YJConfirmCell *cell = [tableView dequeueReusableCellWithIdentifier:@"four"];
-            [cell.icon sd_setImageWithURL:[NSURL URLWithString:self.model.showPicUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+            [cell.icon sd_setImageWithURL:[NSURL URLWithString:self.model.showPicUrl] placeholderImage:[UIImage imageNamed:@"head"]];
             cell.name.text = [NSString stringWithFormat:@"%@/%@",self.model.bigTitle,self.model.smallTitle];
             return cell;
         }
@@ -206,12 +206,12 @@
         
         YJPayFormCell *cell = [tableView dequeueReusableCellWithIdentifier:@"second"];
         if (indexPath.row == 0) {
-            cell.icon.image = [UIImage imageNamed:@"微信"];
+            cell.icon.image = [UIImage imageNamed:@"weixin"];
             cell.payName.text = YJLocalizedString(@"微信");
         }
         
         if (indexPath.row == 1) {
-            cell.icon.image = [UIImage imageNamed:@"支付宝A"];
+            cell.icon.image = [UIImage imageNamed:@"pay-treasure"];
             cell.payName.text = YJLocalizedString(@"支付宝");
         }
        
@@ -241,17 +241,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.section == 2) {
-        if (indexPath.row ==0 ) {
-            NSLog(@"微信支付");
-        }
-        
-        if (indexPath.row == 1) {
-            NSLog(@"支付宝支付");
-            [self payOrder];
-        }
-    }
-    
+//    if (indexPath.section == 2) {
+//        if (indexPath.row ==0 ) {
+//        }
+//        
+//        if (indexPath.row == 1) {
+//            [self payOrder];
+//        }
+//    }
+
+    SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"功能开发中" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+    }];
+    alertV.sure_btnTitleColor = TextColor;
+    [alertV show];
 }
 
 //支付

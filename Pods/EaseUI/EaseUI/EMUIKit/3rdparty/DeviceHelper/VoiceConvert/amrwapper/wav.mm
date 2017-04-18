@@ -67,7 +67,6 @@ WavWriter::WavWriter(const char *filename, int sampleRate, int bitsPerSample, in
 	NSArray *paths               = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString *documentPath       = [paths objectAtIndex:0];
 	NSString *docFilePath        = [documentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%s", filename]];
-	//NSLog(@"documentPath=%@", documentPath);
 	
 	wav = fopen([docFilePath cStringUsingEncoding:NSASCIIStringEncoding], "wb");
 	if (wav == NULL)

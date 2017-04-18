@@ -190,7 +190,7 @@
 {
     id<IMessageModel> model = nil;
     model = [[EaseMessageModel alloc] initWithMessage:message];
-    model.avatarImage = [UIImage imageNamed:@"HeaderIcon"];
+    model.avatarImage = [UIImage imageNamed:@"head"];
     
     NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"userInfo.plist"];
     NSDictionary *data = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
@@ -213,31 +213,26 @@
         
         model.message.ext = dict;
         //头像
-        //NSLog(@"***++++**%@",model.message);
         model.avatarURLPath = data[@"headUrl"];
-        //NSLog(@"******%@",model.avatarURLPath);
         //昵称
         model.nickname = data[@"nickName"];
         //头像占位图
-        model.failImageName = @"HeaderIcon.png";
+        model.failImageName = @"head.png";
         
     }else{
-        NSLog(@"对方发送");
         
        
         
         
         //头像
         model.avatarURLPath = ext[@"MyPicUrl"];
-        //NSLog(@"+++++++______+++%@",model.avatarURLPath);
         //昵称
         model.nickname = ext[@"MyNickName"];
         
         
         //头像占位图
-        model.failImageName = @"HeaderIcon.png";
+        model.failImageName = @"head.png";
     }
-    //NSLog(@"+++++++++++%@",model.message);
     return model;
 }
 

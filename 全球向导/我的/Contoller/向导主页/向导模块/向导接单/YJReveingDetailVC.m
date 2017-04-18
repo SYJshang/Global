@@ -72,7 +72,7 @@
         [self.view addSubview:reduse];
         [reduse addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         reduse.tag = 1;
-        reduse.layer.borderColor = BackGray.CGColor;
+        reduse.layer.borderColor = BackGroundColor.CGColor;
         reduse.layer.borderWidth = 0.5;
         reduse.sd_layout.leftEqualToView(self.view).bottomSpaceToView(self.view,0).heightIs(44).widthIs(screen_width / 4);
         
@@ -82,7 +82,7 @@
         [self.view addSubview:lianxi];
         [lianxi addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         lianxi.tag = 2;
-        lianxi.layer.borderColor = BackGray.CGColor;
+        lianxi.layer.borderColor = BackGroundColor.CGColor;
         lianxi.layer.borderWidth = 0.5;
         lianxi.sd_layout.leftSpaceToView(reduse,0).bottomSpaceToView(self.view,0).heightIs(44).widthIs(screen_width / 4);
         
@@ -93,7 +93,7 @@
         [self.view addSubview:jiedan];
         [jiedan addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         jiedan.tag = 3;
-        jiedan.layer.borderColor = BackGray.CGColor;
+        jiedan.layer.borderColor = BackGroundColor.CGColor;
         jiedan.layer.borderWidth = 0.5;
         jiedan.sd_layout.leftSpaceToView(lianxi,0).bottomSpaceToView(self.view,0).heightIs(44).rightSpaceToView(self.view,0);
 
@@ -105,7 +105,7 @@
         [self.view addSubview:reduse];
         [reduse addTarget:self action:@selector(btnClick1:) forControlEvents:UIControlEventTouchUpInside];
         reduse.tag = 1;
-        reduse.layer.borderColor = BackGray.CGColor;
+        reduse.layer.borderColor = BackGroundColor.CGColor;
         reduse.layer.borderWidth = 0.5;
         reduse.sd_layout.leftEqualToView(self.view).bottomSpaceToView(self.view,0).heightIs(44).widthIs(screen_width / 2);
         
@@ -115,7 +115,7 @@
         [self.view addSubview:jiedan];
         [jiedan addTarget:self action:@selector(btnClick1:) forControlEvents:UIControlEventTouchUpInside];
         jiedan.tag = 2;
-        jiedan.layer.borderColor = BackGray.CGColor;
+        jiedan.layer.borderColor = BackGroundColor.CGColor;
         jiedan.layer.borderWidth = 0.5;
         jiedan.sd_layout.leftSpaceToView(reduse,0).bottomSpaceToView(self.view,0).heightIs(44).rightSpaceToView(self.view,0);
 

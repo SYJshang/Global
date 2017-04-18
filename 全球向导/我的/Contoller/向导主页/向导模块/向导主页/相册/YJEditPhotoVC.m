@@ -353,7 +353,7 @@ static CGFloat navH = 64;
     TZTestCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TZTestCell" forIndexPath:indexPath];
     cell.videoImageView.hidden = YES;
     if (indexPath.row == self.photoLsitArr.count) {
-        cell.imageView.image = [UIImage imageNamed:@"AlbumAddBtn.png"];
+        cell.imageView.image = [UIImage imageNamed:@"add_photo"];
         cell.deleteBtn.hidden = YES;
         cell.gifLable.hidden = YES;
     } else {

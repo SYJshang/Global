@@ -27,7 +27,7 @@
         self.intrLab.text = @"+10000";
         self.intrLab.layer.masksToBounds = YES;
         self.intrLab.layer.cornerRadius = 1;
-        self.intrLab.layer.borderColor = BackGray.CGColor;
+        self.intrLab.layer.borderColor = BackGroundColor.CGColor;
         self.intrLab.layer.borderWidth = 0.5;
         
         
@@ -37,7 +37,7 @@
         view.sd_layout.leftSpaceToView(self.intrLab,0).rightSpaceToView(self.contentView, 10).centerYEqualToView(self.contentView).heightIs(40);
         view.layer.masksToBounds = YES;
         view.layer.cornerRadius = 1;
-        view.layer.borderColor = BackGray.CGColor;
+        view.layer.borderColor = BackGroundColor.CGColor;
         view.layer.borderWidth = 0.5;
 
         self.orderNo = [[UILabel alloc]init];
@@ -59,6 +59,34 @@
     }
     
     return self;
+}
+
+
+- (void)setModel:(YJRankDetailModel *)model{
+    
+    _model = model;
+    
+    if (self.isIntegral == 3) {
+        if (model.flow == 1) {
+            self.intrLab.text = [NSString stringWithFormat:@"+%@",model.operateScore];
+        }else{
+            self.intrLab.text = [NSString stringWithFormat:@"-%@",model.operateScore];
+            
+        }
+    }else{
+        if (model.flow == 1) {
+            self.intrLab.text = [NSString stringWithFormat:@"+%@",model.operateGv];
+        }else{
+            self.intrLab.text = [NSString stringWithFormat:@"-%@",model.operateGv];
+            
+        }  
+    }
+    
+    
+    
+    self.orderNo.text = model.remark;
+    self.timeLab.text = model.addTime;
+    
 }
 
 - (void)awakeFromNib {

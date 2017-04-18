@@ -64,7 +64,7 @@
     self.pwdOld.font = [UIFont systemFontOfSize:AdaptedWidth(16)];
     self.pwdOld.text = YJLocalizedString(@"旧密码");
     self.pwdOld.textColor = [UIColor blackColor];
-    self.pwdOld.sd_layout.leftSpaceToView(self.view,20).topSpaceToView(self.view,60).heightIs(30 * KHeight_Scale).widthIs(60 * KWidth_Scale);
+    self.pwdOld.sd_layout.leftSpaceToView(self.view,20).topSpaceToView(self.view,124).heightIs(30 * KHeight_Scale).widthIs(60 * KWidth_Scale);
     
     self.pwdTfOld = [[UITextField alloc]init];
     self.pwdTfOld.textColor = [UIColor blackColor];
@@ -76,7 +76,7 @@
     self.pwdTfOld.sd_layout.leftSpaceToView(self.pwdOld,5).rightSpaceToView(self.view,20).centerYEqualToView(self.pwdOld).heightIs(30 * KHeight_Scale);
     
     UIView *line = [[UIView alloc]init];
-    line.backgroundColor = BackGray;
+    line.backgroundColor = BackGroundColor;
     [self.view addSubview:line];
     line.sd_layout.leftSpaceToView(self.view,20).rightSpaceToView(self.view,20).topSpaceToView(self.pwdOld,5).heightIs(1);
     
@@ -98,7 +98,7 @@
     self.pwdTfNew.sd_layout.leftSpaceToView(self.pwdNew,5).rightSpaceToView(self.view,20).centerYEqualToView(self.pwdNew).heightIs(30 * KHeight_Scale);
     
     UIView *line1 = [[UIView alloc]init];
-    line1.backgroundColor = BackGray;
+    line1.backgroundColor = BackGroundColor;
     [self.view addSubview:line1];
     line1.sd_layout.leftSpaceToView(self.view,20).rightSpaceToView(self.view,20).topSpaceToView(self.pwdNew,5).heightIs(1);
     

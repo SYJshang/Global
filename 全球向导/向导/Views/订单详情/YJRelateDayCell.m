@@ -23,7 +23,7 @@
         
         self.addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.contentView addSubview:self.addBtn];
-        [self.addBtn setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
+        [self.addBtn setImage:[UIImage imageNamed:@"adds"] forState:UIControlStateNormal];
         [self.addBtn setImage:[UIImage imageNamed:@"add1"] forState:UIControlStateHighlighted];
         self.addBtn.tag = 100;
         [self.addBtn addTarget:self action:@selector(addBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -56,7 +56,7 @@
         
         
         UIView *line = [[UIView alloc]init];
-        line.backgroundColor = BackGray;
+        line.backgroundColor = BackGroundColor;
         [self.contentView addSubview:line];
         line.sd_layout.leftSpaceToView(self.contentView,10).rightSpaceToView(self.contentView,10).bottomSpaceToView(self.contentView,0).heightIs(0.5);
         

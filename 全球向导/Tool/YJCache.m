@@ -70,7 +70,6 @@
     
     NSArray * files = [[ NSFileManager defaultManager ] subpathsAtPath :cachPath];
     
-    //    NSLog ( @"cachpath = %@" , cachPath);
     
     for ( NSString * p in files) {
         

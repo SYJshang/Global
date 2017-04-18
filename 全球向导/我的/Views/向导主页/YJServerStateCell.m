@@ -27,7 +27,7 @@
         self.icon.sd_layout.leftSpaceToView(self.contentView,10).topSpaceToView(view,15 * KHeight_Scale).widthIs(60 * KWidth_Scale).heightIs(60 * KHeight_Scale);
         self.icon.layer.masksToBounds = YES;
         self.icon.layer.cornerRadius = self.icon.width / 2;
-        self.icon.layer.borderColor = BackGray.CGColor;
+        self.icon.layer.borderColor = BackGroundColor.CGColor;
         self.icon.layer.borderWidth = 0.5;
         
         self.server = [[UILabel alloc]init];
@@ -61,7 +61,7 @@
         self.stateBtn.sd_layout.rightSpaceToView(self.contentView,10).topSpaceToView(self.descLab,10).heightIs(25 * KHeight_Scale).widthIs(70 * KWidth_Scale);
         self.stateBtn.layer.masksToBounds = YES;
         self.stateBtn.layer.cornerRadius = 12;
-        self.stateBtn.layer.borderColor = BackGray.CGColor;
+        self.stateBtn.layer.borderColor = BackGroundColor.CGColor;
         self.stateBtn.layer.borderWidth = 0.5;
         
         
@@ -76,7 +76,7 @@
         self.editBtn.sd_layout.rightSpaceToView(self.stateBtn,10).topSpaceToView(self.priceLab,10).heightIs(25 * KHeight_Scale).widthIs(70 * KWidth_Scale);
         self.editBtn.layer.masksToBounds = YES;
         self.editBtn.layer.cornerRadius = 12;
-        self.editBtn.layer.borderColor = BackGray.CGColor;
+        self.editBtn.layer.borderColor = BackGroundColor.CGColor;
         self.editBtn.layer.borderWidth = 0.5;
         
         
@@ -119,7 +119,7 @@
 - (void)setModel:(YJServerStateModle *)model{
     
     _model = model;
-    [self.icon sd_setImageWithURL:[NSURL URLWithString:model.iconUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+    [self.icon sd_setImageWithURL:[NSURL URLWithString:model.iconUrl] placeholderImage:[UIImage imageNamed:@"head"]];
     self.server.text = model.name;
     self.descLab.text = model.desc;
     self.priceLab.text = [NSString stringWithFormat:@"￥ %@",model.price];

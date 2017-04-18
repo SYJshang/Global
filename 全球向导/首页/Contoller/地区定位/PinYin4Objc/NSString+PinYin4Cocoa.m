@@ -70,7 +70,6 @@
     NSError *error=nil;
     NSRegularExpression *pattern = [NSRegularExpression regularExpressionWithPattern:regex options:options error:&error];
     if (error) {
-        NSLog(@"Error creating Regex: %@",[error description]);
         return nil;
     }
     
@@ -94,7 +93,6 @@
     NSError *error=nil;
     NSRegularExpression *pattern = [NSRegularExpression regularExpressionWithPattern:regex options:options error:&error];
     if (error) {
-        NSLog(@"Error creating Regex: %@",[error description]);
         return nil;
     }
     
@@ -125,7 +123,6 @@
     NSError *error=nil;
     NSRegularExpression *pattern = [NSRegularExpression regularExpressionWithPattern:regex options:options error:&error];
     if (error) {
-        NSLog(@"Error creating Regex: %@",[error description]);
         return NO;  //Can't possibly match an invalid Regex
     }
     

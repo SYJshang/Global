@@ -63,6 +63,13 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
+    SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"如遇到上传图片返回登录页面，请退出程序重试。" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+    alertV.sure_btnTitleColor = TextColor;
+    [alertV show];
+    
     id traget = self.navigationController.interactivePopGestureRecognizer.delegate;
     UIPanGestureRecognizer * pan = [[UIPanGestureRecognizer alloc]initWithTarget:traget action:nil];
     [self.view addGestureRecognizer:pan];
@@ -169,8 +176,7 @@
 //    
 //    NSString *requestString = [navigationResponse.response.URL.absoluteString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 //
-//    NSLog(@"%@",requestString);
-//    
+//
 //    decisionHandler(WKNavigationResponsePolicyAllow);
 //
 //        if ([requestString containsString:@"http://www.globaleguide.com"]){
@@ -201,7 +207,6 @@
     
     NSString *requestString = [navigationAction.request.URL.absoluteString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    NSLog(@"%@",requestString);
     
     decisionHandler(WKNavigationActionPolicyAllow);
     
@@ -245,7 +250,6 @@
 //}
 //// 警告框
 //- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler{
-//    NSLog(@"%@",message);
 //    completionHandler();
 //}
 //

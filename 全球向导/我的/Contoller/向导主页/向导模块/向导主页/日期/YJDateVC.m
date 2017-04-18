@@ -144,7 +144,7 @@
 -(CAGradientLayer *)backgroundLayer{
     CAGradientLayer *gradientLayer = [CAGradientLayer layer];
     gradientLayer.frame = self.view.bounds;
-    gradientLayer.colors = @[(__bridge id)BackGray.CGColor,(__bridge id)[UIColor redColor].CGColor];
+    gradientLayer.colors = @[(__bridge id)BackGroundColor.CGColor,(__bridge id)[UIColor redColor].CGColor];
     gradientLayer.startPoint = CGPointMake(0.5, 0);
     gradientLayer.endPoint = CGPointMake(0.5, 1);
     gradientLayer.locations = @[@0.65,@1];
@@ -198,8 +198,8 @@
     receved.titleLabel.font = [UIFont systemFontOfSize:AdaptedWidth(13)];
     [receved setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
     [receved setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [receved setImage:[UIImage imageNamed:@"bb2"] forState:UIControlStateNormal];
-    [receved setImage:[UIImage imageNamed:@"bb1"] forState:UIControlStateSelected];
+    [receved setImage:[UIImage imageNamed:@"square2"] forState:UIControlStateNormal];
+    [receved setImage:[UIImage imageNamed:@"square"] forState:UIControlStateSelected];
     [receved addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     receved.tag = 1;
     receved.selected = NO;

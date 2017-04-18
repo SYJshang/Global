@@ -118,7 +118,7 @@
     depositBtn.titleLabel.font = [UIFont systemFontOfSize:AdaptedWidth(16)];
     depositBtn.layer.masksToBounds = YES;
     depositBtn.layer.cornerRadius = 5;
-    depositBtn.layer.borderColor = BackGray.CGColor;
+    depositBtn.layer.borderColor = BackGroundColor.CGColor;
     depositBtn.layer.borderWidth = 1.0;
     
 }

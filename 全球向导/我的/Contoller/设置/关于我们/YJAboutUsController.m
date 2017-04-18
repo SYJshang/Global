@@ -80,7 +80,6 @@
     if (urlToSave.length == 0) {
         return;
     }
-    NSLog(@"获取到图片地址：%@",urlToSave);
 }
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer

@@ -61,7 +61,7 @@
         self.timeLab.sd_layout.rightSpaceToView(posi,5).centerYEqualToView(money).heightIs(15 * KHeight_Scale).leftSpaceToView(time,5);
         
         UIView *line = [[UIView alloc]init];
-        line.backgroundColor = BackGray;
+        line.backgroundColor = BackGroundColor;
         [self.contentView addSubview:line];
         line.sd_layout.leftSpaceToView(self.contentView,10).topSpaceToView(self.timeLab,10 * KHeight_Scale).rightSpaceToView(self.contentView,10).heightIs(1);
         
@@ -80,7 +80,7 @@
         self.nameLab.sd_layout.leftSpaceToView(name,5).rightSpaceToView(self.contentView,10).centerYEqualToView(name).heightIs(15 * KHeight_Scale);
 
         UIView *line1 = [[UIView alloc]init];
-        line1.backgroundColor = BackGray;
+        line1.backgroundColor = BackGroundColor;
         [self.contentView addSubview:line1];
         line1.sd_layout.leftSpaceToView(self.contentView,10).rightSpaceToView(self.contentView,10).topSpaceToView(name,10 * KHeight_Scale).heightIs(1);
         

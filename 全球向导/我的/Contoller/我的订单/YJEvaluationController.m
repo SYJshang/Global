@@ -286,7 +286,7 @@
     TZTestCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TZTestCell" forIndexPath:indexPath];
     cell.videoImageView.hidden = YES;
     if (indexPath.row == _selectedPhotos.count) {
-        cell.imageView.image = [UIImage imageNamed:@"AlbumAddBtn.png"];
+        cell.imageView.image = [UIImage imageNamed:@"add_photo"];
         cell.deleteBtn.hidden = YES;
         cell.gifLable.hidden = YES;
     } else {
@@ -429,7 +429,6 @@
             }
             [self presentViewController:_imagePickerVc animated:YES completion:nil];
         } else {
-            NSLog(@"模拟器中无法打开照相机,请在真机中使用");
         }
     }
 }
@@ -446,7 +445,6 @@
 //        [[TZImageManager manager] savePhotoWithImage:image completion:^(NSError *error){
 //            if (error) {
 //                [tzImagePickerVc hideProgressHUD];
-//                NSLog(@"图片保存失败 %@",error);
 //            } else {
 //                [[TZImageManager manager] getCameraRollAlbum:NO allowPickingImage:YES completion:^(TZAlbumModel *model) {
 //                    [[TZImageManager manager] getAssetsFromFetchResult:model.result allowPickingVideo:NO allowPickingImage:YES completion:^(NSArray<TZAssetModel *> *models) {
@@ -493,7 +491,6 @@
 /// User click cancel button
 /// 用户点击了取消
 - (void)tz_imagePickerControllerDidCancel:(TZImagePickerController *)picker {
-    // NSLog(@"cancel");
 }
 
 // The picker should dismiss itself; when it dismissed these handle will be called.
@@ -527,7 +524,6 @@
     _selectedAssets = [NSMutableArray arrayWithArray:@[asset]];
     // open this code to send video / 打开这段代码发送视频
     // [[TZImageManager manager] getVideoOutputPathWithAsset:asset completion:^(NSString *outputPath) {
-    // NSLog(@"视频导出到本地完成,沙盒路径为:%@",outputPath);
     // Export completed, send video here, send by outputPath or NSData
     // 导出完成，在这里写上传代码，通过路径或者通过NSData上传
     
@@ -566,7 +562,6 @@
             ALAsset *alAsset = (ALAsset *)asset;
             fileName = alAsset.defaultRepresentation.filename;;
         }
-        NSLog(@"图片名字:%@",fileName);
     }
 }
 

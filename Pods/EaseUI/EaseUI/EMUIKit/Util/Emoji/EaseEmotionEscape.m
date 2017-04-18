@@ -147,7 +147,6 @@ static EaseEmotionEscape *_sharedInstance = nil;
     NSString *fileName = [plistPaht stringByAppendingPathComponent:@"EmotionTextMapList.plist"];
     NSMutableDictionary *emojiKeyValue = [[NSMutableDictionary alloc] initWithContentsOfFile: fileName];
     return [emojiKeyValue objectForKey:aKey];
-    //    NSLog(@"write data is :%@",writeData);
 }
 
 - (NSString*) getEmojiImageNameByKey:(NSString*) aKey

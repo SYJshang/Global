@@ -85,7 +85,6 @@
         }
     }];
     
-    NSLog(@"%f",[self.maxYDic[maxIndex] floatValue] + self.sectionInset.bottom);
 
     
     //collectionView的contentSize.height就等于最长列的最大y值+下内边距

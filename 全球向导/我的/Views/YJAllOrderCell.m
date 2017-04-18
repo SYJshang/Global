@@ -44,7 +44,7 @@
     //中间线
     UIView *line = [[UIView alloc]init];
     [self.contentView addSubview:line];
-    line.backgroundColor = BackGray;
+    line.backgroundColor = BackGroundColor;
     line.sd_layout.leftSpaceToView(self.contentView,0).rightSpaceToView(self.contentView,0).heightIs(1).topSpaceToView(self.orderLab,5);
     
     //头像
@@ -53,7 +53,7 @@
     self.icon.sd_layout.leftSpaceToView(self.contentView,10).topSpaceToView(line,5).widthIs(90 * KWidth_Scale).heightIs(90 * KWidth_Scale);
     self.icon.layer.masksToBounds = YES;
     self.icon.layer.cornerRadius = self.icon.width / 2;
-    self.icon.layer.borderColor = BackGray.CGColor;
+    self.icon.layer.borderColor = BackGroundColor.CGColor;
     self.icon.layer.borderWidth = 1.0;
 
     //名称
@@ -84,7 +84,7 @@
     //中间线
     UIView *line1 = [[UIView alloc]init];
     [self.contentView addSubview:line1];
-    line1.backgroundColor = BackGray;
+    line1.backgroundColor = BackGroundColor;
     line1.sd_layout.leftSpaceToView(self.contentView,0).rightSpaceToView(self.contentView,0).heightIs(1).topSpaceToView(self.icon,5);
         
         
@@ -132,7 +132,7 @@
     self.disOrder.sd_layout.rightSpaceToView(self.relation,5).topSpaceToView(line1,5).heightIs(30 * KHeight_Scale).widthIs(80 *KWidth_Scale);
     self.disOrder.layer.masksToBounds = YES;
     self.disOrder.layer.cornerRadius = 13;
-    self.disOrder.layer.borderColor = BackGray.CGColor;
+    self.disOrder.layer.borderColor = BackGroundColor.CGColor;
     self.disOrder.layer.borderWidth = 1.0;
 
     UIView *view = [[UIView alloc]init];
@@ -169,7 +169,7 @@
     self.orderLab.text = [NSString stringWithFormat:@"订单号 %@",model.orderNo];
     NSString *status = [NSString stringWithFormat:@"%ld",model.status];
     self.stateLab.text = orderStatus[status];
-    [self.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",model.showPicUrl]] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+    [self.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",model.showPicUrl]] placeholderImage:[UIImage imageNamed:@"head"]];
     self.nameLab.text = model.bigTitle;
     self.descLab.text = model.smallTitle;
     
@@ -295,7 +295,7 @@
     
     
     
-    [self.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",evaModel.showPicUrl]] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+    [self.icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",evaModel.showPicUrl]] placeholderImage:[UIImage imageNamed:@"head"]];
     self.nameLab.text = evaModel.bigTitle;
     self.descLab.text = evaModel.smallTitle;
     

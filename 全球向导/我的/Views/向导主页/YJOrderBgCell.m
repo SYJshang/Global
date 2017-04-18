@@ -53,7 +53,7 @@
         UIView *line = [[UIView alloc]init];
         [self.contentView addSubview:line];
         line.sd_layout.leftSpaceToView(self.contentView,0).topSpaceToView(self.timeLab,5 * KHeight_Scale).rightEqualToView(self.contentView).heightIs(1);
-        line.backgroundColor = BackGray;
+        line.backgroundColor = BackGroundColor;
         
         //预订人名称
         //icon
@@ -104,7 +104,7 @@
         
         UIView *line1 = [[UIView alloc]init];
         [self.contentView addSubview:line1];
-        line1.backgroundColor = BackGray;
+        line1.backgroundColor = BackGroundColor;
         line1.sd_layout.leftEqualToView(self.contentView).rightEqualToView(self.contentView).topSpaceToView(self.findLab,10 * KHeight_Scale).heightIs(1);
         
         
@@ -126,7 +126,7 @@
     
         UIView *view = [[UIView alloc]init];
         [self.contentView addSubview:view];
-        view.backgroundColor = BackGray;
+        view.backgroundColor = BackGroundColor;
         view.sd_layout.leftSpaceToView(self.contentView,0).rightSpaceToView(self.contentView,0).topSpaceToView(self.receiveBtn,10 * KHeight_Scale).bottomSpaceToView(self.contentView,0);
         
         

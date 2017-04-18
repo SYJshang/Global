@@ -11,10 +11,14 @@
 #import "YJRankTopCell.h"
 #import "YJRankRuleCell.h"
 #import "YJDescRankCell.h"
+#import "YJRankModel.h"
+#import "YJRanKDetailVC.h"
 
 @interface YJRankVC ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
+
+@property (nonatomic, strong) YJRankModel *model;
 
 @end
 
@@ -29,6 +33,8 @@
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"星级评定" font:19.0];
+    
+    [self getUserInfo];
 }
 
 
@@ -67,6 +73,37 @@
     
     // Do any additional setup after loading the view.
 }
+
+
+- (void)getUserInfo{
+    
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/guide/gv/findMain",BaseUrl] parameters:nil success:^(id responseObject) {
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        XXLog(@"%@",data);
+        
+        if ([data[@"code"] isEqualToString:@"1"]) {
+            
+            self.model = [YJRankModel mj_objectWithKeyValues:data[@"data"]];
+            
+            [self.tableView reloadData];
+            
+        }else{
+            
+            SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:data[@"msg"] alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            }];
+            alertV.sure_btnTitleColor = TextColor;
+            [alertV show];
+            
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    
+}
+
 
 #pragma mark - table view dataSource
 
@@ -142,7 +179,12 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 0) {
+        
         YJRankTopCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+        cell.model = self.model;
+        
+        [cell.detailBtn addTarget:self action:@selector(btnClick) forControlEvents:UIControlEventTouchUpInside];
+        
         return cell;
 
     }else if (indexPath.section == 1){
@@ -163,6 +205,11 @@
     }
     
     
+}
+
+- (void)btnClick{
+    
+    [self.navigationController pushViewController:[YJRanKDetailVC new] animated:YES];
 }
 
 #pragma mark - table view delegate

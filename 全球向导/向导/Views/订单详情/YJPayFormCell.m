@@ -19,7 +19,7 @@
         self.icon.sd_layout.leftSpaceToView(self.contentView,10).topSpaceToView(self.contentView,10).bottomSpaceToView(self.contentView,10).widthEqualToHeight();
         self.icon.layer.masksToBounds = YES;
         self.icon.layer.cornerRadius = 2;
-        self.icon.layer.borderColor = BackGray.CGColor;
+        self.icon.layer.borderColor = BackGroundColor.CGColor;
         self.icon.layer.borderWidth = 1;
         
         self.payName = [[UILabel alloc]init];
@@ -44,7 +44,7 @@
         
         
         UIView *line = [[UIView alloc]init];
-        line.backgroundColor = BackGray;
+        line.backgroundColor = BackGroundColor;
         [self.contentView addSubview:line];
         line.sd_layout.leftSpaceToView(self.contentView,10).rightSpaceToView(self.contentView,10).bottomSpaceToView(self.contentView,0).heightIs(0.5);
         

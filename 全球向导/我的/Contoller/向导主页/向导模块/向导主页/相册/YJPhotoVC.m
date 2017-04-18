@@ -124,7 +124,7 @@
     
     
     if (indexPath.row == 0) {
-        cell.imgIcon.image = [UIImage imageNamed:@"AlbumAddBtn"];
+        cell.imgIcon.image = [UIImage imageNamed:@"add_photo"];
         cell.text.text = @"添加相册";
     }else{
         YJPhotoModel *model = self.albumLists[indexPath.row - 1];
@@ -165,7 +165,6 @@
     //    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
     //    [cell setBackgroundColor:[UIColor greenColor]];
     
-    NSLog(@"点击了%ld个",indexPath.row);
     
     
     if (indexPath.row == 0) {
@@ -185,7 +184,6 @@
 //取消选择了某个cell
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"取消了%ld个",indexPath.row);
     
 }
 

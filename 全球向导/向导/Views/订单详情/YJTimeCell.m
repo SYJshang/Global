@@ -37,7 +37,7 @@
         
         
         UIView *line = [[UIView alloc]init];
-        line.backgroundColor = BackGray;
+        line.backgroundColor = BackGroundColor;
         [self.contentView addSubview:line];
         line.sd_layout.leftSpaceToView(self.contentView,10).rightSpaceToView(self.contentView,10).bottomSpaceToView(self.contentView,0).heightIs(0.5);
         

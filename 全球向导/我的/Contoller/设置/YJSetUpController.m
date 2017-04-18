@@ -172,7 +172,7 @@
             btn.layer.masksToBounds = YES;
             btn.layer.cornerRadius = 10;
             btn.layer.borderWidth = 1.0;
-            btn.layer.borderColor = BackGray.CGColor;
+            btn.layer.borderColor = BackGroundColor.CGColor;
         }
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -366,7 +366,6 @@
     //第一步
     //    NSHTTPCookieStorage *myCookie = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies];
     //    for (NSHTTPCookie *cookie in [myCookie cookies]) {
-    //        NSLog(@"%@", cookie);
     //        //需要将cookie保存下来，以便自动登录
     //        [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie]; //保存
     //

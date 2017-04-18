@@ -31,7 +31,7 @@
         
         self.layer.masksToBounds = YES;
         self.layer.cornerRadius = 2;
-        self.layer.borderColor = BackGray.CGColor;
+        self.layer.borderColor = BackGroundColor.CGColor;
         self.layer.borderWidth = 0.5;
 
     }

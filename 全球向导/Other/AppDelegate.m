@@ -366,7 +366,6 @@ static NSString *appLanguage = @"appLanguage";
 
 // 注册deviceToken失败
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
-    NSLog(@"error -- %@",error);
     
 }
 
@@ -478,12 +477,10 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
     if ([url.host isEqualToString:@"safepay"]) {
         // 支付跳转支付宝钱包进行支付，处理支付结果
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-            NSLog(@"result = %@",resultDic);
         }];
         
         // 授权跳转支付宝钱包进行支付，处理支付结果
         [[AlipaySDK defaultService] processAuth_V2Result:url standbyCallback:^(NSDictionary *resultDic) {
-            NSLog(@"result = %@",resultDic);
             // 解析 auth code
             NSString *result = resultDic[@"result"];
             NSString *authCode = nil;
@@ -496,7 +493,6 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
                     }
                 }
             }
-            NSLog(@"授权结果 authCode = %@", authCode?:@"");
         }];
     }
     
@@ -517,12 +513,10 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
     if ([url.host isEqualToString:@"safepay"]) {
         // 支付跳转支付宝钱包进行支付，处理支付结果
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-            NSLog(@"result = %@",resultDic);
         }];
         
         // 授权跳转支付宝钱包进行支付，处理支付结果
         [[AlipaySDK defaultService] processAuth_V2Result:url standbyCallback:^(NSDictionary *resultDic) {
-            NSLog(@"result = %@",resultDic);
             // 解析 auth code
             NSString *result = resultDic[@"result"];
             NSString *authCode = nil;
@@ -535,7 +529,6 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
                     }
                 }
             }
-            NSLog(@"授权结果 authCode = %@", authCode?:@"");
         }];
     }
     
@@ -574,7 +567,6 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
         
         if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
             //程序运行时收到通知，先弹出消息框
-            NSLog(@"程序在前台");
             [self popAlert:userInfo];
             
         }
@@ -640,7 +632,6 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
 //    NSString *sound = [aps valueForKey:@"sound"]; //播放的声音
 //    // 取得Extras字段内容
 //    NSString *customizeField1 = [userInfo valueForKey:@"customizeExtras"]; //服务端中Extras字段，key是自己定义的
-//    NSLog(@"content =[%@], badge=[%ld], sound=[%@], customize field  =[%@]",content,(long)badge,sound,customizeField1);
    
     completionHandler(UIBackgroundFetchResultNewData);
     

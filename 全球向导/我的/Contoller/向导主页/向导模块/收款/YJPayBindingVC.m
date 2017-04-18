@@ -56,7 +56,7 @@
     
     UIView *line = [[UIView alloc]init];
     [self.view addSubview:line];
-    line.backgroundColor = BackGray;
+    line.backgroundColor = BackGroundColor;
     line.sd_layout.topSpaceToView(self.aliAccout, 0).leftSpaceToView(self.view, 0).rightSpaceToView(self.view, 0).heightIs(1);
     
     self.realName = [[UITextField alloc]init];
@@ -66,7 +66,7 @@
     
     UIView *line1 = [[UIView alloc]init];
     [self.view addSubview:line1];
-    line1.backgroundColor = BackGray;
+    line1.backgroundColor = BackGroundColor;
     line1.sd_layout.topSpaceToView(self.realName, 0).leftSpaceToView(self.view, 0).rightSpaceToView(self.view, 0).heightIs(1);
     
     self.finshBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -77,7 +77,7 @@
     [self.finshBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.finshBtn.layer.masksToBounds = YES;
     self.finshBtn.layer.cornerRadius = 5;
-    self.finshBtn.layer.borderColor = BackGray.CGColor;
+    self.finshBtn.layer.borderColor = BackGroundColor.CGColor;
     self.finshBtn.layer.borderWidth = 0.5;
     self.finshBtn.sd_layout.centerXEqualToView(self.view).topSpaceToView(line1, 50).heightIs(50).widthIs(280);
     

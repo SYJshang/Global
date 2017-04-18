@@ -558,7 +558,6 @@ static CGFloat TZScreenScale;
                 if (success && completion) {
                     completion(nil);
                 } else if (error) {
-                    NSLog(@"保存照片出错:%@",error.localizedDescription);
                     if (completion) {
                         completion(error);
                     }
@@ -568,7 +567,6 @@ static CGFloat TZScreenScale;
     } else {
         [self.assetLibrary writeImageToSavedPhotosAlbum:image.CGImage orientation:[self orientationFromImage:image] completionBlock:^(NSURL *assetURL, NSError *error) {
             if (error) {
-                NSLog(@"保存图片失败:%@",error.localizedDescription);
                 if (completion) {
                     completion(error);
                 }
@@ -612,9 +610,7 @@ static CGFloat TZScreenScale;
         options.deliveryMode = PHVideoRequestOptionsDeliveryModeAutomatic;
         options.networkAccessAllowed = YES;
         [[PHImageManager defaultManager] requestAVAssetForVideo:asset options:options resultHandler:^(AVAsset* avasset, AVAudioMix* audioMix, NSDictionary* info){
-            // NSLog(@"Info:\n%@",info);
             AVURLAsset *videoAsset = (AVURLAsset*)avasset;
-            // NSLog(@"AVAsset URL: %@",myAsset.URL);
             [self startExportVideoWithVideoAsset:videoAsset completion:completion];
         }];
     } else if ([asset isKindOfClass:[ALAsset class]]) {
@@ -638,7 +634,6 @@ static CGFloat TZScreenScale;
         NSDateFormatter *formater = [[NSDateFormatter alloc] init];
         [formater setDateFormat:@"yyyy-MM-dd-HH:mm:ss"];
         NSString *outputPath = [NSHomeDirectory() stringByAppendingFormat:@"/tmp/output-%@.mp4", [formater stringFromDate:[NSDate date]]];
-        NSLog(@"video outputPath = %@",outputPath);
         session.outputURL = [NSURL fileURLWithPath:outputPath];
         
         // Optimize for network use.
@@ -648,7 +643,6 @@ static CGFloat TZScreenScale;
         if ([supportedTypeArray containsObject:AVFileTypeMPEG4]) {
             session.outputFileType = AVFileTypeMPEG4;
         } else if (supportedTypeArray.count == 0) {
-            NSLog(@"No supported file types 视频类型暂不支持导出");
             return;
         } else {
             session.outputFileType = [supportedTypeArray objectAtIndex:0];
@@ -668,13 +662,13 @@ static CGFloat TZScreenScale;
         [session exportAsynchronouslyWithCompletionHandler:^(void) {
             switch (session.status) {
                 case AVAssetExportSessionStatusUnknown:
-                    NSLog(@"AVAssetExportSessionStatusUnknown"); break;
+                     break;
                 case AVAssetExportSessionStatusWaiting:
-                    NSLog(@"AVAssetExportSessionStatusWaiting"); break;
+                     break;
                 case AVAssetExportSessionStatusExporting:
-                    NSLog(@"AVAssetExportSessionStatusExporting"); break;
+                     break;
                 case AVAssetExportSessionStatusCompleted: {
-                    NSLog(@"AVAssetExportSessionStatusCompleted");
+                    
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if (completion) {
                             completion(outputPath);
@@ -682,7 +676,7 @@ static CGFloat TZScreenScale;
                     });
                 }  break;
                 case AVAssetExportSessionStatusFailed:
-                    NSLog(@"AVAssetExportSessionStatusFailed"); break;
+                     break;
                 default: break;
             }
         }];

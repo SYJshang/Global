@@ -93,7 +93,6 @@ static UIView *FIRST_RESPONDER;
     if (adaptiveController) {
         self.adaptiveController = adaptiveController;
     } else {
-        NSLog(@"\nERROR: Can not find adaptiveView`s Controller");
         return;
     }
     

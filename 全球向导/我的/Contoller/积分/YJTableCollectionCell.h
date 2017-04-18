@@ -18,6 +18,9 @@
 
 @property (nonatomic,weak) id<ImgBtnClickDelegte> delegate;
 
+@property (nonatomic, strong) UICollectionView *collection;
+
+
 @property (nonatomic, assign) BOOL isGuide;
 @property (nonatomic, assign) BOOL isSignIn;
 

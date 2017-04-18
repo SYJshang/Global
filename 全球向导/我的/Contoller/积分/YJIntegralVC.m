@@ -11,10 +11,17 @@
 #import "YJIntrgralDetailCell.h"
 #import "YJDescRankCell.h"
 #import "YJDIYButton.h"
+#import "YJIntegraModel.h"
+#import "YJRanKDetailVC.h"
+
 
 @interface YJIntegralVC ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
+
+@property (nonatomic, strong) NSArray *listScore;
+
+@property (nonatomic, strong) YJIntegraModel *model;
 
 
 @end
@@ -30,6 +37,8 @@
     self.navigationController.navigationBar.tintColor = [UIColor grayColor];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:@"积分" font:19.0];
+    
+    [self getUserInfo];
 }
 
 
@@ -62,6 +71,39 @@
     // Do any additional setup after loading the view.
 }
 
+- (void)getUserInfo{
+    
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myScore/findMain",BaseUrl] parameters:nil success:^(id responseObject) {
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        XXLog(@"%@",data);
+        
+        if ([data[@"code"] isEqualToString:@"1"]) {
+            
+            self.model = [YJIntegraModel mj_objectWithKeyValues:data[@"data"]];
+            
+            self.listScore = self.model.scoreDetailList;
+            
+            [self.tableView reloadData];
+            
+        }else{
+            
+            SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:data[@"msg"] alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            }];
+            alertV.sure_btnTitleColor = TextColor;
+            [alertV show];
+            
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    
+}
+
+
+
 #pragma mark - table view dataSource
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -84,7 +126,9 @@
         
         YJDIYButton *btn = [YJDIYButton buttonWithFrame:CGRectMake(screen_width - 50, 5, 40, 20) title:@"MORE" imageName:@"arrow-right" Block:^{
             
-            XXLog(@"section >>>> %ld",section);
+            YJRanKDetailVC *vc = [[YJRanKDetailVC alloc]init];
+            [self.navigationController pushViewController:vc animated:YES];
+            
         }];
         
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -134,18 +178,26 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    
+    if (section == 1) {
+        return self.listScore.count;
+    }else{
+        return 1;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 0) {
         YJIntegralTopCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+        cell.model = self.model;
         return cell;
         
     }else if (indexPath.section == 1){
         
         YJIntrgralDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
+        cell.isIntegral = 3;
+        cell.model = self.listScore[indexPath.row];
         return cell;
     }else{
         

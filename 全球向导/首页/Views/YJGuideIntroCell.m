@@ -14,6 +14,8 @@
     
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         [self initView];
+        
+        self.backgroundColor = BackGray;
     }
     
     return self;
@@ -51,6 +53,8 @@
     [self.contentView addSubview:self.unfoldBtn];
     self.unfoldBtn.selected = YES;
     [self.unfoldBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    UIColor *col = [UIColor colorWithRed:35.0 / 255.0 green:125.0 / 255.0 blue:255.0 / 255.0 alpha:1.0];
+    [self.unfoldBtn setTitleColor:col forState:UIControlStateNormal];
     self.unfoldBtn.titleLabel.font = [UIFont systemFontOfSize:AdaptedWidth(12)];
     self.unfoldBtn.sd_layout.rightSpaceToView(self.contentView,10).bottomSpaceToView(self.contentView,5).heightIs(15).widthIs(60);
     [self.unfoldBtn setImageEdgeInsets:UIEdgeInsetsMake(0,50, 0, 0)];
@@ -72,7 +76,7 @@
     
     UIView *line = [[UIView alloc]init];
     [self.contentView addSubview:line];
-    line.backgroundColor = BackGray;
+    line.backgroundColor = BackGroundColor;
     line.sd_layout.leftSpaceToView(self.contentView,10).rightSpaceToView(self.contentView,10).bottomSpaceToView(self.contentView,0.5).heightIs(0.5);
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;

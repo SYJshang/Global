@@ -109,7 +109,6 @@ void *CustomHeaderInsetObserver = &CustomHeaderInsetObserver;
 {
     if (_header == nil) {
         _header = [[[NSBundle mainBundle] loadNibNamed:@"CustomHeader" owner:nil options:nil] lastObject];
-        _header.backgroundColor = [UIColor redColor];
     }
     return _header;
 }
@@ -133,7 +132,7 @@ void *CustomHeaderInsetObserver = &CustomHeaderInsetObserver;
             self.infoModel = [YJGuideInformationModel mj_objectWithKeyValues:data[@"guide"]];
             
             [self.header.imageView sd_setImageWithURL:[NSURL URLWithString:self.infoModel.coverPhotoUrl] placeholderImage:[UIImage imageNamed:@"big_horse"]];
-            [self.header.headImageView sd_setImageWithURL:[NSURL URLWithString:self.infoModel.headUrl] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+            [self.header.headImageView sd_setImageWithURL:[NSURL URLWithString:self.infoModel.headUrl] placeholderImage:[UIImage imageNamed:@"head"]];
             self.header.nameLab.text = self.infoModel.realName;
             
 //            self.curStatus = data[@"curIdMap"];

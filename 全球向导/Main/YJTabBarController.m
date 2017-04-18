@@ -113,7 +113,6 @@ static NSString *kGroupName = @"GroupName";
                                    timeIntervalSinceDate:self.lastPlaySoundDate];
     if (timeInterval < kDefaultPlaySoundInterval) {
         //如果距离上次响铃和震动时间太短, 则跳过响铃
-        NSLog(@"skip ringing & vibration %@, %@", [NSDate date], self.lastPlaySoundDate);
         return;
     }
     

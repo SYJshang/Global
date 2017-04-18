@@ -65,7 +65,7 @@
     UIView *view = [[UIView alloc]init];
     [self.view addSubview:view];
     view.frame = CGRectMake(0, screen_height - 44, screen_width, 1);
-    view.backgroundColor = BackGray;
+    view.backgroundColor = BackGroundColor;
     
 
     
@@ -218,7 +218,7 @@
         
         
         YJConfirmCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
-        [cell.icon sd_setImageWithURL:[NSURL URLWithString:self.userlModel[@"showPicUrl"]] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+        [cell.icon sd_setImageWithURL:[NSURL URLWithString:self.userlModel[@"showPicUrl"]] placeholderImage:[UIImage imageNamed:@"head"]];
         cell.name.text = [NSString stringWithFormat:@"%@/%@",self.userlModel[@"bigTitle"],self.userlModel[@"smallTitle"]];
         return cell;
     }else if (indexPath.section == 1){

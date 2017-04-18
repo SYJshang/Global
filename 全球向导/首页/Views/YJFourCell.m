@@ -44,7 +44,7 @@
         
         
         
-        self.icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"HeaderIcon"]];
+        self.icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"head"]];
         [self.imageV addSubview:self.icon];
         self.icon.sd_layout.leftEqualToView(self.title).bottomSpaceToView(self.imageV,5).heightIs(60 * KWidth_Scale).widthIs(60 * KWidth_Scale);
         self.icon.layer.masksToBounds = YES;
@@ -90,7 +90,7 @@
     self.title.text = guideModel.bigTitle;
     self.descTitle.text = guideModel.smallTitle;
     [self.imageV sd_setImageWithURL:[NSURL URLWithString:guideModel.coverPicUrl] placeholderImage:[UIImage imageNamed:@"big_horse"]];
-    [self.icon sd_setImageWithURL:[NSURL URLWithString:guideModel.guide[@"headUrl"]] placeholderImage:[UIImage imageNamed:@"HeaderIcon"]];
+    [self.icon sd_setImageWithURL:[NSURL URLWithString:guideModel.guide[@"headUrl"]] placeholderImage:[UIImage imageNamed:@"head"]];
     self.num.text = [NSString stringWithFormat:@"收藏数: %@",guideModel.colNumber];
     self.name.text = [NSString stringWithFormat:@"by %@",guideModel.guide[@"realName"]];
     

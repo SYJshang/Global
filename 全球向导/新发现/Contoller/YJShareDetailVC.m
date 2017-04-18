@@ -45,8 +45,8 @@
     
     share = [UIButton buttonWithType:UIButtonTypeCustom];
     [share addTarget:self action:@selector(share:) forControlEvents:UIControlEventTouchUpInside];
-    [share setImage:[UIImage imageNamed:@"shareIcon"] forState:UIControlStateNormal];
-    [share setImage:[UIImage imageNamed:@"share"] forState:UIControlStateHighlighted];
+//    [share setImage:[UIImage imageNamed:@"shareIcon"] forState:UIControlStateNormal];
+    [share setImage:[UIImage imageNamed:@"share"] forState:UIControlStateNormal];
     share.selected = NO;
     [share sizeToFit];
     UIBarButtonItem *settingBtnItem = [[UIBarButtonItem alloc] initWithCustomView:share];
@@ -59,6 +59,9 @@
     
     
     self.navigationItem.titleView = [UILabel titleWithColor:[UIColor blackColor] title:YJLocalizedString(@"用户分享") font:19.0];
+    
+    [self getNetWork];
+
 }
 
 - (void)back{
@@ -70,6 +73,11 @@
 - (void)share:(UIButton *)btn{
     
     XXLog(@"分享");
+    
+    SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"功能开发中" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+    }];
+    alertV.sure_btnTitleColor = TextColor;
+    [alertV show];
     
 }
 
@@ -275,7 +283,6 @@
     [opaqueView addSubview:activityIndicatorView];
     
     
-    [self getNetWork];
     
     // Do any additional setup after loading the view.
 }

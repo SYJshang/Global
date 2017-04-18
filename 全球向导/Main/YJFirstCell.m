@@ -38,6 +38,7 @@
 //                            @"您可以发邮件到gsdios@126.com"
 //                            ];
         self.cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(10, 10, Width - 20, 170 * KHeight_Scale) delegate:self placeholderImage:[UIImage imageNamed:@"big_horse"]];
+        self.cycleScrollView.currentPageDotColor = TextColor;
         self.cycleScrollView.layer.masksToBounds = YES;
         self.cycleScrollView.layer.borderColor = [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0].CGColor;
         self.cycleScrollView.layer.borderWidth = 2;
@@ -50,7 +51,6 @@
         self.cycleScrollView.titleLabelTextAliment = SDCycleScrollViewTitleLabelAlimntCenter;
         self.cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleAnimated;
         self.cycleScrollView.titlesGroup = self.titleArr;
-        self.cycleScrollView.currentPageDotColor = [UIColor yellowColor]; // 自定义分页控件小圆标颜色
         [self.contentView addSubview:self.cycleScrollView];
 
         self.cycleScrollView.imageURLStringsGroup = self.imagesURLStrings;

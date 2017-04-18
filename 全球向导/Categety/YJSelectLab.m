@@ -86,7 +86,7 @@
     self.textColor = [UIColor whiteColor];
     self.backgroundColor = TextColor;
     
-    self.layer.borderColor =  [BackGray CGColor];
+    self.layer.borderColor =  [BackGroundColor CGColor];
     ;
     
     

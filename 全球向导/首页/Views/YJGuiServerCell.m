@@ -15,6 +15,9 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        
+        self.backgroundColor = BackGray;
+
         [self initView];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
@@ -31,7 +34,7 @@
     self.imgIcon.layer.masksToBounds = YES;
     self.imgIcon.layer.cornerRadius = self.imgIcon.width /2;
     self.imgIcon.layer.borderWidth = 0.5;
-    self.imgIcon.layer.borderColor = BackGray.CGColor;
+    self.imgIcon.layer.borderColor = BackGroundColor.CGColor;
     
     self.titleLab = [[UILabel alloc]init];
     [self.contentView addSubview:self.titleLab];
@@ -47,7 +50,7 @@
     
     self.priceLab = [[UILabel alloc]init];
     [self.contentView addSubview:self.priceLab];
-    self.priceLab.textColor = [UIColor blueColor];
+    self.priceLab.textColor = [UIColor colorWithRed:35.0 / 255.0 green:125.0 / 255.0 blue:255.0 / 255.0 alpha:1.0];
     self.priceLab.font = [UIFont systemFontOfSize:AdaptedWidth(14)];
     self.priceLab.text = @"￥98.00起";
     self.priceLab.textAlignment = NSTextAlignmentRight;
@@ -67,7 +70,7 @@
     
     UIView *line = [[UIView alloc]init];
     [self.contentView addSubview:line];
-    line.backgroundColor = BackGray;
+    line.backgroundColor = BackGroundColor;
     line.sd_layout.leftSpaceToView(self.contentView,10).rightSpaceToView(self.contentView,10).bottomSpaceToView(self.contentView,0.5).heightIs(0.5);
     
 }
