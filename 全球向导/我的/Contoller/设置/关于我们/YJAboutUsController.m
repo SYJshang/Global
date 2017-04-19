@@ -8,7 +8,6 @@
 
 #import "YJAboutUsController.h"
 #import <JavaScriptCore/JavaScriptCore.h>
-#import "YJMineController.h"
 
 @interface YJAboutUsController ()<UIWebViewDelegate,UIGestureRecognizerDelegate>
 

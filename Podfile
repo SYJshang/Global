@@ -17,6 +17,8 @@ target '全球向导' do
     pod 'EaseUI', :git => 'https://github.com/easemob/easeui-ios-hyphenate-cocoapods.git'
     pod 'FMDB'
     pod 'JPush'
+    pod 'UMengAnalytics'
+    #标准SDK，含IDFA
 
 
   # Pods for 全球向导

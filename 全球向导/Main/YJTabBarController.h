@@ -11,7 +11,6 @@
 #import "ViewController.h"
 #import "YJGuideController.h"
 #import "YJNewFindController.h"
-#import "YJMineController.h"
 #import "YJMessageListVC.h"
 #import "YJChatVC.h"
 #import <UIKit/UIKit.h>

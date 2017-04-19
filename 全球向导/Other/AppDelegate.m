@@ -183,6 +183,16 @@ static NSString *appLanguage = @"appLanguage";
     
     [self confitUShareSettings];
     
+    //设置友盟统计
+    [MobClick setAppVersion:XcodeAppVersion]; //参数为NSString * 类型,自定义app版本信息，如果不设置，默认从CFBundleVersion里取
+    
+    //上线时候要把这个隐藏
+    [MobClick setLogEnabled:YES];
+    UMConfigInstance.appKey = @"58cfb59fc8957663c8001a9e";
+    UMConfigInstance.channelId = @"App Store";
+    //    UMConfigInstance.eSType = E_UM_GAME;
+    [MobClick startWithConfigure:UMConfigInstance];
+    
     NSString *apnsCertName = nil;
 
 #if DEBUG

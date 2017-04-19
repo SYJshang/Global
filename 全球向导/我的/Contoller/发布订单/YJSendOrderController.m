@@ -7,7 +7,6 @@
 //
 
 #import "YJSendOrderController.h"
-#import "YJMineController.h"
 #import "YJPhoneNumCell.h"
 #import "YJAddNumCell.h"
 #import "YJDataController.h"

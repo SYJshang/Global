@@ -81,7 +81,6 @@
 		1A12C17C1E14AB7F00213F95 /* YJMineShareVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A12C17B1E14AB7F00213F95 /* YJMineShareVC.m */; };
 		1A18BA9F1DED218500208989 /* YJCollectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A18BA9E1DED218500208989 /* YJCollectController.m */; };
 		1A18BAA21DED22C700208989 /* YJGlobalCollectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A18BAA11DED22C700208989 /* YJGlobalCollectController.m */; };
-		1A1BA4CC1E03E6F0003BCB75 /* YJSetUserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1BA4CB1E03E6F0003BCB75 /* YJSetUserController.m */; };
 		1A1BA4CF1E03E84C003BCB75 /* YJEditPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1BA4CE1E03E84C003BCB75 /* YJEditPhotoCell.m */; };
 		1A1CBAC31E7AA57D00A3BBED /* YJUserOrderDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A1CBAC21E7AA57D00A3BBED /* YJUserOrderDetailModel.m */; };
 		1A21D06B1E9C702F009692DE /* YJEditUserShareVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A21D06A1E9C702F009692DE /* YJEditUserShareVC.m */; };
@@ -93,7 +92,6 @@
 		1A25B74A1E83B90B000B49AF /* YJMessageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A25B7491E83B90B000B49AF /* YJMessageVC.m */; };
 		1A25B74D1E83BACD000B49AF /* YJChatVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A25B74C1E83BACD000B49AF /* YJChatVC.m */; };
 		1A2612F91DCAE236002B95DC /* YJNewFindController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2612F81DCAE236002B95DC /* YJNewFindController.m */; };
-		1A2612FC1DCAE3D0002B95DC /* YJMineController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2612FB1DCAE3D0002B95DC /* YJMineController.m */; };
 		1A2613511DCB2C36002B95DC /* FTPopOverMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2613501DCB2C36002B95DC /* FTPopOverMenu.m */; };
 		1A2613551DCB3DFF002B95DC /* HYPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2613541DCB3DFF002B95DC /* HYPageView.m */; };
 		1A2613581DCC184C002B95DC /* YJGuideRecommendController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2613571DCC184C002B95DC /* YJGuideRecommendController.m */; };
@@ -133,6 +131,7 @@
 		1A443C0C1DF94AD500CC1AC2 /* YJDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A443C0B1DF94AD500CC1AC2 /* YJDetailController.m */; };
 		1A443C0F1DF9525D00CC1AC2 /* YJDetailOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A443C0E1DF9525D00CC1AC2 /* YJDetailOrderController.m */; };
 		1A443C151DF96B5400CC1AC2 /* YJButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A443C141DF96B5400CC1AC2 /* YJButton.m */; };
+		1A4697261EA7688300E375D1 /* YJSetUserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A4697251EA7688300E375D1 /* YJSetUserController.m */; };
 		1A4EA7E81E8D0D910055947C /* BQLDBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A4EA7E21E8D0D910055947C /* BQLDBModel.m */; };
 		1A4EA7E91E8D0D910055947C /* BQLDBReadMe in Resources */ = {isa = PBXBuildFile; fileRef = 1A4EA7E31E8D0D910055947C /* BQLDBReadMe */; };
 		1A4EA7EA1E8D0D910055947C /* BQLDBTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A4EA7E51E8D0D910055947C /* BQLDBTool.m */; };
@@ -544,8 +543,6 @@
 		1A18BA9E1DED218500208989 /* YJCollectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJCollectController.m; sourceTree = "<group>"; };
 		1A18BAA01DED22C700208989 /* YJGlobalCollectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJGlobalCollectController.h; sourceTree = "<group>"; };
 		1A18BAA11DED22C700208989 /* YJGlobalCollectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJGlobalCollectController.m; sourceTree = "<group>"; };
-		1A1BA4CA1E03E6F0003BCB75 /* YJSetUserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YJSetUserController.h; path = ../YJSetUserController.h; sourceTree = "<group>"; };
-		1A1BA4CB1E03E6F0003BCB75 /* YJSetUserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YJSetUserController.m; path = ../YJSetUserController.m; sourceTree = "<group>"; };
 		1A1BA4CD1E03E84C003BCB75 /* YJEditPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJEditPhotoCell.h; sourceTree = "<group>"; };
 		1A1BA4CE1E03E84C003BCB75 /* YJEditPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJEditPhotoCell.m; sourceTree = "<group>"; };
 		1A1CBAC11E7AA57D00A3BBED /* YJUserOrderDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJUserOrderDetailModel.h; sourceTree = "<group>"; };
@@ -566,8 +563,6 @@
 		1A25B74C1E83BACD000B49AF /* YJChatVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJChatVC.m; sourceTree = "<group>"; };
 		1A2612F71DCAE236002B95DC /* YJNewFindController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJNewFindController.h; sourceTree = "<group>"; };
 		1A2612F81DCAE236002B95DC /* YJNewFindController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJNewFindController.m; sourceTree = "<group>"; };
-		1A2612FA1DCAE3D0002B95DC /* YJMineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJMineController.h; sourceTree = "<group>"; };
-		1A2612FB1DCAE3D0002B95DC /* YJMineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJMineController.m; sourceTree = "<group>"; };
 		1A26134F1DCB2C36002B95DC /* FTPopOverMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTPopOverMenu.h; sourceTree = "<group>"; };
 		1A2613501DCB2C36002B95DC /* FTPopOverMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTPopOverMenu.m; sourceTree = "<group>"; };
 		1A2613531DCB3DFF002B95DC /* HYPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYPageView.h; sourceTree = "<group>"; };
@@ -652,6 +647,8 @@
 		1A443C0E1DF9525D00CC1AC2 /* YJDetailOrderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJDetailOrderController.m; sourceTree = "<group>"; };
 		1A443C131DF96B5400CC1AC2 /* YJButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJButton.h; sourceTree = "<group>"; };
 		1A443C141DF96B5400CC1AC2 /* YJButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJButton.m; sourceTree = "<group>"; };
+		1A4697241EA7688300E375D1 /* YJSetUserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJSetUserController.h; sourceTree = "<group>"; };
+		1A4697251EA7688300E375D1 /* YJSetUserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJSetUserController.m; sourceTree = "<group>"; };
 		1A4EA7E11E8D0D910055947C /* BQLDBModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BQLDBModel.h; sourceTree = "<group>"; };
 		1A4EA7E21E8D0D910055947C /* BQLDBModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BQLDBModel.m; sourceTree = "<group>"; };
 		1A4EA7E31E8D0D910055947C /* BQLDBReadMe */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BQLDBReadMe; sourceTree = "<group>"; };
@@ -1764,8 +1761,8 @@
 		1A7886D91E1B2F92004F3271 /* 修改用户信息 */ = {
 			isa = PBXGroup;
 			children = (
-				1A1BA4CA1E03E6F0003BCB75 /* YJSetUserController.h */,
-				1A1BA4CB1E03E6F0003BCB75 /* YJSetUserController.m */,
+				1A4697241EA7688300E375D1 /* YJSetUserController.h */,
+				1A4697251EA7688300E375D1 /* YJSetUserController.m */,
 				1A7886DA1E1B2FB7004F3271 /* YJSetUserInfoVC.h */,
 				1A7886DB1E1B2FB7004F3271 /* YJSetUserInfoVC.m */,
 			);
@@ -2342,8 +2339,6 @@
 			isa = PBXGroup;
 			children = (
 				1A54D9161EA45379008993CD /* 积分 */,
-				1A2612FA1DCAE3D0002B95DC /* YJMineController.h */,
-				1A2612FB1DCAE3D0002B95DC /* YJMineController.m */,
 				1A7886D91E1B2F92004F3271 /* 修改用户信息 */,
 				1A12C1731E14A89900213F95 /* 我的发布 */,
 				1A1BA4D01E03F44C003BCB75 /* 我的评价 */,
@@ -3062,7 +3057,6 @@
 				1AF3ABA71E656FF400F5E568 /* YJPhotoAlbumCell.m in Sources */,
 				1AF928A01DF93B20004B666F /* YJWaitEvaluationControllerViewController.m in Sources */,
 				1AED50441E856E19006A1C98 /* YJGETableVC.m in Sources */,
-				1A2612FC1DCAE3D0002B95DC /* YJMineController.m in Sources */,
 				1A443C151DF96B5400CC1AC2 /* YJButton.m in Sources */,
 				1A2C15A21DF14A3E0053B02B /* YJTravelController.m in Sources */,
 				1A03835D1E729B8100A54525 /* YJOrderDetailModel.m in Sources */,
@@ -3238,7 +3232,6 @@
 				1AAB74611E51B25400B59D46 /* YJShareCollectVC.m in Sources */,
 				1AFD22621DDAA7FA00DA255D /* YJOderDataController.m in Sources */,
 				1A54D9371EA4A14A008993CD /* YJIntrgralDetailCell.m in Sources */,
-				1A1BA4CC1E03E6F0003BCB75 /* YJSetUserController.m in Sources */,
 				1A9423861E66C50100CEA243 /* UIWebView+AFNetworking.m in Sources */,
 				1A109DF51DB8AF9E00D7A74B /* SDCollectionViewCell.m in Sources */,
 				1A26135B1DCC1CBC002B95DC /* YJGuideRecommendCell.m in Sources */,
@@ -3278,6 +3271,7 @@
 				1A03A7431E092B3B007EB922 /* NSNotification+Extension.m in Sources */,
 				1A109DBD1DB89E6400D7A74B /* YJTabBarController.m in Sources */,
 				1ACA58671DC32E85003D640A /* YJLoginController.m in Sources */,
+				1A4697261EA7688300E375D1 /* YJSetUserController.m in Sources */,
 				1A6C746A1DFA4ECF002A9481 /* YJOrderStateController.m in Sources */,
 				1A047D601E0B692500AC1355 /* MJFoundation.m in Sources */,
 				1A5E4D351DF56BDC00136053 /* YJCache.m in Sources */,
