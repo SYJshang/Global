@@ -487,6 +487,26 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
     if ([url.host isEqualToString:@"safepay"]) {
         // 支付跳转支付宝钱包进行支付，处理支付结果
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            
+            if ([resultDic[@"resultStatus"] isEqualToString:@"6001"]) {
+                
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.window animated:YES];
+                hud.mode = MBProgressHUDModeText;
+                hud.labelColor = [UIColor whiteColor];
+                hud.color = [UIColor blackColor];
+                hud.labelText = NSLocalizedString(@"支付成功！", @"HUD message title");
+                [hud hide:YES afterDelay:2.0];
+                
+            }else{
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.window animated:YES];
+                hud.mode = MBProgressHUDModeText;
+                hud.labelColor = [UIColor whiteColor];
+                hud.color = [UIColor blackColor];
+                hud.labelText = NSLocalizedString(@"支付失败！", @"HUD message title");
+                [hud hide:YES afterDelay:2.0];
+                
+            }
+
         }];
         
         // 授权跳转支付宝钱包进行支付，处理支付结果
@@ -523,6 +543,28 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
     if ([url.host isEqualToString:@"safepay"]) {
         // 支付跳转支付宝钱包进行支付，处理支付结果
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            
+            XXLog(@"%@",resultDic);
+            if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
+                
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.window animated:YES];
+                hud.mode = MBProgressHUDModeText;
+                hud.labelColor = [UIColor whiteColor];
+                hud.color = [UIColor blackColor];
+                hud.labelText = NSLocalizedString(@"支付成功！", @"HUD message title");
+                [hud hide:YES afterDelay:2.0];
+                
+            }else{
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.window animated:YES];
+                hud.mode = MBProgressHUDModeText;
+                hud.labelColor = [UIColor whiteColor];
+                hud.color = [UIColor blackColor];
+                hud.labelText = NSLocalizedString(@"支付失败！", @"HUD message title");
+                [hud hide:YES afterDelay:2.0];
+                
+            }
+            
+            
         }];
         
         // 授权跳转支付宝钱包进行支付，处理支付结果

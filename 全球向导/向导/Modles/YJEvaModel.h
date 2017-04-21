@@ -29,5 +29,6 @@
 @property (nonatomic , copy) NSString              * addTime;
 @property (nonatomic , copy) NSString              * smallTitle;
 @property (nonatomic , assign) NSInteger              buyerId;
+@property (nonatomic, assign) NSInteger              evaValue;
 
 @end

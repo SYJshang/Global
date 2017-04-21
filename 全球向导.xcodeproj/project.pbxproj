@@ -153,6 +153,9 @@
 		1A5543E81E77F38100E8B112 /* YJDepositVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5543E71E77F38100E8B112 /* YJDepositVC.m */; };
 		1A5543EE1E78EA1400E8B112 /* KeychainHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5543EB1E78EA1400E8B112 /* KeychainHelper.m */; };
 		1A5543EF1E78EA1400E8B112 /* KeychainIDFA.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5543ED1E78EA1400E8B112 /* KeychainIDFA.m */; };
+		1A580C3C1EA8BAEE0027C5A6 /* YJEveListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A580C3B1EA8BAEE0027C5A6 /* YJEveListCell.m */; };
+		1A580C3F1EA9E70B0027C5A6 /* YJEveamentDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A580C3E1EA9E70B0027C5A6 /* YJEveamentDetailVC.m */; };
+		1A580C421EA9ED480027C5A6 /* SDWeiXinPhotoContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A580C411EA9ED480027C5A6 /* SDWeiXinPhotoContainerView.m */; };
 		1A5B11261E5E8572009DA9F1 /* YJEvaWaitModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5B11251E5E8572009DA9F1 /* YJEvaWaitModel.m */; };
 		1A5DA4A21EA5C04200B6DAFA /* YJRankModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5DA4A11EA5C04200B6DAFA /* YJRankModel.m */; };
 		1A5DA4A51EA5EA4500B6DAFA /* YJRanKDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A5DA4A41EA5EA4500B6DAFA /* YJRanKDetailVC.m */; };
@@ -690,6 +693,12 @@
 		1A5543EB1E78EA1400E8B112 /* KeychainHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainHelper.m; sourceTree = "<group>"; };
 		1A5543EC1E78EA1400E8B112 /* KeychainIDFA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainIDFA.h; sourceTree = "<group>"; };
 		1A5543ED1E78EA1400E8B112 /* KeychainIDFA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainIDFA.m; sourceTree = "<group>"; };
+		1A580C3A1EA8BAEE0027C5A6 /* YJEveListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJEveListCell.h; sourceTree = "<group>"; };
+		1A580C3B1EA8BAEE0027C5A6 /* YJEveListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJEveListCell.m; sourceTree = "<group>"; };
+		1A580C3D1EA9E70B0027C5A6 /* YJEveamentDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJEveamentDetailVC.h; sourceTree = "<group>"; };
+		1A580C3E1EA9E70B0027C5A6 /* YJEveamentDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJEveamentDetailVC.m; sourceTree = "<group>"; };
+		1A580C401EA9ED480027C5A6 /* SDWeiXinPhotoContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWeiXinPhotoContainerView.h; sourceTree = "<group>"; };
+		1A580C411EA9ED480027C5A6 /* SDWeiXinPhotoContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWeiXinPhotoContainerView.m; sourceTree = "<group>"; };
 		1A5B11241E5E8572009DA9F1 /* YJEvaWaitModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJEvaWaitModel.h; sourceTree = "<group>"; };
 		1A5B11251E5E8572009DA9F1 /* YJEvaWaitModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJEvaWaitModel.m; sourceTree = "<group>"; };
 		1A5DA4A01EA5C04200B6DAFA /* YJRankModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJRankModel.h; sourceTree = "<group>"; };
@@ -2176,6 +2185,8 @@
 				1AFCC82A1E275D0600450852 /* YJGuideDetailVC.m */,
 				1A0276701E85099C008E8E25 /* YJAllEveVC.h */,
 				1A0276711E85099C008E8E25 /* YJAllEveVC.m */,
+				1A580C3D1EA9E70B0027C5A6 /* YJEveamentDetailVC.h */,
+				1A580C3E1EA9E70B0027C5A6 /* YJEveamentDetailVC.m */,
 				1A03A72C1E08CFEA007EB922 /* YJScreeningVC.h */,
 				1A03A72D1E08CFEA007EB922 /* YJScreeningVC.m */,
 			);
@@ -2233,6 +2244,10 @@
 				1AFCC8391E2777D300450852 /* YJOtherServerCell.m */,
 				1AFCC82F1E27776C00450852 /* YJCommentCell.h */,
 				1AFCC8301E27776C00450852 /* YJCommentCell.m */,
+				1A580C3A1EA8BAEE0027C5A6 /* YJEveListCell.h */,
+				1A580C3B1EA8BAEE0027C5A6 /* YJEveListCell.m */,
+				1A580C401EA9ED480027C5A6 /* SDWeiXinPhotoContainerView.h */,
+				1A580C411EA9ED480027C5A6 /* SDWeiXinPhotoContainerView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3107,6 +3122,7 @@
 				1A0383511E715FD500A54525 /* YJGuideWaitReceiveVC.m in Sources */,
 				1AA4C0631E52A68000B7DD9F /* YJShareCollectCell.m in Sources */,
 				1AED50461E856E19006A1C98 /* YJGEFindVC.m in Sources */,
+				1A580C3C1EA8BAEE0027C5A6 /* YJEveListCell.m in Sources */,
 				1AF3AB931E6567DD00F5E568 /* YJReceiveOrderController.m in Sources */,
 				1A03A6C61E07C637007EB922 /* YJShareCell.m in Sources */,
 				1A21D06E1E9C7C02009692DE /* YJEditGuideShareVC.m in Sources */,
@@ -3117,6 +3133,7 @@
 				1A21D0711E9E379F009692DE /* YJfundDetailVC.m in Sources */,
 				1A26D11F1DB861E1006A6363 /* ViewController.m in Sources */,
 				1A78871E1E1DE084004F3271 /* SGPickerView.m in Sources */,
+				1A580C3F1EA9E70B0027C5A6 /* YJEveamentDetailVC.m in Sources */,
 				1A84BC201E7938AE006019CD /* YJMoneyDetailModel.m in Sources */,
 				1A0DF3231DBFAA2300E2EE9F /* ZWCollectionViewFlowLayout.m in Sources */,
 				1A7887101E1DE084004F3271 /* SGActionSheet.m in Sources */,
@@ -3352,6 +3369,7 @@
 				1AED50501E858272006A1C98 /* YJChatCell.m in Sources */,
 				1A0276691E84A850008E8E25 /* YJTableView.m in Sources */,
 				1A03A6C01E077616007EB922 /* YJEveWiatVC.m in Sources */,
+				1A580C421EA9ED480027C5A6 /* SDWeiXinPhotoContainerView.m in Sources */,
 				1A0276751E851176008E8E25 /* YJMoreGuideVC.m in Sources */,
 				1AC036301E77904A005FCB65 /* YJPayBindingVC.m in Sources */,
 				1AF3AB8F1E6567DD00F5E568 /* YJMyFindVC.m in Sources */,

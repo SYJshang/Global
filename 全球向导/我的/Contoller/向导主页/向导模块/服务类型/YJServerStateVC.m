@@ -147,7 +147,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
-    [self.navigationController pushViewController:[YJOtherServerVC new] animated:YES];
+//    [self.navigationController pushViewController:[YJOtherServerVC new] animated:YES];
     
 }
 

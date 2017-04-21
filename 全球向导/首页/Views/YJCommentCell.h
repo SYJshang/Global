@@ -16,6 +16,9 @@
 @property (nonatomic, strong) UILabel *timeLab;//时间
 @property (nonatomic, strong) UILabel *textLab;//评论内容
 
+@property (nonatomic, strong) UIButton *btn; //评价
+
+
 -(void)configCellWithText:(YJEvaModel *)text;
 +(CGFloat)cellHegith:(YJEvaModel *)text;
 

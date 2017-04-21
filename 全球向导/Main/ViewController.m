@@ -71,6 +71,50 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    
+    //获取版本信息
+    [WBHttpTool GET:[NSString stringWithFormat:@"%@/getAppVersion",BaseUrl] parameters:nil success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            
+            XXLog(@"%@",dict);
+            NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+            NSString *ver = [NSString stringWithFormat:@"%@",dict[@"data"][@"curVersion"]];
+            NSString *minver = [NSString stringWithFormat:@"%@",dict[@"data"][@"minVersion"]];
+
+            
+            if ([currentVersion compare:ver options:NSNumericSearch] == NSOrderedDescending || currentVersion == ver)
+            {
+            }else
+            {
+                
+                if ([currentVersion compare:minver options:NSNumericSearch] == NSOrderedDescending  || currentVersion == minver) {
+                    
+                    SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"有新版本升级，是否立即升级？" alertViewBottomViewType:(SGAlertViewBottomViewTypeTwo) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                    }];
+                    alertV.sure_btnTitleColor = TextColor;
+                    alertV.sure_btnTitle = @"立即升级";
+                    [alertV show];
+                    
+                }else{
+                    
+                    SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"当前版本过小，部分功能可能无法使用，是否升级？" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                    }];
+                    alertV.sure_btnTitleColor = TextColor;
+                    alertV.sure_btnTitle = @"立即升级";
+                    [alertV show];
+                    
+                }
+                
+            }
+            
+            
+        }
+        
+    } failure:^(NSError *error) {
+        
+    }];
 
 }
 
@@ -638,19 +682,19 @@
         
         YJFourCell *cells = [tableView dequeueReusableCellWithIdentifier:@"forCell"];
         YJNewFindModel *guideModel = self.userModel.guideRec;
-        if (guideModel) {
+       // if (guideModel) {
             cells.guideType = self.guideType;
             cells.guideModel = guideModel;
-        }
+       // }
         return cells;
         
     }else if (indexPath.section == 2){
         
         YJThreeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"thCell"];
-        if (self.userModel.guide) {
+
             cell.guideType = self.guideType;
             cell.guideModel = self.userModel.guide;
-        }
+
         
         return cell;
     }
@@ -670,9 +714,18 @@
     XXLog(@"当前组%ld 当前行%ld",indexPath.section,indexPath.row);
     
     if (indexPath.section == 1) {
-        YJGuideRecVC *vc = [[YJGuideRecVC alloc]init];
-        vc.ID = self.userModel.guideRec.ID;
-        [self.navigationController pushViewController:vc animated:YES];
+        
+        if (self.userModel.guideRec) {
+            YJGuideRecVC *vc = [[YJGuideRecVC alloc]init];
+            vc.ID = self.userModel.guideRec.ID;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else{
+            
+            return;
+            
+        }
+        
+       
         
     }else if (indexPath.section == 2){
 //        self.userModel.guide

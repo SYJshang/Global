@@ -436,7 +436,7 @@
             __weak typeof(cell) Scell = cell;
             Scell.serverBtn.userInteractionEnabled = NO;
             
-            _allPrice = [moddel.price integerValue] * select.count;
+            _allPrice = [moddel.price floatValue] * select.count;
             self.priceAll.text = [NSString stringWithFormat:@"%@ ￥%ld",YJLocalizedString(@"总计"),_allPrice];
             if (self.productArr.count != 0) {
                 
@@ -669,13 +669,12 @@
             
         }else{
             
-            _allPrice = _allPrice + [model.price integerValue] * cell.people;
+            _allPrice = _allPrice + [model.price floatValue] * cell.people;
             //            numbers = [NSString stringWithFormat:@"%@%@,",numbers,cell.numLab.text];
             
         }
         
-//        XXLog(@"%ld",_allPrice);
-//        XXLog(@"number >>>>%@",numbers);
+
         
         //给总价文本赋值
         self.priceAll.text = [NSString stringWithFormat:@"%@ ￥%ld",YJLocalizedString(@"总计"),_allPrice];

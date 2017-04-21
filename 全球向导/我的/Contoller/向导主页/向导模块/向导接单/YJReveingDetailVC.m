@@ -67,6 +67,11 @@
 
 
     if (state == 1 || state == 7) {
+        
+        [reduse removeFromSuperview];
+        [lianxi removeFromSuperview];
+        [jiedan removeFromSuperview];
+        
         [reduse setTitle:@"拒绝接单" forState:UIControlStateNormal];
         [reduse setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         [self.view addSubview:reduse];
@@ -99,6 +104,10 @@
 
   
     }else{
+        
+        [reduse removeFromSuperview];
+        [lianxi removeFromSuperview];
+        [jiedan removeFromSuperview];
         
         [reduse setTitle:@"联系用户" forState:UIControlStateNormal];
         [reduse setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];

@@ -19,7 +19,8 @@
     manger.requestSerializer.timeoutInterval = 10.f;
     [manger.requestSerializer didChangeValueForKey:@"timeoutInterval"];
     
-    [parameters setObject:@"1.0.0" forKey:@"v"];
+    NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    [parameters setObject:currentVersion forKey:@"v"];
     
     [manger GET:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 //AFN请求成功的时候调用
@@ -51,7 +52,8 @@
     mgr.requestSerializer.timeoutInterval = 10.f;
     [mgr.requestSerializer didChangeValueForKey:@"timeoutInterval"];
     
-    [parameters setObject:@"1.0.0" forKey:@"v"];
+    NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    [parameters setObject:currentVersion forKey:@"v"];
 
 
     [mgr POST:URLString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

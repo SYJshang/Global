@@ -21,7 +21,7 @@ typedef void (^buttonBlock)();
 
 +(YJDIYButton *)buttonWithFrame:(CGRect)frame imageName:(NSString *)imageName andBlock:(buttonBlock)myBlock;
 
-+(YJDIYButton *)buttonWithFrame:(CGRect)frame imageName:(NSString *)imageName selectedImageName:(NSString *)selectedImageName andBlock:(buttonBlock)myBlock;
++(YJDIYButton *)buttonWithFrame:(CGRect)frame imageName:(NSString *)imageName selectedImageName:(NSString *)selectedImageName title:(NSString *)title andBlock:(buttonBlock)myBlock;
 
 +(YJDIYButton *)buttonWithFrame:(CGRect)frame title:(NSString *)title imageName:(NSString *)imageName Block:(buttonBlock)block;
 

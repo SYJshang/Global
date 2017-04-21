@@ -126,6 +126,9 @@
         }else{
             
             self.nickName.text = @"未登录";
+            self.rankLab.text = @"";
+            self.topImageView.image = [UIImage imageNamed:@"bg"];
+            
             SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:dict[@"msg"] alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
             }];
             alertV.sure_btnTitleColor = TextColor;

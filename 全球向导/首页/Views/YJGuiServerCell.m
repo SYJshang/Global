@@ -81,7 +81,7 @@
     self.titleLab.text = model.name;
     self.descLab.text = model.desc;
     [self.imgIcon sd_setImageWithURL:[NSURL URLWithString:model.iconUrl] placeholderImage:[UIImage imageNamed:@"icon3"]];
-    self.priceLab.text = [NSString stringWithFormat:@"￥%ld起",(long)model.price];
+    self.priceLab.text = [NSString stringWithFormat:@"￥%@起",model.price];
     NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithString:self.priceLab.text];
     
     

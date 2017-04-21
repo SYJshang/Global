@@ -241,41 +241,46 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-//    if (indexPath.section == 2) {
-//        if (indexPath.row ==0 ) {
-//        }
-//        
-//        if (indexPath.row == 1) {
-//            [self payOrder];
-//        }
-//    }
+    if (indexPath.section == 2) {
+        if (indexPath.row ==0 ) {
+            SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"功能开发中" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            }];
+            alertV.sure_btnTitleColor = TextColor;
+            [alertV show];
+        }
+        
+        if (indexPath.row == 1) {
+            [self payOrder];
+        }
+    }
 
-    SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"功能开发中" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
-    }];
-    alertV.sure_btnTitleColor = TextColor;
-    [alertV show];
-}
+    }
+
+
 
 //支付
 - (void)payOrder{
     
-    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
-    [parameter setObject:self.orderID forKey:@"orderId"];
-//      /userInfo/myOrder/findAppPay/%@
-    [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myOrder/pay",BaseUrl] parameters:parameter success:^(id responseObject) {
+//    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+//    [parameter setObject:self.orderID forKey:@"orderId"];
+    //      /userInfo/myOrder/findAppPay/%@
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myOrder/findAppPay/%@",BaseUrl,self.orderID] parameters:nil success:^(id responseObject) {
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         XXLog(@"%@",dict);
         
         if ([dict[@"code"] isEqualToString:@"1"]) {
-           
-            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-            hud.mode = MBProgressHUDModeText;
-            hud.labelColor = [UIColor whiteColor];
-            hud.color = [UIColor blackColor];
-            hud.labelText = NSLocalizedString(@"支付成功！", @"HUD message title");
-            [hud hide:YES afterDelay:2.0];
+            
+            
+            // NOTE: 调用支付结果开始支付
+            NSString *appScheme = @"globaleguide";
+            NSString *order = dict[@"data"][@"payParam"];
 
+            [[AlipaySDK defaultService] payOrder:order fromScheme:appScheme callback:^(NSDictionary *resultDic) {
+
+            }];
+            
+            
         }else{
             
             SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
@@ -292,7 +297,6 @@
     }];
     
 }
-
 
 
 - (void)didReceiveMemoryWarning {

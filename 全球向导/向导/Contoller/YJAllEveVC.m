@@ -7,21 +7,50 @@
 //
 
 #import "YJAllEveVC.h"
+#import "YJPageModel.h"
+#import "YJEvaModel.h"
+#import "NoNetwork.h"
+#import "YJEveListCell.h"
+#import "YJCommentCell.h"
 
-@interface YJAllEveVC ()<UIWebViewDelegate>{
-    UIWebView *webView;
-    
-    UIActivityIndicatorView *activityIndicatorView;
-    UIView *opaqueView;
-}
+#define kSpace 10
+#define imgWidth ([UIScreen mainScreen].bounds.size.width - 65 - 20)/3//高宽相等
+
+@interface YJAllEveVC ()<UITableViewDelegate,UITableViewDataSource,ImageDelegate>
+
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) YJPageModel *pageModel;  //页数列表
+
+@property (nonatomic, strong) NoNetwork *noNetWork;
+
+@property (nonatomic, assign) int cureenPage;
+@property (nonatomic, strong) NSMutableArray *orderList; //订单列表
+@property (nonatomic, strong) NSMutableArray *totalCout; //总数
 
 @end
 
 @implementation YJAllEveVC
 
+- (NSMutableArray *)totalCout{
+    
+    if (_totalCout == nil) {
+        _totalCout = [NSMutableArray array];
+    }
+    return _totalCout;
+}
+
+- (NSMutableArray *)orderList{
+    
+    if (_orderList == nil) {
+        _orderList = [NSMutableArray array];
+    }
+    return _orderList;
+}
+
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+    self.view.backgroundColor = BackGray;
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
@@ -40,81 +69,266 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"更多评论";
-    // Do any additional setup after loading the view.
-    webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 64, screen_width, screen_height - 64)];
-    [webView setUserInteractionEnabled:YES];//是否支持交互
-    //[webView setDelegate:self];
-    webView.delegate = self;
-    [webView setOpaque:NO];//opaque是不透明的意思
-    [webView setScalesPageToFit:YES];//自动缩放以适应屏幕
-    [self.view addSubview:webView];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, screen_width, screen_height - 64) style:UITableViewStylePlain];
+    [self.view addSubview:self.tableView];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:1.0];
     
-    //加载网页的方式
-    //1.创建并加载远程网页
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/mainGuide/findEvaFinishPage/%@",BaseUrl,self.ID]];
-    [webView loadRequest:[NSURLRequest requestWithURL:url]];
-    
-    opaqueView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
-    activityIndicatorView = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
-    [activityIndicatorView setCenter:opaqueView.center];
-    [activityIndicatorView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
-    [opaqueView setBackgroundColor:[UIColor blackColor]];
-    [opaqueView setAlpha:0.6];
-    [self.view addSubview:opaqueView];
-    [opaqueView addSubview:activityIndicatorView];
+    //注册cell
+    [self.tableView registerClass:[YJEveListCell class] forCellReuseIdentifier:@"eveaCell"];
+    [self.tableView registerClass:[YJCommentCell class] forCellReuseIdentifier:@"noPicCell"];
     
     
-}
-
-
-- (void)webViewDidStartLoad:(UIWebView *)webView{
+    self.cureenPage = 1;
+    //    self.count = 0;
     
-    [activityIndicatorView startAnimating];
-    opaqueView.hidden = NO;
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView{
     
-    [activityIndicatorView startAnimating];
-    opaqueView.hidden = YES;
-    
-}
-
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
-    
-    XXLog(@"error code ==  %ld",error.code);
-    if (error.code  == -999) {
-        return;
+    NSString *str = [YJBNetWorkNotifionTool stringFormStutas];
+    XXLog(@"%@",str);
+    if ([str isEqualToString:@"3"]) {
+        
+        //设置网络状态
+        [self NetWorks];
     }
-}
-
-
-
-//UIWebView如何判断 HTTP 404 等错误
--(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
-    NSURL *url = [NSURL URLWithString:@"http://www.baidu.com"];
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    if ((([httpResponse statusCode]/100) == 2)) {
-        // self.earthquakeData = [NSMutableData data];
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
-        [ webView loadRequest:[ NSURLRequest requestWithURL: url]];
-        webView.delegate = self;
-    } else {
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObject:
-                                  NSLocalizedString(@"HTTP Error",
-                                                    @"Error message displayed when receving a connection error.")
-                                                             forKey:NSLocalizedDescriptionKey];
-        NSError *error = [NSError errorWithDomain:@"HTTP" code:[httpResponse statusCode] userInfo:userInfo];
+        [self getNetWork];
+    }];
+    
+    self.tableView.mj_header.automaticallyChangeAlpha = YES;
+    [self.tableView.mj_header beginRefreshing];
+    
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         
-        if ([error code] == 404) {
-            webView.hidden = YES;
+        
+        if (self.pageModel.totalCount <= self.totalCout.count ) {
+            
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            
+        }else{
+            [self getMoreData];
         }
         
-    }
+        
+    }];
+
 }
 
+//设置网络状态
+- (void)NetWorks{
+    
+    self.tableView.hidden = YES;
+    
+    [self.noNetWork removeFromSuperview];
+    
+    self.noNetWork = [[NoNetwork alloc]init];
+    self.noNetWork.titleLabel.text = @"数据请求失败\n请设置网络之后重试";
+    __weak typeof(self) weakSelf = self;
+    self.noNetWork.btnBlock = ^{
+        [weakSelf getNetWork];
+    };
+    [self.view addSubview:self.noNetWork];
+}
+
+- (void)noDatas{
+    
+    self.tableView.hidden = YES;
+    
+    [self.noNetWork removeFromSuperview];
+    
+    self.noNetWork = [[NoNetwork alloc]init];
+    self.noNetWork.btrefresh.hidden = YES;
+    self.noNetWork.titleLabel.text = @"暂无数据\n赶快去整出动静吧。。";
+    __weak typeof(self) weakSelf = self;
+    self.noNetWork.btnBlock = ^{
+        [weakSelf getNetWork];
+    };
+    [self.view addSubview:self.noNetWork];
+}
+
+
+- (void)getNetWork{
+    
+    
+    NSMutableDictionary *parpermt = [NSMutableDictionary dictionary];
+    [parpermt setObject:self.ID forKey:@"guideId"];
+    
+    [WBHttpTool GET:[NSString stringWithFormat:@"%@/mainGuide/findEvaFinish",BaseUrl] parameters:parpermt success:^(id responseObject) {
+        
+        self.cureenPage = 1;
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        XXLog(@"%@",dict);
+        
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            
+            self.totalCout = [YJEvaModel mj_objectArrayWithKeyValuesArray:dict[@"data"][@"evaFinishList"]];
+            self.pageModel = [YJPageModel mj_objectWithKeyValues:dict[@"data"][@"queryEvaFinish"][@"page"]];
+            
+            if (self.totalCout.count == 0) {
+                [self noDatas];
+            }
+            
+            
+            [self.tableView.mj_header endRefreshing];
+            [self.tableView.mj_footer endRefreshing];
+            [self.tableView reloadData];
+        }else{
+            
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
+            
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+        //       [self getNetWork];
+        
+    }];
+    
+}
+
+- (void)getMoreData{
+    
+    
+    if (self.cureenPage < self.pageModel.totalPage) {
+        self.cureenPage ++;
+    }
+    
+    NSString *curee = [NSString stringWithFormat:@"%d",self.cureenPage];
+    NSMutableDictionary *parmeter = [NSMutableDictionary dictionary];
+    [parmeter setObject:curee forKey:@"currentPage"];
+    [parmeter setObject:self.ID forKey:@"guideId"];
+
+    [WBHttpTool Post:[NSString stringWithFormat:@"%@/mainGuide/findEvaFinish",BaseUrl] parameters:parmeter success:^(id responseObject) {
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        XXLog(@"%@",dict);
+        
+        if ([dict[@"code"] isEqualToString:@"1"]) {
+            
+            self.orderList = [YJEvaModel mj_objectArrayWithKeyValuesArray:dict[@"data"][@"evaFinishList"]];
+            self.pageModel = [YJPageModel mj_objectWithKeyValues:dict[@"data"][@"queryEvaFinish"][@"page"]];
+            
+            for (YJEvaModel *model in self.orderList) {
+                [self.totalCout addObject:model];
+            }
+            
+            if (self.totalCout.count < self.pageModel.totalCount) {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            }else{
+                [self.tableView.mj_footer endRefreshing];
+            }
+            
+            
+            [self.tableView reloadData];
+        }else{
+            
+            SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                
+            }];
+            alert.sure_btnTitleColor = TextColor;
+            [alert show];
+            
+        }
+        
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    
+}
+
+
+#pragma mark - table view dataSource
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    YJEvaModel *model = self.totalCout[indexPath.row];
+    NSArray *imgs;
+
+    if (model.picUrls != nil && ![model.picUrls isKindOfClass:[NSNull class]] && ![model.picUrls isEqualToString:@""]) {
+       imgs = [model.picUrls componentsSeparatedByString:@","];
+    }else{
+        imgs = nil;
+    }
+    
+    
+    CGFloat heg;
+    if (imgs.count == 0) {
+        heg = 0;
+  
+    }else{
+        heg = (kSpace+imgWidth)*(imgs.count / 4 + 1);
+    }
+    
+    XXLog(@"cell 高度为：%f",[YJEveListCell cellHegith:model] + heg);
+    
+   
+
+    
+    
+    return [YJEveListCell cellHegith:model];
+
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    
+    XXLog(@"当前是共 %ld",self.totalCout.count);
+    
+    if (self.totalCout) {
+        return self.totalCout.count;
+    }
+    
+    return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    YJEvaModel *model = self.totalCout[indexPath.row];
+//    if (model.picUrls != nil && ![model.picUrls isKindOfClass:[NSNull class]] && ![model.picUrls isEqualToString:@""]) {
+//        YJEveListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"eveaCell" forIndexPath:indexPath];
+//        cell.myDelegate = self;
+//        YJEvaModel *model = self.totalCout[indexPath.row];
+//        cell.model = model;
+//        
+//        return cell;
+// 
+//    }
+    
+    YJCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"noPicCell"];
+    cell.model = model;
+    return cell;
+    
+}
+
+#pragma mark - table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+
+}
+
+
+#pragma mark - 点击图片代理
+- (void)checkImage:(NSString *)imgname{
+    
+    
+    
+}
 
 //设置状态栏颜色
 - (UIStatusBarStyle)preferredStatusBarStyle{

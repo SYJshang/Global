@@ -52,7 +52,23 @@
     NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
     [parameter setObject:self.model.ID forKey:@"id"];
     [parameter setObject:@"1" forKey:@"peopleNumberLimit"];
-    [parameter setObject:self.textFiled.text forKey:@"price"];
+
+    CGFloat price = [self.textFiled.text floatValue];
+    if (price > 1 && price < 100000) {
+        [parameter setObject:self.textFiled.text forKey:@"price"];
+    }else{
+        
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelColor = [UIColor whiteColor];
+        hud.color = [UIColor blackColor];
+        hud.labelText = NSLocalizedString(@"控制价格在1-100000之间!", @"HUD message title");
+        [hud hide:YES afterDelay:2.0];
+        [self.navigationController popViewControllerAnimated:YES];
+        
+        return;
+    }
+    
 //    if (self.model.status == 0) {
         [parameter setObject:@"1" forKey:@"status"];
         

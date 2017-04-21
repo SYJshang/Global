@@ -87,6 +87,8 @@
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     button.tempBlock=myBlock;
+    [button addTarget:button action:@selector(buttonBlockClick:) forControlEvents:UIControlEventTouchUpInside];
+
     
     return button;
     
@@ -114,14 +116,21 @@
     return button;
     
 }
-+(YJDIYButton *)buttonWithFrame:(CGRect)frame imageName:(NSString *)imageName selectedImageName:(NSString *)selectedImageName andBlock:(buttonBlock)myBlock{
++(YJDIYButton *)buttonWithFrame:(CGRect)frame imageName:(NSString *)imageName selectedImageName:(NSString *)selectedImageName title:(NSString *)title andBlock:(buttonBlock)myBlock{
     
-    YJDIYButton *button = [YJDIYButton buttonWithFrame:frame imageName:imageName andBlock:myBlock];
+    YJDIYButton *button = [YJDIYButton buttonWithType:UIButtonTypeCustom];
+    button.titleLabel.font = [UIFont systemFontOfSize:12];
+    [button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     
-    [button setBackgroundImage:[UIImage imageNamed:selectedImageName] forState:UIControlStateHighlighted];
+    [button setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:selectedImageName] forState:UIControlStateSelected];
+    [button setTitle:title forState:UIControlStateNormal];
+
+    button.tempBlock=myBlock;
     
-    [button setBackgroundImage:[UIImage imageNamed:selectedImageName] forState:UIControlStateSelected];
-    
+    [button addTarget:button action:@selector(buttonBlockClick:) forControlEvents:UIControlEventTouchUpInside];
+
+
     return button;
     
 }
@@ -131,6 +140,7 @@
     YJDIYButton *button = [YJDIYButton buttonWithType:UIButtonTypeCustom];//自定义
     
     button.frame = frame;
+    
     
     //[button setTitle:title forState:UIControlStateNormal];
     

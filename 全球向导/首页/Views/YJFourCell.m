@@ -18,7 +18,7 @@
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
-        self.imageV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"123"]];
+        self.imageV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"big_horse"]];
         [self.contentView addSubview:self.imageV];
         self.imageV.sd_layout.leftSpaceToView(self.contentView,5).rightSpaceToView(self.contentView,5).topSpaceToView(self.contentView,5).bottomSpaceToView(self.contentView,5);
         self.imageV.layer.masksToBounds = YES;

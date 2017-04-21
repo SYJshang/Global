@@ -51,6 +51,17 @@
     self.timeLab.font = [UIFont systemFontOfSize:AdaptedWidth(13)];
     self.timeLab.sd_layout.leftSpaceToView(self.icon,5).topSpaceToView(self.nameLab,5).heightIs(15).widthIs(150);
     
+    self.btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.btn setImage:[UIImage imageNamed:@"y_bad"] forState:UIControlStateNormal];
+    [self.btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [self.btn setTitle:@"差评" forState:UIControlStateNormal];
+    [self.contentView addSubview:self.btn];
+    self.btn.titleLabel.font = [UIFont systemFontOfSize:AdaptedWidth(12)];
+    self.btn.userInteractionEnabled = NO;
+    self.btn.sd_layout.rightSpaceToView(self.contentView, 10).topEqualToView(self.timeLab).heightIs(20).widthIs(45);
+    
+
+    
     self.textLab = [[UILabel alloc]init];
     [self.contentView addSubview:self.textLab];
     self.textLab.textColor = [UIColor lightGrayColor];
@@ -103,7 +114,28 @@
     self.timeLab.text = model.addTime;
     self.textLab.text = model.eva;
 
-    
+    if (model.evaValue == 1) {
+        [self.btn setImage:[UIImage imageNamed:@"y_good"] forState:UIControlStateNormal];
+        [self.btn setTitle:@"好评" forState:UIControlStateNormal];
+        
+    }else if (model.evaValue == 2){
+        
+        [self.btn setImage:[UIImage imageNamed:@"y_normal"] forState:UIControlStateNormal];
+        [self.btn setTitle:@"一般" forState:UIControlStateNormal];
+        
+        
+    }else if (model.evaValue == 3){
+        
+        [self.btn setImage:[UIImage imageNamed:@"y_bad"] forState:UIControlStateNormal];
+        [self.btn setTitle:@"差评" forState:UIControlStateNormal];
+        
+        
+    }else{
+        [self.btn setImage:[UIImage imageNamed:@"y_good"] forState:UIControlStateNormal];
+        [self.btn setTitle:@"好评" forState:UIControlStateNormal];
+        
+    }
+
 }
 
 

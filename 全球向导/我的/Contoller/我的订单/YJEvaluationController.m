@@ -44,6 +44,10 @@
 
 @property (nonatomic, strong) NSString *photoID; //图片上传id
 
+@property (nonatomic, strong) YJDIYButton *badBtn;
+@property (nonatomic, strong) YJDIYButton *norBtn;
+@property (nonatomic, strong) YJDIYButton *goodBtn;
+
 @end
 
 @implementation YJEvaluationController
@@ -80,7 +84,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = BackGray;
     [self setArtile];
     
     self.photoID = @"";
@@ -96,16 +100,65 @@
 //设置上边头像及输入文字信息布局
 - (void)setArtile{
     
-//    self.icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"456"]];
-//    [self.view addSubview:self.icon];
-//    self.icon.sd_layout.leftSpaceToView(self.view,10).topSpaceToView(self.view,5).widthIs(80).heightIs(80);
+    self.icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"head"]];
+    [self.view addSubview:self.icon];
+    self.icon.sd_layout.leftSpaceToView(self.view,10).topSpaceToView(self.view,70).widthIs(80).heightIs(80);
+    
+    NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"userInfo.plist"];
+    NSDictionary *data = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    if (data) {
+        [self.icon sd_setImageWithURL:[NSURL URLWithString:data[@"headUrl"]] placeholderImage:[UIImage imageNamed:@"head"]];
+    }
+    
+    
+    
+    UILabel *label = [[UILabel alloc]init];
+    [self.view addSubview:label];
+    label.textColor = [UIColor blackColor];
+    label.textAlignment = NSTextAlignmentLeft;
+    label.text = @"向导的服务打分";
+    label.font = [UIFont systemFontOfSize:AdaptedWidth(15)];
+    label.sd_layout.leftSpaceToView(self.icon, 10).topSpaceToView(self.view, 85).heightIs(20).rightSpaceToView(self.view, 10);
+    
+    
+    self.badBtn = [YJDIYButton buttonWithFrame:CGRectMake(0, 0, 0, 0) imageName:@"bad" selectedImageName:@"y_bad" title:@"差评" andBlock:^{
+        
+        self.norBtn.selected = NO;
+        self.goodBtn.selected = NO;
+        self.badBtn.selected = YES;
+        
+    }];
+    [self.view addSubview:self.badBtn];
+    self.badBtn.sd_layout.leftSpaceToView(self.icon, 12).topSpaceToView(label, 10).widthIs(45).heightIs(20);
+    
+    self.norBtn = [YJDIYButton buttonWithFrame:CGRectMake(0, 0, 0, 0) imageName:@"normal" selectedImageName:@"y_normal" title:@"一般" andBlock:^{
+        
+        self.norBtn.selected = YES;
+        self.goodBtn.selected = NO;
+        self.badBtn.selected = NO;
+        
+    }];
+    [self.view addSubview:self.norBtn];
+    self.norBtn.sd_layout.leftSpaceToView(self.badBtn, 25).topSpaceToView(label, 10).widthIs(45).heightIs(20);
+    
+    self.goodBtn = [YJDIYButton buttonWithFrame:CGRectMake(0, 0, 0, 0) imageName:@"good" selectedImageName:@"y_good" title:@"好评" andBlock:^{
+        
+        self.norBtn.selected = NO;
+        self.goodBtn.selected = YES;
+        self.badBtn.selected = NO;
+        
+    }];
+    [self.view addSubview:self.goodBtn];
+    self.goodBtn.sd_layout.leftSpaceToView(self.norBtn, 25).topSpaceToView(label, 10).widthIs(45).heightIs(20);
+    
     
     self.textView = [[UITextView alloc]init];
     self.textView.delegate = self;
     [self.view addSubview:self.textView];
-    self.textView.sd_layout.leftSpaceToView(self.view,10).topSpaceToView(self.view,5).rightSpaceToView(self.view,10).heightIs(160);
-    self.textView.placeholder = @"亲~~ 您可以在这里输入评价那~~";
-    self.textView.limitLength = @20;
+//    self.textView.backgroundColor
+    self.textView.sd_layout.leftSpaceToView(self.view,10).topSpaceToView(self.view,155).rightSpaceToView(self.view,10).heightIs(100);
+    self.textView.placeholder = @"亲~~ 在这里你可以写下对向导的评价那~~";
+    self.textView.limitLength = @200;
     self.textView.font = [UIFont systemFontOfSize:AdaptedWidth(15)];
     self.textView.textColor = [UIColor colorWithRed:70.0 / 255.0 green:70.0 / 255.0 blue:70.0 / 255.0 alpha:1.0];
 
@@ -125,6 +178,25 @@
         [parameter setObject:self.photoID forKey:@"picIds"];
     }
     [parameter setObject:self.textView.text forKey:@"eva"];
+    
+    if (self.badBtn.selected == YES) {
+        [parameter setObject:@"3" forKey:@"evaValue"];
+    }else if (self.norBtn.selected == YES){
+        [parameter setObject:@"2" forKey:@"evaValue"];
+    }else if (self.goodBtn.selected == YES){
+        [parameter setObject:@"1" forKey:@"evaValue"];
+    }else{
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelColor = [UIColor whiteColor];
+        hud.color = [UIColor blackColor];
+        hud.labelText = NSLocalizedString(@"请选择对向导的评价!", @"HUD message title");
+        [hud hide:YES afterDelay:2.0];
+        [self.navigationController popViewControllerAnimated:YES];
+        
+        return;
+    }
+    
     
     [WBHttpTool Post:[NSString stringWithFormat:@"%@/userInfo/myEva/evaByOrderId",BaseUrl] parameters:parameter success:^(id responseObject) {
         
@@ -261,7 +333,7 @@
     layout.itemSize = CGSizeMake(_itemWH, _itemWH);
     layout.minimumInteritemSpacing = _margin;
     layout.minimumLineSpacing = _margin;
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 160, self.view.tz_width, self.view.tz_height - 160) collectionViewLayout:layout];
+    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 265, self.view.tz_width, self.view.tz_height - 265) collectionViewLayout:layout];
     //    _collectionView = [[UICollectionView alloc]init];
     //    _collectionView.collectionViewLayout = layout;
     CGFloat rgb = 244 / 255.0;

@@ -30,6 +30,6 @@
 @property (nonatomic , copy) NSString              * page;
 @property (nonatomic , assign) NSInteger              iconPicId;
 @property (nonatomic , copy) NSString              * desc;
-@property (nonatomic , assign) NSInteger              price;
+@property (nonatomic , strong) NSString            *  price;
 
 @end

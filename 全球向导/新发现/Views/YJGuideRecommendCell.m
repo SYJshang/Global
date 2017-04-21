@@ -15,7 +15,7 @@
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
-        UIImage *abc = [UIImage imageNamed:@"123"];
+        UIImage *abc = [UIImage imageNamed:@"big_house"];
         self.imageV = [[UIImageView alloc]initWithImage:abc];
         [self.contentView addSubview:self.imageV];
         self.imageV.sd_layout.leftSpaceToView(self.contentView,5).rightSpaceToView(self.contentView,5).topSpaceToView(self.contentView,5).bottomSpaceToView(self.contentView,5);
@@ -42,7 +42,7 @@
         
         
         
-        self.icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"456"]];
+        self.icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"head"]];
         [self.imageV addSubview:self.icon];
         self.icon.sd_layout.leftEqualToView(self.title).bottomSpaceToView(self.imageV,5).heightIs(60 * KWidth_Scale).widthIs(60 * KWidth_Scale);
         self.icon.layer.masksToBounds = YES;
@@ -92,7 +92,7 @@
 - (void)setModel:(YJNFindGuideModel *)model{
     
     _model = model;
-    [self.imageV sd_setImageWithURL:[NSURL URLWithString:model.coverPicUrl] placeholderImage:[UIImage imageNamed:@"big_house"]];
+    [self.imageV sd_setImageWithURL:[NSURL URLWithString:model.coverPicUrl] placeholderImage:[UIImage imageNamed:@"big_horse"]];
     self.title.text = model.bigTitle;
     self.descTitle.text = model.smallTitle;
     [self.icon sd_setImageWithURL:[NSURL URLWithString:model.headUrl] placeholderImage:[UIImage imageNamed:@"head"]];
