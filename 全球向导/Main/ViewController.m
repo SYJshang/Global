@@ -30,16 +30,6 @@
 #import "YJTravelController.h"
 
 
-
-
-#define STOREAPPID @"1104867082"
-
-#define Height  CGRectGetHeight([UIScreen mainScreen].bounds)
-#define Width   CGRectGetWidth([UIScreen mainScreen].bounds)
-
-#define TextColor [UIColor colorWithRed:255 / 255.0 green:198 / 255.0 blue:0 / 255.0 alpha:1.0]
-
-
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,LunboDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -240,7 +230,7 @@
 - (void)setTable{
     
     //穿创建tableView
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Width, Height) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height) style:UITableViewStylePlain];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //tableView的代理
     __weak __typeof(self) weakSelf = self;

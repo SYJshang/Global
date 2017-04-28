@@ -8,15 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "YJEvaModel.h"
+#import "SDPhotoBrowser.h"
+
 
 
 @protocol ImageDelegate <NSObject>
 
--(void)checkImage:(NSString*)imgname;
+-(void)checkImage:(NSInteger )tag;
 
 @end
 
-@interface YJEveListCell : UITableViewCell
+@interface YJEveListCell : UITableViewCell<SDPhotoBrowserDelegate>
 
 @property (nonatomic, strong) UIImageView *icon;//头像
 @property (nonatomic, strong) UILabel *nameLab;//名称
@@ -27,6 +29,8 @@
 @property (nonatomic, strong) NSString *imgStr;
 
 @property (nonatomic, strong) UIView *view;
+
+@property (nonatomic, strong) SDPhotoBrowser *photoBrowser;
 
 -(void)configCellWithText:(YJEvaModel *)text;
 +(CGFloat)cellHegith:(YJEvaModel *)text;

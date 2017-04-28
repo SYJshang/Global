@@ -11,12 +11,16 @@
 #import "YJEvaModel.h"
 #import "NoNetwork.h"
 #import "YJEveListCell.h"
-#import "YJCommentCell.h"
+#import "SDPhotoBrowser.h"
 
 #define kSpace 10
 #define imgWidth ([UIScreen mainScreen].bounds.size.width - 65 - 20)/3//高宽相等
 
-@interface YJAllEveVC ()<UITableViewDelegate,UITableViewDataSource,ImageDelegate>
+@interface YJAllEveVC ()<UITableViewDelegate,UITableViewDataSource,ImageDelegate,SDPhotoBrowserDelegate>{
+    
+    SDPhotoBrowser *photoBrowser;
+
+}
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) YJPageModel *pageModel;  //页数列表
@@ -26,6 +30,7 @@
 @property (nonatomic, assign) int cureenPage;
 @property (nonatomic, strong) NSMutableArray *orderList; //订单列表
 @property (nonatomic, strong) NSMutableArray *totalCout; //总数
+
 
 @end
 
@@ -78,7 +83,6 @@
     
     //注册cell
     [self.tableView registerClass:[YJEveListCell class] forCellReuseIdentifier:@"eveaCell"];
-    [self.tableView registerClass:[YJCommentCell class] forCellReuseIdentifier:@"noPicCell"];
     
     
     self.cureenPage = 1;
@@ -275,7 +279,7 @@
 
     
     
-    return [YJEveListCell cellHegith:model];
+    return [YJEveListCell cellHegith:model] + heg;
 
 }
 
@@ -308,8 +312,9 @@
 // 
 //    }
     
-    YJCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"noPicCell"];
+    YJEveListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"eveaCell"];
     cell.model = model;
+    cell.myDelegate = self;
     return cell;
     
 }
@@ -324,11 +329,53 @@
 
 
 #pragma mark - 点击图片代理
-- (void)checkImage:(NSString *)imgname{
+- (void)checkImage:(NSInteger)tag{
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    
+    UIImageView *img = (UIImageView *)[self.view viewWithTag:tag];
+    YJEveListCell *cell = (YJEveListCell *)[[img superview] superview];
     
     
+    YJEvaModel *model = self.totalCout[indexPath.row];
+    NSArray *imgs;
+    if (model.picUrls) {
+    imgs = [model.picUrls componentsSeparatedByString:@","];
+
+    }
+    
+    photoBrowser = [SDPhotoBrowser new];
+    photoBrowser.delegate = self;
+    photoBrowser.currentImageIndex = tag;
+    photoBrowser.imageCount = imgs.count;
+    photoBrowser.sourceImagesContainerView = self.tableView;
+    
+    [photoBrowser show];
     
 }
+
+
+- (NSURL *)photoBrowser:(SDPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index
+{
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    YJEvaModel *model = self.totalCout[indexPath.row];
+    NSArray *imgs;
+    if (model.picUrls) {
+        imgs = [model.picUrls componentsSeparatedByString:@","];
+        
+    }
+    NSURL *url = [NSURL URLWithString:imgs[index]];
+    return url;
+}
+
+- (UIImage *)photoBrowser:(SDPhotoBrowser *)browser placeholderImageForIndex:(NSInteger)index
+{
+    
+    return [UIImage imageNamed:@"horse"];
+}
+
+
 
 //设置状态栏颜色
 - (UIStatusBarStyle)preferredStatusBarStyle{

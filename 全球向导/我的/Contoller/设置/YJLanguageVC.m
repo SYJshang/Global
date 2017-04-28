@@ -8,6 +8,7 @@
 //
 
 #import "YJLanguageVC.h"
+#import "YJTabBarController.h"
 
 
 static NSString *appLanguage = @"appLanguage";
@@ -152,22 +153,36 @@ static NSString *appLanguage = @"appLanguage";
         
         [[NSUserDefaults standardUserDefaults] setObject:@"zh-Hans" forKey:appLanguage];
         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"state"];
+        [self languageFinsh];
         
     }else if (indexPath.row == 2){
         
         [[NSUserDefaults standardUserDefaults] setObject:@"zh-Hant" forKey:appLanguage];
         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"state"];
+        [self languageFinsh];
+
     
     }else{
         
         [[NSUserDefaults standardUserDefaults] setObject:@"en" forKey:appLanguage];
         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"state"];
- 
+        [self languageFinsh];
+
+
     }
     
     [self.tableView reloadData];
     
 
+}
+
+- (void)languageFinsh{
+    
+    UIWindow * window =[UIApplication sharedApplication].keyWindow;
+    YJTabBarController * rct=[[YJTabBarController alloc]init];
+    rct.selectedIndex = 4;
+    window.rootViewController=rct;
+    
 }
 
 

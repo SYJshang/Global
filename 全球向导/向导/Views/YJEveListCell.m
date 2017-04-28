@@ -146,18 +146,17 @@
 
     }
     
-    [self imageViewWithImg:model.picUrls];
-
-    
-    
+    if (model.picUrls) {
+        [self imageViewWithImg:model.picUrls];
+        
+    }
     
 }
 
 
 -(void)imageViewWithImg:(NSString *)imgName{
     
-    
-//    self.view = [[UIView alloc]init];
+    [self.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     if (imgName != nil && ![imgName isKindOfClass:[NSNull class]] && ![imgName isEqualToString:@""]){
         
@@ -176,9 +175,6 @@
         }
 
         
-    }else{
-        
-        self.view = nil;
     }
     
 }
@@ -186,13 +182,43 @@
 
 -(void)tapAction:(UITapGestureRecognizer *)tap{
    
+
     NSArray *imgs = [self.imgStr componentsSeparatedByString:@","];
 
-    if (_myDelegate && [_myDelegate respondsToSelector:@selector(checkImage:)]) {
-        [_myDelegate checkImage:imgs[tap.view.tag]];
-    }
+    
+//    if (_myDelegate && [_myDelegate respondsToSelector:@selector(checkImage:)]) {
+//        [_myDelegate checkImage:tap.view.tag];
+//    }
+    
+    _photoBrowser = [SDPhotoBrowser new];
+    _photoBrowser.delegate = self;
+    _photoBrowser.currentImageIndex = tap.view.tag;
+    _photoBrowser.imageCount = imgs.count;
+    _photoBrowser.sourceImagesContainerView = self.contentView;
+    
+    [_photoBrowser show];
     
 }
+
+
+- (NSURL *)photoBrowser:(SDPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index
+{
+    
+    
+    NSArray *imgs = [self.imgStr componentsSeparatedByString:@","];
+    NSURL *url = [NSURL URLWithString:imgs[index]];
+    return url;
+}
+
+- (UIImage *)photoBrowser:(SDPhotoBrowser *)browser placeholderImageForIndex:(NSInteger)index
+{
+
+
+    return [UIImage imageNamed:@"horse"];
+}
+
+
+
 
 
 

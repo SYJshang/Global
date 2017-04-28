@@ -147,7 +147,7 @@ static NSString *appLanguage = @"appLanguage";
     //请求获取位置服务
     self.location = [[CLLocationManager alloc]init];
     
-    [self.location requestAlwaysAuthorization];
+    [self.location requestWhenInUseAuthorization];
     
     
 
