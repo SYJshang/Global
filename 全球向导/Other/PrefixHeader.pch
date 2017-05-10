@@ -24,6 +24,7 @@
 #import "SGActionSheet.h"
 #import "SGAlertView.h"
 #import "NoNetwork.h"
+#import "YJLoginFirstController.h"
 #import <MJRefresh.h>
 #import "YJBNetWorkNotifionTool.h"
 #import "UIImageView+WebCache.h"
@@ -41,6 +42,7 @@
 #import <AdSupport/AdSupport.h>
 #import <UMMobClick/MobClick.h>
 
+#import "UINavigationController+FDFullscreenPopGesture.h"
 
 
 
@@ -96,7 +98,7 @@
 #define saveSelectArr @"saveSelectArr"
 
 
-#define kChatUserId @"ChatUserId"// 环信账号
+#define kChatUserId @"ChatUserId" //环信账号
 #define kChatUserNick @"ChatUserNick"
 #define kChatUserPic @"ChatUserPic"
 

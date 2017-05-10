@@ -18,6 +18,7 @@
 
 @end
 
+
 @implementation YJLunboWebVC
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -44,7 +45,7 @@
     
     self.title = @"详情";
     // Do any additional setup after loading the view.
-    webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, screen_width, screen_height)];
+    webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 64, screen_width, screen_height - 64)];
     [webView setUserInteractionEnabled:YES];//是否支持交互
     //[webView setDelegate:self];
     webView.delegate = self;

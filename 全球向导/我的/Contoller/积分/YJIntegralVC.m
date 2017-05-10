@@ -12,7 +12,7 @@
 #import "YJDescRankCell.h"
 #import "YJDIYButton.h"
 #import "YJIntegraModel.h"
-#import "YJRanKDetailVC.h"
+#import "YJIntralDetailVC.h"
 
 
 @interface YJIntegralVC ()<UITableViewDataSource,UITableViewDelegate>
@@ -86,6 +86,14 @@
             
             [self.tableView reloadData];
             
+        }else if ([data[@"code"] isEqualToString:@"2"]){
+            
+            SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"登录失效,请重新登录！" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+            }];
+            alertV.sure_btnTitleColor = TextColor;
+            [alertV show];
+            
         }else{
             
             SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:data[@"msg"] alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
@@ -126,7 +134,7 @@
         
         YJDIYButton *btn = [YJDIYButton buttonWithFrame:CGRectMake(screen_width - 50, 5, 40, 20) title:@"MORE" imageName:@"arrow-right" Block:^{
             
-            YJRanKDetailVC *vc = [[YJRanKDetailVC alloc]init];
+            YJIntralDetailVC *vc = [[YJIntralDetailVC alloc]init];
             [self.navigationController pushViewController:vc animated:YES];
             
         }];

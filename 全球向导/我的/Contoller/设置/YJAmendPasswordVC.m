@@ -158,7 +158,9 @@
                 
                 UIAlertAction *action = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     
-                    [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+//                    [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+                    [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+
                     
                 }];
                 [action setValue:TextColor forKey:@"titleTextColor"];
@@ -176,6 +178,16 @@
                 
                 [self presentViewController:alert animated:YES completion:nil];
 
+                
+            }else if ([dict[@"code"] isEqualToString:@"2"]){
+                
+                SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"登录失效,请重新登录！" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+//                    [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+                    [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+
+                }];
+                alertV.sure_btnTitleColor = TextColor;
+                [alertV show];
                 
             }else{
                [self title:@"提示" message:dict[@"msg "] titleColor:TextColor messageColor:[UIColor grayColor] leftBtnColor:TextColor rightColor:[UIColor grayColor]];

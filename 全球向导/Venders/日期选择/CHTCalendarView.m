@@ -580,6 +580,13 @@ static const CGFloat timeInterval = 8 * 60 * 60;
             hud.labelText = NSLocalizedString(@"上传成功", @"HUD message title");
             [hud hide:YES afterDelay:2.0];
             
+        }else if ([dict[@"code"] isEqualToString:@"2"]){
+            
+            SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"登录失效,请重新登录！" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            }];
+            alertV.sure_btnTitleColor = TextColor;
+            [alertV show];
+            
         }
         
     } failure:^(NSError *error) {
@@ -603,6 +610,13 @@ static const CGFloat timeInterval = 8 * 60 * 60;
             hud.color = [UIColor blackColor];
             hud.labelText = NSLocalizedString(@"取消成功", @"HUD message title");
             [hud hide:YES afterDelay:2.0];
+            
+        }else if ([dict[@"code"] isEqualToString:@"2"]){
+            
+            SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"登录失效,请重新登录！" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+            }];
+            alertV.sure_btnTitleColor = TextColor;
+            [alertV show];
             
         }
         

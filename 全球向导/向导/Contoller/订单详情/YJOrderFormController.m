@@ -206,7 +206,9 @@
             SGAlertView *alert = [SGAlertView alertViewWithTitle:@"未登录" contentTitle:@"是否立即登录" alertViewBottomViewType:SGAlertViewBottomViewTypeTwo didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
                 
                 if (index == 1) {
-                    [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+//                    [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+                    [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+
                 }
                 
             }];
@@ -742,6 +744,14 @@
             vc.orderID = model.orderId;
             vc.model = model;
             [self.navigationController pushViewController:vc animated:YES];
+        }else if ([dict[@"code"] isEqualToString:@"2"]){
+            
+            SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"登录失效,请重新登录！" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+            }];
+            alertV.sure_btnTitleColor = TextColor;
+            [alertV show];
+            
         }else{
             
             SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {

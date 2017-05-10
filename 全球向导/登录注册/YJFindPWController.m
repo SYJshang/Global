@@ -47,8 +47,31 @@
 
 @implementation YJFindPWController
 
+
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+
     
     self.view.backgroundColor = [UIColor whiteColor];
     _countDownForBtn = [[CountDown alloc] init];
@@ -99,7 +122,7 @@
 //    }
 //    [rootVC dismissViewControllerAnimated:YES completion:nil];
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 //键盘监听
@@ -144,8 +167,11 @@
 //点击跳转
 - (void)loginClick:(UIButton *)btn{
     
-    YJFinshController *vc = [[YJFinshController alloc]init];
-    [self presentViewController:vc animated:NO completion:nil];
+//    YJFinshController *vc = [[YJFinshController alloc]init];
+//    [self presentViewController:vc animated:NO completion:nil];
+    
+    [self.navigationController pushViewController:[YJFinshController new] animated:YES];
+
     
 }
 //加载布局
@@ -353,8 +379,11 @@
             NSString *code = dict[@"code"];
             if ([code isEqualToString:@"1"]) {
                 
-                YJFinshController *vc = [[YJFinshController alloc]init];
-                [self presentViewController:vc animated:NO completion:nil];
+//                YJFinshController *vc = [[YJFinshController alloc]init];
+//                [self presentViewController:vc animated:NO completion:nil];
+                
+                [self.navigationController pushViewController:[YJFinshController new] animated:YES];
+
                 
             }else{
                 

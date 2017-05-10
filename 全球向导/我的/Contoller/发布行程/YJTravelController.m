@@ -63,11 +63,11 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"如遇到上传图片返回登录页面，请退出程序重试。" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
-        
-    }];
-    alertV.sure_btnTitleColor = TextColor;
-    [alertV show];
+//    SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"如遇到上传图片返回登录页面，请退出程序重试。" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+//        
+//    }];
+//    alertV.sure_btnTitleColor = TextColor;
+//    [alertV show];
     
     id traget = self.navigationController.interactivePopGestureRecognizer.delegate;
     UIPanGestureRecognizer * pan = [[UIPanGestureRecognizer alloc]initWithTarget:traget action:nil];
@@ -221,7 +221,8 @@
         
         SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"未登录" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
             
-            [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+//            [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+            [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
             
         }];
         alert.sure_btnTitleColor = TextColor;

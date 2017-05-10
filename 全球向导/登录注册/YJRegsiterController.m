@@ -59,8 +59,30 @@
 
 @implementation YJRegsiterController
 
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+
     
     self.view.backgroundColor = [UIColor whiteColor];
     _countDownForBtn = [[CountDown alloc] init];
@@ -143,7 +165,9 @@
     
     //    [self dismissViewControllerAnimated:YES completion:nil];
     
-    [self presentViewController:[YJLoginController new] animated:YES completion:nil];
+//    [self presentViewController:[YJLoginController new] animated:YES completion:nil];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+
     
 }
 
@@ -189,8 +213,10 @@
 //点击跳转
 - (void)loginClick:(UIButton *)btn{
     
-    YJLoginFirstController *vc = [[YJLoginFirstController alloc]init];
-    [self presentViewController:vc animated:NO completion:nil];
+//    YJLoginFirstController *vc = [[YJLoginFirstController alloc]init];
+//    [self presentViewController:vc animated:NO completion:nil];
+    [self.navigationController pushViewController:[YJLoginFirstController new] animated:NO];
+
     
 }
 //加载布局
@@ -379,7 +405,7 @@
         self.loginOrRegist.enabled = NO;
         self.loginOrRegist.layer.masksToBounds = YES;
         self.loginOrRegist.layer.cornerRadius = 17.0;
-        self.loginOrRegist.layer.borderColor = [UIColor whiteColor].CGColor;
+        self.loginOrRegist.layer.borderColor = TextColor.CGColor;
         self.loginOrRegist.layer.borderWidth = 1;
         btn.selected = NO;
     }else{
@@ -432,6 +458,14 @@
                 alertV.sure_btnTitleColor = TextColor;
                 [alertV show];
 
+                
+            }else if ([dict[@"code"] isEqualToString:@"2"]){
+                
+                SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"登录失效,请重新登录！" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                    [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+                }];
+                alertV.sure_btnTitleColor = TextColor;
+                [alertV show];
                 
             }else{
                 

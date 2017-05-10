@@ -331,7 +331,8 @@ static NSString *appLanguage = @"appLanguage";
             self.first = NO;
             [NSFileManager setAppSettingsForObject:currentVersion forKey:@"VersionStr"];
             YJLoginController *vc = [[YJLoginController alloc]init];
-            self.window.rootViewController = vc;
+            YJNavigationController *nav = [[YJNavigationController alloc] initWithRootViewController:vc];
+            self.window.rootViewController = nav;
         }];
     }
     self.first = YES;

@@ -542,7 +542,7 @@ static NSMutableArray *tasks;
                         successBlock(responseObject);
                     }
                 } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                    NSLog(@"上传视频失败 = %@", error);
+//                    NSLog(@"上传视频失败 = %@", error);
                     if (failureBlock)
                     {
                         failureBlock(error);

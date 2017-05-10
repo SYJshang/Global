@@ -155,7 +155,9 @@
     }else{
         SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"未登录！是否现在登录？" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
             
-            [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+//            [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+            [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+
             
         }];
         alert.sure_btnTitleColor = TextColor;
@@ -179,7 +181,9 @@
     }else{
         SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"未登录！是否现在登录？" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
             
-            [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+//            [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+            [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+
         }];
         alert.sure_btnTitleColor = TextColor;
         [alert show];
@@ -440,10 +444,22 @@
                 alert.sure_btnTitleColor = TextColor;
                 [alert show];
 
+            }else if ([dict[@"code"] isEqualToString:@"2"]){
+                
+                SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"登录失效,请重新登录！" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+//                    [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+                    [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+
+                }];
+                alertV.sure_btnTitleColor = TextColor;
+                [alertV show];
+                
             }else{
                 SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"收藏失败！请重新登录过后重试！" alertViewBottomViewType:SGAlertViewBottomViewTypeTwo didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
                     if (index == 1) {
-                        [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+//                        [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+                        [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+
                     }
                 }];
                 alert.sure_btnTitleColor = TextColor;
@@ -485,6 +501,16 @@
                     hud.labelText = NSLocalizedString(@"取消收藏成功!", @"HUD message title");
                     [hud hide:YES afterDelay:2.0];
                     
+                }else if ([dict[@"code"] isEqualToString:@"2"]){
+                    
+                    SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"登录失效,请重新登录！" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+//                        [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+                        [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+
+                    }];
+                    alertV.sure_btnTitleColor = TextColor;
+                    [alertV show];
+                    
                 }else if ([dict[@"code"] isEqualToString:@"10088"]){
                     SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"该收藏不存在！" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
                         
@@ -502,7 +528,9 @@
                 }else{
                     SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"取消收藏失败！请重新登录过后重试！" alertViewBottomViewType:SGAlertViewBottomViewTypeTwo didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
                         if (index == 1) {
-                            [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+//                            [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+                            [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+
                         }
                     }];
                     alert.sure_btnTitleColor = TextColor;

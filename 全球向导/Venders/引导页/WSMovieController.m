@@ -73,7 +73,9 @@
 
 - (void)enterMainAction:(UIButton *)btn {
     
-    [self presentViewController:[YJLoginController new] animated:YES completion:nil];
+//    [self presentViewController:[YJLoginController new] animated:YES completion:nil];
+    [self.navigationController pushViewController:[YJLoginController new] animated:YES];
+
     
     XXLog(@"进入应用");
     

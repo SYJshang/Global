@@ -73,7 +73,9 @@
         
         SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:@"未登录" alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
             
-            [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+//            [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+            [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+
             
         }];
         alert.sure_btnTitleColor = TextColor;

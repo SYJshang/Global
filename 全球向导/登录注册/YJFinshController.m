@@ -20,8 +20,32 @@
 
 @implementation YJFinshController
 
+
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    
+}
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+
     
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -79,13 +103,15 @@
 
 - (void)backBtn{
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)finshClick{
     
-    YJLoginFirstController *vc = [[YJLoginFirstController alloc]init];
-    [self presentViewController:vc animated:NO completion:nil];
+//    YJLoginFirstController *vc = [[YJLoginFirstController alloc]init];
+//    [self presentViewController:vc animated:NO completion:nil];
+    [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+
     
 }
 

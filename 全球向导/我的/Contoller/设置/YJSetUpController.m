@@ -330,7 +330,9 @@
                 }
                 
                 
-                [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+//                [self presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+                [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+
 
             }
             

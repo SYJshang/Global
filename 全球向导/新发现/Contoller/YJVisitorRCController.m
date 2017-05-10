@@ -75,6 +75,23 @@
     [self.view addSubview:self.noNetWork];
 }
 
+- (void)noDatas{
+    
+    self.tableView.hidden = YES;
+    
+    [self.noNetWork removeFromSuperview];
+    
+    self.noNetWork = [[NoNetwork alloc]init];
+    self.noNetWork.btrefresh.hidden = YES;
+    self.noNetWork.titleLabel.text = @"暂无数据\n去其他地方转转吧";
+    __weak typeof(self) weakSelf = self;
+    self.noNetWork.btnBlock = ^{
+        [weakSelf getNetWork];
+    };
+    [self.view addSubview:self.noNetWork];
+}
+
+
 
 
 //加载tableView
@@ -133,7 +150,9 @@
             
             self.pageModel = [YJPageModel mj_objectWithKeyValues:data[@"queryGuideRec"][@"page"]];
             self.shareListArr = [YJNearbyModel mj_objectArrayWithKeyValuesArray:data[@"userRecList"]];
-            
+            if (self.shareListArr.count == 0) {
+                [self noDatas];
+            }
             [self.tableView.mj_header endRefreshing];
             [self.tableView reloadData];
 
@@ -176,7 +195,9 @@
             
             self.pageModel = [YJPageModel mj_objectWithKeyValues:data[@"queryGuideRec"][@"page"]];
             self.shareListArr = [YJNearbyModel mj_objectArrayWithKeyValuesArray:data[@"userRecList"]];
-            
+            if (self.shareListArr.count == 0) {
+                [self noDatas];
+            }
             [self.tableView.mj_footer endRefreshingWithNoMoreData];
             [self.tableView reloadData];
             

@@ -20,7 +20,8 @@
 
 
 
-@interface YJLoginFirstController ()<UITextFieldDelegate>
+@interface YJLoginFirstController ()<UITextFieldDelegate,UIGestureRecognizerDelegate>
+
 
 //头部图片
 @property (nonatomic, strong) UIImageView *imgV;
@@ -49,8 +50,43 @@
 
 @implementation YJLoginFirstController
 
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    
+}
+
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+    
+    return NO;
+
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+
+    self.fd_interactivePopDisabled = YES ;
+
+    
+//    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+//        self.navigationController.interactivePopGestureRecognizer.delegate = self;
+//    }
     
     //处理键盘事件
     self.nameTf.delegate = self;
@@ -136,14 +172,18 @@
     
 //    [self dismissViewControllerAnimated:YES completion:nil];
     
-    [self presentViewController:[YJLoginController new] animated:YES completion:nil];
+//    [self presentViewController:[YJLoginController new] animated:YES completion:nil];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+
 
 }
 
 - (void)registerCliclk:(UIButton *)btn{
     
     YJRegsiterController *vc = [[YJRegsiterController alloc]init];
-    [self presentViewController:vc animated:NO completion:nil];
+//    [self presentViewController:vc animated:NO completion:nil];
+    [self.navigationController pushViewController:vc animated:NO];
+
     
 }
 
@@ -392,8 +432,18 @@
                     }
                 }
                 
+                
                 //跳转界面
+                
+                if (self.type == 10) {
                 [self presentViewController:[YJTabBarController new] animated:YES completion:nil];
+  
+                }else{
+                    
+                    [self.navigationController popToRootViewControllerAnimated:YES];
+                }
+                
+
             }else{
                 //登录错误提示信息
                 SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:dict[@"msg"] alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
@@ -495,7 +545,9 @@
 - (void)findPw{
     
     YJFindPWController *vc = [[YJFindPWController alloc]init];
-    [self presentViewController:vc animated:NO completion:nil];
+//    [self presentViewController:vc animated:NO completion:nil];
+    [self.navigationController pushViewController:vc animated:YES];
+
 }
 
 

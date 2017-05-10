@@ -84,6 +84,23 @@
     [self.view addSubview:self.noNetWork];
 }
 
+- (void)noDatas{
+    
+    self.tableView.hidden = YES;
+    
+    [self.noNetWork removeFromSuperview];
+    
+    self.noNetWork = [[NoNetwork alloc]init];
+    self.noNetWork.btrefresh.hidden = YES;
+    self.noNetWork.titleLabel.text = @"暂无数据\n去其他地方转转吧";
+    __weak typeof(self) weakSelf = self;
+    self.noNetWork.btnBlock = ^{
+        [weakSelf getNetWork];
+    };
+    [self.view addSubview:self.noNetWork];
+}
+
+
 
 //加载tableView
 - (void)setTableView{
@@ -135,9 +152,21 @@
             
             self.pageModel = [YJPageModel mj_objectWithKeyValues:data[@"queryGuideRec"][@"page"]];
             self.newFindArr = [YJNFindGuideModel mj_objectArrayWithKeyValuesArray:data[@"guideRecList"]];
-            
+            if (self.newFindArr.count == 0) {
+                [self noDatas];
+            }
             [self.tableView.mj_header endRefreshing];
             [self.tableView reloadData];
+        }else if ([dict[@"code"] isEqualToString:@"2"]){
+            
+            SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"登录失效,请重新登录！" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+//                [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+                [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+
+            }];
+            alertV.sure_btnTitleColor = TextColor;
+            [alertV show];
+            
         }else{
             
             SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:dict[@"msg"] alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
@@ -179,7 +208,9 @@
             self.pageModel = [YJPageModel mj_objectWithKeyValues:data[@"queryGuideRec"][@"page"]];
             self.newFindArr = [YJNFindGuideModel mj_objectArrayWithKeyValuesArray:data[@"guideRecList"]];
 
-            
+            if (self.newFindArr.count == 0) {
+                [self noDatas];
+            }
             [self.tableView.mj_footer endRefreshingWithNoMoreData];
             [self.tableView reloadData];
             

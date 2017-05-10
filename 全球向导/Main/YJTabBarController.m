@@ -43,7 +43,7 @@ static NSString *kGroupName = @"GroupName";
     //主页
     ViewController *main = [[ViewController alloc]init] ;
 //    main.view.backgroundColor = [UIColor redColor];
-    [self addChildVc:main Title:YJLocalizedString(@"目的地") withTitleSize:12.0 andFoneName:@"HelveticaNeue-Bold" selectedImage:@"home2" withTitleColor:TextColor unselectedImage:@"home" withTitleColor:[UIColor lightGrayColor]];
+    [self addChildVc:main Title:YJLocalizedString(@"首页") withTitleSize:12.0 andFoneName:@"HelveticaNeue-Bold" selectedImage:@"home2" withTitleColor:TextColor unselectedImage:@"home" withTitleColor:[UIColor lightGrayColor]];
     //向导
     YJGuideController  *caseVC = [[YJGuideController alloc]init];
 //    caseVC.view.backgroundColor = [UIColor grayColor];

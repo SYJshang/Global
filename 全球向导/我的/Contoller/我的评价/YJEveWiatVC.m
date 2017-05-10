@@ -173,6 +173,16 @@
             [self.tableView.mj_header endRefreshing];
             [self.tableView.mj_footer endRefreshing];
             [self.tableView reloadData];
+        }else if ([dict[@"code"] isEqualToString:@"2"]){
+            
+            SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"登录失效,请重新登录！" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+//                [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+                [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+
+            }];
+            alertV.sure_btnTitleColor = TextColor;
+            [alertV show];
+            
         }else{
             
             SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
@@ -224,6 +234,16 @@
             }
             
             [self.tableView reloadData];
+        }else if ([dict[@"code"] isEqualToString:@"2"]){
+            
+            SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"登录失效,请重新登录！" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+//                [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+                [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+
+            }];
+            alertV.sure_btnTitleColor = TextColor;
+            [alertV show];
+            
         }else{
             
             SGAlertView *alert = [SGAlertView alertViewWithTitle:@"提示" contentTitle:dict[@"msg"] alertViewBottomViewType:SGAlertViewBottomViewTypeOne didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {

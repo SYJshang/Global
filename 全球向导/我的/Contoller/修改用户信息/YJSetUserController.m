@@ -83,6 +83,14 @@
                     hud.labelText = NSLocalizedString(@"提交成功", @"HUD message title");
                     [hud hide:YES afterDelay:2.0];
 
+                }else if ([dict[@"code"] isEqualToString:@"2"]){
+                    
+                    SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"登录失效,请重新登录！" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                        [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+                    }];
+                    alertV.sure_btnTitleColor = TextColor;
+                    [alertV show];
+                    
                 }else{
                     
                     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:dict[@"msg"] preferredStyle:UIAlertControllerStyleAlert];
@@ -133,7 +141,15 @@
                     hud.labelText = NSLocalizedString(@"完成", @"HUD message title");
                     [hud hide:YES afterDelay:2.0];
                     
-            }else{
+                }else if ([dict[@"code"] isEqualToString:@"2"]){
+                    
+                    SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"登录失效,请重新登录！" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                        [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+                    }];
+                    alertV.sure_btnTitleColor = TextColor;
+                    [alertV show];
+                    
+                }else{
                     
                     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:dict[@"msg"] preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -374,7 +390,7 @@
             [formData appendPartWithFileData:imageData name:@"upload" fileName:[NSString stringWithFormat:@"%@.png",@"test"] mimeType:@"image/png"];
         } progress:^(NSProgress * _Nonnull uploadProgress) {
             
-            NSLog(@"图片上传进度%f",uploadProgress.fractionCompleted);
+//            NSLog(@"图片上传进度%f",uploadProgress.fractionCompleted);
             
         }success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
@@ -417,7 +433,7 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
             
-                NSLog(@"%@",error);
+//                NSLog(@"%@",error);
             
                 hud.mode = MBProgressHUDModeText;
                 hud.labelColor = [UIColor whiteColor];

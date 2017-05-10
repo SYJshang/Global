@@ -20,4 +20,7 @@
 //名称、手机号
 @property (nonatomic, strong) UITextField *nameTf;
 
+@property (nonatomic, assign) NSInteger type;
+
+
 @end

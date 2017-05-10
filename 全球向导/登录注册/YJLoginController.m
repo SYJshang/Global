@@ -33,8 +33,30 @@
 
 @implementation YJLoginController
 
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+
     
     //
     [self setView];
@@ -115,19 +137,24 @@
 
 - (void)loginBtn:(UIButton *)btn{
     YJLoginFirstController *vc = [[YJLoginFirstController alloc]init];
-    [self presentViewController:vc animated:YES completion:nil];
+    vc.type = 10;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 
 - (void)registerBtn:(UIButton *)btn{
     YJRegsiterController *vc = [[YJRegsiterController alloc]init];
-    [self presentViewController:vc animated:YES completion:nil];
+//    [self presentViewController:vc animated:YES completion:nil];
+    [self.navigationController pushViewController:vc animated:YES];
+
 }
 
 - (void)move:(UIButton *)btn{
     
     YJTabBarController *vc = [[YJTabBarController alloc]init];
     [self presentViewController:vc animated:YES completion:nil];
+//    [self.navigationController pushViewController:vc animated:YES];
+
 }
 
 

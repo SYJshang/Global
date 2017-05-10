@@ -83,7 +83,9 @@
     __weak typeof(self) weakSelf = self;
     self.noNetWork.btnBlock = ^{
         
-        [weakSelf presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+//        [weakSelf presentViewController:[YJLoginFirstController new] animated:YES completion:nil];
+        [weakSelf.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+
         
     };
     [self.noNetWork.btrefresh setTitle:@"登录" forState:UIControlStateNormal];

@@ -19,6 +19,7 @@
         self.imageV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"big_horse"]];
         [self.contentView addSubview:self.imageV];
         self.imageV.sd_layout.leftSpaceToView(self.contentView,5).rightSpaceToView(self.contentView,5).topSpaceToView(self.contentView,5).heightIs(160.0 * KWidth_Scale);
+        self.imageV.contentMode = UIViewContentModeScaleAspectFill;
         self.imageV.layer.masksToBounds = YES;
         self.imageV.layer.cornerRadius = 8;
         self.imageV.layer.borderWidth = 2;

@@ -395,27 +395,10 @@
 
 
 
--(void)onNavButtonTapped:(UIBarButtonItem *)sender event:(UIEvent *)event
+- (void)onNavButtonTapped:(UIBarButtonItem *)sender event:(UIEvent *)event
 {
     
-    // provide two methods to deal with the barbuttonitems
-    // comment this fowowing line and see how the other way of dealing with barbuttonitems
-    
-    //#define IfMethodOne
-    
-    
-#ifdef IfMethodOne
-    CGRect rect = [self.navigationController.navigationBar convertRect:[event.allTouches.anyObject view].frame toView:[[UIApplication sharedApplication] keyWindow]];
-    
-    [FTPopOverMenu showFromSenderFrame:rect
-                              withMenu:@[@"MenuOne",@"MenuTwo",@"MenuThree",@"MenuFour"]
-                        imageNameArray:@[@"Pokemon_Go_01",@"Pokemon_Go_02",@"Pokemon_Go_03",@"Pokemon_Go_04"]
-                             doneBlock:^(NSInteger selectedIndex) {
-                             } dismissBlock:^{
-                             }];
-    
-    
-#else
+
     
     [FTPopOverMenu showFromEvent:event
                         withMenu:@[YJLocalizedString(@"发布订单"),YJLocalizedString(@"发布分享"),YJLocalizedString(@"发布发现")]
@@ -429,19 +412,17 @@
                     }];
                     alertV.sure_btnTitleColor = TextColor;
                     [alertV show];
-                    
                 
-
-            
-            
             }else if (selectedIndex == 1){
                 
               NSString *code =  [[NSUserDefaults standardUserDefaults] objectForKey:@"code"];
                 if ([code isEqualToString:@"1"]) {
+                    
                     YJTravelController *vc = [[YJTravelController alloc]init];
                     vc.state = @"1";
                     [self.navigationController pushViewController:vc animated:YES];
                 }else{
+                    
                     SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"未登录" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
                     }];
                     alertV.sure_btnTitleColor = TextColor;
@@ -474,8 +455,7 @@
                            
                            
                        }];
-    
-#endif
+
     
     
 }
@@ -487,6 +467,7 @@
 - (void)location{
     
     YJLocaController *locati = [[YJLocaController alloc]init];
+    
     [locati returnText:^(NSString *cityname) {
         
     self.navigationController.navigationBar.tintColor = TextColor;
@@ -541,6 +522,7 @@
     }
     return 30;
 }
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {

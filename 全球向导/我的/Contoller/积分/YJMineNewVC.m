@@ -49,6 +49,8 @@
 
 @property (nonatomic, strong) NSString *isSigin;
 
+@property (nonatomic, strong) UIImageView *img;
+
 
 @end
 
@@ -59,6 +61,13 @@
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+    
+    self.guideStateDict = [NSMutableDictionary dictionary];
+    [self.guideStateDict setObject:@"申请成为全球向导,请到PC端官网申请" forKey:@"0"];
+    [self.guideStateDict setObject:@"向导申请中" forKey:@"1"];
+    [self.guideStateDict setObject:@"向导申请失败" forKey:@"3"];
+    [self.guideStateDict setObject:@"账号封号处理中" forKey:@"4"];
+    
     //把选中数组存成全局变量
     [self getUserInfo];
     
@@ -84,7 +93,6 @@
         if ([dict[@"code"] isEqualToString:@"1"]) {
             
             NSDictionary *data = dict[@"data"];
-            
             NSDictionary *usrInfo = data[@"userInfo"];
             NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"userInfo.plist"];
             [NSKeyedArchiver archiveRootObject:usrInfo toFile:path];
@@ -115,18 +123,32 @@
             
             self.nickName.text = self.userModel.nickName;
             self.NoLab.text = [NSString stringWithFormat:@"NO:%@",self.userModel.userNo];
-            self.rankLab.text = dict[@"data"][@"gradeName"];
-            
             self.guideStatus = [NSString stringWithFormat:@"%@",data[@"guideStatus"]];
+            
+            if ([self.guideStatus isEqualToString:@"2"]) {
+                self.rankLab.text = dict[@"data"][@"gradeName"];
+            }else{
+                self.rankLab.superview.hidden = YES;
+            }
+            
             self.isSigin = [NSString stringWithFormat:@"%@",data[@"hasSign"]];
 
             
             [self.tableView reloadData];
             
-        }else{
+        }else if ([dict[@"code"] isEqualToString:@"2"]){
             
+            self.rankLab.superview.hidden = YES;
+
+            SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"登录失效,请重新登录！" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+            }];
+            alertV.sure_btnTitleColor = TextColor;
+            [alertV show];
+            
+        }else{
             self.nickName.text = @"未登录";
-            self.rankLab.text = @"";
+            self.img.hidden = YES;
             self.topImageView.image = [UIImage imageNamed:@"bg"];
             
             SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:dict[@"msg"] alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
@@ -155,11 +177,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.guideStateDict = [NSMutableDictionary dictionary];
-    [self.guideStateDict setObject:@"申请成为全球向导" forKey:@"0"];
-    [self.guideStateDict setObject:@"向导申请中" forKey:@"1"];
-    [self.guideStateDict setObject:@"向导申请失败" forKey:@"3"];
-    [self.guideStateDict setObject:@"账号封号处理中" forKey:@"4"];
+    
 
 
     
@@ -170,13 +188,7 @@
     self.automaticallyAdjustsScrollViewInsets = NO; //默认是YES
     self.tableView.tableFooterView = [UIView new];
     
-    //    [self setImage];
-    
-    //    if (self.tableView.style == UITableViewStylePlain) {
-    //        UIEdgeInsets contentInset = self.tableView.contentInset;
-    //        contentInset.top = -20;
-    //        [self.tableView setContentInset:contentInset];
-    //    }
+
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:1.0];
     self.tableView.contentInset = UIEdgeInsetsMake(200, 0, 0, 0);
@@ -264,33 +276,33 @@
     self.NoLab.sd_layout.leftSpaceToView(self.icon,5).topSpaceToView(self.nickName,5).heightIs(20).widthIs(100);
     
     
-    UIImageView *view = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"mine_bg"]];
-    view.userInteractionEnabled = YES;
-    [self.topImageView addSubview:view];
-    view.sd_layout.rightSpaceToView(self.topImageView, -10).centerYEqualToView(self.topImageView).heightIs(40).widthIs(120);
+    self.img = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"mine_bg"]];
+    self.img.userInteractionEnabled = YES;
+    [self.topImageView addSubview:self.img];
+    self.img.sd_layout.rightSpaceToView(self.topImageView, -10).centerYEqualToView(self.topImageView).heightIs(40).widthIs(120);
 
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(goInIntegral)];
-    [view addGestureRecognizer:tap];
+    [self.img addGestureRecognizer:tap];
     
     
     UIImageView *medal = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"s_logo"]];
     medal.userInteractionEnabled = YES;
-    [view addSubview:medal];
-    medal.sd_layout.leftSpaceToView(view, 5).centerYEqualToView(view).heightIs(20).widthIs(18);
+    [self.img addSubview:medal];
+    medal.sd_layout.leftSpaceToView(self.img, 5).centerYEqualToView(self.img).heightIs(20).widthIs(18);
     
     UIImageView *accow = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"arrow"]];
     accow.userInteractionEnabled = YES;
-    [view addSubview:accow];
-    accow.sd_layout.rightSpaceToView(view,15).centerYEqualToView(view).heightIs(12).widthIs(10);
+    [self.img addSubview:accow];
+    accow.sd_layout.rightSpaceToView(self.img,15).centerYEqualToView(self.img).heightIs(12).widthIs(10);
 
     
     self.rankLab = [[UILabel alloc]init];
-    [view addSubview:self.rankLab];
+    [self.img addSubview:self.rankLab];
     self.rankLab.text = @"实习向导";
     self.rankLab.font = [UIFont systemFontOfSize:AdaptedWidth(13)];
     self.rankLab.textColor = [UIColor whiteColor];
-    self.rankLab.sd_layout.leftSpaceToView(medal,5).centerYEqualToView(view).heightIs(20).rightSpaceToView(accow, 5);
+    self.rankLab.sd_layout.leftSpaceToView(medal,5).centerYEqualToView(self.img).heightIs(20).rightSpaceToView(accow, 5);
     
 }
 
@@ -311,7 +323,7 @@
 
     }else{
         
-        [self presentViewController:[YJLoginFirstController new] animated:NO completion:nil];
+        [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
     }
     
     
@@ -327,7 +339,7 @@
         
     }else{
         
-        [self presentViewController:[YJLoginFirstController new] animated:NO completion:nil];
+        [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
     }
 }
 
@@ -448,7 +460,7 @@
                 break;
             case 8:
                 if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 10) {
-                    NSString *phone = [NSString stringWithFormat:@"tel://0574-87844680"];
+                    NSString *phone = [NSString stringWithFormat:@"tel://4008877507"];
                     NSURL *url = [NSURL URLWithString:phone];
                     [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success) {
                         
@@ -462,7 +474,14 @@
                         
                     }];
                 }else{
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://0574-87844680"]];
+//                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://0574-87844680"]];
+                    
+                    
+                    NSMutableString * str = [[NSMutableString alloc] initWithFormat:@"tel:%@",@"4008877507"];
+                    UIWebView * callWebview = [[UIWebView alloc] init];
+                    [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:str]]];
+                    [self.view addSubview:callWebview];
+                    
                 }
                 break;
                 
@@ -475,8 +494,8 @@
         SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"未登录，是否立即登录？" alertViewBottomViewType:(SGAlertViewBottomViewTypeTwo) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
             
             if (index == 1) {
-                [self presentViewController:[YJLoginFirstController new] animated:NO completion:nil];
-                
+//                [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+                [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
             }
             
         }];
@@ -506,6 +525,14 @@
             [hud hide:YES afterDelay:2.0];
             
             [self getUserInfo];
+            
+        }else if ([data[@"code"] isEqualToString:@"2"]){
+            
+            SGAlertView *alertV = [SGAlertView alertViewWithTitle:@"温馨提示" contentTitle:@"登录失效,请重新登录！" alertViewBottomViewType:(SGAlertViewBottomViewTypeOne) didSelectedBtnIndex:^(SGAlertView *alertView, NSInteger index) {
+                [self.navigationController pushViewController:[YJLoginFirstController new] animated:YES];
+            }];
+            alertV.sure_btnTitleColor = TextColor;
+            [alertV show];
             
         }else{
             
